@@ -76,7 +76,7 @@ class MainnCubit extends Cubit<MainInitial> {
 
   final navbarItems = BottomNavbarItemsModel.items;
   final boxItems = MainPageBoxModel.items;
-  
+
   final myHealingCardItems = MyHealingCardItemsModel.items;
   final settingItems = SettingsItemModel.items;
   final medicineDetailItems = MedicineDetailItemsModel.items;
@@ -189,9 +189,7 @@ class MainnCubit extends Cubit<MainInitial> {
   void pushScaffoldForumComments(BuildContext context, int forumID) {
     Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
-        builder: (_) => ForumCommentsPage(
-          forumId: forumID,
-        ),
+        builder: (_) => ForumCommentsPage(),
       ),
     );
   }
@@ -294,8 +292,6 @@ class MainnCubit extends Cubit<MainInitial> {
   void updateCommentBoxIndex(int v) {
     emit(state.copyWith(commentBoxIndex: v));
   }
-
-  
 
   @override
   Future<void> close() {

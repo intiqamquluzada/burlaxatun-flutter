@@ -1,4 +1,3 @@
-import 'package:burla_xatun/data/models/remote/response/forum_comments_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,12 +66,12 @@ import 'comment_datas.dart';
 // }
 
 class SingleCommentBox extends StatelessWidget {
-  final Result comment;
+  // final Result comment;
   final int index;
 
   const SingleCommentBox({
     super.key,
-    required this.comment,
+    // required this.comment,
     required this.index,
   });
 
@@ -118,8 +117,8 @@ class SingleCommentBox extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: CommentDatas(
-                        comment: comment,
-                      ),
+                          // comment: comment,
+                          ),
                     ),
                   ),
                 ),

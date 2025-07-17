@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../../cubits/main_cubit/mainn_cubit.dart';
 import '../../../../../../utils/extensions/context_extensions.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../widgets/global_text.dart';
@@ -23,12 +21,11 @@ class ForumBox extends StatelessWidget {
   final String authorName;
   final String forumTitle;
   final int likeCount;
-  final int viewCount;
-  final int commentCount;
+  final String viewCount;
+  final String commentCount;
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
     return GestureDetector(
       onTap: onTap,
       child: DecoratedBox(
@@ -94,13 +91,13 @@ class ForumBox extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
                   ),
-                  GlobalText(
-                    textAlign: TextAlign.left,
-                    text: '$likeCount Bəyənmə',
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                  ),
+                  // GlobalText(
+                  //   textAlign: TextAlign.left,
+                  //   text: '$likeCount Bəyənmə',
+                  //   fontSize: 10,
+                  //   fontWeight: FontWeight.w400,
+                  //   color: Colors.black,
+                  // ),
                   GlobalText(
                     textAlign: TextAlign.left,
                     text: '$commentCount Rəy',

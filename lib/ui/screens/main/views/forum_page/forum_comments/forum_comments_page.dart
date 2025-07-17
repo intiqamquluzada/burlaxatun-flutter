@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/forum_detail/forum_detail_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,11 +10,11 @@ import 'widgets/comment_input.dart';
 import 'widgets/forum_comments_custom_scroll.dart';
 
 class ForumCommentsPage extends StatelessWidget {
-  final int forumId;
+  // final int forumId;
 
   const ForumCommentsPage({
     super.key,
-    required this.forumId,
+    // required this.forumId,
   });
 
   @override
@@ -25,34 +26,55 @@ class ForumCommentsPage extends StatelessWidget {
           context.pop();
         },
       ),
-      body: CustomRefreshIndicator(
-        onRefresh: () async {
-          context.read<ForumCommentsCubit>().getForumComments();
+      body: BlocBuilder<ForumDetailCubit, ForumDetailState>(
+        builder: (context, state) {
+          if (state.forumDetailStatus == ForumDetailStatus.loading) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state.forumDetailStatus == ForumDetailStatus.error) {
+            return Center(child: Text('error occured'));
+          } else if (state.forumDetailStatus ==
+              ForumDetailStatus.networkError) {
+            return Text('network error');
+          }
+          if (state.forumDetailStatus == ForumDetailStatus.success) {
+            final post = state.post;
+            return CustomRefreshIndicator(
+              onRefresh: () async {},
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        post?.subject ?? 'data not found',
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Text(
+                        'author: ${post?.author ?? 'data not found'}',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      Text(
+                        post?.message ?? 'data not found',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  )
+                  // ForumCommentsCustomScroll(),
+                  ),
+            );
+          }
+          return SizedBox.shrink();
         },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: BlocBuilder<ForumCommentsCubit, ForumCommentsState>(
-            builder: (context, state) {
-              if (state.status == ForumCommentsStatus.loading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state.status == ForumCommentsStatus.success) {
-                final comments = state.response?.results
-                        ?.where((comment) => comment.forum == forumId)
-                        .toList() ??
-                    [];
-
-                return ForumCommentsCustomScroll(
-                  forumId: forumId,
-                  comments: comments,
-                );
-              } else if (state.status == ForumCommentsStatus.failure) {
-                return Center(child: Text("Rəylər yüklənmədi"));
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          ),
-        ),
       ),
       bottomSheet: CommentInput(),
     );

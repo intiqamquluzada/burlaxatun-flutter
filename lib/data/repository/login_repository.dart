@@ -10,7 +10,7 @@ class LoginRepository implements LoginContractor {
   @override
   Future<LoginResponseModel> login({
     required String email,
-    required String password,
+    required String password, 
   }) {
     return _loginService.login(
       email: email,

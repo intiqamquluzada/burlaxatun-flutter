@@ -10,6 +10,7 @@ import 'package:burla_xatun/cubits/faqs_cubit/faqs_cubit.dart';
 import 'package:burla_xatun/cubits/forum_category/forum_category_cubit.dart';
 import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
 import 'package:burla_xatun/cubits/forum_create/forum_create_cubit.dart';
+import 'package:burla_xatun/cubits/forum_list/forum_list_cubit.dart';
 import 'package:burla_xatun/cubits/medicine/medicine_cubit.dart';
 import 'package:burla_xatun/cubits/medicine_create/medicine_create_cubit.dart';
 import 'package:burla_xatun/cubits/medicine_patch/medicine_patch_cubit.dart';
@@ -20,6 +21,7 @@ import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
 import 'package:burla_xatun/cubits/user_update/user_update_cubit.dart';
 import 'package:burla_xatun/cubits/using_rules/using_rules_cubit.dart';
 import 'package:burla_xatun/data/contractor/ultrasound_contract.dart';
+import 'package:burla_xatun/ui/screens/main/views/forum_page/secondary_forum_page/secondary_forum_page.dart';
 import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
@@ -128,6 +130,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => UltrasoundCubit(locator<UltrasoundContract>()),
           child: Container(),
+        ),
+        BlocProvider(
+          create: (context) => locator<ForumListCubit>()..getForumList(),
+          child: SecondaryForumPage(),
         )
       ],
       child: BlocBuilder<LanguageCubit, Locale>(

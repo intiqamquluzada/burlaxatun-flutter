@@ -64,10 +64,12 @@ class EndpointsConstants {
   static const String myReservations = '$baseUrl/C/my-reservations/';
 
   // D
-  static const forumCategory = "$baseUrl/D/forum-category-stats/";
-  static const forumList = "$baseUrl/D/forum-list/";
-  static const forumComments = '$baseUrl/D/comments/';
-  static const forumCreate = '$baseUrl/D/forum-create/';
+  // static const forumCategory = "$baseUrl/D/forum-category-stats/";
+  static const forumList = "$baseUrl/D/forum/videodoktor/threads/";
+  static const postDetail = "$baseUrl/D/forum/videodoktor/post/";
+  static const user = "$baseUrl/D/forum/videodoktor/user/";
+  // static const forumComments = '$baseUrl/D/comments/';
+  // static const forumCreate = '$baseUrl/D/forum-create/';
 
   static const String doctorsList = '$baseUrl/C/doctors-list/';
   static const String doctorDetail = '$baseUrl/C/doctors-detail/{slug}/';

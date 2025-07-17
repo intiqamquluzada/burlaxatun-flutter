@@ -6,3 +6,4 @@ abstract class LoginContractor {
     required String password,
   });
 }
+ 

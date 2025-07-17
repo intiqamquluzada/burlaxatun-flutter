@@ -55,18 +55,17 @@
 //   }
 // }
 
-import 'package:burla_xatun/data/models/remote/response/forum_comments_model.dart';
 import 'package:burla_xatun/ui/screens/main/views/forum_page/forum_comments/widgets/single_comment_box.dart';
 import 'package:flutter/material.dart';
 
 class CommentsBox extends StatelessWidget {
-  final int forumId;
-  final List<Result> comments;
+  // final int forumId;
+  // final List<Result> comments;
 
   const CommentsBox({
     super.key,
-    required this.forumId,
-    required this.comments,
+    // required this.forumId,
+    // required this.comments,
   });
 
   @override
@@ -82,12 +81,12 @@ class CommentsBox extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView.builder(
-              itemCount: comments.length,
+              itemCount: 10,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, i) {
                 return SingleCommentBox(
-                  comment: comments[i],
+                  // comment: comments[i],
                   index: i,
                 );
               },

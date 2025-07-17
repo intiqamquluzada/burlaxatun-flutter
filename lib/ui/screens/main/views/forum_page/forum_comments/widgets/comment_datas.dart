@@ -1,16 +1,14 @@
-import 'package:burla_xatun/data/models/remote/response/forum_comments_model.dart';
-import 'package:burla_xatun/utils/helper/time_ago_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/global_text.dart';
 
 class CommentDatas extends StatelessWidget {
-  final Result comment;
+  // final Result comment;
 
   const CommentDatas({
     super.key,
-    required this.comment,
+    // required this.comment,
   });
 
   @override
@@ -34,7 +32,7 @@ class CommentDatas extends StatelessWidget {
                 children: [
                   Flexible(
                     child: GlobalText(
-                      text: '@${comment.user}',
+                      text: '@nihad',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,
@@ -42,9 +40,7 @@ class CommentDatas extends StatelessWidget {
                   ),
                   Flexible(
                     child: GlobalText(
-                      text: comment.createdAt != null
-                          ? timeAgo(comment.createdAt!)
-                          : '',
+                      text: 'efe',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,
@@ -56,7 +52,7 @@ class CommentDatas extends StatelessWidget {
               GlobalText(
                 height: 1.4,
                 textAlign: TextAlign.left,
-                text: comment.text ?? '',
+                text: 'efkfomekomfo',
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,

@@ -1,32 +1,28 @@
-import 'package:burla_xatun/cubits/add_child/add_child_cubit.dart';
-import 'package:burla_xatun/cubits/doctor_reservation/doctor_reservation_cubit.dart';
-import 'package:burla_xatun/cubits/forum_list/forum_list_cubit.dart';
-import 'package:burla_xatun/cubits/indicator/indicator_cubit.dart';
-import 'package:burla_xatun/cubits/notification/notification_cubit.dart';
-import 'package:burla_xatun/cubits/signup_cubit/signup_cubit.dart';
-import 'package:burla_xatun/cubits/splash/splash_cubit.dart';
-import 'package:burla_xatun/data/models/remote/response/blog_cat_model.dart';
-import 'package:burla_xatun/ui/screens/add_child/add_your_child.dart';
-import 'package:burla_xatun/ui/screens/auth/forgot_psw/email_request_screen.dart';
-import 'package:burla_xatun/ui/screens/auth/forgot_psw/forgot_psw_otp_screen.dart';
-import 'package:burla_xatun/ui/screens/auth/forgot_psw/forgot_psw_success_screen.dart';
-import 'package:burla_xatun/ui/screens/auth/forgot_psw/reset_psw_screen.dart';
-import 'package:burla_xatun/ui/screens/main/views/profil_page/using_rules/using_rules_screen.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../cubits/add_child/add_child_cubit.dart';
 import '../../cubits/baby_names_cubit/baby_names_cubit.dart';
+import '../../cubits/doctor_reservation/doctor_reservation_cubit.dart';
 import '../../cubits/doctors_detail/doctors_detail_cubit.dart';
+import '../../cubits/indicator/indicator_cubit.dart';
 import '../../cubits/login_cubit/login_cubit.dart';
+import '../../cubits/notification/notification_cubit.dart';
 import '../../cubits/onboarding_cubit/onboarding_cubit.dart';
 import '../../cubits/questions_cubit/questions_cubit.dart';
+import '../../cubits/signup_cubit/signup_cubit.dart';
+import '../../cubits/splash/splash_cubit.dart';
+import '../../data/models/remote/response/blog_cat_model.dart';
+import '../../ui/screens/add_child/add_your_child.dart';
+import '../../ui/screens/auth/forgot_psw/email_request_screen.dart';
+import '../../ui/screens/auth/forgot_psw/forgot_psw_otp_screen.dart';
+import '../../ui/screens/auth/forgot_psw/forgot_psw_success_screen.dart';
+import '../../ui/screens/auth/forgot_psw/reset_psw_screen.dart';
 import '../../ui/screens/auth/login/login.dart';
 import '../../ui/screens/auth/sign_up/signup.dart';
 import '../../ui/screens/main/main_page.dart';
 import '../../ui/screens/main/views/daily_advise_page/advice_page.dart';
-import '../../ui/screens/main/views/forum_page/main_forum_page.dart/forum_page.dart';
 import '../../ui/screens/main/views/forum_page/new_forum_page/create_new_forum.dart';
 import '../../ui/screens/main/views/forum_page/secondary_forum_page/secondary_forum_page.dart';
 import '../../ui/screens/main/views/home_page/blog/article_details/article_details_page.dart';
@@ -55,10 +51,12 @@ import '../../ui/screens/main/views/profil_page/settings/setting_views/change_pa
 import '../../ui/screens/main/views/profil_page/settings/setting_views/change_password/success_change_password/success_change_password.dart';
 import '../../ui/screens/main/views/profil_page/settings/setting_views/change_phone_number/change_phone_number_view.dart';
 import '../../ui/screens/main/views/profil_page/special_thanks/special_thanks_view.dart';
+import '../../ui/screens/main/views/profil_page/using_rules/using_rules_screen.dart';
 import '../../ui/screens/onboarding/onboarding.dart';
 import '../../ui/screens/questions/questions.dart';
 import '../../ui/screens/questions/widgets/calculate_birth_view/calculate_birth.dart';
 import '../../ui/screens/splash/splash_screen.dart';
+import '../di/locator.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -320,68 +318,16 @@ class Routerapp {
           ),
           StatefulShellBranch(
             routes: [
-              GoRoute(
-                path: '/main_forum',
-                builder: (context, state) => MainForumPage(),
-              ),
               // GoRoute(
-              //   path: '/secondary_forum',
-              //   builder: (context, state) {
-              //     // final forumCategory = context.read<ForumCategoryResponse>();
-              //     return MultiBlocProvider(
-              //       providers: [
-              //         BlocProvider(
-              //           create: (context) => locator<ForumListCubit>()
-              //             ..getForumList(
-              //                 // categoryId: forumCategory.id.toString(),
-              //                 ),
-              //         ),
-              //         // BlocProvider<ForumCategoryCubit>(
-              //         //   create: (context) =>
-              //         //       locator<ForumCategoryCubit>()..getForumCategory(),
-              //         // ),
-              //       ],
-              //       child: SecondaryForumPage(),
-              //     );
-              //   },
+              //   path: '/main_forum',
+              //   builder: (context, state) => MainForumPage(),
               // ),
               GoRoute(
                 path: '/secondary_forum',
                 builder: (context, state) {
-                  final categoryId = state.uri.queryParameters['categoryId'];
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(
-                        create: (context) => locator<ForumListCubit>()
-                          ..getForumList(categoryId: categoryId),
-                      ),
-                    ],
-                    child: SecondaryForumPage(),
-                  );
+                  return SecondaryForumPage();
                 },
               ),
-
-              // GoRoute(
-              //   path: '/secondary_forum',
-              //   builder: (context, state) {
-              //     // Extract categoryId from route params
-              //     final Map<String, dynamic>? extra =
-              //         state.extra as Map<String, dynamic>?;
-              //     final String? categoryId = extra?['categoryId']?.toString();
-
-              //     return MultiBlocProvider(
-              //       providers: [
-              //         BlocProvider(
-              //           create: (context) => locator<ForumListCubit>()
-              //             ..getForumList(
-              //               categoryId: categoryId,
-              //             ),
-              //         ),
-              //       ],
-              //       child: SecondaryForumPage(),
-              //     );
-              //   },
-              // ),
               GoRoute(
                 path: '/create_new_forum',
                 builder: (context, state) => CreateNewForum(),

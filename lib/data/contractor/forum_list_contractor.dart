@@ -1,5 +1,5 @@
-import 'package:burla_xatun/data/models/remote/response/forum_list_response.dart';
+import 'package:dio/dio.dart';
 
 abstract class ForumListContractor {
-  Future<ForumListResponse> getForumList({String? categoryId});
+  Future<Response<dynamic>> getForumList({int? page});
 }

@@ -9,7 +9,7 @@ class SecondaryForumPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( 
       appBar: GlobalAppbar(
         title: 'Forum',
         onLeadingTap: () {

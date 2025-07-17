@@ -1,31 +1,24 @@
 part of 'forum_list_cubit.dart';
 
-sealed class ForumListState {}
-//  extends Equatable {
-//   const ForumListState();
+class ForumListState extends Equatable {
+  const ForumListState({
+    this.forumListStatus = ForumListStatus.initial,
+    this.forumList,
+  });
 
-//   @override
-//   List<Object> get props => [];
-// }
+  final ForumListStatus? forumListStatus;
+  final List<Thread>? forumList;
 
-final class ForumListInitial extends ForumListState {}
+  @override
+  List<Object?> get props => [forumListStatus, forumList];
 
-final class ForumListLoading extends ForumListState {}
-
-final class ForumListSuccess extends ForumListState {
-  ForumListSuccess(this.forumListResponse);
-
-  final ForumListResponse forumListResponse;
-}
-
-final class ForumListError extends ForumListState {
-  ForumListError(this.message);
-
-  final String message;
-}
-
-final class ForumListNetworkError extends ForumListState {
-  ForumListNetworkError(this.message);
-
-  final String message;
+  ForumListState copyWith({
+    ForumListStatus? forumListStatus,
+    List<Thread>? forumList,
+  }) {
+    return ForumListState(
+      forumListStatus: forumListStatus ?? this.forumListStatus,
+      forumList: forumList ?? this.forumList,
+    );
+  }
 }
