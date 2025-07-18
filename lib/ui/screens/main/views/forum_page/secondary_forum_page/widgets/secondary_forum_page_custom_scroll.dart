@@ -30,11 +30,11 @@ class _SecondaryForumPageCustomScrollState
     scrollController = ScrollController();
     forumListCubit = context.read<ForumListCubit>();
 
-    loadMore();
+    _loadMore();
     super.initState();
   }
 
-  void loadMore() {
+  void _loadMore() {
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {

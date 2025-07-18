@@ -1,13 +1,10 @@
-import 'package:burla_xatun/cubits/forum_detail/forum_detail_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../../cubits/forum_comments/forum_comments_cubit.dart';
+import '../../../../../../cubits/forum_detail/forum_detail_cubit.dart';
 import '../../../../../widgets/custom_refresh_indicator.dart';
 import '../../../../../widgets/global_appbar.dart';
-import 'widgets/comment_input.dart';
-import 'widgets/forum_comments_custom_scroll.dart';
 
 class ForumCommentsPage extends StatelessWidget {
   // final int forumId;
@@ -76,7 +73,7 @@ class ForumCommentsPage extends StatelessWidget {
           return SizedBox.shrink();
         },
       ),
-      bottomSheet: CommentInput(),
+      // bottomSheet: CommentInput(),
     );
   }
 }
