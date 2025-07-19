@@ -1,6 +1,9 @@
 import 'dart:developer';
 
 import 'package:burla_xatun/cubits/forum_detail/forum_detail_cubit.dart';
+import 'package:burla_xatun/ui/screens/main/views/profil_page/initial_profile/widgets/delete_profile_button.dart';
+import 'package:burla_xatun/ui/widgets/global_button.dart';
+import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,14 +56,40 @@ class _SecondaryForumPageCustomScrollState
   Widget build(BuildContext context) {
     return BlocBuilder<ForumListCubit, ForumListState>(
       buildWhen: (previous, current) {
-        return previous.forumList != current.forumList &&
+        return previous.forumList != current.forumList ||
             previous.forumListStatus != current.forumListStatus;
       },
       builder: (context, state) {
         if (state.forumListStatus == ForumListStatus.loading) {
           return Center(child: CircularProgressIndicator.adaptive());
         } else if (state.forumListStatus == ForumListStatus.error) {
-          return Center(child: Text('error occured'));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 40,
+              children: [
+                Text(
+                  'Xəta baş verdi',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GlobalButton(
+                    onPressed: () async {
+                      await forumListCubit.getForumList(isRefresh: true);
+                    },
+                    buttonName: 'Yenidən cəhd et',
+                    buttonColor: ColorConstants.primaryRedColor,
+                    textColor: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          );
         }
         if (state.forumListStatus == ForumListStatus.success) {
           return Stack(

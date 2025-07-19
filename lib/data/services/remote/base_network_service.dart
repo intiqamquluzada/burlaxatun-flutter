@@ -1,14 +1,10 @@
 import 'dart:developer';
 
-import '../../../cubits/main_cubit/mainn_cubit.dart';
-import '../../../cubits/splash/splash_cubit.dart';
-import '../local/login_token_service.dart';
-import '../../../utils/di/locator.dart';
-import '../../../utils/routes/router.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' show PrettyDioLogger;
+
+import '../../../cubits/splash/splash_cubit.dart';
+import '../../../utils/di/locator.dart';
 
 class BaseNetwork {
   BaseNetwork._();
@@ -27,6 +23,7 @@ class BaseNetwork {
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
+          compact: true,
         ),
       )
       ..interceptors.add(

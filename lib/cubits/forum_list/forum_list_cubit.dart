@@ -21,7 +21,8 @@ class ForumListCubit extends Cubit<ForumListState> {
   List<Thread> forumList = [];
 
   Future<void> getForumList({bool isRefresh = false}) async {
-    if (state.forumListStatus == ForumListStatus.loading || !canPagination) {
+    if (state.forumListStatus == ForumListStatus.loading ||
+        (!isRefresh && !canPagination)) {
       return;
     }
     isRefresh ? page = 1 : page += 1;

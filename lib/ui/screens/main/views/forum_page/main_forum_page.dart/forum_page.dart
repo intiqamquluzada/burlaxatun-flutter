@@ -12,7 +12,7 @@ class MainForumPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: GlobalAppbar(
         title: 'Əsas forum',
-        onLeadingTap: () {},
+        leading: SizedBox(),
       ),
       body: MainForumCustomScroll(),
     );

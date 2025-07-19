@@ -173,4 +173,3 @@ class _DeleteProfileButtonState extends State<DeleteProfileButton> {
   }
 }
 
-class AppColorConstants {}

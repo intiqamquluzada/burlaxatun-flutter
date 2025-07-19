@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../../widgets/global_appbar.dart';
 import 'widgets/secondary_forum_page_custom_scroll.dart';
@@ -9,12 +8,10 @@ class SecondaryForumPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
+    return Scaffold(
       appBar: GlobalAppbar(
         title: 'Forum',
-        onLeadingTap: () {
-          context.pop();
-        },
+        leading: SizedBox(),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
