@@ -8,11 +8,13 @@ final class UserDataState extends Equatable {
     required this.response,
     required this.errorMessage,
     required this.babies,
+    // required this.currentBaby,
   });
 
   final UserDataStatus status;
   final UserDataResponse? response;
   final List<Baby>? babies;
+  // final Baby? currentBaby;
   final String? errorMessage;
 
   UserDataState copyWith({
@@ -20,12 +22,14 @@ final class UserDataState extends Equatable {
     UserDataResponse? response,
     String? errorMessage,
     List<Baby>? babies,
+    // Baby? currentBaby,
   }) {
     return UserDataState(
       status: status ?? this.status,
       response: response ?? this.response,
       errorMessage: errorMessage ?? this.errorMessage,
       babies: babies ?? this.babies,
+      // currentBaby: currentBaby,
     );
   }
 
@@ -34,6 +38,7 @@ final class UserDataState extends Equatable {
         response: null,
         errorMessage: null,
         babies: [],
+        // currentBaby: null,
       );
 
   @override

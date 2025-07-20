@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:burla_xatun/data/models/remote/response/user_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../cubits/user_data/user_data_cubit.dart';
 import '../../../utils/extensions/context_extensions.dart';
@@ -13,8 +16,9 @@ class GlobalChangeBabyBottomsheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final UserDataCubit userDataCubit = context.read<UserDataCubit>();
-    // final children = userDataCubit.state.babies;
+    final UserDataCubit userDataCubit = context.read<UserDataCubit>();
+    final currentBaby = userDataCubit.currentBabyNotifier.value;
+    log('${currentBaby?.name}');
     return SizedBox(
       width: context.deviceWidth,
       child: Padding(
@@ -38,9 +42,25 @@ class GlobalChangeBabyBottomsheet extends StatelessWidget {
                     for (int i = 0; i < children.length; i++) ...[
                       ChildAccountBox(
                         babyName: children[i].name ?? 'Körpə adı tapılmadı',
+                        isSelected: userDataCubit.currentBabyNotifier.value ==
+                            children[i],
+                        onTap: () {
+                          userDataCubit.changeProfile(children[i]);
+                          context.pop();
+                        },
                       ),
-                      24.h
+                      18.h
                     ],
+                  ChildAccountBox(
+                    babyName: 'Me',
+                    isSelected: currentBaby == null,
+                    onTap: () {
+                      userDataCubit.changeProfile(null);
+                      context.pop();
+                      // log('${currentBaby?.name}');
+                    },
+                  ),
+                  18.h,
                   AddChildOrImPregnantButton(),
                   33.h,
                 ],

@@ -1,10 +1,7 @@
-import 'package:burla_xatun/cubits/tasks_by_weeks/tasks_by_weeks_cubit.dart';
-import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
-import 'widgets/baby_information.dart';
 import 'widgets/home_page_appbar.dart';
 import 'widgets/home_page_boxes.dart';
 import 'widgets/home_page_daily_advise.dart';

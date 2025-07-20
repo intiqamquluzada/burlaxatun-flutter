@@ -14,13 +14,14 @@ class UserDataCubit extends Cubit<UserDataState> {
   UserDataCubit(this._userDataContractor) : super(UserDataState.initial());
 
   final UserDataContractor _userDataContractor;
+  late ValueNotifier<Baby?> currentBabyNotifier;
 
   Future<void> getUserData() async {
+    currentBabyNotifier = ValueNotifier<Baby?>(null);
     try {
       emit(state.copyWith(status: UserDataStatus.loading));
 
       final response = await _userDataContractor.getUserData();
-      log('babies count: ${response.babies?.length}');
 
       emit(state.copyWith(
         status: UserDataStatus.success,
@@ -41,5 +42,10 @@ class UserDataCubit extends Cubit<UserDataState> {
       debugPrint("Error: $e");
       debugPrint("Stack trace: $stackTrace");
     }
+  }
+
+  void changeProfile(Baby? currentBaby) {
+    // emit(state.copyWith(currentBaby: currentBaby));
+    currentBabyNotifier.value = currentBaby;
   }
 }

@@ -84,15 +84,25 @@ class _HomePageAppbarState extends State<HomePageAppbar> {
                     ),
                   ],
                 ),
-                GlobalText(
-                  textAlign: TextAlign.left,
-                  height: 1.3,
-                  text:
-                      'Hamiləliyin ${data.pregnantWeek ?? '0'}. həftəsi \nGün ${(int.tryParse(data.pregnantWeek ?? '0') ?? 0) * 7}',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
+                !data.isPregnant!
+                    ? GlobalText(
+                        textAlign: TextAlign.left,
+                        height: 1.3,
+                        text:
+                            '${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}',
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      )
+                    : GlobalText(
+                        textAlign: TextAlign.left,
+                        height: 1.3,
+                        text:
+                            'Hamiləliyin ${data.pregnantWeek ?? '0'}. həftəsi \nGün ${(int.tryParse(data.pregnantWeek ?? '0') ?? 0) * 7}',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
               ],
             );
           }
