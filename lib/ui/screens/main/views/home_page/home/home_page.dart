@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final mainCubit = context.read<MainnCubit>();
+    // final mainCubit = context.read<MainnCubit>); 
     return Scaffold(
       backgroundColor: ColorConstants.scaffoldColor,
       appBar: HomePageAppbar(),

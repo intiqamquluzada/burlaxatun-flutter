@@ -1,4 +1,3 @@
-import 'package:burla_xatun/ui/screens/main/views/home_page/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,11 +12,13 @@ class ScrollableDaysAppbar extends StatefulWidget {
     required this.appbarName,
     this.week,
     this.weekValue,
+    this.isShowBackButton = true,
   });
 
   final String appbarName;
   final int? week;
   final ValueNotifier<int?>? weekValue;
+  final bool isShowBackButton;
 
   @override
   State<ScrollableDaysAppbar> createState() => _ScrollableDaysAppbarState();
@@ -63,27 +64,29 @@ class _ScrollableDaysAppbarState extends State<ScrollableDaysAppbar> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      context.pop();
-                    },
-                    child: SizedBox(
-                      width: 44,
-                      height: 44,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.arrow_back_ios_new_rounded),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  widget.isShowBackButton
+                      ? GestureDetector(
+                          onTap: () {
+                            context.pop();
+                          },
+                          child: SizedBox(
+                            width: 44,
+                            height: 44,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.arrow_back_ios_new_rounded),
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      : SizedBox(height: 44, width: 30),
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(right: 25),

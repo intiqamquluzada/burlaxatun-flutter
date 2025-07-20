@@ -1,4 +1,3 @@
-import 'package:burla_xatun/ui/widgets/report_comment_or_block_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -41,16 +40,17 @@ class BottomNavbarItem extends StatelessWidget {
               return GlobalChangeBabyBottomsheet();
             },
           );
-        } else if (i == 2) {
-          showModalBottomSheet(
-            // showDragHandle: true,
-            isScrollControlled: true,
-            context: context,
-            builder: (_) {
-              return ReportCommentOrBlockUser();
-            },
-          );
         }
+        // else if (i == 2) {
+        //   showModalBottomSheet(
+        //     // showDragHandle: true,
+        //     isScrollControlled: true,
+        //     context: context,
+        //     builder: (_) {
+        //       return ReportCommentOrBlockUser();
+        //     },
+        //   );
+        // }
       },
       child: BlocBuilder<MainnCubit, MainInitial>(
         buildWhen: (previous, current) =>

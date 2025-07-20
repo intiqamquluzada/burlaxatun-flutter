@@ -15,7 +15,7 @@ class HomePageAppbar extends StatefulWidget implements PreferredSizeWidget {
   State<HomePageAppbar> createState() => _HomePageAppbarState();
 
   @override
-  Size get preferredSize => const Size(double.maxFinite, 101);
+  Size get preferredSize => const Size(double.maxFinite, 95);
 }
 
 class _HomePageAppbarState extends State<HomePageAppbar> {
