@@ -33,9 +33,11 @@ class AdviceDetailView extends StatelessWidget {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(175),
               child: ScrollableDaysAppbar(
+                count: 270,
                 isShowBackButton: false,
                 appbarName: 'Günlük Tövsiyələr',
                 week: data?.day ?? 1,
+                weekValue: ValueNotifier<int?>(data?.day),
               ),
             ),
             body: SingleChildScrollView(

@@ -13,12 +13,14 @@ class ScrollableDaysAppbar extends StatefulWidget {
     this.week,
     this.weekValue,
     this.isShowBackButton = true,
+    this.count = 47,
   });
 
   final String appbarName;
   final int? week;
   final ValueNotifier<int?>? weekValue;
   final bool isShowBackButton;
+  final int count;
 
   @override
   State<ScrollableDaysAppbar> createState() => _ScrollableDaysAppbarState();
@@ -33,7 +35,7 @@ class _ScrollableDaysAppbarState extends State<ScrollableDaysAppbar> {
   }
 
   void _scrollToCurrentWeek(int week) {
-    final scrollPixel = 30 * week;
+    final scrollPixel = 33 * week;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.animateTo(
@@ -115,7 +117,7 @@ class _ScrollableDaysAppbarState extends State<ScrollableDaysAppbar> {
                     return ListView.separated(
                       controller: _scrollController,
                       scrollDirection: Axis.horizontal,
-                      itemCount: 47,
+                      itemCount: widget.count,
                       itemBuilder: (_, i) {
                         return i == value
                             ? SizedBox(
@@ -172,7 +174,7 @@ class _ScrollableDaysAppbarState extends State<ScrollableDaysAppbar> {
                             : Padding(
                                 padding: const EdgeInsets.only(top: 12),
                                 child: SizedBox(
-                                  width: 25,
+                                  width: 28, // 25
                                   child: GlobalText(
                                     text: '$i',
                                     fontSize: 16,

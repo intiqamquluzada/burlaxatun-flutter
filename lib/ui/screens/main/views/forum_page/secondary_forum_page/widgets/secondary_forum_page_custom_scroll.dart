@@ -110,12 +110,12 @@ class _SecondaryForumPageCustomScrollState
                     //     ),
                     //   ),
                     // ),
-                    SliverPadding(
-                      padding: const EdgeInsets.only(bottom: 18),
-                      sliver: SliverToBoxAdapter(
-                        child: SecondaryForumSearchInput(),
-                      ),
-                    ),
+                    // SliverPadding(
+                    //   padding: const EdgeInsets.only(bottom: 18),
+                    //   sliver: SliverToBoxAdapter(
+                    //     child: SecondaryForumSearchInput(),
+                    //   ),
+                    // ),
                     BlocSelector<ForumListCubit, ForumListState, List<Thread>>(
                       selector: (state) {
                         return state.forumList ?? [];
