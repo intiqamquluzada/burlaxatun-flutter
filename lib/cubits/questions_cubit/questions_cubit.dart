@@ -602,14 +602,15 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
       emit(state.copyWith(userUpdateStatus: UserUpdateStatus.loading));
       log("User Update Loading");
 
-      final response = await userUpdateContractor!.updateUser(
+      // final response =
+      await userUpdateContractor!.updateUser(
         isPregnant: questionOneButtonNotifier.value == 0,
         wantToSeePeriod: questionOneButtonNotifier.value == 1,
         wantToBePregnant: questionOneButtonNotifier.value == 2,
         activeLanguage: activeLanguage,
-        enableNotifications: true,
+        enableNotifications: enableNotifications,
         firstChild: state.isFirstChild,
-        onboardingDone: true,
+        onboardingDone: onboardingDone,
         phoneNumber: phoneNumber,
         pregnantWeek: state.focusedWeekIndex.toString(),
       );

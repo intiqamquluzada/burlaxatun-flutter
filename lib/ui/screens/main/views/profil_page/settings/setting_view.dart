@@ -10,7 +10,7 @@ class SettingView extends StatelessWidget {
   const SettingView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Scaffold(
       backgroundColor: ColorConstants.scaffoldColor,
       appBar: GlobalAppbar(

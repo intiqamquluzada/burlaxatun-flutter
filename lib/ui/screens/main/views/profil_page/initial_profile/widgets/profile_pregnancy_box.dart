@@ -1,4 +1,5 @@
 import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
+import 'package:burla_xatun/cubits/user_update/user_update_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,31 @@ import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/custom_circular_progress_indicator.dart';
 import '../../../../../../widgets/global_text.dart';
 
-class ProfilePregnancyBox extends StatelessWidget {
+class ProfilePregnancyBox extends StatefulWidget {
   const ProfilePregnancyBox({super.key});
+
+  @override
+  State<ProfilePregnancyBox> createState() => _ProfilePregnancyBoxState();
+}
+
+class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
+  late UserDataCubit userDataCubit;
+  late UserUpdateCubit userUpdateCubit;
+  late ValueNotifier<bool> isFirstChildNotifier;
+  late ValueNotifier<bool> isMiscarryNotifier;
+  late ValueNotifier<bool> isBornNotifier;
+  @override
+  void initState() {
+    userDataCubit = context.read<UserDataCubit>();
+    userUpdateCubit = context.read<UserUpdateCubit>();
+    final isFirstChild = userDataCubit.state.response?.firstChild ?? false;
+    final isMiscarry = false;
+    final isBorn = userDataCubit.state.response?.isPregnant ?? false;
+    isFirstChildNotifier = ValueNotifier<bool>(isFirstChild);
+    isMiscarryNotifier = ValueNotifier<bool>(isMiscarry);
+    isBornNotifier = ValueNotifier<bool>(!isBorn);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,11 +210,24 @@ class ProfilePregnancyBox extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: Color(0xff344054),
                         ),
-                        CupertinoSwitch(
-                          dragStartBehavior: DragStartBehavior.down,
-                          value: baby?.isFirst ?? false,
-                          onChanged: (_) {},
+                        ValueListenableBuilder(
+                          valueListenable: isFirstChildNotifier,
+                          builder: (context, value, child) {
+                            return CupertinoSwitch(
+                              dragStartBehavior: DragStartBehavior.down,
+                              value: value,
+                              onChanged: (v) async {
+                                await userUpdateCubit.updateUser(firstChild: v);
+                                isFirstChildNotifier.value = v;
+                              },
+                            );
+                          },
                         ),
+                        // CupertinoSwitch(
+                        //   dragStartBehavior: DragStartBehavior.down,
+                        //   value: baby?.isFirst ?? false,
+                        //   onChanged: (_) {},
+                        // ),
                       ],
                     ),
                     14.h,
@@ -211,11 +248,25 @@ class ProfilePregnancyBox extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: Color(0xff344054),
                         ),
-                        CupertinoSwitch(
-                          dragStartBehavior: DragStartBehavior.down,
-                          value: baby?.haveMiscarriage ?? false,
-                          onChanged: (_) {},
+                        ValueListenableBuilder(
+                          valueListenable: isMiscarryNotifier,
+                          builder: (context, value, child) {
+                            return CupertinoSwitch(
+                              dragStartBehavior: DragStartBehavior.down,
+                              value: value,
+                              onChanged: (v) async {
+                                // await userUpdateCubit.updateUser(
+                                //     enableNotifications: v);
+                                isMiscarryNotifier.value = v;
+                              },
+                            );
+                          },
                         ),
+                        // CupertinoSwitch(
+                        //   dragStartBehavior: DragStartBehavior.down,
+                        //   value: baby?.haveMiscarriage ?? false,
+                        //   onChanged: (_) {},
+                        // ),
                       ],
                     ),
                     14.h,
@@ -238,13 +289,24 @@ class ProfilePregnancyBox extends StatelessWidget {
                             color: Color(0xff344054),
                           ),
                         ),
-                        Flexible(
-                          child: CupertinoSwitch(
-                            dragStartBehavior: DragStartBehavior.down,
-                            value: baby?.haveBorn ?? false,
-                            onChanged: (_) {},
-                          ),
+                        ValueListenableBuilder(
+                          valueListenable: isBornNotifier,
+                          builder: (context, value, child) {
+                            return CupertinoSwitch(
+                              dragStartBehavior: DragStartBehavior.down,
+                              value: value,
+                              onChanged: (v) async {
+                                await userUpdateCubit.updateUser(isPregnant: v);
+                                isBornNotifier.value = v;
+                              },
+                            );
+                          },
                         ),
+                        // CupertinoSwitch(
+                        //   dragStartBehavior: DragStartBehavior.down,
+                        //   value: baby?.haveBorn ?? false,
+                        //   onChanged: (_) {},
+                        // ),
                       ],
                     ),
                   ],

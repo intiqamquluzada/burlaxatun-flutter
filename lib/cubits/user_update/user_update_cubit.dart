@@ -1,10 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:burla_xatun/data/contractor/user_update_contractor.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/contractor/user_update_contractor.dart';
 
 part 'user_update_state.dart';
 
@@ -44,6 +45,7 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
       if (response != null) {
         emit(state.copyWith(status: UserUpdateStatus.success));
         log('User Update Success');
+        // locator<UserDataCubit>().state.copyWith(response: UserDataResponse());
       } else {
         emit(state.copyWith(
           status: UserUpdateStatus.failure,
@@ -68,7 +70,7 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
   Future<bool> userProfileDelete() async {
     try {
       final response = await _contractor.userProfileDelete();
-      return response; 
+      return response;
     } on DioException catch (e, s) {
       log("User Profile Delete Dio Exception: $e", stackTrace: s);
       return false;
