@@ -16,7 +16,7 @@ class ForumListCubit extends Cubit<ForumListState> {
 
   final ForumListContractor forumListContractor;
 
-  int page = 0;
+  int page = 0; 
   bool canPagination = true;
   List<Thread> forumList = [];
 

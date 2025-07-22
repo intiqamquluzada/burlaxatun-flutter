@@ -56,8 +56,10 @@ class _SecondaryForumPageCustomScrollState
   Widget build(BuildContext context) {
     return BlocBuilder<ForumListCubit, ForumListState>(
       buildWhen: (previous, current) {
-        return previous.forumList != current.forumList ||
-            previous.forumListStatus != current.forumListStatus;
+        return previous.forumList == null;
+        // previous.forumList != current.forumList
+        // &&
+        // previous.forumListStatus != current.forumListStatus;
       },
       builder: (context, state) {
         if (state.forumListStatus == ForumListStatus.loading) {
