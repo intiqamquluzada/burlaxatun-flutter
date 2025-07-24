@@ -13,15 +13,16 @@ class ImagePickerHelper {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Choose photo'),
+          backgroundColor: Colors.white,
+          title: const Text('Şəkil seçin'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(ImageSource.camera),
-              child: const Text('Camera'),
+              child: const Text('Kamera'),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(ImageSource.gallery),
-              child: const Text('Gallery'),
+              child: const Text('Qalereya'),
             ),
           ],
         );
