@@ -1,29 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../cubits/forum_category_stats/forum_category_stats_cubit.dart';
 import '../../../../../../../utils/extensions/context_extensions.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/global_text.dart';
 
-class MainForumTitleBox extends StatelessWidget {
+class MainForumTitleBox extends StatefulWidget {
   const MainForumTitleBox({
     super.key,
     required this.title,
-    this.topicCount,
-    this.messageCount,
-    this.viewsCount,
     this.onTap,
+    required this.categoryIndex,
   });
 
   final String title;
-  final int? topicCount;
-  final int? messageCount;
-  final int? viewsCount;
+  final int categoryIndex;
   final void Function()? onTap;
+
+  @override
+  State<MainForumTitleBox> createState() => _MainForumTitleBoxState();
+}
+
+class _MainForumTitleBoxState extends State<MainForumTitleBox> {
+  late ForumCategoryStatsCubit forumCategoryStatsCubit;
+  @override
+  void initState() {
+    forumCategoryStatsCubit = context.read<ForumCategoryStatsCubit>();
+    forumCategoryStatsCubit.getCategoryStatistics();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: Color(0xffF7F7F7),
@@ -41,31 +52,68 @@ class MainForumTitleBox extends StatelessWidget {
                     width: context.deviceWidth * 0.58,
                     child: GlobalText(
                       textAlign: TextAlign.left,
-                      text: title,
+                      text: widget.title,
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
                   ),
                   25.h,
-                  Row(
-                    children: [
-                      GlobalText(
-                        textAlign: TextAlign.left,
-                        text: '$topicCount mövzu',
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                      SizedBox(width: 14),
-                      GlobalText(
-                        textAlign: TextAlign.left,
-                        text: '$messageCount baxış',
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                    ],
+                  BlocBuilder<ForumCategoryStatsCubit, ForumCategoryStatsState>(
+                    builder: (context, state) {
+                      if (state.categoryStatsStatus ==
+                          CategoryStatsStatus.loading) {
+                        return Row(
+                          children: [
+                            Container(
+                              width: 40,
+                              height: 20,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(width: 30),
+                            Container(
+                              width: 40,
+                              height: 20,
+                              color: Colors.grey,
+                            ),
+                          ],
+                        );
+                      } else if (state.categoryStatsStatus ==
+                          CategoryStatsStatus.error) {
+                        return Text('melumat tapilmadi');
+                      }
+                      if (state.categoryStatsStatus ==
+                          CategoryStatsStatus.success) {
+                        final stats =
+                            state.categoryStatsList?[widget.categoryIndex];
+                        final totalViews = stats?.totalViews == null
+                            ? 'baxış sayı tapılmadı'
+                            : '${stats!.totalViews} baxış';
+                        final forumCount = stats?.forumCount == null
+                            ? 'forum sayı tapılmadı'
+                            : '${stats!.forumCount} mövzu';
+                        return Row(
+                          children: [
+                            GlobalText(
+                              textAlign: TextAlign.left,
+                              text: forumCount,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 14),
+                            GlobalText(
+                              textAlign: TextAlign.left,
+                              text: totalViews,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                          ],
+                        );
+                      }
+                      return SizedBox.shrink();
+                    },
                   ),
                 ],
               ),

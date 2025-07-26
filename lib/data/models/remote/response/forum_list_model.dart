@@ -1,120 +1,158 @@
 class ForumListModel {
-  final List<Thread>? threads;
   final int? count;
+  final String? next;
+  final String? previous;
+  final List<Forum>? results;
 
   ForumListModel({
-    this.threads,
     this.count,
+    this.next,
+    this.previous,
+    this.results,
   });
 
   factory ForumListModel.fromJson(Map<String, dynamic> json) => ForumListModel(
-        threads: json["threads"] == null
-            ? []
-            : List<Thread>.from(
-                json["threads"]!.map((x) => Thread.fromJson(x))),
         count: json["count"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "threads": threads == null
+        next: json["next"],
+        previous: json["previous"],
+        results: json["results"] == null
             ? []
-            : List<dynamic>.from(threads!.map((x) => x.toJson())),
+            : List<Forum>.from(
+                json["results"]!.map((x) => Forum.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
         "count": count,
+        "next": next,
+        "previous": previous,
+        "results": results == null
+            ? []
+            : List<dynamic>.from(results!.map((x) => x.toJson())),
       };
 }
 
-class Thread {
+class Forum {
   final int? id;
-  final String? subject;
-  final int? fid;
-  final int? uid;
-  final String? author;
-  final int? views;
-  final int? replies;
-  final bool? closed;
-  final bool? sticky;
-  final int? createdAt;
-  final Post? post;
+  final User? user;
+  final Category? category;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final String? slug;
+  final String? text;
+  final int? viewCount;
+  final int? likes;
 
-  Thread({
+  Forum({
     this.id,
-    this.subject,
-    this.fid,
-    this.uid,
-    this.author,
-    this.views,
-    this.replies,
-    this.closed,
-    this.sticky,
+    this.user,
+    this.category,
     this.createdAt,
-    this.post,
+    this.updatedAt,
+    this.slug,
+    this.text,
+    this.viewCount,
+    this.likes,
   });
 
-  factory Thread.fromJson(Map<String, dynamic> json) => Thread(
+  factory Forum.fromJson(Map<String, dynamic> json) => Forum(
         id: json["id"],
-        subject: json["subject"],
-        fid: json["fid"],
-        uid: json["uid"],
-        author: json["author"],
-        views: json["views"],
-        replies: json["replies"],
-        closed: json["closed"],
-        sticky: json["sticky"],
-        createdAt: json["createdAt"],
-        post: json["post"] == null ? null : Post.fromJson(json["post"]),
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+        category: json["category"] == null
+            ? null
+            : Category.fromJson(json["category"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        slug: json["slug"],
+        text: json["text"],
+        viewCount: json["view_count"],
+        likes: json["likes"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "subject": subject,
-        "fid": fid,
-        "uid": uid,
-        "author": author,
-        "views": views,
-        "replies": replies,
-        "closed": closed,
-        "sticky": sticky,
-        "createdAt": createdAt,
-        "post": post?.toJson(),
+        "user": user?.toJson(),
+        "category": category?.toJson(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "slug": slug,
+        "text": text,
+        "view_count": viewCount,
+        "likes": likes,
       };
 }
 
-class Post {
+class Category {
   final int? id;
-  final int? tid;
-  final int? fid;
-  final int? uid;
-  final String? author;
-  final String? subject;
-  final String? message;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? order;
+  final String? name;
+  final bool? isActive;
 
-  Post({
+  Category({
     this.id,
-    this.tid,
-    this.fid,
-    this.uid,
-    this.author,
-    this.subject,
-    this.message,
+    this.createdAt,
+    this.updatedAt,
+    this.order,
+    this.name,
+    this.isActive,
   });
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json["id"],
-        tid: json["tid"],
-        fid: json["fid"],
-        uid: json["uid"],
-        author: json["author"],
-        subject: json["subject"],
-        message: json["message"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        order: json["order"],
+        name: json["name"],
+        isActive: json["is_active"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "tid": tid,
-        "fid": fid,
-        "uid": uid,
-        "author": author,
-        "subject": subject,
-        "message": message,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "order": order,
+        "name": name,
+        "is_active": isActive,
+      };
+}
+
+class User {
+  final int? id;
+  final String? fullName;
+  final String? email;
+  final String? image;
+  final bool? fromVideoDoktor;
+
+  User({
+    this.id,
+    this.fullName,
+    this.email,
+    this.image,
+    this.fromVideoDoktor,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json["id"],
+        fullName: json["full_name"],
+        email: json["email"],
+        image: json["image"],
+        fromVideoDoktor: json["from_video_doktor"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "full_name": fullName,
+        "email": email,
+        "image": image,
+        "from_video_doktor": fromVideoDoktor,
       };
 }

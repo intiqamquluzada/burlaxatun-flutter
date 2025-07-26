@@ -23,6 +23,7 @@ import '../../ui/screens/auth/login/login.dart';
 import '../../ui/screens/auth/sign_up/signup.dart';
 import '../../ui/screens/main/main_page.dart';
 import '../../ui/screens/main/views/daily_advise_page/advice_page.dart';
+import '../../ui/screens/main/views/forum_page/main_forum_page.dart/forum_page.dart';
 import '../../ui/screens/main/views/forum_page/new_forum_page/create_new_forum.dart';
 import '../../ui/screens/main/views/forum_page/secondary_forum_page/secondary_forum_page.dart';
 import '../../ui/screens/main/views/home_page/blog/article_details/article_details_page.dart';
@@ -318,10 +319,10 @@ class Routerapp {
           ),
           StatefulShellBranch(
             routes: [
-              // GoRoute(
-              //   path: '/main_forum',
-              //   builder: (context, state) => MainForumPage(),
-              // ),
+              GoRoute(
+                path: '/main_forum',
+                builder: (context, state) => MainForumPage(),
+              ),
               GoRoute(
                 path: '/secondary_forum',
                 builder: (context, state) {

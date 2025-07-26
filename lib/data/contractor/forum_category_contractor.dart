@@ -1,5 +1,5 @@
-import 'package:burla_xatun/data/models/remote/response/forum_category_response.dart';
+import 'package:burla_xatun/data/models/remote/response/forum_category_model.dart';
 
 abstract class ForumCategoryContractor {
-  Future<List<ForumCategoryResponse>> getForumCategory();
+  Future<List<ForumCategory>> getForumCategory();
 }

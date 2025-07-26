@@ -1,6 +1,14 @@
+import 'package:burla_xatun/cubits/forum_category/forum_category_cubit.dart';
+import 'package:burla_xatun/cubits/forum_category_stats/forum_category_stats_cubit.dart';
 import 'package:burla_xatun/cubits/forum_detail/forum_detail_cubit.dart';
+import 'package:burla_xatun/data/contractor/forum_category_contractor.dart';
+import 'package:burla_xatun/data/contractor/forum_category_stats_contract.dart';
 import 'package:burla_xatun/data/contractor/forum_detail_contract.dart';
+import 'package:burla_xatun/data/repository/forum_category_repository.dart';
+import 'package:burla_xatun/data/repository/forum_category_stats_repo.dart';
 import 'package:burla_xatun/data/repository/forum_detail_repo.dart';
+import 'package:burla_xatun/data/services/remote/forum_category_service.dart';
+import 'package:burla_xatun/data/services/remote/forum_category_stats_service.dart';
 import 'package:burla_xatun/data/services/remote/forum_detail_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -155,7 +163,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => MedicineService());
   locator.registerLazySingleton(() => UserUpdateService());
   locator.registerLazySingleton(() => MedicineCreateService());
-  // locator.registerLazySingleton(() => ForumCategoryService());
+  locator.registerLazySingleton(() => ForumCategoryService());
   locator.registerLazySingleton(() => DoctorsListService());
   locator.registerLazySingleton(() => DoctorDetailService());
   // locator.registerLazySingleton(() => ForumListService());
@@ -174,6 +182,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => RefreshTokenService());
   locator.registerLazySingleton(() => ForumListService());
   locator.registerLazySingleton(() => ForumDetailService());
+  locator.registerLazySingleton(() => ForumCategoryStatsService());
 
   // contractor
   locator.registerLazySingleton<LoginContractor>(
@@ -224,8 +233,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<MedicineCreateContractor>(
       () => MedicineCreateRepository(locator<MedicineCreateService>()));
 
-  // locator.registerLazySingleton<ForumCategoryContractor>(
-  //     () => ForumCategoryRepository(locator<ForumCategoryService>()));
+  locator.registerLazySingleton<ForumCategoryContractor>(
+      () => ForumCategoryRepository(locator<ForumCategoryService>()));
 
   // locator.registerLazySingleton<ForumCreateContractor>(
   // () => ForumCreateRepository(locator<ForumCreateService>()));
@@ -278,6 +287,9 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<ForumDetailContract>(
       () => ForumDetailRepo(locator<ForumDetailService>()));
 
+  locator.registerLazySingleton<ForumCategoryStatsContract>(
+      () => ForumCategoryStatsRepo(locator<ForumCategoryStatsService>()));
+
   // cubit
   locator.registerFactory(() => LoginCubit(locator()));
   locator.registerFactory(() => DailyRecCubit(locator()));
@@ -296,7 +308,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => UserUpdateCubit(locator()));
   locator.registerFactory(() => MedicineCreateCubit(locator()));
   locator.registerFactory(() => MedicinePatchCubit(locator()));
-  // locator.registerFactory(() => ForumCategoryCubit(locator()));
+  locator.registerFactory(() => ForumCategoryCubit(locator()));
   locator.registerFactory(() => DoctorsListCubit(locator()));
   locator.registerFactory(() => DoctorDetailCubit(locator()));
   // locator.registerFactory(() => ForumCommentsCubit(locator()));
@@ -327,5 +339,9 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(() => ForumListCubit(locator<ForumListContractor>()));
 
-    locator.registerFactory(() => ForumDetailCubit(locator<ForumDetailContract>()));
+  locator
+      .registerFactory(() => ForumDetailCubit(locator<ForumDetailContract>()));
+
+  locator.registerFactory(
+      () => ForumCategoryStatsCubit(locator<ForumCategoryStatsContract>()));
 }

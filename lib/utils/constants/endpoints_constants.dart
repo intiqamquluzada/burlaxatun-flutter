@@ -64,7 +64,8 @@ class EndpointsConstants {
   static const String myReservations = '$baseUrl/C/my-reservations/';
 
   // D
-  // static const forumCategory = "$baseUrl/D/forum-category-stats/";
+  static const forumCategory = "$baseUrl/D/forum-category-list/";
+  static const forumCategoryStats = "$baseUrl/D/forum-category-stats/";
   static const forumList = "$baseUrl/D/forum/videodoktor/threads/";
   static const postDetail = "$baseUrl/D/forum/videodoktor/post/";
   static const user = "$baseUrl/D/forum/videodoktor/user/";

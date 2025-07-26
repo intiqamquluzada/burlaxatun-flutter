@@ -20,10 +20,10 @@ class ForumDetailCubit extends Cubit<ForumDetailState> {
       emit(state.copyWith(forumDetailStatus: ForumDetailStatus.loading));
       final response = await forumDetailContract.getForumDetail(postId: postId);
       if (response.statusCode.isSuccess) {
-        final post = Post.fromJson(response.data);
+        // final post = Post.fromJson(response.data);
         emit(state.copyWith(
           forumDetailStatus: ForumDetailStatus.success,
-          post: post,
+          // post: post,
         ));
       } else {
         log('Error occured while getting forum detail');

@@ -34,7 +34,7 @@ class ForumCommentsPage extends StatelessWidget {
             return Text('network error');
           }
           if (state.forumDetailStatus == ForumDetailStatus.success) {
-            final post = state.post;
+            // final post = state.post;
             return CustomRefreshIndicator(
               onRefresh: () async {},
               child: Padding(
@@ -43,7 +43,7 @@ class ForumCommentsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        post?.subject ?? 'data not found',
+                        'ejijf',
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w800,
@@ -51,14 +51,14 @@ class ForumCommentsPage extends StatelessWidget {
                       ),
                       SizedBox(height: 30),
                       Text(
-                        'author: ${post?.author ?? 'data not found'}',
+                        'author:',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
                       Text(
-                        post?.message ?? 'data not found',
+                        'data noeededde found',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w400,

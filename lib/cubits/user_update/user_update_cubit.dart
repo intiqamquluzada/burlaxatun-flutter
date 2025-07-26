@@ -15,17 +15,18 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
 
   final UserUpdateContractor _contractor;
 
-  Future<void> updateUser(
-      {String? phoneNumber,
-      bool? onboardingDone,
-      bool? wantToBePregnant,
-      bool? wantToSeePeriod,
-      bool? isPregnant,
-      String? pregnantWeek,
-      bool? firstChild,
-      String? activeLanguage,
-      bool? enableNotifications,
-      File? image}) async {
+  Future<void> updateUser({
+    String? phoneNumber,
+    bool? onboardingDone,
+    bool? wantToBePregnant,
+    bool? wantToSeePeriod,
+    bool? isPregnant,
+    String? pregnantWeek,
+    bool? firstChild,
+    String? activeLanguage,
+    bool? enableNotifications,
+    File? image,
+  }) async {
     try {
       emit(state.copyWith(status: UserUpdateStatus.loading));
       log("User Update Loading");

@@ -4,10 +4,20 @@ import '../../../utils/constants/endpoints_constants.dart';
 import 'base_network_service.dart';
 
 class ForumListService {
-  Future<Response<dynamic>> getForumList({int? page}) async {
-    final url = EndpointsConstants.forumList;
+  Future<Response<dynamic>> getForumList({
+    int? categoryId,
+    String? url,
+  }) async {
+    String? url;
+    // url = nextPage ?? EndpointsConstants.forumList;
+    // String url = EndpointsConstants.forumList;
+    // final Map<String, dynamic> query = {
+    //   'page': page,
+    // };
+    url ??= EndpointsConstants.forumList;
+
     final Map<String, dynamic> query = {
-      'page': page,
+      'category': categoryId,
     };
 
     final response = await BaseNetwork.instance.getDio().get(

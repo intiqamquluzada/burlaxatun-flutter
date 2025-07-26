@@ -1,9 +1,10 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/data/contractor/forum_category_contractor.dart';
-import 'package:burla_xatun/data/models/remote/response/forum_category_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/contractor/forum_category_contractor.dart';
+import '../../data/models/remote/response/forum_category_model.dart';
 
 part 'forum_category_state.dart';
 
@@ -15,7 +16,6 @@ class ForumCategoryCubit extends Cubit<ForumCategoryState> {
   Future<void> getForumCategory() async {
     try {
       emit(ForumCategoryLoading());
-      log("Forum category loading");
       final response = await _categoryContractor.getForumCategory();
       emit(ForumCategorySuccess(response));
     } on DioException catch (e, s) {
@@ -26,4 +26,6 @@ class ForumCategoryCubit extends Cubit<ForumCategoryState> {
       log("Forum Category unknown error: $e", stackTrace: s);
     }
   }
+
+  
 }

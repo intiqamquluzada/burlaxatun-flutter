@@ -1,20 +1,18 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/forum_detail/forum_detail_cubit.dart';
-import 'package:burla_xatun/ui/screens/main/views/profil_page/initial_profile/widgets/delete_profile_button.dart';
-import 'package:burla_xatun/ui/widgets/global_button.dart';
-import 'package:burla_xatun/utils/constants/color_constants.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../cubits/forum_detail/forum_detail_cubit.dart';
 import '../../../../../../../cubits/forum_list/forum_list_cubit.dart';
 import '../../../../../../../data/models/remote/response/forum_list_model.dart';
+import '../../../../../../../utils/constants/color_constants.dart';
+import '../../../../../../../utils/di/locator.dart';
 import '../../../../../../widgets/custom_refresh_indicator.dart';
+import '../../../../../../widgets/global_button.dart';
 import '../../forum_comments/forum_comments_page.dart';
 import '../../widgets/forum_box.dart';
 import 'add_new_forum_button.dart';
-import 'secondary_forum_search_input.dart';
 
 class SecondaryForumPageCustomScroll extends StatefulWidget {
   const SecondaryForumPageCustomScroll({super.key});
@@ -82,7 +80,7 @@ class _SecondaryForumPageCustomScrollState
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: GlobalButton(
                     onPressed: () async {
-                      await forumListCubit.getForumList(isRefresh: true);
+                      await forumListCubit.getForumList(categoryid: 1);
                     },
                     buttonName: 'Yenidən cəhd et',
                     buttonColor: ColorConstants.primaryRedColor,
@@ -99,7 +97,7 @@ class _SecondaryForumPageCustomScrollState
             children: [
               CustomRefreshIndicator(
                 onRefresh: () async {
-                  await forumListCubit.getForumList(isRefresh: true);
+                  await forumListCubit.getForumList(categoryid: 1);
                 },
                 child: CustomScrollView(
                   controller: scrollController,
@@ -118,7 +116,7 @@ class _SecondaryForumPageCustomScrollState
                     //     child: SecondaryForumSearchInput(),
                     //   ),
                     // ),
-                    BlocSelector<ForumListCubit, ForumListState, List<Thread>>(
+                    BlocSelector<ForumListCubit, ForumListState, List<Forum>>(
                       selector: (state) {
                         return state.forumList ?? [];
                       },
@@ -131,26 +129,26 @@ class _SecondaryForumPageCustomScrollState
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 18),
                                 child: ForumBox(
-                                  forumId: 20,
-                                  authorName:
-                                      forumList[i].author ?? 'data not found',
-                                  forumTitle:
-                                      forumList[i].subject ?? 'data not found',
-                                  likeCount: 23,
-                                  viewCount: forumList[i]?.views.toString() ??
+                                  forumId: forumList[i].id ?? -1,
+                                  authorName: forumList[i].user?.fullName ??
                                       'data not found',
-                                  commentCount:
-                                      forumList?[i].replies.toString() ??
+                                  forumTitle:
+                                      forumList[i].text ?? 'data not found',
+                                  likeCount: 23,
+                                  viewCount:
+                                      forumList[i].viewCount.toString() ??
                                           'data not found',
+                                  commentCount: '10',
                                   onTap: () {
-                                    final postId = forumList[i].post?.id ?? 0;
+                                    final forumSlug = forumList[i].slug ?? '';
+
                                     Navigator.of(context, rootNavigator: true)
                                         .push(
                                       MaterialPageRoute(
                                         builder: (_) => BlocProvider(
                                           create: (context) =>
                                               locator<ForumDetailCubit>()
-                                                ..getForumDetail(postId),
+                                                ..getForumDetail(2),
                                           child: ForumCommentsPage(),
                                         ),
                                       ),

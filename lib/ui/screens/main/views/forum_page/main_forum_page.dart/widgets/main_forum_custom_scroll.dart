@@ -1,11 +1,12 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/forum_category/forum_category_cubit.dart';
-import 'package:burla_xatun/ui/widgets/custom_circular_progress_indicator.dart';
+import 'package:burla_xatun/cubits/forum_category_stats/forum_category_stats_cubit.dart';
+import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../../../cubits/forum_category/forum_category_cubit.dart';
 import 'main_forum_banner.dart';
 import 'main_forum_title_box.dart';
 
@@ -18,7 +19,7 @@ class MainForumCustomScroll extends StatelessWidget {
       builder: (_, state) {
         if (state is ForumCategoryLoading) {
           return Center(
-            child: CustomCircularProgressIndicator(),
+            child: CircularProgressIndicator.adaptive(),
           );
         }
         if (state is ForumCategoryError) {
@@ -50,12 +51,14 @@ class MainForumCustomScroll extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 24) +
                             EdgeInsets.symmetric(horizontal: 15),
-                        child: MainForumTitleBox(
-                          title: data[i].name ?? "",
-                          topicCount: data[i].forumCount,
-                          messageCount: data[i].totalViews ?? 0,
-                          onTap: () => context.push(
-                            '/secondary_forum?categoryId=${data[i].id}',
+                        child: BlocProvider(
+                          create: (context) =>
+                              locator<ForumCategoryStatsCubit>()
+                                ..getCategoryStatistics(),
+                          child: MainForumTitleBox(
+                            title: data[i].name ?? 'Məlumat tapılmadı',
+                            onTap: () => context.push('/secondary_forum'),
+                            categoryIndex: i,
                           ),
                         ),
                       );

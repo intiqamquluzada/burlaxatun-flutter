@@ -7,14 +7,14 @@ class ForumListState extends Equatable {
   });
 
   final ForumListStatus? forumListStatus;
-  final List<Thread>? forumList;
+  final List<Forum>? forumList;
 
   @override
   List<Object?> get props => [forumListStatus, forumList];
 
   ForumListState copyWith({
     ForumListStatus? forumListStatus,
-    List<Thread>? forumList,
+    List<Forum>? forumList,
   }) {
     return ForumListState(
       forumListStatus: forumListStatus ?? this.forumListStatus,

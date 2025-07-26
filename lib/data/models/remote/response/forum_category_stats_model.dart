@@ -1,4 +1,4 @@
-class ForumCategoryResponse {
+class ForumCategoryStatsModel {
   final int? id;
   final int? forumCount;
   final int? totalViews;
@@ -8,7 +8,7 @@ class ForumCategoryResponse {
   final String? name;
   final bool? isActive;
 
-  ForumCategoryResponse({
+  ForumCategoryStatsModel({
     this.id,
     this.forumCount,
     this.totalViews,
@@ -19,8 +19,8 @@ class ForumCategoryResponse {
     this.isActive,
   });
 
-  factory ForumCategoryResponse.fromJson(Map<String, dynamic> json) =>
-      ForumCategoryResponse(
+  factory ForumCategoryStatsModel.fromJson(Map<String, dynamic> json) =>
+      ForumCategoryStatsModel(
         id: json["id"],
         forumCount: json["forum_count"],
         totalViews: json["total_views"],

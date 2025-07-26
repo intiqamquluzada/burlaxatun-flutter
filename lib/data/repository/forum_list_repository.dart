@@ -8,7 +8,13 @@ class ForumListRepository implements ForumListContractor {
 
   final ForumListService _forumListService;
   @override
-  Future<Response<dynamic>> getForumList({int? page}) {
-    return _forumListService.getForumList(page: page);
+  Future<Response<dynamic>> getForumList({
+    int? categoryId,
+    String? url,
+  }) {
+    return _forumListService.getForumList(
+      categoryId: categoryId,
+      url: url,
+    );
   }
 }

@@ -296,7 +296,7 @@ class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
                               dragStartBehavior: DragStartBehavior.down,
                               value: value,
                               onChanged: (v) async {
-                                await userUpdateCubit.updateUser(isPregnant: v);
+                                await userUpdateCubit.updateUser(isPregnant: !v);
                                 isBornNotifier.value = v;
                               },
                             );
