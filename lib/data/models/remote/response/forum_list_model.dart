@@ -5,7 +5,7 @@ class ForumListModel {
   final List<Forum>? results;
 
   ForumListModel({
-    this.count,
+    this.count, 
     this.next,
     this.previous,
     this.results,

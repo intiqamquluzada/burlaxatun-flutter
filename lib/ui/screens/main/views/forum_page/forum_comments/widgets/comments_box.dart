@@ -1,12 +1,12 @@
 // import 'package:flutter/material.dart';
-//
+
 // import 'single_comment_box.dart';
-//
+
 // class CommentsBox extends StatelessWidget {
 //   const CommentsBox({
 //     super.key,
 //   });
-//
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return DecoratedSliver(
@@ -20,7 +20,7 @@
 //           delegate: SliverChildBuilderDelegate(
 //             childCount: 4,
 //             (_, i) {
-//               return SingleCommentBox(i: i);
+//               return SingleCommentBox(index: i);
 //             },
 //           ),
 //         ),
@@ -59,38 +59,29 @@ import 'package:burla_xatun/ui/screens/main/views/forum_page/forum_comments/widg
 import 'package:flutter/material.dart';
 
 class CommentsBox extends StatelessWidget {
-  // final int forumId;
-  // final List<Result> comments;
-
   const CommentsBox({
     super.key,
-    // required this.forumId,
-    // required this.comments,
   });
 
-  @override
+  @override 
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: const EdgeInsets.all(2),
-      sliver: SliverToBoxAdapter(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(width: 2, color: Color(0xffE4E7EC)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemCount: 10,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, i) {
-                return SingleCommentBox(
-                  // comment: comments[i],
-                  index: i,
-                );
-              },
-            ),
+    return SliverToBoxAdapter(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(width: 2, color: Color(0xffE4E7EC)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(2),
+          child: ListView.builder(
+            itemCount: 10,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, i) {
+              return SingleCommentBox(
+                index: i,
+              );
+            },
           ),
         ),
       ),

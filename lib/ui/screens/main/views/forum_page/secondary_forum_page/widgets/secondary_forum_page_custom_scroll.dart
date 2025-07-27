@@ -13,9 +13,15 @@ import '../../../../../../widgets/global_button.dart';
 import '../../forum_comments/forum_comments_page.dart';
 import '../../widgets/forum_box.dart';
 import 'add_new_forum_button.dart';
+import 'forum_title.dart';
 
 class SecondaryForumPageCustomScroll extends StatefulWidget {
-  const SecondaryForumPageCustomScroll({super.key});
+  const SecondaryForumPageCustomScroll({
+    super.key,
+    required this.categoryId,
+  });
+
+  final int categoryId;
 
   @override
   State<SecondaryForumPageCustomScroll> createState() =>
@@ -39,7 +45,7 @@ class _SecondaryForumPageCustomScrollState
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        await forumListCubit.getForumList();
+        await forumListCubit.getForumList(categoryid: widget.categoryId);
       }
     });
   }
@@ -80,7 +86,10 @@ class _SecondaryForumPageCustomScrollState
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: GlobalButton(
                     onPressed: () async {
-                      await forumListCubit.getForumList(categoryid: 1);
+                      await forumListCubit.getForumList(
+                        isRefresh: true,
+                        categoryid: widget.categoryId,
+                      );
                     },
                     buttonName: 'Yenidən cəhd et',
                     buttonColor: ColorConstants.primaryRedColor,
@@ -92,24 +101,29 @@ class _SecondaryForumPageCustomScrollState
           );
         }
         if (state.forumListStatus == ForumListStatus.success) {
+          final categoryName = state.forumList?.first.category?.name ??
+              'Category name not found';
           return Stack(
             alignment: Alignment.bottomRight,
             children: [
               CustomRefreshIndicator(
                 onRefresh: () async {
-                  await forumListCubit.getForumList(categoryid: 1);
+                  await forumListCubit.getForumList(
+                    isRefresh: true,
+                    categoryid: widget.categoryId,
+                  );
                 },
                 child: CustomScrollView(
                   controller: scrollController,
                   slivers: [
-                    // SliverPadding(
-                    //   padding: const EdgeInsets.only(top: 22, bottom: 18),
-                    //   sliver: SliverToBoxAdapter(
-                    //     child: ForumTitle(
-                    //       title: 'deidoejio',
-                    //     ),
-                    //   ),
-                    // ),
+                    SliverPadding(
+                      padding: const EdgeInsets.only(top: 22, bottom: 18),
+                      sliver: SliverToBoxAdapter(
+                        child: ForumTitle(
+                          title: categoryName,
+                        ),
+                      ),
+                    ),
                     // SliverPadding(
                     //   padding: const EdgeInsets.only(bottom: 18),
                     //   sliver: SliverToBoxAdapter(
@@ -135,20 +149,22 @@ class _SecondaryForumPageCustomScrollState
                                   forumTitle:
                                       forumList[i].text ?? 'data not found',
                                   likeCount: 23,
-                                  viewCount:
-                                      forumList[i].viewCount.toString() ??
-                                          'data not found',
+                                  viewCount: forumList[i].viewCount.toString(),
                                   commentCount: '10',
                                   onTap: () {
-                                    final forumSlug = forumList[i].slug ?? '';
+                                    // final forumSlug = forumList[i].slug ?? '';
 
                                     Navigator.of(context, rootNavigator: true)
                                         .push(
                                       MaterialPageRoute(
-                                        builder: (_) => BlocProvider(
-                                          create: (context) =>
-                                              locator<ForumDetailCubit>()
-                                                ..getForumDetail(2),
+                                        builder: (_) => MultiBlocProvider(
+                                          providers: [
+                                            BlocProvider(
+                                              create: (context) =>
+                                                  locator<ForumDetailCubit>()
+                                                    ..getForumDetail(2),
+                                            ),
+                                          ],
                                           child: ForumCommentsPage(),
                                         ),
                                       ),
@@ -190,7 +206,7 @@ class _SecondaryForumPageCustomScrollState
               ),
               Positioned(
                 bottom: 24,
-                child: AddNewForumButton(),
+                child: AddNewForumButton(categoryId: widget.categoryId),
               ),
             ],
           );

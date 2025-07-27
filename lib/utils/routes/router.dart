@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/forum_list/forum_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -326,7 +327,12 @@ class Routerapp {
               GoRoute(
                 path: '/secondary_forum',
                 builder: (context, state) {
-                  return SecondaryForumPage();
+                  final categoryId = state.extra as int;
+                  return BlocProvider(
+                    create: (context) => locator<ForumListCubit>()
+                      ..getForumList(categoryid: categoryId),
+                    child: SecondaryForumPage(categoryId: categoryId),
+                  );
                 },
               ),
               GoRoute(

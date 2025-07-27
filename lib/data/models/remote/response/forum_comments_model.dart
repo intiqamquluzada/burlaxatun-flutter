@@ -1,27 +1,25 @@
-import 'package:equatable/equatable.dart';
-
-class ForumCommentsResponse extends Equatable {
+class ForumCommentsModel {
   final int? count;
-  final dynamic next;
-  final dynamic previous;
-  final List<Result>? results;
+  final String? next;
+  final String? previous;
+  final List<Replyes>? results;
 
-  const ForumCommentsResponse({
+  ForumCommentsModel({
     this.count,
     this.next,
     this.previous,
     this.results,
   });
 
-  factory ForumCommentsResponse.fromJson(Map<String, dynamic> json) =>
-      ForumCommentsResponse(
+  factory ForumCommentsModel.fromJson(Map<String, dynamic> json) =>
+      ForumCommentsModel(
         count: json["count"],
         next: json["next"],
         previous: json["previous"],
         results: json["results"] == null
             ? []
-            : List<Result>.from(
-                json["results"]!.map((x) => Result.fromJson(x))),
+            : List<Replyes>.from(
+                json["results"]!.map((x) => Replyes.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,28 +30,20 @@ class ForumCommentsResponse extends Equatable {
             ? []
             : List<dynamic>.from(results!.map((x) => x.toJson())),
       };
-
-  @override
-  List<Object?> get props => [
-        count,
-        next,
-        previous,
-        results,
-      ];
 }
 
-class Result extends Equatable {
+class Replyes {
   final int? id;
   final String? user;
   final int? forum;
   final String? text;
-  final dynamic parent;
+  final int? parent;
   final DateTime? createdAt;
-  final List<dynamic>? replies;
+  final List<Replyes>? replies;
   final int? likeCount;
   final int? dislikeCount;
 
-  const Result({
+  Replyes({
     this.id,
     this.user,
     this.forum,
@@ -65,7 +55,7 @@ class Result extends Equatable {
     this.dislikeCount,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory Replyes.fromJson(Map<String, dynamic> json) => Replyes(
         id: json["id"],
         user: json["user"],
         forum: json["forum"],
@@ -76,7 +66,8 @@ class Result extends Equatable {
             : DateTime.parse(json["created_at"]),
         replies: json["replies"] == null
             ? []
-            : List<dynamic>.from(json["replies"]!.map((x) => x)),
+            : List<Replyes>.from(
+                json["replies"]!.map((x) => Replyes.fromJson(x))),
         likeCount: json["like_count"],
         dislikeCount: json["dislike_count"],
       );
@@ -88,38 +79,10 @@ class Result extends Equatable {
         "text": text,
         "parent": parent,
         "created_at": createdAt?.toIso8601String(),
-        "replies":
-            replies == null ? [] : List<dynamic>.from(replies!.map((x) => x)),
+        "replies": replies == null
+            ? []
+            : List<dynamic>.from(replies!.map((x) => x.toJson())),
         "like_count": likeCount,
         "dislike_count": dislikeCount,
       };
-
-  @override
-  List<Object?> get props => [
-        id,
-        user,
-        forum,
-        text,
-        parent,
-        createdAt,
-        replies,
-        likeCount,
-        dislikeCount,
-      ];
-}
-
-/// Returns comments count for every forum
-extension ForumCommentsCountExtension on ForumCommentsResponse {
-  Map<int, int> get forumCommentCounts {
-    final counts = <int, int>{};
-
-    for (final result in results ?? []) {
-      if (result.forum != null) {
-        final id = result.forum!;
-        counts[id] = (counts[id] ?? 0) + 1;
-      }
-    }
-
-    return counts;
-  }
 }

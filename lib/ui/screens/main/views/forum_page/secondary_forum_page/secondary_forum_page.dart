@@ -5,7 +5,12 @@ import '../../../../../widgets/global_appbar.dart';
 import 'widgets/secondary_forum_page_custom_scroll.dart';
 
 class SecondaryForumPage extends StatelessWidget {
-  const SecondaryForumPage({super.key});
+  const SecondaryForumPage({
+    super.key,
+    this.categoryId,
+  });
+
+  final int? categoryId;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class SecondaryForumPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: SecondaryForumPageCustomScroll(),
+        child: SecondaryForumPageCustomScroll(categoryId: categoryId!),
       ),
     );
   }

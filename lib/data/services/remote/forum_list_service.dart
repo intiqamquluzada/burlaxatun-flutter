@@ -8,13 +8,20 @@ class ForumListService {
     int? categoryId,
     String? url,
   }) async {
-    String? url;
+    // String? url;
     // url = nextPage ?? EndpointsConstants.forumList;
     // String url = EndpointsConstants.forumList;
     // final Map<String, dynamic> query = {
     //   'page': page,
     // };
+
     url ??= EndpointsConstants.forumList;
+
+    // if (url == null) {
+    //   url = EndpointsConstants.forumList;
+    // } else {
+
+    // }
 
     final Map<String, dynamic> query = {
       'category': categoryId,

@@ -66,7 +66,8 @@ class EndpointsConstants {
   // D
   static const forumCategory = "$baseUrl/D/forum-category-list/";
   static const forumCategoryStats = "$baseUrl/D/forum-category-stats/";
-  static const forumList = "$baseUrl/D/forum/videodoktor/threads/";
+  static const forumList = "$baseUrl/D/forum-list/";
+
   static const postDetail = "$baseUrl/D/forum/videodoktor/post/";
   static const user = "$baseUrl/D/forum/videodoktor/user/";
   // static const forumComments = '$baseUrl/D/comments/';

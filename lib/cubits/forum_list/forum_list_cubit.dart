@@ -13,17 +13,37 @@ enum ForumListStatus { initial, loading, success, error, netwokrError }
 
 class ForumListCubit extends Cubit<ForumListState> {
   ForumListCubit(this.forumListContractor) : super(ForumListState());
- 
-  final ForumListContractor forumListContractor;
 
-  Future<void> getForumList({int? categoryid, bool? isRefresh}) async {
+  final ForumListContractor forumListContractor;
+  List<Forum> forumList = [];
+  String? url = '';
+
+  Future<void> getForumList({int? categoryid, bool isRefresh = false}) async {
+    if (isRefresh) {
+      forumList = [];
+      url = isRefresh ? '' : url;
+    }
+    if (url == null || state.forumListStatus == ForumListStatus.loading) {
+      return;
+    }
     try {
       emit(state.copyWith(forumListStatus: ForumListStatus.loading));
-      final response =
-          await forumListContractor.getForumList(categoryId: categoryid);
+      final response = await forumListContractor.getForumList(
+        categoryId: categoryid,
+        url: url!.isEmpty ? null : url,
+      );
       if (!response.statusCode.isSuccess) return;
-      final data = forumListContractor.getForumList(categoryId: categoryid);
-      emit(state.copyWith(forumListStatus: ForumListStatus.success));
+      final data = ForumListModel.fromJson(response.data);
+
+      url = data.next;
+
+      data.results?.forEach((e) {
+        forumList.add(e);
+      });
+      emit(state.copyWith(
+        forumListStatus: ForumListStatus.success,
+        forumList: List.from(forumList),
+      ));
     } catch (e, s) {
       emit(state.copyWith(forumListStatus: ForumListStatus.error));
       log('Error occured while getting forum list by category id: $e',

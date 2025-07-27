@@ -1,14 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/global_text.dart';
 
 class CommentDatas extends StatelessWidget {
-  // final Result comment;
-
   const CommentDatas({
     super.key,
-    // required this.comment,
   });
 
   @override
@@ -16,11 +14,25 @@ class CommentDatas extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Image.asset(
-          'assets/png/comment_user_pic.png',
-          width: 44,
-          height: 44,
+        CachedNetworkImage(
+          imageUrl: '',
+          errorWidget: (context, url, error) {
+            return Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.black12,
+              ),
+              child: Icon(Icons.person),
+            );
+          },
         ),
+        // Image.asset(
+        //   'assets/png/comment_user_pic.png',
+        //   width: 44,
+        //   height: 44,
+        // ),
         SizedBox(width: 10),
         Expanded(
           child: Column(

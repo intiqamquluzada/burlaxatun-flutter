@@ -8,7 +8,6 @@ import 'package:burla_xatun/cubits/daily_rec_detail/daily_rec_detail_cubit.dart'
 import 'package:burla_xatun/cubits/doctors_list/doctors_list_cubit.dart';
 import 'package:burla_xatun/cubits/faqs_cubit/faqs_cubit.dart';
 import 'package:burla_xatun/cubits/forum_category/forum_category_cubit.dart';
-import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
 import 'package:burla_xatun/cubits/forum_create/forum_create_cubit.dart';
 import 'package:burla_xatun/cubits/forum_list/forum_list_cubit.dart';
 import 'package:burla_xatun/cubits/medicine/medicine_cubit.dart';
@@ -108,10 +107,10 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               locator<ForumCategoryCubit>()..getForumCategory(),
         ),
-        BlocProvider<ForumCommentsCubit>(
-          create: (context) =>
-              locator<ForumCommentsCubit>()..getForumComments(),
-        ),
+        // BlocProvider<ForumCommentsCubit>(
+        //   create: (context) =>
+        //       locator<ForumCommentsCubit>()..getForumComments(),
+        // ),
         BlocProvider<ForumCreateCubit>(
           create: (context) => locator<ForumCreateCubit>(),
         ),
@@ -131,10 +130,6 @@ class MyApp extends StatelessWidget {
           create: (context) => UltrasoundCubit(locator<UltrasoundContract>()),
           child: Container(),
         ),
-        BlocProvider(
-          create: (context) => locator<ForumListCubit>()..getForumList(),
-          child: SecondaryForumPage(),
-        )
       ],
       child: BlocBuilder<LanguageCubit, Locale>(
         builder: (context, state) {
