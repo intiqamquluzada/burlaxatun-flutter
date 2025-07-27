@@ -1,3 +1,4 @@
+import 'package:burla_xatun/data/models/remote/response/forum_comments_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -7,10 +8,15 @@ import '../../../../../../widgets/global_text.dart';
 class CommentDatas extends StatelessWidget {
   const CommentDatas({
     super.key,
+    this.comment,
   });
+
+  final Comments? comment;
 
   @override
   Widget build(BuildContext context) {
+    final userName = comment?.user ?? 'user';
+    final text = comment?.text ?? 'comment text not found';
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -44,7 +50,7 @@ class CommentDatas extends StatelessWidget {
                 children: [
                   Flexible(
                     child: GlobalText(
-                      text: '@nihad',
+                      text: '@$userName',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,
@@ -52,7 +58,7 @@ class CommentDatas extends StatelessWidget {
                   ),
                   Flexible(
                     child: GlobalText(
-                      text: 'efe',
+                      text: '1 minute ago',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,
@@ -64,7 +70,7 @@ class CommentDatas extends StatelessWidget {
               GlobalText(
                 height: 1.4,
                 textAlign: TextAlign.left,
-                text: 'efkfomekomfo',
+                text: text,
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,

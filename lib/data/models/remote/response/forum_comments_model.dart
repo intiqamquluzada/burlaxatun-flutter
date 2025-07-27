@@ -2,7 +2,7 @@ class ForumCommentsModel {
   final int? count;
   final String? next;
   final String? previous;
-  final List<Replyes>? results;
+  final List<Comments>? results;
 
   ForumCommentsModel({
     this.count,
@@ -18,8 +18,8 @@ class ForumCommentsModel {
         previous: json["previous"],
         results: json["results"] == null
             ? []
-            : List<Replyes>.from(
-                json["results"]!.map((x) => Replyes.fromJson(x))),
+            : List<Comments>.from(
+                json["results"]!.map((x) => Comments.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,18 +32,18 @@ class ForumCommentsModel {
       };
 }
 
-class Replyes {
+class Comments {
   final int? id;
   final String? user;
   final int? forum;
   final String? text;
   final int? parent;
   final DateTime? createdAt;
-  final List<Replyes>? replies;
+  final List<Comments>? replies;
   final int? likeCount;
   final int? dislikeCount;
 
-  Replyes({
+  Comments({
     this.id,
     this.user,
     this.forum,
@@ -55,7 +55,7 @@ class Replyes {
     this.dislikeCount,
   });
 
-  factory Replyes.fromJson(Map<String, dynamic> json) => Replyes(
+  factory Comments.fromJson(Map<String, dynamic> json) => Comments(
         id: json["id"],
         user: json["user"],
         forum: json["forum"],
@@ -66,8 +66,8 @@ class Replyes {
             : DateTime.parse(json["created_at"]),
         replies: json["replies"] == null
             ? []
-            : List<Replyes>.from(
-                json["replies"]!.map((x) => Replyes.fromJson(x))),
+            : List<Comments>.from(
+                json["replies"]!.map((x) => Comments.fromJson(x))),
         likeCount: json["like_count"],
         dislikeCount: json["dislike_count"],
       );

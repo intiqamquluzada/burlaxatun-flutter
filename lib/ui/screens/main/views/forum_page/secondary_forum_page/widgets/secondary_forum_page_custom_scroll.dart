@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -152,7 +153,8 @@ class _SecondaryForumPageCustomScrollState
                                   viewCount: forumList[i].viewCount.toString(),
                                   commentCount: '10',
                                   onTap: () {
-                                    // final forumSlug = forumList[i].slug ?? '';
+                                    final forumSlug = forumList[i].slug ?? '';
+                                    final forumId = forumList[i].id ?? -1;
 
                                     Navigator.of(context, rootNavigator: true)
                                         .push(
@@ -162,10 +164,19 @@ class _SecondaryForumPageCustomScrollState
                                             BlocProvider(
                                               create: (context) =>
                                                   locator<ForumDetailCubit>()
-                                                    ..getForumDetail(2),
+                                                    ..getForumDetail(forumSlug),
+                                            ),
+                                            BlocProvider(
+                                              create: (context) =>
+                                                  locator<ForumCommentsCubit>()
+                                                    ..getForumComments(
+                                                      forumId: forumId,
+                                                    ),
                                             ),
                                           ],
-                                          child: ForumCommentsPage(),
+                                          child: ForumCommentsPage(
+                                            forumId: forumId,
+                                          ),
                                         ),
                                       ),
                                     );

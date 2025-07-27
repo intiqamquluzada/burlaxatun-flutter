@@ -67,10 +67,10 @@ class EndpointsConstants {
   static const forumCategory = "$baseUrl/D/forum-category-list/";
   static const forumCategoryStats = "$baseUrl/D/forum-category-stats/";
   static const forumList = "$baseUrl/D/forum-list/";
+  static const forumDetail = "$baseUrl/D/forum-detail";
+  static const forumComments = "$baseUrl/D/forum-comment";
 
-  static const postDetail = "$baseUrl/D/forum/videodoktor/post/";
   static const user = "$baseUrl/D/forum/videodoktor/user/";
-  // static const forumComments = '$baseUrl/D/comments/';
   // static const forumCreate = '$baseUrl/D/forum-create/';
 
   static const String doctorsList = '$baseUrl/C/doctors-list/';

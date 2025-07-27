@@ -20,7 +20,7 @@ class ForumListCubit extends Cubit<ForumListState> {
 
   Future<void> getForumList({int? categoryid, bool isRefresh = false}) async {
     if (isRefresh) {
-      forumList = [];
+      forumList = []; 
       url = isRefresh ? '' : url;
     }
     if (url == null || state.forumListStatus == ForumListStatus.loading) {

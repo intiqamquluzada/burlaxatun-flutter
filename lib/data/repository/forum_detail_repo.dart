@@ -8,7 +8,7 @@ class ForumDetailRepo implements ForumDetailContract {
   final ForumDetailService forumDetailService;
 
   @override
-  Future<Response<dynamic>> getForumDetail({required int postId}) {
-    return forumDetailService.getForumDetail(postId: postId);
+  Future<Response<dynamic>> getForumDetail({required String forumSlug}) {
+    return forumDetailService.getForumDetail(forumSlug: forumSlug);
   }
 }

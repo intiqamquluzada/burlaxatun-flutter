@@ -1,10 +1,11 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/data/contractor/forum_detail_contract.dart';
 import 'package:burla_xatun/data/models/remote/response/forum_list_model.dart';
-import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/contractor/forum_detail_contract.dart';
+import '../../utils/extensions/statuscode_extension.dart';
 
 part 'forum_detail_state.dart';
 
@@ -15,15 +16,17 @@ class ForumDetailCubit extends Cubit<ForumDetailState> {
 
   final ForumDetailContract forumDetailContract;
 
-  Future<void> getForumDetail(int postId) async {
+  Future<void> getForumDetail(String forumSlug) async {
     try {
       emit(state.copyWith(forumDetailStatus: ForumDetailStatus.loading));
-      final response = await forumDetailContract.getForumDetail(postId: postId);
+      final response = await forumDetailContract.getForumDetail(
+        forumSlug: forumSlug,
+      );
       if (response.statusCode.isSuccess) {
-        // final post = Post.fromJson(response.data);
+        final forumDetail = Forum.fromJson(response.data);
         emit(state.copyWith(
           forumDetailStatus: ForumDetailStatus.success,
-          // post: post,
+          forumDetail: forumDetail,
         ));
       } else {
         log('Error occured while getting forum detail');

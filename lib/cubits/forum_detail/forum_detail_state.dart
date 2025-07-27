@@ -3,25 +3,25 @@ part of 'forum_detail_cubit.dart';
 class ForumDetailState extends Equatable {
   const ForumDetailState({
     this.forumDetailStatus = ForumDetailStatus.initial,
-    // this.post,
+    this.forumDetail,
   });
 
   final ForumDetailStatus? forumDetailStatus;
-  // final Post? post;
+  final Forum? forumDetail;
 
   @override
   List<Object?> get props => [
         forumDetailStatus,
-        // post,
+        forumDetail,
       ];
 
   ForumDetailState copyWith({
     ForumDetailStatus? forumDetailStatus,
-    // Post? post,
+    Forum? forumDetail,
   }) {
     return ForumDetailState(
       forumDetailStatus: forumDetailStatus ?? this.forumDetailStatus,
-      // post: post ?? this.post,
+      forumDetail: forumDetail ?? this.forumDetail,
     );
   }
 }
