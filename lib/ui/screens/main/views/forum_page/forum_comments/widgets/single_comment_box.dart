@@ -119,19 +119,6 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
             return SizedBox.shrink();
           },
         ),
-        // BlocConsumer<CreateCommentCubit, CreateCommentState>(
-        //   listener: (context, state) {
-        //     if (state.createCommentStatus == CreateCommentStatus.replySuccess) {
-        //       sendedCommentList.value.insert(0, state.sendedComment!);
-        //     }
-        //   },
-        //   builder: (context, state) {
-        //     return SendedReplyBox(
-        //       parentId: widget.comment.id!,
-        //       sendedComments: sendedCommentList,
-        //     );
-        //   },
-        // ),
         SendedReplyBox(
           parentId: widget.comment.id!,
           sendedComments: sendedCommentList,
