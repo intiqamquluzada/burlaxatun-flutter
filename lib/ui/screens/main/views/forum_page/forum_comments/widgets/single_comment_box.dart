@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../cubits/create_comment/create_comment_cubit.dart';
 import '../../../../../../../cubits/main_cubit/main_state.dart';
 import '../../../../../../../cubits/main_cubit/mainn_cubit.dart';
 import '../../../../../../../data/models/remote/response/forum_comments_model.dart';
@@ -8,6 +9,7 @@ import '../../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../../utils/extensions/context_extensions.dart';
 import 'comment_datas.dart';
 import 'reply_box.dart';
+import 'sended_reply_box.dart';
 
 class SingleCommentBox extends StatefulWidget {
   final int index;
@@ -27,9 +29,13 @@ class SingleCommentBox extends StatefulWidget {
 class _SingleCommentBoxState extends State<SingleCommentBox>
     with AutomaticKeepAliveClientMixin {
   late ValueNotifier<bool> hasReplies;
+  late CreateCommentCubit createCommentCubit;
+  late ValueNotifier<List<Comments>> sendedCommentList;
   @override
   void initState() {
     hasReplies = ValueNotifier<bool>(widget.comment.replies!.isEmpty);
+    createCommentCubit = context.read<CreateCommentCubit>();
+    sendedCommentList = ValueNotifier<List<Comments>>([]);
     super.initState();
   }
 
@@ -45,7 +51,13 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
             double fromTop = details.globalPosition.dy > 160
                 ? details.globalPosition.dy - 160
                 : 10;
-            mainCubit.showMenuDialogAndEmojis(context, fromTop);
+
+            mainCubit.showMenuDialogAndEmojis(
+              context,
+              fromTop,
+              widget.comment,
+              createCommentCubit,
+            );
             mainCubit.updateCommentBoxIndex(widget.index);
           },
           child: BlocBuilder<MainnCubit, MainInitial>(
@@ -91,6 +103,38 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
               );
             },
           ),
+        ),
+        BlocSelector<CreateCommentCubit, CreateCommentState,
+            CreateCommentStatus>(
+          selector: (state) {
+            return state.createCommentStatus;
+          },
+          builder: (context, state) {
+            if (state == CreateCommentStatus.replyLoading) {
+              return widget.comment.id! ==
+                      createCommentCubit.selectedComment.value?.id
+                  ? CircularProgressIndicator.adaptive()
+                  : SizedBox.shrink();
+            }
+            return SizedBox.shrink();
+          },
+        ),
+        // BlocConsumer<CreateCommentCubit, CreateCommentState>(
+        //   listener: (context, state) {
+        //     if (state.createCommentStatus == CreateCommentStatus.replySuccess) {
+        //       sendedCommentList.value.insert(0, state.sendedComment!);
+        //     }
+        //   },
+        //   builder: (context, state) {
+        //     return SendedReplyBox(
+        //       parentId: widget.comment.id!,
+        //       sendedComments: sendedCommentList,
+        //     );
+        //   },
+        // ),
+        SendedReplyBox(
+          parentId: widget.comment.id!,
+          sendedComments: sendedCommentList,
         ),
         ValueListenableBuilder(
           valueListenable: hasReplies,

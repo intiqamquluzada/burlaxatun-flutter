@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/ui/widgets/global_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +28,6 @@ class ForumCommentsCustomScroll extends StatelessWidget {
           );
         }
         if (state.forumCommentStatus == ForumCommentStatus.success) {
-          // final commentList = state.comments ?? [];
           return SliverPadding(
             padding: const EdgeInsets.only(bottom: 0),
             sliver: BlocSelector<ForumCommentsCubit, ForumCommentsState,
@@ -38,7 +38,15 @@ class ForumCommentsCustomScroll extends StatelessWidget {
               builder: (context, commentList) {
                 log('comment count: ${commentList!.length}');
 
-                return CommentsBox(commentList: commentList);
+                return commentList.isEmpty
+                    ? SliverToBoxAdapter(
+                        child: Center(
+                          child: SizedBox(
+                            child: GlobalText(text: 'İlk şərhi yaz'),
+                          ),
+                        ),
+                      )
+                    : CommentsBox(commentList: commentList);
               },
             ),
           );

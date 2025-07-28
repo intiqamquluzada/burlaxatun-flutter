@@ -43,18 +43,25 @@
 //   }
 // }
 
+import 'package:burla_xatun/cubits/create_comment/create_comment_cubit.dart';
 import 'package:burla_xatun/data/models/remote/response/forum_comments_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'single_comment_box.dart';
 
-class CommentsBox extends StatelessWidget {
+class CommentsBox extends StatefulWidget {
   const CommentsBox({
     super.key,
     required this.commentList,
   });
   final List<Comments> commentList;
 
+  @override
+  State<CommentsBox> createState() => _CommentsBoxState();
+}
+
+class _CommentsBoxState extends State<CommentsBox> {
   @override
   Widget build(BuildContext context) {
     return DecoratedSliver(
@@ -65,14 +72,35 @@ class CommentsBox extends StatelessWidget {
       sliver: SliverPadding(
         padding: const EdgeInsets.all(2),
         sliver: SliverList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: commentList.length,
-            (_, i) {
-              return SingleCommentBox(
-                index: i,
-                comment: commentList[i],
-              );
-            },
+          delegate: SliverChildListDelegate(
+            [
+              ...List.generate(widget.commentList.length, (i) {
+                return SingleCommentBox(
+                  index: i,
+                  comment: widget.commentList[i],
+                );
+              }),
+              BlocSelector<CreateCommentCubit, CreateCommentState,
+                  CreateCommentStatus>(
+                selector: (CreateCommentState state) {
+                  return state.createCommentStatus;
+                },
+                builder: (context, status) {
+                  if (status == CreateCommentStatus.commentLoading) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.all(Radius.circular(18)),
+                      ),
+                    );
+                  } else {
+                    return SizedBox.shrink();
+                  }
+                },
+              ),
+            ],
           ),
         ),
       ),

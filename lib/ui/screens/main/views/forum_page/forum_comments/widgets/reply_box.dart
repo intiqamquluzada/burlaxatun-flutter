@@ -4,7 +4,7 @@ import '../../../../../../../data/models/remote/response/forum_comments_model.da
 import '../../../../../../../utils/constants/color_constants.dart';
 import 'comment_datas.dart';
 
-class ReplyBox extends StatelessWidget {
+class ReplyBox extends StatefulWidget {
   const ReplyBox({
     super.key,
     required this.reply,
@@ -13,9 +13,19 @@ class ReplyBox extends StatelessWidget {
   final Comments reply;
 
   @override
+  State<ReplyBox> createState() => _ReplyBoxState();
+}
+
+class _ReplyBoxState extends State<ReplyBox> {
+  late ValueNotifier<bool> replyeHasReplies;
+  @override
+  void initState() {
+    replyeHasReplies = ValueNotifier<bool>(widget.reply.replies!.isEmpty);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> replyeHasReplies =
-        ValueNotifier<bool>(reply.replies!.isEmpty);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Padding(
@@ -42,7 +52,7 @@ class ReplyBox extends StatelessWidget {
                         vertical: 6.5,
                         horizontal: 10,
                       ),
-                      child: CommentDatas(comment: reply),
+                      child: CommentDatas(comment: widget.reply),
                     ),
                     ValueListenableBuilder(
                       valueListenable: replyeHasReplies,
@@ -54,9 +64,9 @@ class ReplyBox extends StatelessWidget {
                               replacement: ListView.builder(
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: reply.replies!.length,
+                                itemCount: widget.reply.replies!.length,
                                 itemBuilder: (_, i) {
-                                  final replies = reply.replies ?? [];
+                                  final replies = widget.reply.replies ?? [];
                                   return ReplyBox(
                                     reply: replies[i],
                                   );

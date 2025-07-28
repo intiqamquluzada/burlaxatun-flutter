@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
+import 'package:burla_xatun/data/models/remote/response/forum_comments_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -27,10 +28,12 @@ class ForumCommentsPage extends StatefulWidget {
 class _ForumCommentsPageState extends State<ForumCommentsPage> {
   late ScrollController scrollController;
   late ForumCommentsCubit forumCommentsCubit;
+  late ValueNotifier<Comments?> selectedComment;
   @override
   void initState() {
     scrollController = ScrollController();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
+    selectedComment = ValueNotifier<Comments?>(null);
     _loadMoreComment();
     super.initState();
   }
@@ -55,7 +58,12 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
         },
       ),
       body: CustomRefreshIndicator(
-        onRefresh: () async {},
+        onRefresh: () async {
+          await forumCommentsCubit.getForumComments(
+            isRefresh: true,
+            forumId: widget.forumId,
+          );
+        },
         child: CustomScrollView(
           controller: scrollController,
           slivers: [
@@ -100,24 +108,43 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
               padding: EdgeInsets.symmetric(horizontal: 15),
               sliver: ForumCommentsCustomScroll(),
             ),
-            BlocSelector<ForumCommentsCubit, ForumCommentsState,
-                ForumCommentStatus>(
-              selector: (ForumCommentsState state) {
-                return state.forumCommentStatus;
+
+            BlocBuilder<ForumCommentsCubit, ForumCommentsState>(
+              buildWhen: (previous, current) {
+                return current.forumCommentStatus != ForumCommentStatus.initial;
               },
-              builder: (context, forumCommentStatus) {
+              builder: (context, state) {
                 return SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 175) +
                         EdgeInsets.only(top: 10),
                     child: Visibility(
-                      visible: forumCommentStatus == ForumCommentStatus.loading,
+                      visible: state.forumCommentStatus ==
+                          ForumCommentStatus.loading,
                       child: CircularProgressIndicator.adaptive(),
                     ),
                   ),
                 );
               },
             ),
+            // BlocSelector<ForumCommentsCubit, ForumCommentsState,
+            //     ForumCommentStatus>(
+            //   selector: (ForumCommentsState state) {
+            //     return state.forumCommentStatus;
+            //   },
+            //   builder: (context, forumCommentStatus) {
+            //     return SliverToBoxAdapter(
+            //       child: Padding(
+            //         padding: const EdgeInsets.symmetric(horizontal: 175) +
+            //             EdgeInsets.only(top: 10),
+            //         child: Visibility(
+            //           visible: forumCommentStatus == ForumCommentStatus.loading,
+            //           child: CircularProgressIndicator.adaptive(),
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // ),
             SliverToBoxAdapter(
               child: SizedBox(height: 105),
             ),
@@ -125,9 +152,15 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
         ),
       ),
       bottomSheet: BlocBuilder<ForumDetailCubit, ForumDetailState>(
+        buildWhen: (previous, current) {
+          return current.forumDetailStatus == ForumDetailStatus.success;
+        },
         builder: (context, state) {
           if (state.forumDetailStatus == ForumDetailStatus.success) {
-            return CommentInput();
+            return CommentInput(
+              forumId: widget.forumId,
+              scrollController: scrollController,
+            );
           }
           return SizedBox.shrink();
         },

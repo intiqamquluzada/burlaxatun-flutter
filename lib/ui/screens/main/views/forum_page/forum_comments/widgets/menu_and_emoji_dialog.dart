@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/create_comment/create_comment_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,6 +20,8 @@ class MenuAndEmojiDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mainCubit = context.read<MainnCubit>();
+    // final CreateCommentCubit createCommentCubit =
+    //     context.read<CreateCommentCubit>();
     return Stack(
       alignment: Alignment.topCenter,
       children: [

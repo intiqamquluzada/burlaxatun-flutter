@@ -1,10 +1,9 @@
-import 'package:burla_xatun/data/models/remote/request/add_child_request_model.dart';
-import 'package:burla_xatun/data/services/local/login_token_service.dart';
-import 'package:burla_xatun/data/services/local/user_hive_service.dart';
-import 'package:burla_xatun/data/services/remote/base_network_service.dart';
-import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:dio/dio.dart';
+
+import '../../../utils/constants/endpoints_constants.dart';
+import '../../../utils/di/locator.dart';
+import '../local/login_token_service.dart';
+import 'base_network_service.dart';
 
 class AddChildService {
   Future<Response<dynamic>> addChild({

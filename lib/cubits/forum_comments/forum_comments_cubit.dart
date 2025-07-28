@@ -54,4 +54,12 @@ class ForumCommentsCubit extends Cubit<ForumCommentsState> {
       emit(state.copyWith(forumCommentStatus: ForumCommentStatus.error));
     }
   }
+
+  void updateListWithSendenComment(Comments sendedComment) {
+    commentList.add(sendedComment);
+
+    emit(state.copyWith(
+      comments: List.from(commentList),
+    ));
+  }
 }
