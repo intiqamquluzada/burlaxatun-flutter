@@ -104,21 +104,6 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
             },
           ),
         ),
-        BlocSelector<CreateCommentCubit, CreateCommentState,
-            CreateCommentStatus>(
-          selector: (state) {
-            return state.createCommentStatus;
-          },
-          builder: (context, state) {
-            if (state == CreateCommentStatus.replyLoading) {
-              return widget.comment.id! ==
-                      createCommentCubit.selectedComment.value?.id
-                  ? CircularProgressIndicator.adaptive()
-                  : SizedBox.shrink();
-            }
-            return SizedBox.shrink();
-          },
-        ),
         SendedReplyBox(
           parentId: widget.comment.id!,
           sendedComments: sendedCommentList,

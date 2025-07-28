@@ -22,28 +22,48 @@ class SendedReplyBox extends StatefulWidget {
 class _SendedReplyBoxState extends State<SendedReplyBox> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CreateCommentCubit, CreateCommentState>(
-      listener: (context, state) {
-        if (state.createCommentStatus == CreateCommentStatus.replySuccess) {
-          widget.sendedComments.value.insert(0, state.sendedComment!);
-        }
-      },
-      builder: (context, state) {
-        return ValueListenableBuilder(
-          valueListenable: widget.sendedComments,
-          builder: (context, sendedComments, child) {
-            return Column(
-              children: [
-                for (int i = 0; i < sendedComments.length; i++)
-                  Visibility(
-                    visible: sendedComments[i].parent == widget.parentId,
-                    child: ReplyBox(reply: sendedComments[i]),
-                  ),
-              ],
+    final CreateCommentCubit createCommentCubit =
+        context.read<CreateCommentCubit>();
+    return Column(
+      children: [
+        BlocSelector<CreateCommentCubit, CreateCommentState,
+            CreateCommentStatus>(
+          selector: (state) {
+            return state.createCommentStatus;
+          },
+          builder: (context, state) {
+            if (state == CreateCommentStatus.replyLoading &&
+                widget.parentId ==
+                    createCommentCubit.selectedComment.value?.id) {
+              return CircularProgressIndicator.adaptive();
+            }
+            return SizedBox.shrink();
+          },
+        ),
+        BlocConsumer<CreateCommentCubit, CreateCommentState>(
+          listener: (context, state) {
+            if (state.createCommentStatus == CreateCommentStatus.replySuccess) {
+              widget.sendedComments.value.insert(0, state.sendedComment!);
+            }
+          },
+          builder: (context, state) {
+            return ValueListenableBuilder(
+              valueListenable: widget.sendedComments,
+              builder: (context, sendedComments, child) {
+                return Column(
+                  children: [
+                    for (int i = 0; i < sendedComments.length; i++)
+                      Visibility(
+                        visible: sendedComments[i].parent == widget.parentId,
+                        child: ReplyBox(reply: sendedComments[i]),
+                      ),
+                  ],
+                );
+              },
             );
           },
-        );
-      },
+        ),
+      ],
     );
   }
 }
