@@ -128,7 +128,7 @@ class _CommentInputState extends State<CommentInput> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          '@${comment.user}',
+                                          '@${comment.user?.fullName ?? 'user'}',
                                           style: TextStyle(
                                             color:
                                                 ColorConstants.primaryRedColor,
@@ -176,7 +176,7 @@ class _CommentInputState extends State<CommentInput> {
                       CreateCommentStatus.commentSuccess) {
                     _doAfterSuccess();
 
-                    forumCommentsCubit.updateListWithSendenComment(
+                    forumCommentsCubit.updateListWithSendedComment(
                       state.sendedComment!,
                     );
                   } else if (state.createCommentStatus ==

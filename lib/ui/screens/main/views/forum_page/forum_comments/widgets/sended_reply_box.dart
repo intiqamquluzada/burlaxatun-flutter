@@ -55,7 +55,10 @@ class _SendedReplyBoxState extends State<SendedReplyBox> {
                     for (int i = 0; i < sendedComments.length; i++)
                       Visibility(
                         visible: sendedComments[i].parent == widget.parentId,
-                        child: ReplyBox(reply: sendedComments[i]),
+                        child: ReplyBox(
+                          reply: sendedComments[i],
+                          boxIndex: i,
+                        ),
                       ),
                   ],
                 );

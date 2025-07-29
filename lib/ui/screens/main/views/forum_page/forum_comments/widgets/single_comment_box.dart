@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../cubits/create_comment/create_comment_cubit.dart';
+import '../../../../../../../cubits/forum_comments/forum_comments_cubit.dart';
 import '../../../../../../../cubits/main_cubit/main_state.dart';
 import '../../../../../../../cubits/main_cubit/mainn_cubit.dart';
 import '../../../../../../../data/models/remote/response/forum_comments_model.dart';
@@ -30,12 +31,16 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
     with AutomaticKeepAliveClientMixin {
   late ValueNotifier<bool> hasReplies;
   late CreateCommentCubit createCommentCubit;
+  late ForumCommentsCubit forumCommentsCubit;
   late ValueNotifier<List<Comments>> sendedCommentList;
+
   @override
   void initState() {
-    hasReplies = ValueNotifier<bool>(widget.comment.replies!.isEmpty);
     createCommentCubit = context.read<CreateCommentCubit>();
+    forumCommentsCubit = context.read<ForumCommentsCubit>();
     sendedCommentList = ValueNotifier<List<Comments>>([]);
+
+    
     super.initState();
   }
 
@@ -43,7 +48,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
   Widget build(BuildContext context) {
     super.build(context);
     final mainCubit = context.read<MainnCubit>();
-
+    hasReplies = ValueNotifier<bool>(widget.comment.replies!.isEmpty);
     return Column(
       children: [
         GestureDetector(
@@ -53,10 +58,11 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                 : 10;
 
             mainCubit.showMenuDialogAndEmojis(
-              context,
-              fromTop,
-              widget.comment,
-              createCommentCubit,
+              context: context,
+              v: fromTop,
+              comment: widget.comment,
+              createCommentCubit: createCommentCubit,
+              forumCommentsCubit: forumCommentsCubit,
             );
             mainCubit.updateCommentBoxIndex(widget.index);
           },
@@ -66,6 +72,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
             },
             builder: (context, state) {
               return Material(
+                shadowColor: Colors.transparent,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 color: widget.index == state.commentBoxIndex
                     ? Color(0xffFCE4EC)
@@ -88,13 +95,9 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                       child: InkWell(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         onTap: () {},
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: CommentDatas(comment: widget.comment),
-                            ),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: CommentDatas(comment: widget.comment),
                         ),
                       ),
                     ),
@@ -123,6 +126,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                       final replies = widget.comment.replies ?? [];
                       return ReplyBox(
                         reply: replies[i],
+                        boxIndex: i,
                       );
                     },
                   ),
@@ -131,7 +135,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                       hasReplies.value = true;
                     },
                     child: Text(
-                      'show replies',
+                      'cavabları göstər',
                       style: TextStyle(color: ColorConstants.primaryRedColor),
                     ),
                   ),

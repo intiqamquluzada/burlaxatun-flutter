@@ -55,9 +55,21 @@ class ForumCommentsCubit extends Cubit<ForumCommentsState> {
     }
   }
 
-  void updateListWithSendenComment(Comments sendedComment) {
+  void updateListWithSendedComment(Comments sendedComment) {
+    log('before send comment: ${commentList.length}');
     commentList.add(sendedComment);
 
+    emit(state.copyWith(
+      comments: List.from(commentList),
+    ));
+  }
+
+  void deleteCommentFromList(Comments deletedComment) {
+    log('before delete comment: ${commentList.length}');
+
+    commentList.remove(deletedComment);
+    // final isRemoved = commentList.remove(deletedComment);
+    // log('after delete comment: ${commentList.length}, removed: $isRemoved');
     emit(state.copyWith(
       comments: List.from(commentList),
     ));

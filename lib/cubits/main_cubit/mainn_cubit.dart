@@ -34,8 +34,8 @@ import '../../ui/screens/main/views/profil_page/settings/setting_views/change_pa
 import '../../ui/screens/main/views/profil_page/settings/setting_views/change_phone_number/change_phone_number_view.dart';
 import '../../ui/screens/main/views/profil_page/special_thanks/special_thanks_view.dart';
 import '../../ui/screens/main/views/profil_page/using_rules/using_rules_screen.dart';
-import '../../utils/di/locator.dart';
 import '../create_comment/create_comment_cubit.dart';
+import '../forum_comments/forum_comments_cubit.dart';
 import 'main_state.dart';
 
 enum UltrasoundFormat { format2d, format3d }
@@ -44,7 +44,7 @@ enum NameViewOption { countries, selecteds }
 
 enum GenderOption { boy, girl }
 
-enum CommentDialog { copy, reply, delete, emoji }
+enum CommentDialog { copy, reply, edit, delete, emoji }
 
 class MainnCubit extends Cubit<MainInitial> {
   MainnCubit()
@@ -65,6 +65,7 @@ class MainnCubit extends Cubit<MainInitial> {
             isOverlayVisible: false,
             commentBoxIndex: -1,
             userTag: null,
+            replyBoxIndex: -1,
             // menuOption: null,
           ),
         );
@@ -107,41 +108,50 @@ class MainnCubit extends Cubit<MainInitial> {
     'Dərmanlar': MyHealingPage(),
   };
 
-  void showMenuDialogAndEmojis(
-    BuildContext context,
-    double v,
-    Comments? comment,
-    CreateCommentCubit createCommentCubit,
-  ) {
+  void showMenuDialogAndEmojis({
+    required BuildContext context,
+    required double v,
+    required Comments? comment,
+    required CreateCommentCubit createCommentCubit,
+    required ForumCommentsCubit? forumCommentsCubit,
+    ValueNotifier<int?>? replyBoxIndexValue,
+  }) {
     showDialog<CommentDialog>(
       useSafeArea: false,
       barrierColor: Colors.transparent,
       context: context,
       builder: (context) {
-        return MenuAndEmojiDialog(fromTop: v);
+        return MenuAndEmojiDialog(fromTop: v, comment: comment!);
       },
     ).then((onValue) {
       emit(state.copyWith(commentBoxIndex: -1));
+      replyBoxIndexValue?.value = null;
       log('$onValue');
       if (onValue != null) {
         switch (onValue) {
           case CommentDialog.copy:
+          //
           case CommentDialog.delete:
+            forumCommentsCubit!.deleteCommentFromList(comment!);
           case CommentDialog.reply:
-            // emit(state.copyWith(userTag: '@${comment!.user} '));
             commentInputTextController.text = ' ';
             createCommentCubit.selectedComment.value = comment;
 
             commentInputFocusNode.requestFocus();
+          case CommentDialog.edit:
+            comment?.parent == null
+                ? null
+                : createCommentCubit.selectedComment.value = comment;
+            commentInputTextController.text = ' ${comment?.text ?? ''}';
+            commentInputFocusNode.requestFocus();
 
           case CommentDialog.emoji:
-            // emit(state.copyWith(userTag: '@${comment!.user} '));
-            // commentInputTextController.text = state.userTag!;
             createCommentCubit.selectedComment.value = comment;
             commentInputFocusNode.requestFocus();
         }
       } else {
-        locator<CreateCommentCubit>().selectedComment.value = null;
+        commentInputTextController.text = '';
+        createCommentCubit.selectedComment.value = null;
       }
     });
   }
@@ -301,6 +311,10 @@ class MainnCubit extends Cubit<MainInitial> {
 
   void updateCommentBoxIndex(int v) {
     emit(state.copyWith(commentBoxIndex: v));
+  }
+
+  void updateReplyBoxIndex(int v) {
+    emit(state.copyWith(replyBoxIndex: v));
   }
 
   @override
