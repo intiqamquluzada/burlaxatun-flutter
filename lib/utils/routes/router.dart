@@ -1,4 +1,3 @@
-import 'package:burla_xatun/cubits/forum_list/forum_list_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +6,7 @@ import '../../cubits/add_child/add_child_cubit.dart';
 import '../../cubits/baby_names_cubit/baby_names_cubit.dart';
 import '../../cubits/doctor_reservation/doctor_reservation_cubit.dart';
 import '../../cubits/doctors_detail/doctors_detail_cubit.dart';
+import '../../cubits/forum_list/forum_list_cubit.dart';
 import '../../cubits/indicator/indicator_cubit.dart';
 import '../../cubits/login_cubit/login_cubit.dart';
 import '../../cubits/notification/notification_cubit.dart';
@@ -16,7 +16,7 @@ import '../../cubits/signup_cubit/signup_cubit.dart';
 import '../../cubits/splash/splash_cubit.dart';
 import '../../data/models/remote/response/blog_cat_model.dart';
 import '../../ui/screens/add_child/add_your_child.dart';
-import '../../ui/screens/auth/forgot_psw/email_request_screen.dart';
+import '../../ui/screens/auth/forgot_psw/phone_number_request_screen.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_otp_screen.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_success_screen.dart';
 import '../../ui/screens/auth/forgot_psw/reset_psw_screen.dart';
@@ -125,7 +125,7 @@ class Routerapp {
       GoRoute(
         path: '/email_request',
         builder: (context, state) {
-          return EmailRequestScreen();
+          return PhoneNumberRequestScreen();
         },
       ),
       GoRoute(

@@ -12,6 +12,12 @@ class EndpointsConstants {
   static const changePass = "$baseUrl/A/baby-add/";
   static const refreshToken = '$baseUrl/A/users/refresh-token/';
 
+  static const requestResetPassword = '$baseUrl/A/user/password-reset/request/';
+  static const verifyOtp = '$baseUrl/A/user/password-reset/confirm/';
+  static const resetPassword = '$baseUrl/A/user/password-reset/change/';
+
+  static const changePassword = '$baseUrl/A/user/change-password';
+
   static const users = '$baseUrl/users';
 
   static const String pregnancyCalculateDetails =

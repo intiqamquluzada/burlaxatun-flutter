@@ -11,6 +11,9 @@ class TextConstants {
   static const String email = 'Email';
   static const String sifre = 'Şifrə';
   static const String enterYourEmail = 'Emailinizi daxil edin';
+  static const String enterNewPassword = 'Yeni şifrəni daxil edin';
+  static const String enterNewPasswordAgain = 'Şifrəni təsdiqləyin';
+  static const String enterYourNumber = 'Mobil nömrənizi daxil edin';
   static const String sifreniziDaxilEdin = 'Şifrəni qeyd edin';
   static const String forgotPsw = 'Şifrənizi unutmusunuzmu?';
   static const String signUpWithGoogle = 'Sign up with Google';
@@ -21,11 +24,12 @@ class TextConstants {
   static const together = 'Birlikdə';
   static const community = 'İcma';
   static const support = 'Dəstək';
-  static const changePsw = "Şifrəni dəyiş";
+  static const changePsw = "Şifrəni sıfırla";
   static const dontWorry =
-      "Narahat olmayın! Bu baş verir. Zəhmət olmasa hesabınızla əlaqəli e-poçtu daxil edin.";
+      "Narahat olmayın! Bu baş verir. Zəhmət olmasa hesabınızla əlaqəli mobil nömrəni daxil edin.";
   static const sendCode = "Kod göndər";
   static const checkEmail = "Emailinizi yoxlayın";
+  static const chechYourPhone = "Sms bölməsini yoxlayın";
   static const verify = "Təsdiq et";
   static const resetPsw = "Şifrəni yenilə";
   static const typeSomething = "Xatırlayacağınız bir şey yazın";
