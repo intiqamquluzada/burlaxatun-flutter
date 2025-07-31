@@ -64,14 +64,21 @@ class ForumCommentsCubit extends Cubit<ForumCommentsState> {
     ));
   }
 
+  // List<Comments> sendedReplies = [];
+  // void addCommentToSendedRepliesList(Comments sendedReply) {
+  //   sendedReplies.insert(0, sendedReply);
+
+  //   emit(state.copyWith(sendedReplies: List.from(sendedReplies)));
+  // }
+
   void deleteCommentFromList(Comments deletedComment) {
     log('before delete comment: ${commentList.length}');
 
     commentList.remove(deletedComment);
-    // final isRemoved = commentList.remove(deletedComment);
-    // log('after delete comment: ${commentList.length}, removed: $isRemoved');
     emit(state.copyWith(
       comments: List.from(commentList),
     ));
   }
+
+  void deleteReplyFromList() {}
 }

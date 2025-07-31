@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,7 +28,7 @@ class CommentInput extends StatefulWidget {
   State<CommentInput> createState() => _CommentInputState();
 }
 
-class _CommentInputState extends State<CommentInput> {
+class _CommentInputState extends State<CommentInput> { 
   late MainnCubit mainCubit;
   late CreateCommentCubit createCommentCubit;
   late ForumCommentsCubit forumCommentsCubit;
@@ -171,6 +173,10 @@ class _CommentInputState extends State<CommentInput> {
                   return previous.createCommentStatus !=
                       current.createCommentStatus;
                 },
+                listenWhen: (previous, current) {
+                  return previous.createCommentStatus !=
+                      current.createCommentStatus;
+                },
                 listener: (context, state) {
                   if (state.createCommentStatus ==
                       CreateCommentStatus.commentSuccess) {
@@ -181,7 +187,10 @@ class _CommentInputState extends State<CommentInput> {
                     );
                   } else if (state.createCommentStatus ==
                       CreateCommentStatus.replySuccess) {
+                    log('reply successssssss');
                     _doAfterSuccess(isReplySuccess: true);
+                    createCommentCubit
+                        .addCommentToSendedRepliesList(state.sendedComment!);
                   } else if (state.createCommentStatus ==
                       CreateCommentStatus.error) {
                     AppSnackbars.error(context, 'Şərh yazarkən xəta baş verdi');

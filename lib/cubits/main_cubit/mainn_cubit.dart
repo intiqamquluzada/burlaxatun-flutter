@@ -1,7 +1,8 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/ui/screens/auth/change_psw/change_password.dart';
+import 'package:burla_xatun/cubits/delete_comment/delete_comment_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,6 +13,7 @@ import '../../data/models/local/my_healing_card_items_model.dart';
 import '../../data/models/local/settings_items_model.dart';
 import '../../data/models/remote/response/forum_comments_model.dart';
 import '../../data/models/remote/response/medicine/medicines_model.dart';
+import '../../ui/screens/auth/change_psw/change_password.dart';
 import '../../ui/screens/main/views/daily_advise_page/advice_page.dart';
 import '../../ui/screens/main/views/forum_page/forum_comments/widgets/menu_and_emoji_dialog.dart';
 import '../../ui/screens/main/views/forum_page/main_forum_page.dart/forum_page.dart';
@@ -31,7 +33,6 @@ import '../../ui/screens/main/views/profil_page/faq/faq_view.dart';
 import '../../ui/screens/main/views/profil_page/initial_profile/initial_profile_page.dart';
 import '../../ui/screens/main/views/profil_page/pricavy_policy/privacy_policy_view.dart';
 import '../../ui/screens/main/views/profil_page/settings/setting_view.dart';
-import '../../ui/screens/main/views/profil_page/settings/setting_views/change_password/change_password_page/change_password_page.dart';
 import '../../ui/screens/main/views/profil_page/settings/setting_views/change_phone_number/change_phone_number_view.dart';
 import '../../ui/screens/main/views/profil_page/special_thanks/special_thanks_view.dart';
 import '../../ui/screens/main/views/profil_page/using_rules/using_rules_screen.dart';
@@ -115,6 +116,8 @@ class MainnCubit extends Cubit<MainInitial> {
     required Comments? comment,
     required CreateCommentCubit createCommentCubit,
     required ForumCommentsCubit? forumCommentsCubit,
+    required DeleteCommentCubit deleteCommentCubit,
+    ValueNotifier<List<Comments>>? replies,
     ValueNotifier<int?>? replyBoxIndexValue,
   }) {
     showDialog<CommentDialog>(
@@ -124,16 +127,49 @@ class MainnCubit extends Cubit<MainInitial> {
       builder: (context) {
         return MenuAndEmojiDialog(fromTop: v, comment: comment!);
       },
-    ).then((onValue) {
+    ).then((onValue) async {
       emit(state.copyWith(commentBoxIndex: -1));
       replyBoxIndexValue?.value = null;
       log('$onValue');
       if (onValue != null) {
         switch (onValue) {
           case CommentDialog.copy:
-          //
+            log('${comment?.text}');
+            Clipboard.setData(ClipboardData(text: comment?.text ?? ''));
+            ClipboardData? data = await Clipboard.getData('text/plain');
+            // log('${data?.text}');
+
           case CommentDialog.delete:
-            forumCommentsCubit!.deleteCommentFromList(comment!);
+            log('gonderilen replies length:${replies?.value}');
+            final deletedComment = await deleteCommentCubit.deleteComment(
+              deletedComment: comment!,
+              commentId: comment.id ?? -1,
+            );
+            if (deletedComment == null) {
+              log('error');
+              return;
+            } else if (deletedComment.parent == null) {
+              log('delete from comment List');
+              forumCommentsCubit!.deleteCommentFromList(deletedComment);
+            } else if (replies != null) {
+              log('delete from comment replyList: ${comment.id} ${deletedComment.id}');
+              final currentReplies = List<Comments>.from(replies.value);
+              log('length replyList before remove: ${currentReplies.length}');
+              currentReplies.remove(comment);
+              log('length replyList after remove: ${currentReplies.length}');
+              replies.value = currentReplies;
+            } else {
+              log('delete from sendedReply List');
+              createCommentCubit.deleteSendedReply(deletedComment);
+            }
+
+          // if (comment.parent == null) {
+          //   forumCommentsCubit!.deleteCommentFromList(comment);
+          // }
+
+          //else {
+          //   createCommentCubit.deleteSendedReply(comment);
+          // }
           case CommentDialog.reply:
             commentInputTextController.text = ' ';
             createCommentCubit.selectedComment.value = comment;

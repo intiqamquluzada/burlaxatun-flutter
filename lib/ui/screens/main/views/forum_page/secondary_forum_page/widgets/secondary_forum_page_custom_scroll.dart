@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:burla_xatun/cubits/create_comment/create_comment_cubit.dart';
+import 'package:burla_xatun/cubits/delete_comment/delete_comment_cubit.dart';
 import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -177,6 +178,10 @@ class _SecondaryForumPageCustomScrollState
                                             BlocProvider(
                                               create: (context) =>
                                                   locator<CreateCommentCubit>(),
+                                            ),
+                                            BlocProvider(
+                                              create: (context) =>
+                                                  locator<DeleteCommentCubit>(),
                                             ),
                                           ],
                                           child: ForumCommentsPage(

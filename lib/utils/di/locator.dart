@@ -1,5 +1,6 @@
 import 'package:burla_xatun/cubits/change_password/change_password_cubit.dart';
 import 'package:burla_xatun/cubits/create_comment/create_comment_cubit.dart';
+import 'package:burla_xatun/cubits/delete_comment/delete_comment_cubit.dart';
 import 'package:burla_xatun/cubits/forum_category/forum_category_cubit.dart';
 import 'package:burla_xatun/cubits/forum_category_stats/forum_category_stats_cubit.dart';
 import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:burla_xatun/cubits/report_or_block_user/report_or_block_user_cub
 import 'package:burla_xatun/cubits/reset_password/reset_password_cubit.dart';
 import 'package:burla_xatun/data/contractor/change_password_contract.dart';
 import 'package:burla_xatun/data/contractor/create_comment_contract.dart';
+import 'package:burla_xatun/data/contractor/delete_comment_contract.dart';
 import 'package:burla_xatun/data/contractor/forum_category_contractor.dart';
 import 'package:burla_xatun/data/contractor/forum_category_stats_contract.dart';
 import 'package:burla_xatun/data/contractor/forum_comment_contract.dart';
@@ -17,6 +19,7 @@ import 'package:burla_xatun/data/contractor/report_or_block_contract.dart';
 import 'package:burla_xatun/data/contractor/reset_password_contract.dart';
 import 'package:burla_xatun/data/repository/change_password_repo.dart';
 import 'package:burla_xatun/data/repository/create_comment_repo.dart';
+import 'package:burla_xatun/data/repository/delete_comment_repo.dart';
 import 'package:burla_xatun/data/repository/forum_category_repository.dart';
 import 'package:burla_xatun/data/repository/forum_category_stats_repo.dart';
 import 'package:burla_xatun/data/repository/forum_detail_repo.dart';
@@ -24,6 +27,7 @@ import 'package:burla_xatun/data/repository/report_or_block_repo.dart';
 import 'package:burla_xatun/data/repository/reset_password_repo.dart';
 import 'package:burla_xatun/data/services/remote/change_password_service.dart';
 import 'package:burla_xatun/data/services/remote/create_comment_service.dart';
+import 'package:burla_xatun/data/services/remote/delete_comment_service.dart';
 import 'package:burla_xatun/data/services/remote/forum_category_service.dart';
 import 'package:burla_xatun/data/services/remote/forum_category_stats_service.dart';
 import 'package:burla_xatun/data/services/remote/forum_comment_service.dart';
@@ -208,6 +212,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ReportOrBlockService());
   locator.registerLazySingleton(() => ResetPasswordService());
   locator.registerLazySingleton(() => ChangePasswordService());
+  locator.registerLazySingleton(() => DeleteCommentService());
 
   // contractor
   locator.registerLazySingleton<LoginContractor>(
@@ -330,6 +335,9 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<ChangePasswordContract>(
       () => ChangePasswordRepo(locator<ChangePasswordService>()));
 
+  locator.registerLazySingleton<DeleteCommentContract>(
+      () => DeleteCommentRepo(locator<DeleteCommentService>()));
+
   // cubit
   locator.registerFactory(() => LoginCubit(locator()));
   locator.registerFactory(() => DailyRecCubit(locator()));
@@ -397,6 +405,9 @@ Future<void> setupLocator() async {
   locator.registerFactory(
       () => ResetPasswordCubit(locator<ResetPasswordContract>()));
 
-      locator.registerFactory(
+  locator.registerFactory(
       () => ChangePasswordCubit(locator<ChangePasswordContract>()));
+
+  locator.registerFactory(
+      () => DeleteCommentCubit(locator<DeleteCommentContract>()));
 }

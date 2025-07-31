@@ -104,11 +104,12 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
             SliverToBoxAdapter(
               child: SizedBox(height: 24),
             ),
-            SliverPadding( 
+            //
+            SliverPadding(
               padding: EdgeInsets.symmetric(horizontal: 15),
               sliver: ForumCommentsCustomScroll(),
             ),
-
+            //
             BlocBuilder<ForumCommentsCubit, ForumCommentsState>(
               buildWhen: (previous, current) {
                 return current.forumCommentStatus != ForumCommentStatus.initial;
@@ -127,24 +128,6 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
                 );
               },
             ),
-            // BlocSelector<ForumCommentsCubit, ForumCommentsState,
-            //     ForumCommentStatus>(
-            //   selector: (ForumCommentsState state) {
-            //     return state.forumCommentStatus;
-            //   },
-            //   builder: (context, forumCommentStatus) {
-            //     return SliverToBoxAdapter(
-            //       child: Padding(
-            //         padding: const EdgeInsets.symmetric(horizontal: 175) +
-            //             EdgeInsets.only(top: 10),
-            //         child: Visibility(
-            //           visible: forumCommentStatus == ForumCommentStatus.loading,
-            //           child: CircularProgressIndicator.adaptive(),
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // ),
             SliverToBoxAdapter(
               child: SizedBox(height: 105),
             ),

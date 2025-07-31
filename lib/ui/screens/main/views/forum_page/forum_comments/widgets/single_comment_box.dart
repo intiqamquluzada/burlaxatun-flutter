@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../cubits/create_comment/create_comment_cubit.dart';
+import '../../../../../../../cubits/delete_comment/delete_comment_cubit.dart';
 import '../../../../../../../cubits/forum_comments/forum_comments_cubit.dart';
 import '../../../../../../../cubits/main_cubit/main_state.dart';
 import '../../../../../../../cubits/main_cubit/mainn_cubit.dart';
@@ -19,9 +22,11 @@ class SingleCommentBox extends StatefulWidget {
     super.key,
     required this.index,
     required this.comment,
+    this.replies,
   });
 
   final Comments comment;
+  final ValueNotifier<List<Comments>>? replies;
 
   @override
   State<SingleCommentBox> createState() => _SingleCommentBoxState();
@@ -32,15 +37,14 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
   late ValueNotifier<bool> hasReplies;
   late CreateCommentCubit createCommentCubit;
   late ForumCommentsCubit forumCommentsCubit;
-  late ValueNotifier<List<Comments>> sendedCommentList;
+  late DeleteCommentCubit deleteCommentCubit;
+  late List<ValueNotifier<List<Comments>>> replyList;
 
   @override
   void initState() {
     createCommentCubit = context.read<CreateCommentCubit>();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
-    sendedCommentList = ValueNotifier<List<Comments>>([]);
-
-    
+    deleteCommentCubit = context.read<DeleteCommentCubit>();
     super.initState();
   }
 
@@ -48,7 +52,10 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
   Widget build(BuildContext context) {
     super.build(context);
     final mainCubit = context.read<MainnCubit>();
-    hasReplies = ValueNotifier<bool>(widget.comment.replies!.isEmpty);
+    hasReplies = ValueNotifier<bool>(widget.replies!.value.isEmpty);
+    replyList = List.generate(widget.comment.replies!.length, (i) {
+      return ValueNotifier(widget.replies?.value[i].replies ?? []);
+    });
     return Column(
       children: [
         GestureDetector(
@@ -57,13 +64,17 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                 ? details.globalPosition.dy - 160
                 : 10;
 
+            // log('reply valuenotifier list length: ${widget.replies?.value.length}');
+
             mainCubit.showMenuDialogAndEmojis(
               context: context,
               v: fromTop,
               comment: widget.comment,
               createCommentCubit: createCommentCubit,
               forumCommentsCubit: forumCommentsCubit,
+              deleteCommentCubit: deleteCommentCubit,
             );
+            // deleteCommentCubit.deletedComment.value = widget.comment;
             mainCubit.updateCommentBoxIndex(widget.index);
           },
           child: BlocBuilder<MainnCubit, MainInitial>(
@@ -107,10 +118,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
             },
           ),
         ),
-        SendedReplyBox(
-          parentId: widget.comment.id!,
-          sendedComments: sendedCommentList,
-        ),
+        SendedReplyBox(parentId: widget.comment.id ?? -1),
         ValueListenableBuilder(
           valueListenable: hasReplies,
           builder: (context, value, child) {
@@ -118,15 +126,36 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
               children: [
                 Visibility(
                   visible: !value,
-                  replacement: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: widget.comment.replies!.length,
-                    itemBuilder: (_, i) {
-                      final replies = widget.comment.replies ?? [];
-                      return ReplyBox(
-                        reply: replies[i],
-                        boxIndex: i,
+                  replacement: ValueListenableBuilder(
+                    valueListenable: widget.replies!,
+                    builder: (context, replies, child) {
+                      log('reply length: ${widget.replies?.value.length}');
+                      return ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: widget.replies?.value.length,
+                        itemBuilder: (_, i) {
+                          return BlocListener<DeleteCommentCubit,
+                              DeleteCommentState>(
+                            listener: (context, state) {
+                              if (state.deleteCommentStatus ==
+                                  DeleteCommentStatus.success) {
+                                log('${state.deletedComment?.id}');
+                                // final currentReplies =
+                                //     List<Comments>.from(widget.replies!.value);
+                                // currentReplies.remove(state.deletedComment);
+                                // widget.replies!.value = currentReplies;
+                              }
+                            },
+                            child: ReplyBox(
+                              reply: replies[i],
+                              boxIndex: i,
+                              replies: replyList[i],
+                              onTap: () {},
+                              parentReplies: widget.replies,
+                            ),
+                          );
+                        },
                       );
                     },
                   ),

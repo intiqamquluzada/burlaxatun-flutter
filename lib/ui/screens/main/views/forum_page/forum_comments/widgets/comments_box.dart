@@ -62,8 +62,18 @@ class CommentsBox extends StatefulWidget {
 }
 
 class _CommentsBoxState extends State<CommentsBox> {
+  late List<ValueNotifier<List<Comments>>> replyList;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    replyList = List.generate(widget.commentList.length, (i) {
+      return ValueNotifier(widget.commentList[i].replies ?? []);
+    });
+    
     return DecoratedSliver(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -74,12 +84,27 @@ class _CommentsBoxState extends State<CommentsBox> {
         sliver: SliverList(
           delegate: SliverChildListDelegate(
             [
-              ...List.generate(widget.commentList.length, (i) {
-                return SingleCommentBox(
-                  index: i,
-                  comment: widget.commentList[i],
-                );
-              }),
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: widget.commentList.length,
+                shrinkWrap: true,
+                itemBuilder: (_, i) {
+                  // log('comments buildedd');
+                  return SingleCommentBox(
+                    index: i,
+                    comment: widget.commentList[i],
+                    replies: replyList[i],
+                  );
+                },
+              ),
+              // ...List.generate(widget.commentList.length, (i) {
+              //   log('comments buildedd');
+              //   return SingleCommentBox(
+              //     index: i,
+              //     comment: widget.commentList[i],
+              //     replies: replyList[i],
+              //   );
+              // }),
               BlocSelector<CreateCommentCubit, CreateCommentState,
                   CreateCommentStatus>(
                 selector: (CreateCommentState state) {

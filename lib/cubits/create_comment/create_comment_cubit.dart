@@ -24,6 +24,8 @@ class CreateCommentCubit extends Cubit<CreateCommentState> {
 
   final CreateCommentContract createCommentContract;
   ValueNotifier<Comments?> selectedComment = ValueNotifier<Comments?>(null);
+  final ValueNotifier<List<Comments>> sendedReplies =
+      ValueNotifier<List<Comments>>([]);
 
   Future<void> sendComment({
     required int forumId,
@@ -44,6 +46,7 @@ class CreateCommentCubit extends Cubit<CreateCommentState> {
 
       if (!response.statusCode.isSuccess) return;
       final sendedComment = Comments.fromJson(response.data);
+      log('cubit successs');
       emit(state.copyWith(
         createCommentStatus: selectedComment.value?.id == null
             ? CreateCommentStatus.commentSuccess
@@ -54,6 +57,22 @@ class CreateCommentCubit extends Cubit<CreateCommentState> {
       log('Error occured while creating comment: $e', stackTrace: s);
       emit(state.copyWith(createCommentStatus: CreateCommentStatus.error));
     }
+  }
+
+  List<Comments> list = [];
+  void addCommentToSendedRepliesList(Comments sendedReply) {
+    log('before add: ${list.length}');
+    list.add(sendedReply);
+    log('after add: ${list.length}');
+
+    emit(state.copyWith(sendedReplies: List.from(list)));
+    log('after emit: ${state.sendedReplies?.length}');
+  }
+
+  void deleteSendedReply(Comments deletedReply) {
+    log('message');
+    list.remove(deletedReply);
+    emit(state.copyWith(sendedReplies: List.from(list)));
   }
 }
 

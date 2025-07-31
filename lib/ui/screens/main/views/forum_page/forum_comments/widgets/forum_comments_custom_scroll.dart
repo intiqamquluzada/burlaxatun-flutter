@@ -1,8 +1,9 @@
-import 'package:burla_xatun/data/models/remote/response/forum_comments_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../cubits/delete_comment/delete_comment_cubit.dart';
 import '../../../../../../../cubits/forum_comments/forum_comments_cubit.dart';
+import '../../../../../../../utils/app/app_snackbars.dart';
 import '../../../../../../widgets/global_text.dart';
 import 'comments_box.dart';
 
@@ -11,8 +12,10 @@ class ForumCommentsCustomScroll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<List<Comments>> list =
-        ValueNotifier<List<Comments>>([]);
+    // final ValueNotifier<List<Comments>> list =
+    //     ValueNotifier<List<Comments>>([]);
+    final forumCommentsCubit = context.read<ForumCommentsCubit>();
+    final deleteCommentCubit = context.read<DeleteCommentCubit>();
 
     return BlocBuilder<ForumCommentsCubit, ForumCommentsState>(
       buildWhen: (previous, current) {
@@ -30,44 +33,37 @@ class ForumCommentsCustomScroll extends StatelessWidget {
         }
         if (state.forumCommentStatus == ForumCommentStatus.success) {
           return SliverPadding(
-              padding: const EdgeInsets.only(bottom: 0),
-              sliver: BlocBuilder<ForumCommentsCubit, ForumCommentsState>(
-                buildWhen: (previous, current) {
-                  return previous.comments != current.comments;
-                },
-                builder: (context, state) {
-                  list.value = state.comments ?? [];
-                  return state.comments!.isEmpty
-                      ? SliverToBoxAdapter(
-                          child: Center(
-                            child: SizedBox(
-                              child: GlobalText(text: 'İlk şərhi yaz'),
-                            ),
+            padding: const EdgeInsets.only(bottom: 0),
+            sliver: BlocBuilder<ForumCommentsCubit, ForumCommentsState>(
+              buildWhen: (previous, current) {
+                return previous.comments != current.comments;
+              },
+              builder: (context, state) {
+                // list.value = state.comments ?? [];
+                return state.comments!.isEmpty
+                    ? SliverToBoxAdapter(
+                        child: Center(
+                          child: SizedBox(
+                            child: GlobalText(text: 'İlk şərhi yaz'),
                           ),
-                        )
-                      : CommentsBox(commentList: state.comments ?? []);
-                },
-              )
-              // BlocSelector<ForumCommentsCubit, ForumCommentsState,
-              //     List<Comments>?>(
-              //   selector: (ForumCommentsState state) {
-              //     return state.comments ?? [];
-              //   },
-              //   builder: (context, commentList) {
-              //     log('comment count: ${commentList!.length}');
-
-              //     return commentList.isEmpty
-              //         ? SliverToBoxAdapter(
-              //             child: Center(
-              //               child: SizedBox(
-              //                 child: GlobalText(text: 'İlk şərhi yaz'),
-              //               ),
-              //             ),
-              //           )
-              //         : CommentsBox(commentList: commentList);
-              //   },
-              // ),
-              );
+                        ),
+                      )
+                    : BlocListener<DeleteCommentCubit, DeleteCommentState>(
+                        listener: (context, state) {
+                          if (state.deleteCommentStatus ==
+                              DeleteCommentStatus.success) {
+                            AppSnackbars.success(context, 'Şərh silindi');
+                          } else if (state.deleteCommentStatus ==
+                              DeleteCommentStatus.success) {
+                            AppSnackbars.error(
+                                context, 'Şərhi silərkən xəta baş verdi');
+                          }
+                        },
+                        child: CommentsBox(commentList: state.comments ?? []),
+                      );
+              },
+            ),
+          );
         }
         return SizedBox.shrink();
       },

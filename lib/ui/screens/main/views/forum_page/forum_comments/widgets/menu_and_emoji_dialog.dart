@@ -152,39 +152,42 @@ class MenuAndEmojiDialog extends StatelessWidget {
                               ),
                             )
                           ],
-                          SizedBox(
-                            height: 0.5,
-                            width: 228,
-                            child: ColoredBox(color: Colors.grey),
-                          ),
-                          InkWell(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(12),
-                              bottomRight: Radius.circular(12),
+                          if (comment.user?.id ==
+                              userCubit.state.response?.id) ...[
+                            SizedBox(
+                              height: 0.5,
+                              width: 228,
+                              child: ColoredBox(color: Colors.grey),
                             ),
-                            onTap: () {
-                              context.pop(CommentDialog.delete);
-                              mainCubit.updateCommentBoxIndex(-1);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 16),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GlobalText(
-                                    text: 'Sil',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.red,
-                                  ),
-                                  SvgPicture.asset(
-                                      'assets/icons/delete_comment_icon.svg'),
-                                ],
+                            InkWell(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                              ),
+                              onTap: () {
+                                context.pop(CommentDialog.delete);
+                                mainCubit.updateCommentBoxIndex(-1);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 16),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GlobalText(
+                                      text: 'Sil',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.red,
+                                    ),
+                                    SvgPicture.asset(
+                                        'assets/icons/delete_comment_icon.svg'),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
+                          ]
                         ],
                       ),
                     ),
