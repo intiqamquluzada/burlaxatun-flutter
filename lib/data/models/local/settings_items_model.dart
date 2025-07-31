@@ -15,7 +15,7 @@ class SettingsItemModel {
       settingName: 'Bildirişlər',
     ),
     SettingsItemModel(
-      icon: 'assets/icons/faq_icon.svg',
+      icon: 'assets/icons/faq_icon.svg', 
       settingName: 'Şifrəni dəyiş',
       route: '/change_password'
     ),

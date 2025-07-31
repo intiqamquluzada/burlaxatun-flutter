@@ -8,7 +8,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class SuccessForgotPswScreen extends StatelessWidget {
-  const SuccessForgotPswScreen({super.key});
+  const SuccessForgotPswScreen({
+    super.key,
+    this.isChangePasswordSuccess = false,
+  });
+
+  final bool isChangePasswordSuccess;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +39,11 @@ class SuccessForgotPswScreen extends StatelessWidget {
         child: GlobalButton(
           height: 50,
           //buttonName: 'Back at home',
-          buttonName: 'Daxil ol',
+          buttonName: 'Növbəti',
           buttonColor: ColorConstants.primaryRedColor,
           textColor: Colors.white,
           onPressed: () {
-            context.go('/login');
+            isChangePasswordSuccess ? context.pop() : context.go('/login');
           },
         ),
       ),

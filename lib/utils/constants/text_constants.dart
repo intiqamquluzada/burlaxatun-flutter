@@ -12,6 +12,7 @@ class TextConstants {
   static const String sifre = 'Şifrə';
   static const String enterYourEmail = 'Emailinizi daxil edin';
   static const String enterNewPassword = 'Yeni şifrəni daxil edin';
+  static const String enterOldPassword = 'Köhnə şifrəni daxil edin';
   static const String enterNewPasswordAgain = 'Şifrəni təsdiqləyin';
   static const String enterYourNumber = 'Mobil nömrənizi daxil edin';
   static const String sifreniziDaxilEdin = 'Şifrəni qeyd edin';

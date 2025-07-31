@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/ui/screens/auth/change_psw/change_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -219,7 +220,7 @@ class MainnCubit extends Cubit<MainInitial> {
       case 1:
         Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
-            builder: (_) => ChangePasswordPage(),
+            builder: (_) => ChangePassword(),
           ),
         );
       case 2:

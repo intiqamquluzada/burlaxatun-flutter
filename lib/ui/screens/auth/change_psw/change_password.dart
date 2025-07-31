@@ -1,9 +1,9 @@
-import 'package:burla_xatun/cubits/reset_password/reset_password_cubit.dart';
-import 'package:burla_xatun/utils/app/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../cubits/change_password/change_password_cubit.dart';
+import '../../../../utils/app/app_snackbars.dart';
 import '../../../../utils/constants/asset_constants.dart';
 import '../../../../utils/constants/color_constants.dart';
 import '../../../../utils/constants/padding_constants.dart';
@@ -13,37 +13,42 @@ import '../../../widgets/global_appbar.dart';
 import '../../../widgets/global_button.dart';
 import '../../../widgets/global_input.dart';
 import '../../../widgets/global_text.dart';
+import '../forgot_psw/forgot_psw_success_screen.dart';
 
-class ResetPswScreen extends StatefulWidget {
-  const ResetPswScreen({super.key});
+class ChangePassword extends StatefulWidget {
+  const ChangePassword({super.key});
 
   @override
-  State<ResetPswScreen> createState() => _ResetPswScreenState();
+  State<ChangePassword> createState() => _ChangePasswordState();
 }
 
-class _ResetPswScreenState extends State<ResetPswScreen> {
+class _ChangePasswordState extends State<ChangePassword> {
   final ValueNotifier<bool> _newPasswordVisibility = ValueNotifier<bool>(false);
   final ValueNotifier<bool> _confirmPasswordVisibility =
       ValueNotifier<bool>(false);
+  final ValueNotifier<bool> oldPasswordVisibility = ValueNotifier<bool>(false);
   final ValueNotifier<bool> isEqual = ValueNotifier<bool>(true);
 
+  late final TextEditingController oldPasswordController;
   late final TextEditingController newPassController;
   late final TextEditingController confirmPassController;
 
   late final GlobalKey<FormState> passwordsFormKey;
-  late final ResetPasswordCubit resetPasswordCubit;
+  late final ChangePasswordCubit changePasswordCubit;
 
   @override
   void initState() {
     passwordsFormKey = GlobalKey<FormState>();
+    oldPasswordController = TextEditingController();
     newPassController = TextEditingController();
     confirmPassController = TextEditingController();
-    resetPasswordCubit = context.read<ResetPasswordCubit>();
+    changePasswordCubit = context.read<ChangePasswordCubit>();
     super.initState();
   }
 
   @override
   void dispose() {
+    oldPasswordController.dispose();
     _newPasswordVisibility.dispose();
     _confirmPasswordVisibility.dispose();
     super.dispose();
@@ -58,7 +63,9 @@ class _ResetPswScreenState extends State<ResetPswScreen> {
       child: Scaffold(
         appBar: GlobalAppbar(
           title: "",
-          leading: SizedBox.shrink(),
+          onLeadingTap: () {
+            context.pop();
+          },
         ),
         body: SafeArea(
           child: Column(
@@ -83,6 +90,36 @@ class _ResetPswScreenState extends State<ResetPswScreen> {
                             text: TextConstants.typeSomething,
                           ),
                           24.h,
+                          GlobalText(
+                            text: 'Köhnə şifrə',
+                            color: ColorConstants.textFieldTitleColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          20.h,
+                          ValueListenableBuilder(
+                            valueListenable: oldPasswordVisibility,
+                            builder: (_, isVisibile, __) => GlobalInput(
+                              validator: (pass) {
+                                if (pass == null || pass.isEmpty) {
+                                  return 'Zəhmət olmasa sahəni doldurun';
+                                }
+                                return null;
+                              },
+                              textController: oldPasswordController,
+                              isObsecure: !isVisibile,
+                              hintText: TextConstants.enterOldPassword,
+                              prefixIcon: AssetConstants.lockIcon,
+                              suffixIcon: isVisibile
+                                  ? AssetConstants.eyeOpenedIcon
+                                  : AssetConstants.eyeClosedIcon,
+                              onSuffixIconTap: () {
+                                // setState(() {
+                                oldPasswordVisibility.value = !isVisibile;
+                                // });
+                              },
+                            ),
+                          ),
+                          20.h,
                           GlobalText(
                             text: TextConstants.newPsw,
                             color: ColorConstants.textFieldTitleColor,
@@ -185,29 +222,30 @@ class _ResetPswScreenState extends State<ResetPswScreen> {
                   right: 15,
                   bottom: isKeyboardVisible ? 20 : 32,
                 ),
-                child: BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
+                child: BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
                   listener: (context, state) {
-                    if (state.resetPasswordStatus ==
-                        ResetPasswordStatus.error) {
+                    if (state.changePasswordStatus ==
+                        ChangePasswordStatus.error) {
                       AppSnackbars.error(
                         context,
                         'Şifrəni dəyişərkən xəta baş verdi',
                       );
-                    } else if (state.resetPasswordStatus ==
-                        ResetPasswordStatus.success) {
-                      // Navigator.pushReplacement(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (_) => ResetPswScreen(),
-                      //   ),
-                      // );
-                      context.go('/forgot_psw_success');
+                    } else if (state.changePasswordStatus ==
+                        ChangePasswordStatus.success) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => SuccessForgotPswScreen(
+                              isChangePasswordSuccess: true),
+                        ),
+                      );
+                      // context.pushReplacement('/forgot_psw_success');
                     }
                   },
                   builder: (context, state) {
                     return GlobalButton(
-                      isLoading: state.resetPasswordStatus ==
-                          ResetPasswordStatus.loading,
+                      isLoading: state.changePasswordStatus ==
+                          ChangePasswordStatus.loading,
                       buttonName: TextConstants.resetPsw,
                       buttonColor: ColorConstants.primaryRedColor,
                       textColor: ColorConstants.white,
@@ -219,9 +257,10 @@ class _ResetPswScreenState extends State<ResetPswScreen> {
                                 confirmPassController.text) {
                           return;
                         } else {
-                          await resetPasswordCubit.resetPassword(
-                            newPass: newPassController.text.trim(),
-                            confirmNewPass: confirmPassController.text.trim(),
+                          await changePasswordCubit.changePassword(
+                            oldPassword: oldPasswordController.text.trim(),
+                            newPassword1: newPassController.text.trim(),
+                            newPassword2: confirmPassController.text.trim(),
                           );
                         }
                       },
