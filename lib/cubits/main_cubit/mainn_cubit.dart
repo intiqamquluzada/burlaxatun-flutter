@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/delete_comment/delete_comment_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +15,7 @@ import '../../data/models/remote/response/medicine/medicines_model.dart';
 import '../../ui/screens/auth/change_psw/change_password.dart';
 import '../../ui/screens/main/views/daily_advise_page/advice_page.dart';
 import '../../ui/screens/main/views/forum_page/forum_comments/widgets/menu_and_emoji_dialog.dart';
+import '../../ui/screens/main/views/forum_page/forum_comments/widgets/single_comment_box.dart';
 import '../../ui/screens/main/views/forum_page/main_forum_page.dart/forum_page.dart';
 import '../../ui/screens/main/views/home_page/home.dart';
 import '../../ui/screens/main/views/home_page/home/home_page.dart';
@@ -37,6 +37,7 @@ import '../../ui/screens/main/views/profil_page/settings/setting_views/change_ph
 import '../../ui/screens/main/views/profil_page/special_thanks/special_thanks_view.dart';
 import '../../ui/screens/main/views/profil_page/using_rules/using_rules_screen.dart';
 import '../create_comment/create_comment_cubit.dart';
+import '../delete_comment/delete_comment_cubit.dart';
 import '../forum_comments/forum_comments_cubit.dart';
 import 'main_state.dart';
 
@@ -119,7 +120,7 @@ class MainnCubit extends Cubit<MainInitial> {
     required ForumCommentsCubit? forumCommentsCubit,
     required DeleteCommentCubit deleteCommentCubit,
     ValueNotifier<List<Comments>>? replies,
-    ValueNotifier<int?>? replyBoxIndexValue,
+    final ValueNotifier<int>? selectedReplyBoxIndex,
   }) {
     showDialog<CommentDialog>(
       useSafeArea: false,
@@ -129,11 +130,9 @@ class MainnCubit extends Cubit<MainInitial> {
         return MenuAndEmojiDialog(fromTop: v, comment: comment!);
       },
     ).then((onValue) async {
-      emit(state.copyWith(
-        commentBoxIndex: -1,
-        commentDialog: onValue,
-      ));
-      replyBoxIndexValue?.value = null;
+      emit(state.copyWith(commentDialog: onValue));
+      selectedBoxIndex.value = -1;
+      selectedReplyBoxIndex?.value = -1;
       log('$onValue');
       if (onValue != null) {
         switch (onValue) {

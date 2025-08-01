@@ -61,6 +61,7 @@ class _SendedReplyBoxState extends State<SendedReplyBox> {
                             boxIndex: i,
                             parentReplies: null,
                             parentTag: widget.parentTag,
+                            onTap: () {},
                           ),
                         ),
                     ],

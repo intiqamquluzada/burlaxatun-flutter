@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../cubits/create_comment/create_comment_cubit.dart';
 import '../../../../../../../cubits/delete_comment/delete_comment_cubit.dart';
 import '../../../../../../../cubits/forum_comments/forum_comments_cubit.dart';
-import '../../../../../../../cubits/main_cubit/main_state.dart';
 import '../../../../../../../cubits/main_cubit/mainn_cubit.dart';
 import '../../../../../../../data/models/remote/response/forum_comments_model.dart';
 import '../../../../../../../utils/constants/color_constants.dart';
@@ -32,8 +31,11 @@ class SingleCommentBox extends StatefulWidget {
   State<SingleCommentBox> createState() => _SingleCommentBoxState();
 }
 
+final ValueNotifier<int> selectedBoxIndex = ValueNotifier<int>(-1);
+
 class _SingleCommentBoxState extends State<SingleCommentBox>
     with AutomaticKeepAliveClientMixin {
+  late MainnCubit mainCubit;
   late ValueNotifier<bool> hasReplies;
   late CreateCommentCubit createCommentCubit;
   late ForumCommentsCubit forumCommentsCubit;
@@ -45,17 +47,22 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
     createCommentCubit = context.read<CreateCommentCubit>();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
     deleteCommentCubit = context.read<DeleteCommentCubit>();
+    mainCubit = context.read<MainnCubit>();
+
     super.initState();
+  }
+
+  void _initializeReplies() {
+    hasReplies = ValueNotifier<bool>(widget.replies!.value.isEmpty);
+    replyList = List.generate(widget.comment.replies!.length, (i) {
+      return ValueNotifier(widget.replies?.value[i].replies ?? []);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final mainCubit = context.read<MainnCubit>();
-    hasReplies = ValueNotifier<bool>(widget.replies!.value.isEmpty);
-    replyList = List.generate(widget.comment.replies!.length, (i) {
-      return ValueNotifier(widget.replies?.value[i].replies ?? []);
-    });
+    _initializeReplies();
     return Column(
       children: [
         GestureDetector(
@@ -63,8 +70,6 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
             double fromTop = details.globalPosition.dy > 160
                 ? details.globalPosition.dy - 160
                 : 10;
-
-            // log('reply valuenotifier list length: ${widget.replies?.value.length}');
 
             mainCubit.showMenuDialogAndEmojis(
               context: context,
@@ -74,50 +79,49 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
               forumCommentsCubit: forumCommentsCubit,
               deleteCommentCubit: deleteCommentCubit,
             );
-            // deleteCommentCubit.deletedComment.value = widget.comment;
-            mainCubit.updateCommentBoxIndex(widget.index);
+            deleteCommentCubit.deletedComment.value = widget.comment;
+
+            selectedBoxIndex.value = widget.index;
           },
-          child: BlocBuilder<MainnCubit, MainInitial>(
-            buildWhen: (previous, current) {
-              return previous.commentBoxIndex != current.commentBoxIndex;
-            },
-            builder: (context, state) {
+          child: ValueListenableBuilder(
+            valueListenable: selectedBoxIndex,
+            builder: (context, boxIndex, child) {
               return Material(
                 shadowColor: Colors.transparent,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                color: widget.index == state.commentBoxIndex
-                    ? Color(0xffFCE4EC)
-                    : Colors.white,
-                child: SizedBox(
-                  width: context.deviceWidth,
-                  child: Ink(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        border: widget.index == 0
-                            ? null
-                            : Border(
-                                top: BorderSide(
-                                  width: 2,
-                                  color: Color(0xffE4E7EC),
-                                ),
-                              ),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                      child: InkWell(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: CommentDatas(
-                            comment: widget.comment,
+                color:
+                    widget.index == boxIndex ? Color(0xffFCE4EC) : Colors.white,
+                child: child,
+              );
+            },
+            child: SizedBox(
+              width: context.deviceWidth,
+              child: Ink(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: widget.index == 0
+                        ? null
+                        : Border(
+                            top: BorderSide(
+                              width: 2,
+                              color: Color(0xffE4E7EC),
+                            ),
                           ),
-                        ),
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: InkWell(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: CommentDatas(
+                        comment: widget.comment,
                       ),
                     ),
                   ),
                 ),
-              );
-            },
+              ),
+            ),
           ),
         ),
         SendedReplyBox(
@@ -145,6 +149,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                             listener: (context, state) {
                               if (state.deleteCommentStatus ==
                                   DeleteCommentStatus.success) {
+                                _initializeReplies();
                                 log('${state.deletedComment?.id}');
                                 // final currentReplies =
                                 //     List<Comments>.from(widget.replies!.value);
