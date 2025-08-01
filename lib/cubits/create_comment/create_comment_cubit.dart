@@ -19,6 +19,8 @@ enum CreateCommentStatus {
   replySuccess,
 }
 
+// enum 
+
 class CreateCommentCubit extends Cubit<CreateCommentState> {
   CreateCommentCubit(this.createCommentContract) : super(CreateCommentState());
 
@@ -33,7 +35,7 @@ class CreateCommentCubit extends Cubit<CreateCommentState> {
     // int? parentId,
   }) async {
     try {
-      emit(state.copyWith(
+      emit(state.copyWith( 
         createCommentStatus: selectedComment.value?.id == null
             ? CreateCommentStatus.commentLoading
             : CreateCommentStatus.replyLoading,

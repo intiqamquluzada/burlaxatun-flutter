@@ -14,8 +14,8 @@ class ForumCommentsCustomScroll extends StatelessWidget {
   Widget build(BuildContext context) {
     // final ValueNotifier<List<Comments>> list =
     //     ValueNotifier<List<Comments>>([]);
-    final forumCommentsCubit = context.read<ForumCommentsCubit>();
-    final deleteCommentCubit = context.read<DeleteCommentCubit>();
+    // final forumCommentsCubit = context.read<ForumCommentsCubit>();
+    // final deleteCommentCubit = context.read<DeleteCommentCubit>();
 
     return BlocBuilder<ForumCommentsCubit, ForumCommentsState>(
       buildWhen: (previous, current) {

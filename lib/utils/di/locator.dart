@@ -1,6 +1,8 @@
 import 'package:burla_xatun/cubits/change_password/change_password_cubit.dart';
 import 'package:burla_xatun/cubits/create_comment/create_comment_cubit.dart';
+import 'package:burla_xatun/cubits/create_forum/create_forum_cubit.dart';
 import 'package:burla_xatun/cubits/delete_comment/delete_comment_cubit.dart';
+import 'package:burla_xatun/cubits/edit_comment/edit_comment_cubit.dart';
 import 'package:burla_xatun/cubits/forum_category/forum_category_cubit.dart';
 import 'package:burla_xatun/cubits/forum_category_stats/forum_category_stats_cubit.dart';
 import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
@@ -9,7 +11,9 @@ import 'package:burla_xatun/cubits/report_or_block_user/report_or_block_user_cub
 import 'package:burla_xatun/cubits/reset_password/reset_password_cubit.dart';
 import 'package:burla_xatun/data/contractor/change_password_contract.dart';
 import 'package:burla_xatun/data/contractor/create_comment_contract.dart';
+import 'package:burla_xatun/data/contractor/create_forum_contract.dart';
 import 'package:burla_xatun/data/contractor/delete_comment_contract.dart';
+import 'package:burla_xatun/data/contractor/edit_comment_contract.dart';
 import 'package:burla_xatun/data/contractor/forum_category_contractor.dart';
 import 'package:burla_xatun/data/contractor/forum_category_stats_contract.dart';
 import 'package:burla_xatun/data/contractor/forum_comment_contract.dart';
@@ -19,7 +23,9 @@ import 'package:burla_xatun/data/contractor/report_or_block_contract.dart';
 import 'package:burla_xatun/data/contractor/reset_password_contract.dart';
 import 'package:burla_xatun/data/repository/change_password_repo.dart';
 import 'package:burla_xatun/data/repository/create_comment_repo.dart';
+import 'package:burla_xatun/data/repository/create_forum_repo.dart';
 import 'package:burla_xatun/data/repository/delete_comment_repo.dart';
+import 'package:burla_xatun/data/repository/edit_comment_repo.dart';
 import 'package:burla_xatun/data/repository/forum_category_repository.dart';
 import 'package:burla_xatun/data/repository/forum_category_stats_repo.dart';
 import 'package:burla_xatun/data/repository/forum_detail_repo.dart';
@@ -27,7 +33,9 @@ import 'package:burla_xatun/data/repository/report_or_block_repo.dart';
 import 'package:burla_xatun/data/repository/reset_password_repo.dart';
 import 'package:burla_xatun/data/services/remote/change_password_service.dart';
 import 'package:burla_xatun/data/services/remote/create_comment_service.dart';
+import 'package:burla_xatun/data/services/remote/create_forum_service.dart';
 import 'package:burla_xatun/data/services/remote/delete_comment_service.dart';
+import 'package:burla_xatun/data/services/remote/edit_comment_service.dart';
 import 'package:burla_xatun/data/services/remote/forum_category_service.dart';
 import 'package:burla_xatun/data/services/remote/forum_category_stats_service.dart';
 import 'package:burla_xatun/data/services/remote/forum_comment_service.dart';
@@ -213,6 +221,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ResetPasswordService());
   locator.registerLazySingleton(() => ChangePasswordService());
   locator.registerLazySingleton(() => DeleteCommentService());
+  locator.registerLazySingleton(() => EditCommentService());
+  locator.registerLazySingleton(() => CreateForumService());
 
   // contractor
   locator.registerLazySingleton<LoginContractor>(
@@ -338,6 +348,12 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<DeleteCommentContract>(
       () => DeleteCommentRepo(locator<DeleteCommentService>()));
 
+  locator.registerLazySingleton<EditCommentContract>(
+      () => EditCommentRepo(locator<EditCommentService>()));
+
+  locator.registerLazySingleton<CreateForumContract>(
+      () => CreateForumRepo(locator<CreateForumService>()));
+
   // cubit
   locator.registerFactory(() => LoginCubit(locator()));
   locator.registerFactory(() => DailyRecCubit(locator()));
@@ -410,4 +426,9 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(
       () => DeleteCommentCubit(locator<DeleteCommentContract>()));
+
+  locator
+      .registerFactory(() => EditCommentCubit(locator<EditCommentContract>()));
+  locator
+      .registerFactory(() => CreateForumCubit(locator<CreateForumContract>()));
 }

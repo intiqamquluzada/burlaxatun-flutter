@@ -9,10 +9,12 @@ class SendedReplyBox extends StatefulWidget {
   const SendedReplyBox({
     super.key,
     required this.parentId,
+    required this.parentTag,
     // required this.sendedReplies,
   });
 
   final int parentId;
+  final String parentTag;
   // final ValueNotifier<List<Comments>> sendedReplies;
 
   @override
@@ -58,6 +60,7 @@ class _SendedReplyBoxState extends State<SendedReplyBox> {
                             reply: sendedReplies[i],
                             boxIndex: i,
                             parentReplies: null,
+                            parentTag: widget.parentTag,
                           ),
                         ),
                     ],

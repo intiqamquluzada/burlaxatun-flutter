@@ -1,4 +1,7 @@
+import 'package:burla_xatun/cubits/create_forum/create_forum_cubit.dart';
+import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../../utils/constants/color_constants.dart';
@@ -18,7 +21,10 @@ class AddNewForumButton extends StatelessWidget {
       onTap: () {
         Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
-            builder: (_) => CreateNewForum(categoryId: categoryId),
+            builder: (_) => BlocProvider(
+              create: (context) => locator<CreateForumCubit>(),
+              child: CreateNewForum(categoryId: categoryId),
+            ),
           ),
         );
       },

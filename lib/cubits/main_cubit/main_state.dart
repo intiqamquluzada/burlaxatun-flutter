@@ -29,6 +29,7 @@ class MainInitial extends Equatable {
     required this.userTag,
     required this.replyBoxIndex,
     // required this.menuOption,
+    required this.commentDialog,
   });
 
   final int carouselIndex;
@@ -48,6 +49,7 @@ class MainInitial extends Equatable {
   final bool isOverlayVisible;
   final BuildContext? navigationShellContext;
   final int replyBoxIndex;
+  final CommentDialog? commentDialog;
 
   @override
   List<Object?> get props => [
@@ -67,6 +69,7 @@ class MainInitial extends Equatable {
         commentBoxIndex,
         userTag,
         replyBoxIndex,
+        commentDialog,
       ];
 
   MainInitial copyWith({
@@ -87,6 +90,7 @@ class MainInitial extends Equatable {
     BuildContext? navigationShellContext,
     Offset? commentTapUpBox,
     int? replyBoxIndex,
+    CommentDialog? commentDialog,
   }) {
     return MainInitial(
       indexOfView: indexOfView ?? this.indexOfView,
@@ -106,6 +110,7 @@ class MainInitial extends Equatable {
       commentBoxIndex: commentBoxIndex ?? this.commentBoxIndex,
       userTag: userTag ?? this.userTag,
       replyBoxIndex: replyBoxIndex ?? this.replyBoxIndex,
+      commentDialog: commentDialog ?? this.commentDialog,
     );
   }
 }

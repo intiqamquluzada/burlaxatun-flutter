@@ -1,7 +1,11 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/cubits/edit_comment/edit_comment_cubit.dart';
 import 'package:burla_xatun/cubits/report_or_block_user/report_or_block_user_cubit.dart';
+import 'package:burla_xatun/data/contractor/edit_comment_contract.dart';
+import 'package:burla_xatun/utils/app/app_snackbars.dart';
 import 'package:burla_xatun/utils/di/locator.dart';
+import 'package:burla_xatun/utils/helper/past_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,14 +20,17 @@ class CommentDatas extends StatelessWidget {
   const CommentDatas({
     super.key,
     this.comment,
+    this.tag,
   });
 
   final Comments? comment;
+  final String? tag;
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<Comments> commentValue =
+        ValueNotifier<Comments>(comment!);
     final userName = comment?.user?.fullName ?? 'user';
-    final text = comment?.text ?? 'comment text not found';
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -64,7 +71,7 @@ class CommentDatas extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
                     child: GlobalText(
-                      text: '1 minute ago',
+                      text: PastHelper.timeAgo(comment!.createdAt.toString()),
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,
@@ -73,13 +80,48 @@ class CommentDatas extends StatelessWidget {
                 ],
               ),
               6.h,
-              GlobalText(
-                height: 1.4,
-                textAlign: TextAlign.left,
-                text: text,
-                fontSize: 13,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
+              Row(
+                children: [
+                  Visibility(
+                    visible: tag != null,
+                    child: GlobalText(
+                      height: 1.4,
+                      textAlign: TextAlign.left,
+                      text: '@$tag',
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(width: 7),
+                  ValueListenableBuilder(
+                    valueListenable: commentValue,
+                    builder: (context, value, child) {
+                      return BlocListener<EditCommentCubit, EditCommentState>(
+                        listener: (context, state) {
+                          if (state.editCommentStatus ==
+                              EditCommentStatus.success) {
+                            if (comment?.id == state.editedComment?.id) {
+                              commentValue.value = state.editedComment!;
+                            }
+                          } else if (state.editCommentStatus ==
+                              EditCommentStatus.error) {
+                            AppSnackbars.error(
+                                context, 'Redaktı edərkən xəta baş verdi');
+                          }
+                        },
+                        child: GlobalText(
+                          height: 1.4,
+                          textAlign: TextAlign.left,
+                          text: value.text ?? 'comment text not found',
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -88,7 +130,6 @@ class CommentDatas extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: GestureDetector(
             onTap: () {
-              log('tap on bloc icon');
               log('${comment?.text}');
               showModalBottomSheet(
                 context: context,

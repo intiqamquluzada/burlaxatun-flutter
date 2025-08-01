@@ -68,6 +68,7 @@ class MainnCubit extends Cubit<MainInitial> {
             commentBoxIndex: -1,
             userTag: null,
             replyBoxIndex: -1,
+            commentDialog: null,
             // menuOption: null,
           ),
         );
@@ -128,16 +129,19 @@ class MainnCubit extends Cubit<MainInitial> {
         return MenuAndEmojiDialog(fromTop: v, comment: comment!);
       },
     ).then((onValue) async {
-      emit(state.copyWith(commentBoxIndex: -1));
+      emit(state.copyWith(
+        commentBoxIndex: -1,
+        commentDialog: onValue,
+      ));
       replyBoxIndexValue?.value = null;
       log('$onValue');
       if (onValue != null) {
         switch (onValue) {
           case CommentDialog.copy:
-            log('${comment?.text}');
+            log('copied comment: ${comment?.text}');
             Clipboard.setData(ClipboardData(text: comment?.text ?? ''));
             ClipboardData? data = await Clipboard.getData('text/plain');
-            // log('${data?.text}');
+            log('after copy: ${data?.text}');
 
           case CommentDialog.delete:
             log('gonderilen replies length:${replies?.value}');

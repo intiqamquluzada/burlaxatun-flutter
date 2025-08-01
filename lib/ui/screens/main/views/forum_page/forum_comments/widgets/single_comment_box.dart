@@ -108,7 +108,9 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                         onTap: () {},
                         child: Padding(
                           padding: const EdgeInsets.all(16),
-                          child: CommentDatas(comment: widget.comment),
+                          child: CommentDatas(
+                            comment: widget.comment,
+                          ),
                         ),
                       ),
                     ),
@@ -118,7 +120,10 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
             },
           ),
         ),
-        SendedReplyBox(parentId: widget.comment.id ?? -1),
+        SendedReplyBox(
+          parentId: widget.comment.id ?? -1,
+          parentTag: widget.comment.user?.fullName ?? 'user',
+        ),
         ValueListenableBuilder(
           valueListenable: hasReplies,
           builder: (context, value, child) {
@@ -153,6 +158,8 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                               replies: replyList[i],
                               onTap: () {},
                               parentReplies: widget.replies,
+                              parentTag:
+                                  widget.comment.user?.fullName ?? 'user',
                             ),
                           );
                         },

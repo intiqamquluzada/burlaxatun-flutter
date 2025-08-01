@@ -1,6 +1,10 @@
+import 'package:burla_xatun/cubits/create_forum/create_forum_cubit.dart';
+import 'package:burla_xatun/utils/app/app_snackbars.dart';
 import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../../widgets/global_text.dart';
 
@@ -40,15 +44,29 @@ class NewForumAppbar extends StatelessWidget implements PreferredSizeWidget {
           color: Color(0xff344054),
         ),
         actions: [
-          GestureDetector(
-            onTap: send,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 22),
-              child: SvgPicture.asset(
-                'assets/icons/forum_send_icon.svg',
-                color: ColorConstants.primaryRedColor,
-              ),
-            ),
+          BlocConsumer<CreateForumCubit, CreateForumState>(
+            listener: (context, state) {
+              if (state.createForumStatus == CreateForumStatus.success) {
+                AppSnackbars.success(context, 'Forum uğurla əlavə olundu');
+                context.pop();
+              } else if (state.createForumStatus == CreateForumStatus.error) {
+                AppSnackbars.error(context, 'Forum yaradarkən xəta baş verdi');
+              }
+            },
+            builder: (context, state) {
+              return GestureDetector(
+                onTap: send,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 22),
+                  child: SvgPicture.asset(
+                    'assets/icons/forum_send_icon.svg',
+                    color: state.createForumStatus == CreateForumStatus.loading
+                        ? ColorConstants.customBlack
+                        : ColorConstants.primaryRedColor,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

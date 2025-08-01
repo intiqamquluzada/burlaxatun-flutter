@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/cubits/edit_comment/edit_comment_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,16 +29,18 @@ class CommentInput extends StatefulWidget {
   State<CommentInput> createState() => _CommentInputState();
 }
 
-class _CommentInputState extends State<CommentInput> { 
+class _CommentInputState extends State<CommentInput> {
   late MainnCubit mainCubit;
   late CreateCommentCubit createCommentCubit;
   late ForumCommentsCubit forumCommentsCubit;
+  late EditCommentCubit editCommentCubit;
 
   @override
   void initState() {
     mainCubit = context.read<MainnCubit>();
     createCommentCubit = context.read<CreateCommentCubit>();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
+    editCommentCubit = context.read<EditCommentCubit>();
     mainCubit.commentInputTextController = TextEditingController();
     super.initState();
   }
@@ -187,7 +190,7 @@ class _CommentInputState extends State<CommentInput> {
                     );
                   } else if (state.createCommentStatus ==
                       CreateCommentStatus.replySuccess) {
-                    log('reply successssssss');
+                    log('reply success');
                     _doAfterSuccess(isReplySuccess: true);
                     createCommentCubit
                         .addCommentToSendedRepliesList(state.sendedComment!);
@@ -201,24 +204,51 @@ class _CommentInputState extends State<CommentInput> {
                           CreateCommentStatus.commentLoading ||
                       state.createCommentStatus ==
                           CreateCommentStatus.replyLoading;
-                  return GestureDetector(
-                    onTap: () {
-                      mainCubit.commentInputFocusNode.unfocus();
+                  return BlocSelector<MainnCubit, MainInitial, CommentDialog?>(
+                    selector: (state) {
+                      return state.commentDialog;
+                    },
+                    builder: (context, state) {
+                      return ValueListenableBuilder(
+                        valueListenable: createCommentCubit.selectedComment,
+                        builder: (context, selectedComment, child) {
+                          return GestureDetector(
+                            onTap: () async {
+                              if (state == CommentDialog.edit) {
+                                await editCommentCubit.editComment(
+                                  forumId: widget.forumId,
+                                  text: mainCubit
+                                      .commentInputTextController.text
+                                      .trim(),
+                                  commentId: selectedComment?.id ?? -1,
+                                  parentId: selectedComment?.parent,
+                                );
+                                _doAfterSuccess(isReplySuccess: true);
+                                mainCubit.state.copyWith(
+                                    commentDialog: CommentDialog.copy);
+                              } else {
+                                mainCubit.commentInputFocusNode.unfocus();
 
-                      createCommentCubit.sendComment(
-                        forumId: widget.forumId,
-                        text: mainCubit.commentInputTextController.text,
+                                createCommentCubit.sendComment(
+                                  forumId: widget.forumId,
+                                  text:
+                                      mainCubit.commentInputTextController.text,
+                                );
+                              }
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/send_text_icon.svg',
+                              colorFilter: ColorFilter.mode(
+                                isLoading
+                                    ? ColorConstants.disabledButtonColor
+                                    : ColorConstants.black800,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
-                    child: SvgPicture.asset(
-                      'assets/icons/send_text_icon.svg',
-                      colorFilter: ColorFilter.mode(
-                        isLoading
-                            ? ColorConstants.disabledButtonColor
-                            : ColorConstants.black800,
-                        BlendMode.srcIn,
-                      ),
-                    ),
                   );
                 },
               ),

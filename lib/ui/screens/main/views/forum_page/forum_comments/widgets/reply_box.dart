@@ -20,10 +20,12 @@ class ReplyBox extends StatefulWidget {
     this.replies,
     this.onTap,
     required this.parentReplies,
+    required this.parentTag,
   });
 
   final Comments reply;
   final int boxIndex;
+  final String parentTag;
   final ValueNotifier<List<Comments>>? replies;
   final ValueNotifier<List<Comments>>? parentReplies;
   final void Function()? onTap;
@@ -119,9 +121,16 @@ class _ReplyBoxState extends State<ReplyBox> {
                                   vertical: 6.5,
                                   horizontal: 10,
                                 ),
-                                child: CommentDatas(comment: widget.reply),
+                                child: CommentDatas(
+                                  comment: widget.reply,
+                                  tag: widget.parentTag,
+                                ),
                               ),
-                              SendedReplyBox(parentId: widget.reply.id!),
+                              SendedReplyBox(
+                                parentId: widget.reply.id!,
+                                parentTag:
+                                    widget.reply.user?.fullName ?? 'user',
+                              ),
                               ValueListenableBuilder(
                                 valueListenable: showMoreVisible,
                                 builder: (context, value, child) {
@@ -161,6 +170,11 @@ class _ReplyBoxState extends State<ReplyBox> {
                                                         },
                                                         parentReplies:
                                                             widget.replies,
+                                                        parentTag: widget
+                                                                .reply
+                                                                .user
+                                                                ?.fullName ??
+                                                            'user',
                                                       );
                                                     },
                                                   );

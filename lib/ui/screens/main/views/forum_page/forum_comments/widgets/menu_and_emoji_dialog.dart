@@ -1,5 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:burla_xatun/utils/app/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -67,8 +69,11 @@ class MenuAndEmojiDialog extends StatelessWidget {
                                 topRight: Radius.circular(12),
                               ),
                               onTap: () {
-                                context.pop();
-                                // mainCubit.updateCommentBoxIndex(-1);
+                                context.pop(CommentDialog.copy);
+                                if (Platform.isIOS) {
+                                  AppSnackbars.success(
+                                      context, 'Mətn kopyalandı');
+                                }
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
