@@ -8,9 +8,11 @@ class SecondaryForumPage extends StatelessWidget {
   const SecondaryForumPage({
     super.key,
     this.categoryId,
+    required this.categoryName,
   });
 
   final int? categoryId;
+  final String categoryName;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,10 @@ class SecondaryForumPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: SecondaryForumPageCustomScroll(categoryId: categoryId!),
+        child: SecondaryForumPageCustomScroll(
+          categoryId: categoryId!,
+          categoryName: categoryName,
+        ),
       ),
     );
   }

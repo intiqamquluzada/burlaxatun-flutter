@@ -4,6 +4,7 @@ import 'package:burla_xatun/cubits/create_comment/create_comment_cubit.dart';
 import 'package:burla_xatun/cubits/delete_comment/delete_comment_cubit.dart';
 import 'package:burla_xatun/cubits/edit_comment/edit_comment_cubit.dart';
 import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
+import 'package:burla_xatun/ui/widgets/global_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,9 +24,11 @@ class SecondaryForumPageCustomScroll extends StatefulWidget {
   const SecondaryForumPageCustomScroll({
     super.key,
     required this.categoryId,
+    required this.categoryName,
   });
 
   final int categoryId;
+  final String categoryName;
 
   @override
   State<SecondaryForumPageCustomScroll> createState() =>
@@ -105,8 +108,10 @@ class _SecondaryForumPageCustomScrollState
           );
         }
         if (state.forumListStatus == ForumListStatus.success) {
-          final categoryName = state.forumList?.first.category?.name ??
-              'Category name not found';
+          // final categoryName = state.forumList?.first.category?.name ??
+          //     'Category name not found';
+          log('${state.forumList?.isEmpty}');
+
           return Stack(
             alignment: Alignment.bottomRight,
             children: [
@@ -124,83 +129,93 @@ class _SecondaryForumPageCustomScrollState
                       padding: const EdgeInsets.only(top: 22, bottom: 18),
                       sliver: SliverToBoxAdapter(
                         child: ForumTitle(
-                          title: categoryName,
+                          title: widget.categoryName,
                         ),
                       ),
                     ),
-                    // SliverPadding(
-                    //   padding: const EdgeInsets.only(bottom: 18),
-                    //   sliver: SliverToBoxAdapter(
-                    //     child: SecondaryForumSearchInput(),
-                    //   ),
-                    // ),
                     BlocSelector<ForumListCubit, ForumListState, List<Forum>>(
                       selector: (state) {
-                        return state.forumList ?? [];
+                        return state.forumList!;
                       },
                       builder: (context, forumList) {
-                        log('${forumList.length}');
-                        return SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            childCount: forumList.length,
-                            (_, i) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 18),
-                                child: ForumBox(
-                                  forumId: forumList[i].id ?? -1,
-                                  authorName: forumList[i].user?.fullName ??
-                                      'data not found',
-                                  forumTitle:
-                                      forumList[i].text ?? 'data not found',
-                                  likeCount: 23,
-                                  viewCount: forumList[i].viewCount.toString(),
-                                  commentCount: '10',
-                                  onTap: () {
-                                    final forumSlug = forumList[i].slug ?? '';
-                                    final forumId = forumList[i].id ?? -1;
+                        return forumList.isEmpty
+                            ? SliverToBoxAdapter(
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 30),
+                                    child: GlobalText(text: 'İlk forumu yarat'),
+                                  ),
+                                ),
+                              )
+                            : SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  childCount: forumList.length,
+                                  (_, i) {
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 18),
+                                      child: ForumBox(
+                                        forumId: forumList[i].id ?? -1,
+                                        authorName:
+                                            forumList[i].user?.fullName ??
+                                                'data not found',
+                                        forumTitle: forumList[i].text ??
+                                            'data not found',
+                                        likeCount: 23,
+                                        viewCount:
+                                            forumList[i].viewCount.toString(),
+                                        commentCount: '10',
+                                        onTap: () {
+                                          final forumSlug =
+                                              forumList[i].slug ?? '';
+                                          final forumId = forumList[i].id ?? -1;
 
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(
-                                      MaterialPageRoute(
-                                        builder: (_) => MultiBlocProvider(
-                                          providers: [
-                                            BlocProvider(
-                                              create: (context) =>
-                                                  locator<ForumDetailCubit>()
-                                                    ..getForumDetail(forumSlug),
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .push(
+                                            MaterialPageRoute(
+                                              builder: (_) => MultiBlocProvider(
+                                                providers: [
+                                                  BlocProvider(
+                                                    create: (context) =>
+                                                        locator<
+                                                            ForumDetailCubit>()
+                                                          ..getForumDetail(
+                                                              forumSlug),
+                                                  ),
+                                                  BlocProvider(
+                                                    create: (context) => locator<
+                                                        ForumCommentsCubit>()
+                                                      ..getForumComments(
+                                                        forumId: forumId,
+                                                      ),
+                                                  ),
+                                                  BlocProvider(
+                                                    create: (context) => locator<
+                                                        CreateCommentCubit>(),
+                                                  ),
+                                                  BlocProvider(
+                                                    create: (context) => locator<
+                                                        DeleteCommentCubit>(),
+                                                  ),
+                                                  BlocProvider(
+                                                    create: (context) =>
+                                                        locator<
+                                                            EditCommentCubit>(),
+                                                  ),
+                                                ],
+                                                child: ForumCommentsPage(
+                                                  forumId: forumId,
+                                                ),
+                                              ),
                                             ),
-                                            BlocProvider(
-                                              create: (context) =>
-                                                  locator<ForumCommentsCubit>()
-                                                    ..getForumComments(
-                                                      forumId: forumId,
-                                                    ),
-                                            ),
-                                            BlocProvider(
-                                              create: (context) =>
-                                                  locator<CreateCommentCubit>(),
-                                            ),
-                                            BlocProvider(
-                                              create: (context) =>
-                                                  locator<DeleteCommentCubit>(),
-                                            ),
-                                            BlocProvider(
-                                              create: (context) =>
-                                                  locator<EditCommentCubit>(),
-                                            ),
-                                          ],
-                                          child: ForumCommentsPage(
-                                            forumId: forumId,
-                                          ),
-                                        ),
+                                          );
+                                        },
                                       ),
                                     );
                                   },
                                 ),
                               );
-                            },
-                          ),
-                        );
                       },
                     ),
                     BlocSelector<ForumListCubit, ForumListState,

@@ -1,8 +1,8 @@
-import 'package:burla_xatun/data/services/local/login_token_service.dart';
-import 'package:burla_xatun/data/services/local/token_hive_service.dart';
-import 'package:burla_xatun/data/services/remote/base_network_service.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:dio/dio.dart';
+
+import '../../../utils/di/locator.dart';
+import '../local/login_token_service.dart';
+import 'base_network_service.dart';
 
 class CreateForumService {
   Future<Response<dynamic>> createForum({
@@ -12,7 +12,7 @@ class CreateForumService {
     final url = 'https://burrla.secop.az/D/forum-create/';
 
     final postData = {
-      "category": categoryId,
+      "category_id": categoryId,
       "text": text,
     };
 

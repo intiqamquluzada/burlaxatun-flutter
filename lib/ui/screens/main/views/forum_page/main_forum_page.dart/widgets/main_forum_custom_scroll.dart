@@ -40,7 +40,7 @@ class MainForumCustomScroll extends StatelessWidget {
               slivers: [
                 SliverPadding(
                   padding: EdgeInsets.only(bottom: 24),
-                  sliver: SliverToBoxAdapter( 
+                  sliver: SliverToBoxAdapter(
                     child: MainForumBanner(),
                   ),
                 ),
@@ -59,7 +59,10 @@ class MainForumCustomScroll extends StatelessWidget {
                             title: data[i].name ?? 'Məlumat tapılmadı',
                             onTap: () => context.push(
                               '/secondary_forum',
-                              extra: data[i].id,
+                              extra: {
+                                'category_id': data[i].id,
+                                'category_name': data[i].name,
+                              },
                             ),
                             categoryIndex: i,
                           ),

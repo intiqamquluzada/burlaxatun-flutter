@@ -20,7 +20,7 @@ class ForumListCubit extends Cubit<ForumListState> {
 
   Future<void> getForumList({int? categoryid, bool isRefresh = false}) async {
     if (isRefresh) {
-      forumList = []; 
+      forumList = [];
       url = isRefresh ? '' : url;
     }
     if (url == null || state.forumListStatus == ForumListStatus.loading) {
@@ -49,6 +49,17 @@ class ForumListCubit extends Cubit<ForumListState> {
       log('Error occured while getting forum list by category id: $e',
           stackTrace: s);
     }
+  }
+
+  void addCreatedForumToList(Forum createdForum) {
+    log('forum legth before add: ${state.forumList?.length}');
+    forumList = state.forumList!;
+    forumList.insert(0, createdForum);
+    // forumList.insert(0, createdForum);
+    emit(state.copyWith(
+      forumList: List.from(forumList),
+    ));
+    log('forum legth after add: ${state.forumList?.length}');
   }
 
   // int page = 0;

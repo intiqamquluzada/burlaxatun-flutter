@@ -42,7 +42,7 @@ class _CreateNewForumState extends State<CreateNewForum> {
       appBar: NewForumAppbar(
         onTap: () {
           context.pop();
-        },
+        }, 
         send: () async {
           await createForumCubit.createForum(
             categoryId: widget.categoryId!,

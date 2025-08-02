@@ -1,3 +1,4 @@
+import 'package:burla_xatun/ui/screens/auth/video_doktor_login/video_doktor_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -96,6 +97,10 @@ class Routerapp {
           create: (context) => locator<LoginCubit>(),
           child: Login(),
         ),
+      ),
+      GoRoute(
+        path: '/video_doktor_login',
+        builder: (context, state) => VideoDoktorLogin(),
       ),
       GoRoute(
         path: '/sign_up',
@@ -327,11 +332,17 @@ class Routerapp {
               GoRoute(
                 path: '/secondary_forum',
                 builder: (context, state) {
-                  final categoryId = state.extra as int;
+                  final categoryData = state.extra as Map<String, dynamic>;
+                  final categoryId = categoryData['category_id'];
+                  final categoryName = categoryData['category_name'];
+
                   return BlocProvider(
                     create: (context) => locator<ForumListCubit>()
                       ..getForumList(categoryid: categoryId),
-                    child: SecondaryForumPage(categoryId: categoryId),
+                    child: SecondaryForumPage(
+                      categoryId: categoryId,
+                      categoryName: categoryName,
+                    ),
                   );
                 },
               ),

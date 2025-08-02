@@ -1,4 +1,5 @@
 import 'package:burla_xatun/cubits/create_forum/create_forum_cubit.dart';
+import 'package:burla_xatun/cubits/forum_list/forum_list_cubit.dart';
 import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,7 +24,10 @@ class AddNewForumButton extends StatelessWidget {
           MaterialPageRoute(
             builder: (_) => BlocProvider(
               create: (context) => locator<CreateForumCubit>(),
-              child: CreateNewForum(categoryId: categoryId),
+              child: BlocProvider.value(
+                value: context.read<ForumListCubit>(),
+                child: CreateNewForum(categoryId: categoryId),
+              ),
             ),
           ),
         );

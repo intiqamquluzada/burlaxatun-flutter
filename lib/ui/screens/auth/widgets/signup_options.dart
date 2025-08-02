@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../cubits/login_cubit/login_cubit.dart';
 import '../../../../utils/constants/text_constants.dart';
 import '../../../../utils/extensions/context_extensions.dart';
 import '../../../../utils/extensions/num_extensions.dart';
 import '../../../widgets/global_text.dart';
+import '../video_doktor_login/video_doktor_login.dart';
 
 class SignupOptions extends StatelessWidget {
   const SignupOptions({super.key});
@@ -28,13 +31,27 @@ class SignupOptions extends StatelessWidget {
         //   ),
         // ),
         // 10.h,
-        OptionWidget(
-          paddingRight: 39,
-          optionName: TextConstants.videoDoktor,
-          child: Image.asset(
-            'assets/png/videodoctor_logo.png',
-            width: 25,
-            height: 25,
+        GestureDetector(
+          onTap: () {
+            // context.pushReplacement('/video_doktor_login');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => BlocProvider.value(
+                  value: context.read<LoginCubit>(),
+                  child: VideoDoktorLogin(),
+                ),
+              ),
+            );
+          },
+          child: OptionWidget(
+            paddingRight: 39,
+            optionName: TextConstants.videoDoktor,
+            child: Image.asset(
+              'assets/png/videodoctor_logo.png',
+              width: 25,
+              height: 25,
+            ),
           ),
         ),
       ],

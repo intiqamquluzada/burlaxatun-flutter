@@ -1,8 +1,5 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/edit_comment/edit_comment_cubit.dart';
-import 'package:burla_xatun/ui/screens/main/views/forum_page/forum_comments/continue_thread.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

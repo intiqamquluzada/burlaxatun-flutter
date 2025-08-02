@@ -5,7 +5,7 @@ class ForumListModel {
   final List<Forum>? results;
 
   ForumListModel({
-    this.count, 
+    this.count,
     this.next,
     this.previous,
     this.results,
@@ -17,8 +17,7 @@ class ForumListModel {
         previous: json["previous"],
         results: json["results"] == null
             ? []
-            : List<Forum>.from(
-                json["results"]!.map((x) => Forum.fromJson(x))),
+            : List<Forum>.from(json["results"]!.map((x) => Forum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -41,11 +40,13 @@ class Forum {
   final String? text;
   final int? viewCount;
   final int? likes;
+  final int? commentCount;
 
   Forum({
     this.id,
     this.user,
     this.category,
+    this.commentCount,
     this.createdAt,
     this.updatedAt,
     this.slug,
@@ -70,6 +71,7 @@ class Forum {
         text: json["text"],
         viewCount: json["view_count"],
         likes: json["likes"],
+        commentCount: json["comment_countl"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,6 +84,7 @@ class Forum {
         "text": text,
         "view_count": viewCount,
         "likes": likes,
+        "comment_count": commentCount,
       };
 }
 

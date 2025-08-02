@@ -5,5 +5,9 @@ abstract class LoginContractor {
     required String email,
     required String password,
   });
+
+  Future<LoginResponseModel> loginByVideoDoktor({
+    required String login,
+    required String password,
+  });
 }
- 
