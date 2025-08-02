@@ -105,6 +105,19 @@ class _SecondaryForumPageCustomScrollState
           );
         }
         if (state.forumListStatus == ForumListStatus.success) {
+          if (state.forumList == null || state.forumList!.isEmpty) {
+            return Center(
+              child: Text(
+                'Forumlar tapılmadı',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            );
+          }
+
           final categoryName = state.forumList?.first.category?.name ??
               'Category name not found';
           return Stack(

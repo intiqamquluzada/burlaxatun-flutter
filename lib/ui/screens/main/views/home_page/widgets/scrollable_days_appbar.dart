@@ -174,7 +174,7 @@ class _ScrollableDaysAppbarState extends State<ScrollableDaysAppbar> {
                             : Padding(
                                 padding: const EdgeInsets.only(top: 12),
                                 child: SizedBox(
-                                  width: 28, // 25
+                                  // width: 28, // 25
                                   child: GlobalText(
                                     text: '$i',
                                     fontSize: 16,
