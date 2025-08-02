@@ -18,14 +18,17 @@ class DavamEt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: PaddingConstants.h20,
-      child: GlobalButton(
-        isLoading: isLoading,
-        buttonName: 'Davam et',
-        buttonColor: isActive ? ColorConstants.primaryRedColor : Colors.black38,
-        textColor: Colors.white,
-        onPressed: isActive ? onPressed : null,
+    return SafeArea(
+      child: Padding(
+        padding: PaddingConstants.h20,
+        child: GlobalButton(
+          isLoading: isLoading,
+          buttonName: 'Davam et',
+          buttonColor:
+              isActive ? ColorConstants.primaryRedColor : Colors.black38,
+          textColor: Colors.white,
+          onPressed: isActive ? onPressed : null,
+        ),
       ),
     );
   }

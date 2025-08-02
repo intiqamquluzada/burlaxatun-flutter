@@ -18,7 +18,8 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xffFAFAFA),
       body: navigationShell, // (navigationShell pagelerdir)
-      bottomNavigationBar: GlobalBottomNavbar(navigationShell: navigationShell),
+      bottomNavigationBar:
+          SafeArea(child: GlobalBottomNavbar(navigationShell: navigationShell)),
     );
   }
 }
