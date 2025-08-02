@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/cubits/main_cubit/mainn_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -28,12 +29,16 @@ class ForumCommentsPage extends StatefulWidget {
 class _ForumCommentsPageState extends State<ForumCommentsPage> {
   late ScrollController scrollController;
   late ForumCommentsCubit forumCommentsCubit;
+  late MainnCubit mainnCubit;
   late ValueNotifier<Comments?> selectedComment;
+  // late TextEditingController commentInputTextController;
   @override
   void initState() {
     scrollController = ScrollController();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
+    mainnCubit = context.read<MainnCubit>();
     selectedComment = ValueNotifier<Comments?>(null);
+    mainnCubit.commentInputTextController = TextEditingController();
     _loadMoreComment();
     super.initState();
   }
@@ -46,6 +51,13 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
         log('load more comment');
       }
     });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    mainnCubit.commentInputTextController.dispose();
+    super.dispose();
   }
 
   @override
@@ -143,6 +155,7 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
             return CommentInput(
               forumId: widget.forumId,
               scrollController: scrollController,
+              commentInputTextController: mainnCubit.commentInputTextController,
             );
           }
           return SizedBox.shrink();

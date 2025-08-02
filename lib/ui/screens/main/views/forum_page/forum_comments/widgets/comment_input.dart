@@ -18,12 +18,14 @@ class CommentInput extends StatefulWidget {
   const CommentInput({
     super.key,
     required this.forumId,
-    required this.scrollController,
+    this.scrollController,
+    required this.commentInputTextController,
     // this.comment,
   });
   final int forumId;
 
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
+  final TextEditingController commentInputTextController;
   // final Comments? comment;
   @override
   State<CommentInput> createState() => _CommentInputState();
@@ -34,6 +36,7 @@ class _CommentInputState extends State<CommentInput> {
   late CreateCommentCubit createCommentCubit;
   late ForumCommentsCubit forumCommentsCubit;
   late EditCommentCubit editCommentCubit;
+  
 
   @override
   void initState() {
@@ -41,7 +44,7 @@ class _CommentInputState extends State<CommentInput> {
     createCommentCubit = context.read<CreateCommentCubit>();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
     editCommentCubit = context.read<EditCommentCubit>();
-    mainCubit.commentInputTextController = TextEditingController();
+    // mainCubit.commentInputTextController = widget.commentInputTextController;
     super.initState();
   }
 
@@ -49,8 +52,8 @@ class _CommentInputState extends State<CommentInput> {
     mainCubit.commentInputTextController.text = '';
     isReplySuccess
         ? null
-        : widget.scrollController.animateTo(
-            widget.scrollController.position.maxScrollExtent - 30,
+        : widget.scrollController!.animateTo(
+            widget.scrollController!.position.maxScrollExtent - 30,
             duration: Duration(milliseconds: 300),
             curve: Curves.easeOut,
           );
@@ -59,7 +62,6 @@ class _CommentInputState extends State<CommentInput> {
 
   @override
   void dispose() {
-    mainCubit.commentInputTextController.dispose();
     super.dispose();
   }
 

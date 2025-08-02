@@ -1,22 +1,21 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/edit_comment/edit_comment_cubit.dart';
-import 'package:burla_xatun/cubits/report_or_block_user/report_or_block_user_cubit.dart';
-import 'package:burla_xatun/data/contractor/edit_comment_contract.dart';
-import 'package:burla_xatun/utils/app/app_snackbars.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
-import 'package:burla_xatun/utils/helper/past_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../../../../cubits/edit_comment/edit_comment_cubit.dart';
+import '../../../../../../../cubits/report_or_block_user/report_or_block_user_cubit.dart';
 import '../../../../../../../data/models/remote/response/forum_comments_model.dart';
+import '../../../../../../../utils/app/app_snackbars.dart';
+import '../../../../../../../utils/di/locator.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../../utils/helper/past_helper.dart';
 import '../../../../../../widgets/global_text.dart';
 import '../../../../../../widgets/report_comment_or_block_user.dart';
 
-class CommentDatas extends StatelessWidget {
+class CommentDatas extends StatefulWidget {
   const CommentDatas({
     super.key,
     this.comment,
@@ -27,10 +26,18 @@ class CommentDatas extends StatelessWidget {
   final String? tag;
 
   @override
+  State<CommentDatas> createState() => _CommentDatasState();
+}
+
+class _CommentDatasState extends State<CommentDatas>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+    log('Build commnet data');
     final ValueNotifier<Comments> commentValue =
-        ValueNotifier<Comments>(comment!);
-    final userName = comment?.user?.fullName ?? 'user';
+        ValueNotifier<Comments>(widget.comment!);
+    final userName = widget.comment?.user?.fullName ?? 'user';
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -71,7 +78,8 @@ class CommentDatas extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
                     child: GlobalText(
-                      text: PastHelper.timeAgo(comment!.createdAt.toString()),
+                      text: PastHelper.timeAgo(
+                          widget.comment!.createdAt.toString()),
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,
@@ -83,11 +91,11 @@ class CommentDatas extends StatelessWidget {
               Row(
                 children: [
                   Visibility(
-                    visible: tag != null,
+                    visible: widget.tag != null,
                     child: GlobalText(
                       height: 1.4,
                       textAlign: TextAlign.left,
-                      text: '@$tag',
+                      text: '@${widget.tag}',
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
@@ -101,13 +109,13 @@ class CommentDatas extends StatelessWidget {
                         listener: (context, state) {
                           if (state.editCommentStatus ==
                               EditCommentStatus.success) {
-                            if (comment?.id == state.editedComment?.id) {
+                            if (widget.comment?.id == state.editedComment?.id) {
                               commentValue.value = state.editedComment!;
                             }
                           } else if (state.editCommentStatus ==
                               EditCommentStatus.error) {
                             AppSnackbars.error(
-                                context, 'Redaktı edərkən xəta baş verdi');
+                                context, 'Redaktə edərkən xəta baş verdi');
                           }
                         },
                         child: GlobalText(
@@ -130,15 +138,15 @@ class CommentDatas extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: GestureDetector(
             onTap: () {
-              log('${comment?.text}');
+              log('${widget.comment?.text}');
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
                   return BlocProvider(
                     create: (context) => locator<ReportOrBlockUserCubit>(),
                     child: ReportCommentOrBlockUser(
-                      userId: comment?.user?.id,
-                      commentId: comment?.id,
+                      userId: widget.comment?.user?.id,
+                      commentId: widget.comment?.id,
                     ),
                   );
                 },
@@ -155,4 +163,8 @@ class CommentDatas extends StatelessWidget {
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
