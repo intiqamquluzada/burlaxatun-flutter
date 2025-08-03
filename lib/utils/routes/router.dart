@@ -72,6 +72,7 @@ class Routerapp {
 
   // static final navigatorKey = GlobalKey<NavigatorState>();
   // static final _shellNavigatorKey = GlobalKey<NavigatorState>();
+  late final StatefulNavigationShell shell;
 
   final GoRouter router = GoRouter(
     navigatorKey: navigatorKey,
@@ -179,7 +180,9 @@ class Routerapp {
             routes: [
               GoRoute(
                 path: '/home',
-                builder: (context, state) => HomePage(),
+                builder: (context, state) {
+                  return HomePage();
+                },
               ),
               GoRoute(
                 path: '/videos',

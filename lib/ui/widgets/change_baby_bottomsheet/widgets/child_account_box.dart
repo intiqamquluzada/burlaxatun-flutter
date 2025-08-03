@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/color_constants.dart';
@@ -32,11 +33,19 @@ class ChildAccountBox extends StatelessWidget {
               EdgeInsets.only(left: 23, right: 46),
           child: Row(
             children: [
-              Image.asset(
-                'assets/png/baby_acc_pic.png',
+              CachedNetworkImage(
+                imageUrl: 'assets/png/baby_acc_pic.png',
+                errorWidget: (context, url, error) {
+                  return Icon(Icons.person);
+                },
                 width: 52,
                 height: 52,
               ),
+              // Image.asset(
+              //   'assets/png/baby_acc_pic.png',
+              // width: 52,
+              // height: 52,
+              // ),
               SizedBox(width: 12),
               SizedBox(
                 width: context.deviceWidth * 0.58,

@@ -1,0 +1,18 @@
+import 'package:burla_xatun/data/services/remote/base_network_service.dart';
+import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
+import 'package:dio/dio.dart';
+
+class PregnancyProgressService {
+  Future<Response<dynamic>> getPregnancyProgress({required String week}) async {
+    final url = EndpointsConstants.progressPregnancy;
+
+    final query = {
+      'week': week,
+    };
+
+    final response =
+        await BaseNetwork.instance.getDio().get(url, queryParameters: query);
+
+    return response;
+  }
+}

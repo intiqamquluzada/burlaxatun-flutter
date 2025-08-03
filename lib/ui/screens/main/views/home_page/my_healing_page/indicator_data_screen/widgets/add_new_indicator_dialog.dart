@@ -188,7 +188,7 @@ class _AddNewIndicatorDialogState extends State<AddNewIndicatorDialog> {
                             } else if (state.indicatorStatus ==
                                 IndicatorStatus.success) {
                               context.pop();
-                              AppSnackbars.error(
+                              AppSnackbars.success(
                                   context, 'Göstərici uğurla əlavə olundu');
                             }
                           },

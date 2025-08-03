@@ -8,7 +8,7 @@ import 'widgets/forgot_password_button.dart';
 import 'widgets/login_button.dart';
 import 'widgets/login_image.dart';
 import 'widgets/login_inputs.dart';
-import 'widgets/signup_button.dart';
+import '../sign_up/widgets/signup_button.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});

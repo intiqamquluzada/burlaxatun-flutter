@@ -14,10 +14,12 @@ class UserDataCubit extends Cubit<UserDataState> {
   UserDataCubit(this._userDataContractor) : super(UserDataState.initial());
 
   final UserDataContractor _userDataContractor;
-  late ValueNotifier<Baby?> currentBabyNotifier;
+  // late ValueNotifier<Baby?> currentBabyNotifier;
+
+  final currentBabyNotifier = ValueNotifier<Baby?>(null);
 
   Future<void> getUserData() async {
-    currentBabyNotifier = ValueNotifier<Baby?>(null);
+    // currentBabyNotifier = ValueNotifier<Baby?>(null);
     try {
       emit(state.copyWith(status: UserDataStatus.loading));
 

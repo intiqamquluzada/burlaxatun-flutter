@@ -30,6 +30,7 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
     try {
       emit(state.copyWith(status: UserUpdateStatus.loading));
       log("User Update Loading");
+      log("Picked image path: ${image?.path}");
 
       final response = await _contractor.updateUser(
         activeLanguage: activeLanguage,
@@ -41,6 +42,7 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
         pregnantWeek: pregnantWeek,
         wantToBePregnant: wantToBePregnant,
         wantToSeePeriod: wantToSeePeriod,
+        image: image,
       );
 
       if (response != null) {

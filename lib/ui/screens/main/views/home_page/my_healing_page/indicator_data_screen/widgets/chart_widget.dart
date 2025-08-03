@@ -1,7 +1,8 @@
-import 'package:burla_xatun/data/models/remote/response/indicator_model.dart';
-import 'package:burla_xatun/ui/screens/main/views/home_page/my_healing_page/indicator_data_screen/widgets/chart_data_not_found_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import '../../../../../../../../data/models/remote/response/indicator_model.dart';
+import 'chart_data_not_found_widget.dart';
 
 class ChartWidget extends StatelessWidget {
   const ChartWidget({
@@ -35,7 +36,7 @@ class ChartWidget extends StatelessWidget {
             ),
             series: [
               LineSeries(
-                dataSource: indicatorDataList,
+                dataSource: indicatorDataList.reversed.toList(),
                 xValueMapper: (data, _) => data.time,
                 yValueMapper: (data, _) => data.value,
                 markerSettings: MarkerSettings(

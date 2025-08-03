@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,11 +22,18 @@ class UltrasoundPage extends StatefulWidget {
 class _UltrasoundPageState extends State<UltrasoundPage> {
   late UltrasoundCubit ultrasoundCubit;
   late ValueNotifier<int?> weekValue;
+  late ScrollController scrollController;
   @override
   void initState() {
     ultrasoundCubit = context.read<UltrasoundCubit>()..getUltraSound();
     weekValue = ValueNotifier<int?>(1);
-
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        log('reached end of bar');
+      }
+    });
     super.initState();
   }
 
@@ -36,6 +45,7 @@ class _UltrasoundPageState extends State<UltrasoundPage> {
         child: ScrollableDaysAppbar(
           appbarName: 'Ultrasəs',
           weekValue: weekValue,
+          scrollController: scrollController,
         ),
       ),
       body: SingleChildScrollView(

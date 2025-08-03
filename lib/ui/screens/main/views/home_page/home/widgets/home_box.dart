@@ -37,11 +37,11 @@ class HomeBox extends StatelessWidget {
                 width: 90,
                 child: GlobalText(
                   textAlign: TextAlign.center,
-                  height: 1.2,
+                  height: 1.4,
                   text: boxName,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: Colors.black,
+                  color: Color(0xff414651),
                 ),
               ),
             ],

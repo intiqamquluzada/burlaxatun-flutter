@@ -39,4 +39,6 @@ class TextConstants {
   static const password = 'Şifrə';
   static const enterYourPsw = 'Şifrənizi daxil edin';
   static const daxilOl = "Daxil ol";
+  static const defaultProfileImage =
+      'https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png';
 }

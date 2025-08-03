@@ -14,6 +14,7 @@ class ScrollableDaysAppbar extends StatefulWidget {
     this.weekValue,
     this.isShowBackButton = true,
     this.count = 47,
+    required this.scrollController,
   });
 
   final String appbarName;
@@ -21,16 +22,17 @@ class ScrollableDaysAppbar extends StatefulWidget {
   final ValueNotifier<int?>? weekValue;
   final bool isShowBackButton;
   final int count;
+  final ScrollController? scrollController;
 
   @override
   State<ScrollableDaysAppbar> createState() => _ScrollableDaysAppbarState();
 }
 
 class _ScrollableDaysAppbarState extends State<ScrollableDaysAppbar> {
-  late ScrollController _scrollController;
+  // late ScrollController _scrollController;
   @override
   void initState() {
-    _scrollController = ScrollController();
+    // widget.scrollController = ScrollController();
     super.initState();
   }
 
@@ -38,7 +40,7 @@ class _ScrollableDaysAppbarState extends State<ScrollableDaysAppbar> {
     final scrollPixel = 33 * week;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scrollController.animateTo(
+      widget.scrollController!.animateTo(
         scrollPixel.toDouble(),
         duration: Duration(milliseconds: 500),
         curve: Curves.linear,
@@ -115,7 +117,7 @@ class _ScrollableDaysAppbarState extends State<ScrollableDaysAppbar> {
                     _scrollToCurrentWeek(value!);
 
                     return ListView.separated(
-                      controller: _scrollController,
+                      controller: widget.scrollController,
                       scrollDirection: Axis.horizontal,
                       itemCount: widget.count,
                       itemBuilder: (_, i) {
@@ -174,7 +176,7 @@ class _ScrollableDaysAppbarState extends State<ScrollableDaysAppbar> {
                             : Padding(
                                 padding: const EdgeInsets.only(top: 12),
                                 child: SizedBox(
-                                  // width: 28, // 25
+                                  width: 28, // 25
                                   child: GlobalText(
                                     text: '$i',
                                     fontSize: 16,

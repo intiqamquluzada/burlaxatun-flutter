@@ -1,12 +1,11 @@
-import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
-import 'package:burla_xatun/cubits/user_update/user_update_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../../../cubits/user_data/user_data_cubit.dart';
+import '../../../../../../../cubits/user_update/user_update_cubit.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/custom_circular_progress_indicator.dart';
 import '../../../../../../widgets/global_text.dart';
@@ -180,27 +179,27 @@ class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
                       ),
                     ),
                     14.h,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GlobalText(
-                          text: 'Doğum tarixini hesabla',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xff344054),
-                        ),
-                        SvgPicture.asset('assets/icons/arrow_right.svg'),
-                      ],
-                    ),
-                    14.h,
-                    ColoredBox(
-                      color: Color(0xffF2F4F7),
-                      child: SizedBox(
-                        height: 1,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                    ),
-                    14.h,
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     GlobalText(
+                    //       text: 'Doğum tarixini hesabla',
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.w500,
+                    //       color: Color(0xff344054),
+                    //     ),
+                    //     SvgPicture.asset('assets/icons/arrow_right.svg'),
+                    //   ],
+                    // ),
+                    // 14.h,
+                    // ColoredBox(
+                    //   color: Color(0xffF2F4F7),
+                    //   child: SizedBox(
+                    //     height: 1,
+                    //     width: MediaQuery.of(context).size.width,
+                    //   ),
+                    // ),
+                    // 14.h,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

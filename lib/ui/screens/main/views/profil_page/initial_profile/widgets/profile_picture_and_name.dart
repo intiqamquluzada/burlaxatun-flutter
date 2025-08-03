@@ -1,15 +1,16 @@
 import 'dart:io';
 
-import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
-import 'package:burla_xatun/cubits/user_update/user_update_cubit.dart';
-import 'package:burla_xatun/ui/widgets/custom_circular_progress_indicator.dart';
-import 'package:burla_xatun/utils/helper/image_picker_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../../../../cubits/user_data/user_data_cubit.dart';
+import '../../../../../../../cubits/user_update/user_update_cubit.dart';
+import '../../../../../../../utils/constants/text_constants.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../../utils/helper/image_picker_helper.dart';
+import '../../../../../../widgets/custom_circular_progress_indicator.dart';
 import '../../../../../../widgets/global_text.dart';
 
 class ProfilePictureAndName extends StatefulWidget {
@@ -77,8 +78,10 @@ class _ProfilePictureAndNameState extends State<ProfilePictureAndName> {
                             ? FileImage(imageFile!)
                             : (data?.image != null
                                     ? NetworkImage(data!.image!)
-                                    : const AssetImage('assets/png/pfp.png'))
-                                as ImageProvider,
+                                    : NetworkImage(
+                                        TextConstants.defaultProfileImage)
+                                // const AssetImage('assets/png/pfp.png'),
+                                ) as ImageProvider,
                         fit: BoxFit.cover,
                       ),
                     ),

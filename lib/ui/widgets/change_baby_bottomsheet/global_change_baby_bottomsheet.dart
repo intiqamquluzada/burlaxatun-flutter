@@ -45,6 +45,7 @@ class GlobalChangeBabyBottomsheet extends StatelessWidget {
                         isSelected: userDataCubit.currentBabyNotifier.value ==
                             children[i],
                         onTap: () {
+                          log('selected baby: ${children[i]}');
                           userDataCubit.changeProfile(children[i]);
                           context.pop();
                         },
@@ -55,6 +56,7 @@ class GlobalChangeBabyBottomsheet extends StatelessWidget {
                     babyName: 'Me',
                     isSelected: currentBaby == null,
                     onTap: () {
+                      log('selected baby: null');
                       userDataCubit.changeProfile(null);
                       context.pop();
                       // log('${currentBaby?.name}');

@@ -1,8 +1,14 @@
-import 'package:burla_xatun/cubits/indicator/indicator_cubit.dart';
+import 'dart:developer';
+
+import 'package:burla_xatun/ui/widgets/global_text.dart';
+import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../../../cubits/indicator/indicator_cubit.dart';
+import '../../../../../../../cubits/user_data/user_data_cubit.dart';
+import '../../../../../../../data/models/remote/response/user_data_model.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/global_appbar.dart';
 import 'widgets/calendar_and_add_buttons.dart';
@@ -25,15 +31,55 @@ class IndicatorDataScreen extends StatefulWidget {
 
 class _IndicatorDataScreenState extends State<IndicatorDataScreen> {
   late IndicatorCubit indicatorCubit;
+  late ValueNotifier<Baby?> currentBabyNotifier;
+  // late Baby? currentBaby;
+  late VoidCallback babyNotifierListener;
+
   @override
   void initState() {
-    indicatorCubit = context.read<IndicatorCubit>()
-      ..getIndicatorDatas(
+    super.initState();
+
+    indicatorCubit = context.read<IndicatorCubit>();
+    currentBabyNotifier = context.read<UserDataCubit>().currentBabyNotifier;
+    // currentBaby = currentBabyNotifier.value;
+    log('current baby null: ${currentBabyNotifier.value == null}');
+
+    babyNotifierListener = () {
+      log('change baby');
+      // currentBabyNotifier = context.read<UserDataCubit>().currentBabyNotifier;
+      if (currentBabyNotifier.value == null) {
+        return;
+      } else {
+        indicatorCubit.getIndicatorDatas(
+          babyId: currentBabyNotifier.value?.id ?? -1,
+          indicatorName: widget.indicatorName,
+          range: 'monthly',
+        );
+      }
+      // if (currentBabyNotifier.value == null) return;
+      // indicatorCubit.getIndicatorDatas(
+      //   babyId: currentBabyNotifier.value?.id ?? -1,
+      //   indicatorName: widget.indicatorName,
+      //   range: 'monthly',
+      // );
+    };
+
+    currentBabyNotifier.addListener(babyNotifierListener);
+    if (currentBabyNotifier.value == null) {
+      return;
+    } else {
+      indicatorCubit.getIndicatorDatas(
+        babyId: currentBabyNotifier.value?.id ?? -1,
         indicatorName: widget.indicatorName,
         range: 'monthly',
       );
+    }
+  }
 
-    super.initState();
+  @override
+  void dispose() {
+    currentBabyNotifier.removeListener(babyNotifierListener);
+    super.dispose();
   }
 
   @override
@@ -49,43 +95,86 @@ class _IndicatorDataScreenState extends State<IndicatorDataScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            TimeIntervalsWidget(indicatorName: widget.indicatorName),
+            TimeIntervalsWidget(
+              indicatorName: widget.indicatorName,
+              currentBabyNotifier: currentBabyNotifier,
+            ),
             18.h,
             DecoratedBox(
               decoration: BoxDecoration(
                   border: Border.all(width: 1, color: Colors.grey)),
-              child: BlocBuilder<IndicatorCubit, IndicatorState>(
-                buildWhen: (previous, current) {
-                  return previous.indicatorList == current.indicatorList ||
-                      previous.indicatorStatus != current.indicatorStatus;
-                },
-                // buildWhen: (previous, current) {
-                //   return current.indicatorList != null;
-                // },
-                builder: (context, state) {
-                  if (state.indicatorStatus == IndicatorStatus.loading) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 112),
-                      child:
-                          Center(child: CircularProgressIndicator.adaptive()),
-                    );
-                  } else if (state.indicatorStatus == IndicatorStatus.error) {
-                    return Center(child: Text('Xəta baş verdi'));
-                  }
-                  if (state.indicatorStatus == IndicatorStatus.success) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: ChartWidget(
-                        indicatorDataList: state.indicatorList ?? [],
-                      ),
-                    );
-                  }
-                  return SizedBox.shrink();
+              child: ValueListenableBuilder(
+                valueListenable: currentBabyNotifier,
+                builder: (context, value, child) {
+                  return value == null
+                      ? SizedBox(
+                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          child: Center(
+                            child: GlobalText(
+                              color: ColorConstants.customBlue,
+                              textAlign: TextAlign.center,
+                              text:
+                                  'Uşaq seçilməyib və ya əlavə edilməyib (profilə basılı tutaraq seçə və ya əlavə edə bilərsiniz)',
+                            ),
+                          ),
+                        )
+                      : BlocBuilder<IndicatorCubit, IndicatorState>(
+                          buildWhen: (previous, current) {
+                            return previous.indicatorList ==
+                                    current.indicatorList ||
+                                previous.indicatorStatus !=
+                                    current.indicatorStatus;
+                          },
+                          builder: (context, state) {
+                            log('baby data status: ${state.indicatorStatus}');
+                            if (state.indicatorStatus ==
+                                IndicatorStatus.loading) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 112),
+                                child: Center(
+                                    child:
+                                        CircularProgressIndicator.adaptive()),
+                              );
+                            } else if (state.indicatorStatus ==
+                                IndicatorStatus.error) {
+                              return Center(child: Text('Xəta baş verdi'));
+                            }
+                            if (state.indicatorStatus ==
+                                IndicatorStatus.success) {
+                              log('Indicator datas: ${state.indicatorList?.length}');
+                              return state.indicatorList!.isNotEmpty
+                                  ? Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      child: ChartWidget(
+                                        indicatorDataList:
+                                            state.indicatorList ?? [],
+                                      ),
+                                    )
+                                  : SizedBox(
+                                      height: 200,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Center(
+                                        child: GlobalText(
+                                          color: ColorConstants.customBlue,
+                                          textAlign: TextAlign.center,
+                                          text: 'Məlumat yoxdur',
+                                        ),
+                                      ),
+                                    );
+                            }
+                            return SizedBox.shrink();
+                          },
+                        );
                 },
               ),
             ),
             27.h,
-            CalendarAndAddButtons(indicatorName: widget.indicatorName),
+            CalendarAndAddButtons(
+              indicatorName: widget.indicatorName,
+            ),
           ],
         ),
       ),

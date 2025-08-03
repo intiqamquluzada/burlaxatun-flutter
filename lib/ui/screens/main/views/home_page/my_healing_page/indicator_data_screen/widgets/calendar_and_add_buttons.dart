@@ -1,4 +1,5 @@
 import 'package:burla_xatun/cubits/indicator/indicator_cubit.dart';
+import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
 import 'package:burla_xatun/ui/screens/main/views/home_page/my_healing_page/indicator_data_screen/widgets/add_new_indicator_dialog.dart';
 import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,10 @@ class CalendarAndAddButtons extends StatelessWidget {
         ),
         AddButton(
           onPressed: () {
+            if (context.read<UserDataCubit>().currentBabyNotifier.value ==
+                null) {
+              return;
+            }
             showDialog(
               context: context,
               builder: (_) {

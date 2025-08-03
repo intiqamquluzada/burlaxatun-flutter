@@ -24,6 +24,10 @@ class ImagePickerHelper {
               onPressed: () => Navigator.of(context).pop(ImageSource.gallery),
               child: const Text('Qalereya'),
             ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(ImageSource.camera),
+              child: const Text('Sil'),
+            ),
           ],
         );
       },
@@ -53,15 +57,7 @@ class ImagePickerHelper {
 
       if (user != null) {
         await userUpdateCubit.updateUser(
-          phoneNumber: user.phoneNumber,
-          onboardingDone: user.onboardingDone,
-          wantToBePregnant: user.wantToBePregnant,
-          wantToSeePeriod: user.wantToSeePeriod,
-          isPregnant: user.isPregnant,
-          pregnantWeek: user.pregnantWeek,
-          firstChild: user.firstChild,
-          activeLanguage: user.activeLanguage,
-          enableNotifications: user.enableNotifications,
+          image: pickedImage,
         );
       }
     }

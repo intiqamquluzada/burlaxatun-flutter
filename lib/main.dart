@@ -1,4 +1,5 @@
 import 'package:burla_xatun/cubits/change_password/change_password_cubit.dart';
+import 'package:burla_xatun/cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import 'package:burla_xatun/cubits/reset_password/reset_password_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -133,7 +134,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => UltrasoundCubit(locator<UltrasoundContract>()),
-          child: Container(),
+        ),
+        BlocProvider(
+          create: (context) => locator<PregnancyProgressCubit>(),
         ),
       ],
       child: BlocBuilder<LanguageCubit, Locale>(

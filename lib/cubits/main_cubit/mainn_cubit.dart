@@ -197,6 +197,10 @@ class MainnCubit extends Cubit<MainInitial> {
   }
 
   void onEmoji() {}
+  late StatefulNavigationShell navigationShell;
+  void setNavigationShell(StatefulNavigationShell v) {
+    navigationShell = v;
+  }
 
   void setShellContext(v) {
     emit(state.copyWith(navigationShellContext: v));

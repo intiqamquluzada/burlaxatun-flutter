@@ -11,33 +11,43 @@ class MainPageBoxModel {
 
   static const List items = [
     MainPageBoxModel(
-      boxName: 'Mənim şəfa kartım',
-      boxIcon: 'assets/svgs/my_healing_page_icon.svg',
+      boxName: 'Gündəlik Tövsiyyələr',
+      boxIcon: 'assets/icons/blood_pressure_icon.svg',
       route: '/my_healing_card',
-    ),
-    MainPageBoxModel(
-      boxName: 'Həkimlər',
-      boxIcon: 'assets/icons/doctors_icon.svg',
-      route: '/initial_doctors',
-    ),
-    MainPageBoxModel(
-      boxName: 'Blog',
-      boxIcon: 'assets/icons/blog_icon.svg',
-      route: '/initial_blog',
-    ),
-    MainPageBoxModel(
-      boxName: 'Videolar',
-      boxIcon: 'assets/icons/videos_icon.svg',
-      route: '/videos',
     ),
     MainPageBoxModel(
       boxName: 'Ultrasəs',
       boxIcon: 'assets/icons/ultrasound_icon.svg',
+      route: '/initial_doctors',
+    ),
+    MainPageBoxModel(
+      boxName: 'Dərmanlar',
+      boxIcon: 'assets/icons/medicine_icon.svg',
+      route: '/initial_blog',
+    ),
+    MainPageBoxModel(
+      boxName: 'Şəfa kartım',
+      boxIcon: 'assets/svgs/my_healing_page_icon.svg',
+      route: '/videos',
+    ),
+    MainPageBoxModel(
+      boxName: 'Həkimlər',
+      boxIcon: 'assets/icons/doctorr_icon.svg',
       route: '/ultrasound',
     ),
     MainPageBoxModel(
-      boxName: 'Uşaq adları',
+      boxName: 'Blog',
       boxIcon: 'assets/icons/list_icon.svg',
+      route: '/initial_names',
+    ),
+    MainPageBoxModel(
+      boxName: 'Videolar',
+      boxIcon: 'assets/icons/videoo_icon.svg',
+      route: '/initial_names',
+    ),
+    MainPageBoxModel(
+      boxName: 'Uşaq adları',
+      boxIcon: 'assets/icons/baby_namess_icon.svg',
       route: '/initial_names',
     ),
   ];

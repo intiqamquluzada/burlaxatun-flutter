@@ -10,8 +10,20 @@ import '../../../../../cubits/daily_rec_detail/daily_rec_detail_cubit.dart';
 import '../../../../widgets/custom_circular_progress_indicator.dart';
 import '../home_page/widgets/scrollable_days_appbar.dart';
 
-class AdviceDetailView extends StatelessWidget {
+class AdviceDetailView extends StatefulWidget {
   const AdviceDetailView({super.key});
+
+  @override
+  State<AdviceDetailView> createState() => _AdviceDetailViewState();
+}
+
+class _AdviceDetailViewState extends State<AdviceDetailView> {
+  late final ScrollController scrollController;
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +50,7 @@ class AdviceDetailView extends StatelessWidget {
                 appbarName: 'Günlük Tövsiyələr',
                 week: data?.day ?? 1,
                 weekValue: ValueNotifier<int?>(data?.day),
+                scrollController: scrollController,
               ),
             ),
             body: SingleChildScrollView(

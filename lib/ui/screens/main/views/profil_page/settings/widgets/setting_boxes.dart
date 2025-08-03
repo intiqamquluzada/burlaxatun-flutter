@@ -1,3 +1,4 @@
+import 'package:burla_xatun/data/models/local/settings_items_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,7 @@ class _SettingBoxesState extends State<SettingBoxes> {
   late UserDataCubit userDataCubit;
   late UserUpdateCubit userUpdateCubit;
   late ValueNotifier<bool> isEnableNotification;
+  late final List<SettingsItemModel> settingItems;
   @override
   void initState() {
     mainCubit = context.read<MainnCubit>();
@@ -27,7 +29,7 @@ class _SettingBoxesState extends State<SettingBoxes> {
     userUpdateCubit = context.read<UserUpdateCubit>();
     isEnableNotification = ValueNotifier<bool>(
         userDataCubit.state.response?.enableNotifications ?? false);
-
+    settingItems = SettingsItemModel.items;
     super.initState();
   }
 
@@ -35,7 +37,7 @@ class _SettingBoxesState extends State<SettingBoxes> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < settingItems.length ; i++)
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: SettingBox(
@@ -55,8 +57,8 @@ class _SettingBoxesState extends State<SettingBoxes> {
                         );
                       },
                     ),
-              boxIcon: mainCubit.settingItems[i].icon,
-              boxName: mainCubit.settingItems[i].settingName,
+              boxIcon: settingItems[i].icon,
+              boxName: settingItems[i].settingName,
               onTap: () => mainCubit.tapSettingTile(context, i),
             ),
           ),

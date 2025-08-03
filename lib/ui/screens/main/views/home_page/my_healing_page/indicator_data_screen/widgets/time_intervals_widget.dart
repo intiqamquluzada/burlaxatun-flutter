@@ -1,5 +1,6 @@
 import 'package:burla_xatun/cubits/indicator/indicator_cubit.dart';
 import 'package:burla_xatun/data/models/local/indicator_time_interval_items_model.dart';
+import 'package:burla_xatun/data/models/remote/response/user_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,9 +10,11 @@ class TimeIntervalsWidget extends StatelessWidget {
   const TimeIntervalsWidget({
     super.key,
     required this.indicatorName,
+    required this.currentBabyNotifier,
   });
 
   final String indicatorName;
+  final ValueNotifier<Baby?> currentBabyNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -30,18 +33,28 @@ class TimeIntervalsWidget extends StatelessWidget {
               return ValueListenableBuilder(
                 valueListenable: selectedInterval,
                 builder: (_, value, child) {
-                  return GestureDetector(
-                    onTap: () {
-                      selectedInterval.value = i;
-                      indicatorCubit.getIndicatorDatas(
-                        indicatorName: indicatorName,
-                        range: timeIntervalItems[i].range,
+                  return ValueListenableBuilder(
+                    valueListenable: currentBabyNotifier,
+                    builder: (context, currentBaby, child) {
+                      return GestureDetector(
+                        onTap: () {
+                          selectedInterval.value = i;
+                          if (currentBaby == null) {
+                            return;
+                          } else {
+                            indicatorCubit.getIndicatorDatas(
+                              babyId: currentBaby.id ?? -1,
+                              indicatorName: indicatorName,
+                              range: timeIntervalItems[i].range,
+                            );
+                          }
+                        },
+                        child: SingleTimeIntervalBox(
+                          interval: timeIntervalItems[i].interval,
+                          isSelected: value == i,
+                        ),
                       );
                     },
-                    child: SingleTimeIntervalBox(
-                      interval: timeIntervalItems[i].interval,
-                      isSelected: value == i,
-                    ),
                   );
                 },
               );

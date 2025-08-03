@@ -1,4 +1,6 @@
+import 'package:burla_xatun/cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../../utils/extensions/context_extensions.dart';
@@ -10,12 +12,14 @@ class BabyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pregnancyProgressCubit = context.read<PregnancyProgressCubit>();
+    final progressData = pregnancyProgressCubit.state.progressData;
     return Column(
       children: [
         GlobalText(
           height: 1.5,
           textAlign: TextAlign.left,
-          text: 'Hamiləliyin 6-cı həftəsində nə baş verir?',
+          text: 'Hamiləliyin ${progressData?.week}. həftəsində nə baş verir?',
           fontSize: 24,
           fontWeight: FontWeight.w600,
           color: Colors.black,
@@ -28,7 +32,7 @@ class BabyText extends StatelessWidget {
           child: GlobalText(
             height: 1.5,
             textAlign: TextAlign.left,
-            text: 'İndi körpə alma ölçüsündədir',
+            text: '${progressData?.subTitle}',
             fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Color(0xff656565),
@@ -38,32 +42,13 @@ class BabyText extends StatelessWidget {
         GlobalText(
           height: 1.2,
           textAlign: TextAlign.left,
-          text:
-              'Ölçü və Forma: Embrion təxminən 4-6 mm ölçüdədir, kiçik "C" hərfinə bənzəyir. Ürək: strukturu hələ də primitiv olsa da, döyünməyə və qan vurmağa başlayır.Orqanlar: Beyin, qaraciyər, ağciyərlər və bağırsaqlar da daxil olmaqla mühüm orqanların əsasları formalaşır.',
+          text: progressData?.text ?? '',
+          // 'Ölçü və Forma: Embrion təxminən 4-6 mm ölçüdədir, kiçik "C" hərfinə bənzəyir. Ürək: strukturu hələ də primitiv olsa da, döyünməyə və qan vurmağa başlayır.Orqanlar: Beyin, qaraciyər, ağciyərlər və bağırsaqlar da daxil olmaqla mühüm orqanların əsasları formalaşır.',
           fontSize: 18,
           fontWeight: FontWeight.w400,
           color: Color(0xff656565),
         ),
         10.h,
-        GlobalText(
-          height: 1.2,
-          textAlign: TextAlign.left,
-          text:
-              'Əzalar: Qolların və ayaqların əsas hissələri kiçik "qönçələr" şəklində görünür',
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-          color: Color(0xff656565),
-        ),
-        10.h,
-        GlobalText(
-          height: 1.2,
-          textAlign: TextAlign.left,
-          text:
-              'Baş və Üz: Gözlər, burun çuxurları və ağız da daxil olmaqla üz formalaşmağa başlayır. Baş və Üz: Gözlər, burun çuxurları və ağız da daxil olmaqla üz formalaşmağa başlayır.',
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-          color: Color(0xff656565),
-        ),
       ],
     );
   }
