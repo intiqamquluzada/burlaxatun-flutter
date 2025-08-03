@@ -28,45 +28,51 @@ class _HorizontalCalendarState extends State<HorizontalCalendar>
           itemCount: allDates.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, i) {
-            return Row(
-              children: [
-                SizedBox(
-                  width: 43.33,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: i == currentDateIndex
-                          ? ColorConstants.primaryRedColor
-                          : Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 10,
-                        children: [
-                          GlobalText(
-                            text: getDayName(allDates[i]),
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
-                            color: i == currentDateIndex
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                          GlobalText(
-                            text: allDates[i].day.toString(),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: i == currentDateIndex
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                        ],
+            return GestureDetector(
+              onTap: () {
+                ///* If the tapped date is not the current date, scroll to it
+                if (i == currentDateIndex) return;
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 43.33,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: i == currentDateIndex
+                            ? ColorConstants.primaryRedColor
+                            : Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          spacing: 10,
+                          children: [
+                            GlobalText(
+                              text: getDayName(allDates[i]),
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                              color: i == currentDateIndex
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                            GlobalText(
+                              text: allDates[i].day.toString(),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: i == currentDateIndex
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(width: 5),
-              ],
+                  SizedBox(width: 5),
+                ],
+              ),
             );
           },
         ),
