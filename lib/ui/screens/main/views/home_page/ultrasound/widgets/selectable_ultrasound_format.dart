@@ -11,7 +11,7 @@ class SelectableUltrasoundFormat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     return SizedBox(
       width: context.deviceWidth,
       child: DecoratedBox(
@@ -24,7 +24,7 @@ class SelectableUltrasoundFormat extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BlocBuilder<MainnCubit, MainInitial>(
+              BlocBuilder<MainCubit, MainInitial>(
                 buildWhen: (previous, current) {
                   return previous.ultrasoundFormat != current.ultrasoundFormat;
                 },
@@ -49,7 +49,7 @@ class SelectableUltrasoundFormat extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 18),
-              BlocBuilder<MainnCubit, MainInitial>(
+              BlocBuilder<MainCubit, MainInitial>(
                 buildWhen: (previous, current) {
                   return previous.ultrasoundFormat != current.ultrasoundFormat;
                 },

@@ -14,7 +14,7 @@ class BottomNavbarItemsModel {
     ),
     BottomNavbarItemsModel(
       icon: 'assets/svgs/dairy_advise_icon.svg',
-      iconTitle: 'Gündəlik \n Tövsiyyələr',
+      iconTitle: 'Gündəlik \n Tövsiyyə',
     ),
     BottomNavbarItemsModel(
       icon: 'assets/svgs/forum_icon.svg',
@@ -24,5 +24,5 @@ class BottomNavbarItemsModel {
       icon: 'assets/svgs/profile_icon.svg',
       iconTitle: 'Profil',
     ),
-  ];  
+  ];
 }

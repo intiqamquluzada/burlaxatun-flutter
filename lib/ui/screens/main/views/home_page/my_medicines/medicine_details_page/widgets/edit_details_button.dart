@@ -2,9 +2,9 @@ import 'package:burla_xatun/data/models/remote/response/medicine/medicines_model
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../../../../cubits/main_cubit/mainn_cubit.dart';
-import '../../../../../../../../../utils/constants/color_constants.dart';
-import '../../../../../../../../widgets/global_text.dart';
+import '../../../../../../../../cubits/main_cubit/mainn_cubit.dart';
+import '../../../../../../../../utils/constants/color_constants.dart';
+import '../../../../../../../widgets/global_text.dart';
 
 class EditDetailsButton extends StatelessWidget {
   final Result data;
@@ -18,7 +18,7 @@ class EditDetailsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     return SizedBox(
       height: 48,
       width: 117,

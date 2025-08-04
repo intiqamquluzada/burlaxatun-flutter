@@ -12,7 +12,7 @@ class HomePageBoxes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     final boxItems = MainPageBoxModel.items;
     return GridView.builder(
       shrinkWrap: true,
@@ -32,6 +32,8 @@ class HomePageBoxes extends StatelessWidget {
               mainCubit.changeView(1);
               // mainCubit.navigationShell.goBranch(1);
               navigatorKey.currentContext?.go('/daily_advices');
+            } else if (boxItems[i].boxName == 'Dərmanlar') {
+              mainCubit.pushScaffoldMyMedicinesPage(context);
             } else {
               context.push(mainCubit.boxItems[i].route);
             }

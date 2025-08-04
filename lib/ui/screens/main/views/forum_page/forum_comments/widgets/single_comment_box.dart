@@ -35,7 +35,7 @@ final ValueNotifier<int> selectedBoxIndex = ValueNotifier<int>(-1);
 
 class _SingleCommentBoxState extends State<SingleCommentBox>
     with AutomaticKeepAliveClientMixin {
-  late MainnCubit mainCubit;
+  late MainCubit mainCubit;
   late ValueNotifier<bool> hasReplies;
   late CreateCommentCubit createCommentCubit;
   late ForumCommentsCubit forumCommentsCubit;
@@ -47,7 +47,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
     createCommentCubit = context.read<CreateCommentCubit>();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
     deleteCommentCubit = context.read<DeleteCommentCubit>();
-    mainCubit = context.read<MainnCubit>();
+    mainCubit = context.read<MainCubit>();
 
     super.initState();
   }

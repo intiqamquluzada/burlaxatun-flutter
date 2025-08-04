@@ -1,3 +1,4 @@
+import 'package:burla_xatun/ui/screens/main/views/home_page/home/widgets/current_baby_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,7 +41,9 @@ class HomePage extends StatelessWidget {
                   children: [
                     BlocBuilder<UserDataCubit, UserDataState>(
                       builder: (context, state) {
-                        if (state.status == UserDataStatus.success) {
+                        if (state.status == UserDataStatus.loading) {
+                          return CircularProgressIndicator.adaptive();
+                        } else if (state.status == UserDataStatus.success) {
                           return ValueListenableBuilder(
                             valueListenable: userDataCubit.currentBabyNotifier,
                             builder: (context, currentBaby, child) {
@@ -51,9 +54,10 @@ class HomePage extends StatelessWidget {
                                 visible: currentBaby == null && isPregnant,
                                 replacement: currentBaby == null
                                     ? SizedBox.shrink()
-                                    : Text('not born baby info'),
+                                    : CurrentBabyInfo(),
                                 child: BabyInformation(
-                                    week: user?.pregnantWeek ?? ''),
+                                  week: user?.pregnantWeek ?? '',
+                                ),
                               );
                             },
                           );
@@ -62,7 +66,20 @@ class HomePage extends StatelessWidget {
                       },
                     ),
                     HomePageDailyAdvise(),
-                    PregnancyGuide(),
+                    BlocBuilder<UserDataCubit, UserDataState>(
+                      builder: (context, state) {
+                        if (state.status == UserDataStatus.loading) {
+                          return CircularProgressIndicator.adaptive();
+                        } else if (state.status == UserDataStatus.success) {
+                          final week = state.response?.pregnantWeek ?? '0';
+                          return Visibility(
+                            visible: week != '0',
+                            child: PregnancyGuide(pregnantWeek: week),
+                          );
+                        }
+                        return SizedBox.shrink();
+                      },
+                    ),
                     HomePageBoxes(),
                   ],
                 ),

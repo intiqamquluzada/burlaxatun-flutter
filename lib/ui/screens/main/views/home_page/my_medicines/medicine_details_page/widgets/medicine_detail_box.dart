@@ -2,7 +2,7 @@ import 'package:burla_xatun/data/models/remote/response/medicine/medicines_model
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../../../../cubits/main_cubit/mainn_cubit.dart';
+import '../../../../../../../../cubits/main_cubit/mainn_cubit.dart';
 import 'medicine_detail_tile.dart';
 
 class MedicineDetailBox extends StatelessWidget {
@@ -12,7 +12,7 @@ class MedicineDetailBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     return SizedBox(
       height: 414,
       child: DecoratedBox(

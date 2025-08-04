@@ -1,4 +1,3 @@
-import 'package:burla_xatun/ui/screens/auth/video_doktor_login/video_doktor_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -17,12 +16,13 @@ import '../../cubits/signup_cubit/signup_cubit.dart';
 import '../../cubits/splash/splash_cubit.dart';
 import '../../data/models/remote/response/blog_cat_model.dart';
 import '../../ui/screens/add_child/add_your_child.dart';
-import '../../ui/screens/auth/forgot_psw/phone_number_request_screen.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_otp_screen.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_success_screen.dart';
+import '../../ui/screens/auth/forgot_psw/phone_number_request_screen.dart';
 import '../../ui/screens/auth/forgot_psw/reset_psw_screen.dart';
 import '../../ui/screens/auth/login/login.dart';
 import '../../ui/screens/auth/sign_up/signup.dart';
+import '../../ui/screens/auth/video_doktor_login/video_doktor_login.dart';
 import '../../ui/screens/main/main_page.dart';
 import '../../ui/screens/main/views/daily_advise_page/advice_page.dart';
 import '../../ui/screens/main/views/forum_page/main_forum_page.dart/forum_page.dart';
@@ -36,6 +36,7 @@ import '../../ui/screens/main/views/home_page/doctor/registration_doctor_page/re
 import '../../ui/screens/main/views/home_page/home/home_page.dart';
 import '../../ui/screens/main/views/home_page/my_healing_page/indicator_data_screen/indicator_data_screen.dart';
 import '../../ui/screens/main/views/home_page/my_healing_page/initial_my_healing_page/my_healing_page.dart';
+import '../../ui/screens/main/views/home_page/my_medicines/initial_medicine_page/my_medicines_page.dart';
 import '../../ui/screens/main/views/home_page/names/gender_names/gender_names.dart';
 import '../../ui/screens/main/views/home_page/names/initial_names/names_page.dart';
 import '../../ui/screens/main/views/home_page/notification/notification_page.dart';
@@ -198,6 +199,10 @@ class Routerapp {
               GoRoute(
                 path: '/my_healing_card',
                 builder: (context, state) => MyHealingPage(),
+              ),
+              GoRoute(
+                path: '/my_medicines_page',
+                builder: (context, state) => MyMedicinesPage(),
               ),
               GoRoute(
                 path: '/indicator_data',

@@ -41,7 +41,7 @@ class _AdvicePageState extends State<AdvicePage> {
           );
         } else if (dailyRecState.status == DailyRecStatus.success) {
           // Create a slug one time
-          _slug ??= dailyRecState.response?.results?.first.slug;
+          // _slug ??= dailyRecState.response?.results?.first.slug;
 
           if (_slug == null) {
             return const Center(

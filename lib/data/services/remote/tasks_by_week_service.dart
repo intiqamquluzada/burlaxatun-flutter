@@ -1,12 +1,16 @@
-import 'package:burla_xatun/data/services/remote/base_network_service.dart';
-import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
 import 'package:dio/dio.dart';
+
+import '../../../utils/di/locator.dart';
+import '../local/login_token_service.dart';
+import 'base_network_service.dart';
 
 class TasksByWeekService {
   Future<Response<dynamic>> getTasksByWeek() async {
-    const url = EndpointsConstants.tasksByWeek;
+    const url = 'https://burrla.secop.az/B/my-tasks-by-guider/';
 
-    final response = await BaseNetwork.instance.getDio().get(url);
+    final token = locator<LoginTokenService>().token;
+
+    final response = await BaseNetwork.instance.getDio(token: token).get(url);
 
     return response;
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../../utils/extensions/context_extensions.dart';
-import '../../../../../../../../../utils/extensions/num_extensions.dart';
-import '../../../../../../../../widgets/global_text.dart';
+import '../../../../../../../../utils/extensions/context_extensions.dart';
+import '../../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../../widgets/global_text.dart';
 
 class MedicineDetailTile extends StatelessWidget {
   const MedicineDetailTile({

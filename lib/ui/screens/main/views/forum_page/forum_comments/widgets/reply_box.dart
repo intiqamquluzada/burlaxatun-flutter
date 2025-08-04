@@ -39,7 +39,7 @@ class ReplyBox extends StatefulWidget {
 class _ReplyBoxState extends State<ReplyBox> {
   late CreateCommentCubit createCommentCubit;
   late ForumCommentsCubit forumCommentsCubit;
-  late MainnCubit mainCubit;
+  late MainCubit mainCubit;
   late DeleteCommentCubit deleteCommentCubit;
   late ValueNotifier<bool> showMoreVisible;
   late ValueNotifier<int>? depthValue;
@@ -52,7 +52,7 @@ class _ReplyBoxState extends State<ReplyBox> {
     createCommentCubit = context.read<CreateCommentCubit>();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
     deleteCommentCubit = context.read<DeleteCommentCubit>();
-    mainCubit = context.read<MainnCubit>();
+    mainCubit = context.read<MainCubit>();
     _initializeReplies();
 
     super.initState();

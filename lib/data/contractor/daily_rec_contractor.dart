@@ -1,5 +1,5 @@
-import 'package:burla_xatun/data/models/remote/response/daily_rec_model.dart';
+import 'package:dio/dio.dart';
 
 abstract class DailyRecContractor {
-  Future<DailyRecResponse> getDailyRec();
+  Future<Response<dynamic>> getDailyRec();
 }

@@ -53,13 +53,14 @@ class GlobalChangeBabyBottomsheet extends StatelessWidget {
                       18.h
                     ],
                   ChildAccountBox(
-                    babyName: 'Me',
+                    imageUrl:
+                        context.read<UserDataCubit>().state.response?.image,
+                    babyName: 'Mən',
                     isSelected: currentBaby == null,
                     onTap: () {
-                      log('selected baby: null');
+                      log('selected baby: ${currentBaby?.name}');
                       userDataCubit.changeProfile(null);
                       context.pop();
-                      // log('${currentBaby?.name}');
                     },
                   ),
                   18.h,

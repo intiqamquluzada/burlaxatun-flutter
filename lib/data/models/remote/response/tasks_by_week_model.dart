@@ -1,27 +1,27 @@
-class TasksByWeekModel {
-  final String? week;
-  final List<Task>? tasks;
+// class TasksByWeekModel {
+//   final String? week;
+//   final List<Task>? tasks;
 
-  TasksByWeekModel({
-    this.week,
-    this.tasks,
-  });
+//   TasksByWeekModel({
+//     this.week,
+//     this.tasks,
+//   });
 
-  factory TasksByWeekModel.fromJson(Map<String, dynamic> json) =>
-      TasksByWeekModel(
-        week: json["week"],
-        tasks: json["tasks"] == null
-            ? []
-            : List<Task>.from(json["tasks"]!.map((x) => Task.fromJson(x))),
-      );
+//   factory TasksByWeekModel.fromJson(Map<String, dynamic> json) =>
+//       TasksByWeekModel(
+//         week: json["week"],
+//         tasks: json["tasks"] == null
+//             ? []
+//             : List<Task>.from(json["tasks"]!.map((x) => Task.fromJson(x))),
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "week": week,
-        "tasks": tasks == null
-            ? []
-            : List<dynamic>.from(tasks!.map((x) => x.toJson())),
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "week": week,
+//         "tasks": tasks == null
+//             ? []
+//             : List<dynamic>.from(tasks!.map((x) => x.toJson())),
+//       };
+// }
 
 class Task {
   final int? id;

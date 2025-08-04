@@ -29,14 +29,14 @@ class ForumCommentsPage extends StatefulWidget {
 class _ForumCommentsPageState extends State<ForumCommentsPage> {
   late ScrollController scrollController;
   late ForumCommentsCubit forumCommentsCubit;
-  late MainnCubit mainnCubit;
+  late MainCubit mainnCubit;
   late ValueNotifier<Comments?> selectedComment;
   // late TextEditingController commentInputTextController;
   @override
   void initState() {
     scrollController = ScrollController();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
-    mainnCubit = context.read<MainnCubit>();
+    mainnCubit = context.read<MainCubit>();
     selectedComment = ValueNotifier<Comments?>(null);
     mainnCubit.commentInputTextController = TextEditingController();
     _loadMoreComment();

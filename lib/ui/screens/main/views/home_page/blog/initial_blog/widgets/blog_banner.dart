@@ -15,7 +15,7 @@ class BlogBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
 
     return BlocBuilder<BlogSlidersCubit, BlogSlidersState>(
       builder: (context, state) {
@@ -40,7 +40,7 @@ class BlogBanner extends StatelessWidget {
             fit: StackFit.passthrough,
             alignment: Alignment.bottomCenter,
             children: [
-              BlocBuilder<MainnCubit, MainInitial>(
+              BlocBuilder<MainCubit, MainInitial>(
                 builder: (context, mainState) {
                   return CarouselSlider(
                     options: CarouselOptions(
@@ -114,7 +114,7 @@ class BlogBanner extends StatelessWidget {
                   );
                 },
               ),
-              BlocBuilder<MainnCubit, MainInitial>(
+              BlocBuilder<MainCubit, MainInitial>(
                 buildWhen: (previous, current) =>
                     previous.carouselIndex != current.carouselIndex,
                 builder: (context, state) {

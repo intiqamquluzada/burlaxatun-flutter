@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/baby_update/baby_update_cubit.dart';
 import 'package:burla_xatun/cubits/change_password/change_password_cubit.dart';
 import 'package:burla_xatun/cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import 'package:burla_xatun/cubits/reset_password/reset_password_cubit.dart';
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => MainnCubit(),
+          create: (context) => MainCubit(),
         ),
         BlocProvider(
           create: (context) => LanguageCubit(),
@@ -137,6 +138,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => locator<PregnancyProgressCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<BabyUpdateCubit>(),
         ),
       ],
       child: BlocBuilder<LanguageCubit, Locale>(

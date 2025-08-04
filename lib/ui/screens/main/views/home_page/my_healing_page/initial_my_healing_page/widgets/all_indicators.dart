@@ -9,7 +9,7 @@ class AllIndicators extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     return Column(
       children: [
         for (int i = 0; i < mainCubit.myHealingCardItems.length; i++)

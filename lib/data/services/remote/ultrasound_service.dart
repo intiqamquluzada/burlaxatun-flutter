@@ -1,8 +1,8 @@
-import 'package:burla_xatun/data/services/remote/base_network_service.dart';
-import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
-import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+
+import '../../../utils/constants/endpoints_constants.dart';
+import '../../../utils/extensions/statuscode_extension.dart';
+import 'base_network_service.dart';
 
 class UltrasoundService {
   Future<Response<dynamic>> getUltraSound() async {

@@ -23,7 +23,7 @@ class TasksByWeeksCubit extends Cubit<TasksByWeeksState> {
       final response = await tasksByWeekContract.getTasksByWeeks();
       if (response.statusCode.isSuccess) {
         final data = response.data as List;
-        final tasks = data.map((e) => TasksByWeekModel.fromJson(e)).toList();
+        final tasks = data.map((e) => Task.fromJson(e)).toList();
 
         emit(state.copWith(
           tasksByWeekStatus: TasksByWeekStatus.success,

@@ -1,10 +1,10 @@
 import 'package:burla_xatun/data/models/remote/response/medicine/medicines_model.dart';
-import 'package:burla_xatun/ui/screens/main/views/home_page/my_healing_page/my_medicines/medicine_details_page/widgets/edit_details_button.dart';
+import 'package:burla_xatun/ui/screens/main/views/home_page/my_medicines/medicine_details_page/widgets/edit_details_button.dart';
 import 'package:burla_xatun/utils/extensions/num_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../../../widgets/global_appbar.dart';
+import '../../../../../../widgets/global_appbar.dart';
 import 'widgets/medicine_detail_box.dart';
 
 class MedicineDetailsPage extends StatefulWidget {

@@ -50,6 +50,7 @@ class EndpointsConstants {
   static const userData = '$baseUrl/A/me/';
   static const userProfileDelete = '$baseUrl/A/delete-account/';
   static const videoDoktorLogin = '$baseUrl/A/videodoktor-auth/';
+  static const babyUpdate = '$baseUrl/A/baby-update/';
 
   // A1
   static const String babyIndicators = '$baseUrl/A1/baby-indicators/';

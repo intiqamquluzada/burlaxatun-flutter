@@ -1,8 +1,8 @@
-import 'package:burla_xatun/cubits/daily_rec/daily_rec_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../cubits/daily_rec/daily_rec_cubit.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/custom_circular_progress_indicator.dart';
 import '../../../../../../widgets/global_text.dart';
@@ -32,7 +32,7 @@ class HomePageDailyAdvise extends StatelessWidget {
           }
 
           if (state.status == DailyRecStatus.success) {
-            final data = state.response?.results?.first;
+            final data = state.dailyRecommendList?.first;
 
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -53,18 +53,21 @@ class HomePageDailyAdvise extends StatelessWidget {
                   ),
                   17.h,
                   ClipRRect(
-                      borderRadius: BorderRadius.circular(17),
-                      child: CachedNetworkImage(
-                        imageUrl:
-                            data?.image ?? 'assets/images/default_image.png',
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: 116,
-                        placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.broken_image, size: 100),
-                      )),
+                    borderRadius: BorderRadius.circular(17),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          data?.image ?? 'assets/images/default_image.png',
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: 116,
+                      placeholder: (context, url) {
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      errorWidget: (context, url, error) {
+                        return const Icon(Icons.broken_image, size: 100);
+                      },
+                    ),
+                  ),
                   16.h,
                   Align(
                     alignment: Alignment.topLeft,

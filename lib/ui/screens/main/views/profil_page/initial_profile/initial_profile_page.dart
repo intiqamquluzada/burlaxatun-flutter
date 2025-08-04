@@ -38,7 +38,7 @@ class _InitialProfilePageState extends State<InitialProfilePage> {
               child: Column(
                 children: [
                   24.h,
-                  ProfilePictureAndName(),
+                  ProfilePictureAndName(), 
                   24.h,
                   ProfilePageSections(),
                   12.h,

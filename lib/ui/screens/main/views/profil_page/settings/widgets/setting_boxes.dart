@@ -17,14 +17,14 @@ class SettingBoxes extends StatefulWidget {
 }
 
 class _SettingBoxesState extends State<SettingBoxes> {
-  late MainnCubit mainCubit;
+  late MainCubit mainCubit;
   late UserDataCubit userDataCubit;
   late UserUpdateCubit userUpdateCubit;
   late ValueNotifier<bool> isEnableNotification;
   late final List<SettingsItemModel> settingItems;
   @override
   void initState() {
-    mainCubit = context.read<MainnCubit>();
+    mainCubit = context.read<MainCubit>();
     userDataCubit = context.read<UserDataCubit>();
     userUpdateCubit = context.read<UserUpdateCubit>();
     isEnableNotification = ValueNotifier<bool>(

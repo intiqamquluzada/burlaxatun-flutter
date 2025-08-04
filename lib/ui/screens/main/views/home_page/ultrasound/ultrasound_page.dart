@@ -77,7 +77,7 @@ class _UltrasoundPageState extends State<UltrasoundPage> {
                       24.h,
                       SelectableUltrasoundFormat(),
                       24.h,
-                      BlocBuilder<MainnCubit, MainInitial>(
+                      BlocBuilder<MainCubit, MainInitial>(
                         buildWhen: (previous, current) {
                           return previous.ultrasoundFormat !=
                               current.ultrasoundFormat;

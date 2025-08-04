@@ -1,9 +1,8 @@
-import 'package:burla_xatun/cubits/baby_names_cubit/baby_names_cubit.dart';
-import 'package:burla_xatun/data/contractor/baby_names_contractor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../../../../../cubits/baby_names_cubit/baby_names_cubit.dart';
 import '../../../../../../../../utils/constants/color_constants.dart';
 
 class SelectedNameTile extends StatelessWidget {
@@ -34,9 +33,9 @@ class SelectedNameTile extends StatelessWidget {
               'assets/icons/favorite_icon.svg',
               colorFilter: ColorFilter.mode(
                 // state.selectNameStatus == SelectNameStatus.loading
-                    // ? ColorConstants.hintTextColor
-                    // :
-                     ColorConstants.primaryRedColor,
+                // ? ColorConstants.hintTextColor
+                // :
+                ColorConstants.primaryRedColor,
                 BlendMode.srcIn,
               ),
             );

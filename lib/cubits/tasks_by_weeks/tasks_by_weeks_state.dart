@@ -8,7 +8,7 @@ class TasksByWeeksState extends Equatable {
   });
 
   final TasksByWeekStatus tasksByWeekStatus;
-  final List<TasksByWeekModel>? tasksByWeek;
+  final List<Task>? tasksByWeek;
   final String? networkErrorMessage;
 
   @override
@@ -21,7 +21,7 @@ class TasksByWeeksState extends Equatable {
   TasksByWeeksState copWith({
     TasksByWeekStatus? tasksByWeekStatus,
     String? networkErrorMessage,
-    List<TasksByWeekModel>? tasksByWeek,
+    List<Task>? tasksByWeek,
   }) {
     return TasksByWeeksState(
       tasksByWeekStatus: tasksByWeekStatus ?? this.tasksByWeekStatus,

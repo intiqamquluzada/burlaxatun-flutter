@@ -22,7 +22,7 @@ class BottomNavbarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
 
     return InkWell(
       splashFactory: InkRipple.splashFactory,
@@ -52,7 +52,7 @@ class BottomNavbarItem extends StatelessWidget {
         //   );
         // }
       },
-      child: BlocBuilder<MainnCubit, MainInitial>(
+      child: BlocBuilder<MainCubit, MainInitial>(
         buildWhen: (previous, current) =>
             previous.indexOfView != current.indexOfView,
         builder: (context, state) {
@@ -74,7 +74,7 @@ class BottomNavbarItem extends StatelessWidget {
                   textAlign: TextAlign.center,
                   text: mainCubit.navbarItems[i].iconTitle,
                   fontSize: 12,
-                  height: 1.4,
+                  height: 1.3,
                   fontWeight: FontWeight.w500,
                   color: state.indexOfView == i
                       ? ColorConstants.primaryRedColor

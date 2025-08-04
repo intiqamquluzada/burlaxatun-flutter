@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/baby_update/baby_update_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class ProfilePregnancyBox extends StatefulWidget {
 class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
   late UserDataCubit userDataCubit;
   late UserUpdateCubit userUpdateCubit;
+  late BabyUpdateCubit babyUpdateCubit;
   late ValueNotifier<bool> isFirstChildNotifier;
   late ValueNotifier<bool> isMiscarryNotifier;
   late ValueNotifier<bool> isBornNotifier;
@@ -27,6 +29,7 @@ class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
   void initState() {
     userDataCubit = context.read<UserDataCubit>();
     userUpdateCubit = context.read<UserUpdateCubit>();
+    babyUpdateCubit = context.read<BabyUpdateCubit>();
     final isFirstChild = userDataCubit.state.response?.firstChild ?? false;
     final isMiscarry = false;
     final isBorn = userDataCubit.state.response?.isPregnant ?? false;
@@ -216,7 +219,9 @@ class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
                               dragStartBehavior: DragStartBehavior.down,
                               value: value,
                               onChanged: (v) async {
-                                await userUpdateCubit.updateUser(firstChild: v);
+                                await babyUpdateCubit.updateBabyData(
+                                  isFirst: v,
+                                );
                                 isFirstChildNotifier.value = v;
                               },
                             );
@@ -254,8 +259,9 @@ class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
                               dragStartBehavior: DragStartBehavior.down,
                               value: value,
                               onChanged: (v) async {
-                                // await userUpdateCubit.updateUser(
-                                //     enableNotifications: v);
+                                await babyUpdateCubit.updateBabyData(
+                                  haveMiscarriage: v,
+                                );
                                 isMiscarryNotifier.value = v;
                               },
                             );
@@ -295,7 +301,17 @@ class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
                               dragStartBehavior: DragStartBehavior.down,
                               value: value,
                               onChanged: (v) async {
-                                await userUpdateCubit.updateUser(isPregnant: !v);
+                                babyUpdateCubit.updateBabyData(
+                                  haveBorn: v,
+                                );
+                                // await Future.wait([
+                                //   userUpdateCubit.updateUser(
+                                //     isPregnant: !v,
+                                //   ),
+                                //   babyUpdateCubit.updateBabyData(
+                                //     haveBorn: v,
+                                //   ),
+                                // ]);
                                 isBornNotifier.value = v;
                               },
                             );

@@ -4,8 +4,8 @@ import 'package:burla_xatun/data/models/remote/response/medicine/medicines_model
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../../../../../utils/extensions/num_extensions.dart';
-import '../../../../../../../../widgets/global_text.dart';
+import '../../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../../widgets/global_text.dart';
 import '../../medicine_details_page/medicine_details_page.dart';
 
 class SingleMedicineTile extends StatelessWidget {

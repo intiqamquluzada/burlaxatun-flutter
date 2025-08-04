@@ -32,7 +32,7 @@ class CommentInput extends StatefulWidget {
 }
 
 class _CommentInputState extends State<CommentInput> {
-  late MainnCubit mainCubit;
+  late MainCubit mainCubit;
   late CreateCommentCubit createCommentCubit;
   late ForumCommentsCubit forumCommentsCubit;
   late EditCommentCubit editCommentCubit;
@@ -40,7 +40,7 @@ class _CommentInputState extends State<CommentInput> {
 
   @override
   void initState() {
-    mainCubit = context.read<MainnCubit>();
+    mainCubit = context.read<MainCubit>();
     createCommentCubit = context.read<CreateCommentCubit>();
     forumCommentsCubit = context.read<ForumCommentsCubit>();
     editCommentCubit = context.read<EditCommentCubit>();
@@ -87,7 +87,7 @@ class _CommentInputState extends State<CommentInput> {
               SizedBox(
                 width: 274,
                 height: 43,
-                child: BlocBuilder<MainnCubit, MainInitial>(
+                child: BlocBuilder<MainCubit, MainInitial>(
                   buildWhen: (previous, current) {
                     return previous.userTag != current.userTag;
                   },
@@ -206,7 +206,7 @@ class _CommentInputState extends State<CommentInput> {
                           CreateCommentStatus.commentLoading ||
                       state.createCommentStatus ==
                           CreateCommentStatus.replyLoading;
-                  return BlocSelector<MainnCubit, MainInitial, CommentDialog?>(
+                  return BlocSelector<MainCubit, MainInitial, CommentDialog?>(
                     selector: (state) {
                       return state.commentDialog;
                     },

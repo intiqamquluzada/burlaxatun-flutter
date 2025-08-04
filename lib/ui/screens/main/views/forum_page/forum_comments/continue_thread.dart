@@ -25,11 +25,11 @@ class ContinueThread extends StatefulWidget {
 }
 
 class _ContinueThreadState extends State<ContinueThread> {
-  late MainnCubit mainnCubit;
+  late MainCubit mainnCubit;
   late List<ValueNotifier<List<Comments>>> replyList;
   @override
   void initState() {
-    mainnCubit = context.read<MainnCubit>();
+    mainnCubit = context.read<MainCubit>();
     mainnCubit.commentInputTextController = TextEditingController();
     super.initState();
   }

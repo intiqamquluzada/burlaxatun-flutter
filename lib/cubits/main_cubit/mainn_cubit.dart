@@ -21,9 +21,9 @@ import '../../ui/screens/main/views/home_page/home.dart';
 import '../../ui/screens/main/views/home_page/home/home_page.dart';
 import '../../ui/screens/main/views/home_page/my_healing_page/indicator_data_screen/widgets/calendar_dialog.dart';
 import '../../ui/screens/main/views/home_page/my_healing_page/initial_my_healing_page/my_healing_page.dart';
-import '../../ui/screens/main/views/home_page/my_healing_page/my_medicines/initial_medicine_page/my_medicines_page.dart';
-import '../../ui/screens/main/views/home_page/my_healing_page/my_medicines/initial_medicine_page/widgets/add_medicine_dialog.dart';
-import '../../ui/screens/main/views/home_page/my_healing_page/my_medicines/initial_medicine_page/widgets/edit_medicine_dialog.dart';
+import '../../ui/screens/main/views/home_page/my_medicines/initial_medicine_page/my_medicines_page.dart';
+import '../../ui/screens/main/views/home_page/my_medicines/initial_medicine_page/widgets/add_medicine_dialog.dart';
+import '../../ui/screens/main/views/home_page/my_medicines/initial_medicine_page/widgets/edit_medicine_dialog.dart';
 import '../../ui/screens/main/views/home_page/notification/notification_page.dart';
 import '../../ui/screens/main/views/home_page/ultrasound/ultrasound_page.dart';
 import '../../ui/screens/main/views/home_page/video/video_page.dart';
@@ -49,8 +49,8 @@ enum GenderOption { boy, girl }
 
 enum CommentDialog { copy, reply, edit, delete, emoji }
 
-class MainnCubit extends Cubit<MainInitial> {
-  MainnCubit()
+class MainCubit extends Cubit<MainInitial> {
+  MainCubit()
       : super(
           MainInitial(
             indexOfView: 0,

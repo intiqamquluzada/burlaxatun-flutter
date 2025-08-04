@@ -26,7 +26,7 @@ class MenuAndEmojiDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     final userCubit = context.read<UserDataCubit>();
     log('is me: ${comment.user?.id} == ${userCubit.state.response?.id}');
     return Stack(

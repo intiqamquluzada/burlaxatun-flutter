@@ -17,7 +17,7 @@ class SingleIndicatorTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: GestureDetector(

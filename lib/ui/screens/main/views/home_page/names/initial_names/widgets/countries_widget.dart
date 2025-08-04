@@ -16,8 +16,9 @@ class CountriesWidget extends StatefulWidget {
 
 class _CountriesWidgetState extends State<CountriesWidget>
     with AutomaticKeepAliveClientMixin {
-  @override
+      
   late BabyNamesCubit _babyNamesCubit;
+  @override
   void initState() {
     super.initState();
     log('init countries');

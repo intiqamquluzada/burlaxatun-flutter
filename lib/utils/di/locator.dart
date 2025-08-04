@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/baby_update/baby_update_cubit.dart';
 import 'package:burla_xatun/cubits/change_password/change_password_cubit.dart';
 import 'package:burla_xatun/cubits/create_comment/create_comment_cubit.dart';
 import 'package:burla_xatun/cubits/create_forum/create_forum_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:burla_xatun/cubits/forum_detail/forum_detail_cubit.dart';
 import 'package:burla_xatun/cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import 'package:burla_xatun/cubits/report_or_block_user/report_or_block_user_cubit.dart';
 import 'package:burla_xatun/cubits/reset_password/reset_password_cubit.dart';
+import 'package:burla_xatun/data/contractor/baby_update_contract.dart';
 import 'package:burla_xatun/data/contractor/change_password_contract.dart';
 import 'package:burla_xatun/data/contractor/create_comment_contract.dart';
 import 'package:burla_xatun/data/contractor/create_forum_contract.dart';
@@ -23,6 +25,7 @@ import 'package:burla_xatun/data/contractor/forum_detail_contract.dart';
 import 'package:burla_xatun/data/contractor/pregnancy_progress_contract.dart';
 import 'package:burla_xatun/data/contractor/report_or_block_contract.dart';
 import 'package:burla_xatun/data/contractor/reset_password_contract.dart';
+import 'package:burla_xatun/data/repository/baby_update_repo.dart';
 import 'package:burla_xatun/data/repository/change_password_repo.dart';
 import 'package:burla_xatun/data/repository/create_comment_repo.dart';
 import 'package:burla_xatun/data/repository/create_forum_repo.dart';
@@ -34,6 +37,7 @@ import 'package:burla_xatun/data/repository/forum_detail_repo.dart';
 import 'package:burla_xatun/data/repository/pregnancy_progress_repo.dart';
 import 'package:burla_xatun/data/repository/report_or_block_repo.dart';
 import 'package:burla_xatun/data/repository/reset_password_repo.dart';
+import 'package:burla_xatun/data/services/remote/baby_update_service.dart';
 import 'package:burla_xatun/data/services/remote/change_password_service.dart';
 import 'package:burla_xatun/data/services/remote/create_comment_service.dart';
 import 'package:burla_xatun/data/services/remote/create_forum_service.dart';
@@ -228,7 +232,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => EditCommentService());
   locator.registerLazySingleton(() => CreateForumService());
   locator.registerLazySingleton(() => PregnancyProgressService());
-
+  locator.registerLazySingleton(() => BabyUpdateService());
   // contractor
   locator.registerLazySingleton<LoginContractor>(
       () => LoginRepository(locator<LoginService>()));
@@ -362,6 +366,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<PregnancyProgressContract>(
       () => PregnancyProgressRepo(locator<PregnancyProgressService>()));
 
+  locator.registerLazySingleton<BabyUpdateContract>(
+      () => BabyUpdateRepo(locator<BabyUpdateService>()));
   // cubit
   locator.registerFactory(() => LoginCubit(locator()));
   locator.registerFactory(() => DailyRecCubit(locator()));
@@ -442,4 +448,6 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(
       () => PregnancyProgressCubit(locator<PregnancyProgressContract>()));
+
+  locator.registerFactory(() => BabyUpdateCubit(locator<BabyUpdateContract>()));
 }

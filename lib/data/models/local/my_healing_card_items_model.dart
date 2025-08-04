@@ -10,11 +10,11 @@ class MyHealingCardItemsModel {
   final String? indciatorName;
 
   static const List items = [
-    MyHealingCardItemsModel(
-      icon: 'assets/icons/indicator_medicine_icon.svg',
-      tileName: 'Dərmanlarım',
-      indciatorName: 'medicines',
-    ),
+    // MyHealingCardItemsModel(
+    //   icon: 'assets/icons/indicator_medicine_icon.svg',
+    //   tileName: 'Dərmanlarım',
+    //   indciatorName: 'medicines',
+    // ),
     MyHealingCardItemsModel(
       icon: 'assets/icons/indicator_weight_icon.svg',
       tileName: 'Bədən çəkisi',

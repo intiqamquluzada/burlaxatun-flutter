@@ -36,7 +36,7 @@ class ChartWidget extends StatelessWidget {
             ),
             series: [
               LineSeries(
-                dataSource: indicatorDataList.reversed.toList(),
+                dataSource: indicatorDataList,
                 xValueMapper: (data, _) => data.time,
                 yValueMapper: (data, _) => data.value,
                 markerSettings: MarkerSettings(

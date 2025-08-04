@@ -7,17 +7,23 @@ import '../../../../../../widgets/global_text.dart';
 import 'pregnancy_guide_box.dart';
 
 class PregnancyGuide extends StatefulWidget {
-  const PregnancyGuide({super.key});
+  const PregnancyGuide({
+    super.key,
+    this.pregnantWeek,
+  });
+
+  final String? pregnantWeek;
 
   @override
   State<PregnancyGuide> createState() => _PregnancyGuideState();
 }
 
 class _PregnancyGuideState extends State<PregnancyGuide> {
-  late TasksByWeeksCubit _tasksByWeeksCubit;
+  late TasksByWeeksCubit tasksByWeeksCubit;
+
   @override
   void initState() {
-    _tasksByWeeksCubit = context.read<TasksByWeeksCubit>()..getTasksByWeek();
+    tasksByWeeksCubit = context.read<TasksByWeeksCubit>()..getTasksByWeek();
     super.initState();
   }
 
@@ -33,8 +39,7 @@ class _PregnancyGuideState extends State<PregnancyGuide> {
           return Center(child: Text(state.networkErrorMessage!));
         }
         if (state.tasksByWeekStatus == TasksByWeekStatus.success) {
-          final weekTask = state.tasksByWeek?.first;
-          final tasks = weekTask?.tasks ?? [];
+          final tasks = state.tasksByWeek ?? [];
           return SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
             child: DecoratedBox(
@@ -53,7 +58,7 @@ class _PregnancyGuideState extends State<PregnancyGuide> {
                         GlobalText(
                           textAlign: TextAlign.end,
                           text:
-                              'Hamiləlik Bələdçisi · ${weekTask?.week ?? '-'} . Həftə',
+                              'Hamiləlik Bələdçisi · ${widget.pregnantWeek ?? '0'}. Həftə',
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff8C8A8A),

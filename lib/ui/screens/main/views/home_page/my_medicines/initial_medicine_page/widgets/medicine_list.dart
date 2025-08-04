@@ -4,7 +4,7 @@ import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../../../utils/extensions/num_extensions.dart';
 import 'single_medicine_tile.dart';
 
 class MedicineList extends StatelessWidget {

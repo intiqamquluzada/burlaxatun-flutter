@@ -1,7 +1,7 @@
+import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/constants/color_constants.dart';
 import '../../../../utils/extensions/context_extensions.dart';
 import '../../global_text.dart';
 
@@ -11,9 +11,11 @@ class ChildAccountBox extends StatelessWidget {
     required this.babyName,
     required this.isSelected,
     this.onTap,
+    this.imageUrl,
   });
   final String babyName;
   final bool isSelected;
+  final String? imageUrl;
   final void Function()? onTap;
 
   @override
@@ -33,13 +35,23 @@ class ChildAccountBox extends StatelessWidget {
               EdgeInsets.only(left: 23, right: 46),
           child: Row(
             children: [
-              CachedNetworkImage(
-                imageUrl: 'assets/png/baby_acc_pic.png',
-                errorWidget: (context, url, error) {
-                  return Icon(Icons.person);
-                },
-                width: 52,
-                height: 52,
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.black),
+                  shape: BoxShape.circle,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(32)),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    width: 52,
+                    height: 52,
+                    imageUrl: imageUrl ?? '',
+                    errorWidget: (context, url, error) {
+                      return Icon(Icons.person);
+                    },
+                  ),
+                ),
               ),
               // Image.asset(
               //   'assets/png/baby_acc_pic.png',
@@ -55,7 +67,7 @@ class ChildAccountBox extends StatelessWidget {
                   text: babyName,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Colors.grey,
+                  color: Color(0xff5B5B5B),
                 ),
               ),
             ],

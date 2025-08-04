@@ -35,9 +35,9 @@ class _BoyNameTileState extends State<BoyNameTile> {
   @override
   Widget build(BuildContext context) {
     ValueNotifier<bool> isSelectedName = ValueNotifier<bool>(false);
-    for (var e in babyNamesCubit.selectedNames ?? []) {
-      if (e.babyName == widget.babyNameId) {
-        isSelectedName.value = e.babyName == widget.babyNameId;
+    for (SelectedName e in babyNamesCubit.selectedNames ?? []) {
+      if (e.babyName == widget.name) {
+        isSelectedName.value = true;
       }
     }
     // babyNamesCubit.selectedNames?.forEach((e) {
@@ -53,7 +53,7 @@ class _BoyNameTileState extends State<BoyNameTile> {
           if (isSelectedName.value) {
             final isAdded = await babyNamesCubit.addToWishList(
               babyNameId: widget.babyNameId,
-              selectedName: SelectedName(babyName: widget.babyNameId),
+              selectedName: SelectedName(babyName: widget.name),
             );
             if (isAdded == false) {
               isSelectedName.value = !isSelectedName.value;

@@ -1,12 +1,12 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:burla_xatun/data/contractor/ultrasound_contract.dart';
-import 'package:burla_xatun/data/models/remote/response/ultrasound_model.dart';
-import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../data/contractor/ultrasound_contract.dart';
+import '../../data/models/remote/response/ultrasound_model.dart';
+import '../../utils/extensions/statuscode_extension.dart';
 
 part 'ultrasound_state.dart';
 
