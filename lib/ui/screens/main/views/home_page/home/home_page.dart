@@ -1,4 +1,3 @@
-import 'package:burla_xatun/ui/screens/main/views/home_page/home/widgets/current_baby_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +5,7 @@ import '../../../../../../cubits/user_data/user_data_cubit.dart';
 import '../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
 import 'widgets/baby_information.dart';
+import 'widgets/current_baby_info.dart';
 import 'widgets/home_page_appbar.dart';
 import 'widgets/home_page_boxes.dart';
 import 'widgets/home_page_daily_advise.dart';
@@ -55,9 +55,7 @@ class HomePage extends StatelessWidget {
                                 replacement: currentBaby == null
                                     ? SizedBox.shrink()
                                     : CurrentBabyInfo(),
-                                child: BabyInformation(
-                                  week: user?.pregnantWeek ?? '',
-                                ),
+                                child: BabyInformation(),
                               );
                             },
                           );

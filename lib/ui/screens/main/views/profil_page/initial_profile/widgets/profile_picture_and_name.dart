@@ -31,7 +31,7 @@ class _ProfilePictureAndNameState extends State<ProfilePictureAndName> {
   void initState() {
     _userDataCubit = context.read<UserDataCubit>();
     _userUpdateCubit = context.read<UserUpdateCubit>();
-    _userDataCubit.getUserData();
+    // _userDataCubit.getUserData();
     super.initState();
   }
 

@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../../data/models/remote/response/faqs_model.dart';
@@ -81,14 +80,15 @@ class QuestionBox extends StatelessWidget {
                                   ),
                                 ),
                                 15.h,
-                                GlobalText(
-                                  height: 1.8,
-                                  textAlign: TextAlign.left,
-                                  text: faq.answer ?? 'No answer',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                ),
+                                Html(data: faq.answer)
+                                // GlobalText(
+                                //   height: 1.8,
+                                //   textAlign: TextAlign.left,
+                                //   text: faq.answer ?? 'No answer',
+                                //   fontSize: 14,
+                                //   fontWeight: FontWeight.w400,
+                                //   color: Colors.black,
+                                // ),
                               ],
                             )
                           : SizedBox.shrink();

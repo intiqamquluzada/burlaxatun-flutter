@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../cubits/user_data/user_data_cubit.dart';
 import '../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
 import 'widgets/delete_profile_button.dart';
@@ -22,7 +20,7 @@ class _InitialProfilePageState extends State<InitialProfilePage> {
   @override
   void initState() {
     super.initState();
-    context.read<UserDataCubit>().getUserData();
+    // context.read<UserDataCubit>().getUserData();
   }
 
   @override

@@ -62,7 +62,7 @@ class EndpointsConstants {
   // B1
   static const String notifications = '$baseUrl/B1/notifications/';
   static const String ultraSound = '$baseUrl/B1/ultra-sound/';
-  static const String progressPregnancy = '$baseUrl/B1/progress-pregnancy/';
+  static const String progressPregnancy = '$baseUrl/B1/my-progress-pregnancy/';
 
   // C
   static const String medicines = '$baseUrl/C/medicines/';
