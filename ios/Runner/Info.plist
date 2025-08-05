@@ -48,8 +48,8 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>We need access to your photo library to save and share images.</string>
+		<string>We need access to your photo library for profile image.</string>
 		<key>NSCameraUsageDescription</key>
-		<string>We need access to your camera to take photos and videos.</string>
+		<string>We need access to your camera to take photo for profile image.</string>
 	</dict>
 </plist>
