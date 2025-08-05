@@ -109,7 +109,7 @@ class CalendarWidget extends StatelessWidget {
   final DateTime focusedDay;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     final questionsCubit = context.read<QuestionsCubit>();
 
     return BlocBuilder<QuestionsCubit, QuestionsInitial>(

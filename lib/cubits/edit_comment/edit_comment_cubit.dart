@@ -27,7 +27,7 @@ class EditCommentCubit extends Cubit<EditCommentState> {
         commentId: commentId,
         forumId: forumId,
         text: text,
-        parentId: null,
+        parentId: parentId,
       );
 
       if (!response.statusCode.isSuccess) return;

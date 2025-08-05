@@ -1,9 +1,12 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
+import 'package:burla_xatun/utils/constants/text_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../../../cubits/edit_comment/edit_comment_cubit.dart';
 import '../../../../../../../cubits/report_or_block_user/report_or_block_user_cubit.dart';
@@ -31,35 +34,32 @@ class CommentDatas extends StatefulWidget {
 
 class _CommentDatasState extends State<CommentDatas>
     with AutomaticKeepAliveClientMixin {
+  final ValueNotifier<Comments?> commentValue = ValueNotifier<Comments?>(null);
   @override
   Widget build(BuildContext context) {
     super.build(context);
     log('Build commnet data');
-    final ValueNotifier<Comments> commentValue =
-        ValueNotifier<Comments>(widget.comment!);
+    final profileImage =
+        '${EndpointsConstants.baseUrl}${widget.comment?.user?.image}';
+
     final userName = widget.comment?.user?.fullName ?? 'user';
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CachedNetworkImage(
-          imageUrl: '',
-          errorWidget: (context, url, error) {
-            return Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.black12,
+        ClipOval(
+          child: CachedNetworkImage(
+            width: 44,
+            height: 44,
+            fit: BoxFit.cover,
+            imageUrl: profileImage,
+            errorWidget: (context, url, error) => SizedBox(
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: Colors.black12),
+                child: Icon(Icons.person),
               ),
-              child: Icon(Icons.person),
-            );
-          },
+            ),
+          ),
         ),
-        // Image.asset(
-        //   'assets/png/comment_user_pic.png',
-        //   width: 44,
-        //   height: 44,
-        // ),
         SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -75,11 +75,13 @@ class _CommentDatasState extends State<CommentDatas>
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
                   ),
+                  SizedBox(width: 10),
                   Padding(
-                    padding: const EdgeInsets.only(right: 20),
+                    padding: const EdgeInsets.only(right: 0),
                     child: GlobalText(
                       text: PastHelper.timeAgo(
-                          widget.comment!.createdAt.toString()),
+                        widget.comment!.createdAt.toString(),
+                      ),
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,
@@ -88,54 +90,64 @@ class _CommentDatasState extends State<CommentDatas>
                 ],
               ),
               6.h,
-              Row(
-                children: [
-                  Visibility(
-                    visible: widget.tag != null,
-                    child: GlobalText(
-                      height: 1.4,
-                      textAlign: TextAlign.left,
-                      text: '@${widget.tag}',
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(width: 7),
-                  ValueListenableBuilder(
-                    valueListenable: commentValue,
-                    builder: (context, value, child) {
-                      return BlocListener<EditCommentCubit, EditCommentState>(
-                        listener: (context, state) {
-                          if (state.editCommentStatus ==
-                              EditCommentStatus.success) {
-                            if (widget.comment?.id == state.editedComment?.id) {
-                              commentValue.value = state.editedComment!;
-                            }
-                          } else if (state.editCommentStatus ==
-                              EditCommentStatus.error) {
-                            AppSnackbars.error(
-                                context, 'Redaktə edərkən xəta baş verdi');
+              SizedBox(
+                child: ValueListenableBuilder(
+                  valueListenable: commentValue,
+                  builder: (context, value, child) {
+                    return BlocListener<EditCommentCubit, EditCommentState>(
+                      listener: (context, state) {
+                        if (state.editCommentStatus ==
+                            EditCommentStatus.success) {
+                          if (widget.comment?.id == state.editedComment?.id) {
+                            commentValue.value = state.editedComment!;
                           }
-                        },
-                        child: GlobalText(
-                          height: 1.4,
-                          textAlign: TextAlign.left,
-                          text: value.text ?? 'comment text not found',
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
+                        } else if (state.editCommentStatus ==
+                            EditCommentStatus.error) {
+                          AppSnackbars.error(
+                              context, 'Redaktə edərkən xəta baş verdi');
+                        }
+                      },
+                      child: RichText(
+                        textAlign: TextAlign.left,
+                        text: TextSpan(
+                          style: GoogleFonts.poppins(
+                            height: 1.4,
+                            color: Colors.black,
+                            fontSize: 13,
+                          ),
+                          children: [
+                            TextSpan(
+                              text:
+                                  widget.tag != null ? '@${widget.tag}  ' : '',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                            TextSpan(
+                              text: value == null
+                                  ? widget.comment?.text
+                                  : value.text,
+                              style: TextStyle(fontWeight: FontWeight.w400),
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                  ),
-                ],
+                      ),
+                      // GlobalText(
+                      //   height: 1.4,
+                      //   textAlign: TextAlign.left,
+                      //   text: '${value.text}forekofjoiejiofjeofoi' ??
+                      //       'comment text not found',
+                      //   fontSize: 13,
+                      //   fontWeight: FontWeight.w400,
+                      //   color: Colors.black,
+                      // ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 15),
           child: GestureDetector(
             onTap: () {
               log('${widget.comment?.text}');

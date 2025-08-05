@@ -13,7 +13,7 @@ class DoctorBox extends StatelessWidget {
     super.key,
     required this.doctor,
   });
-
+ 
   @override
   Widget build(BuildContext context) {
     return SizedBox(

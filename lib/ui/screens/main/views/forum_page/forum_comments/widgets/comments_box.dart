@@ -73,7 +73,6 @@ class _CommentsBoxState extends State<CommentsBox> {
     replyList = List.generate(widget.commentList.length, (i) {
       return ValueNotifier(widget.commentList[i].replies ?? []);
     });
-    
     return DecoratedSliver(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20)),

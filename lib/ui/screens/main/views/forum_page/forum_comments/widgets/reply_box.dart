@@ -60,10 +60,10 @@ class _ReplyBoxState extends State<ReplyBox> {
 
   void _initializeReplies() {
     if (widget.replies != null) {
+      showMoreVisible = ValueNotifier<bool>(widget.replies!.value.isNotEmpty);
       replyList = List.generate(widget.replies!.value.length, (i) {
         return ValueNotifier(widget.replies?.value[i].replies ?? []);
       });
-      showMoreVisible = ValueNotifier<bool>(widget.replies!.value.isNotEmpty);
     } else {
       showMoreVisible = ValueNotifier<bool>(false);
     }
@@ -78,7 +78,7 @@ class _ReplyBoxState extends State<ReplyBox> {
     } else {
       depthValue = ValueNotifier<int>(widget.depthValue!.value);
     }
-    _initializeReplies();
+    // _initializeReplies();
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Padding(
@@ -157,7 +157,7 @@ class _ReplyBoxState extends State<ReplyBox> {
                                         ? ValueListenableBuilder(
                                             valueListenable: widget.replies!,
                                             builder: (context, replies, child) {
-                                              _initializeReplies();
+                                              // _initializeReplies();
                                               log('${replies.length}');
                                               return ListView.builder(
                                                 physics:
@@ -165,7 +165,7 @@ class _ReplyBoxState extends State<ReplyBox> {
                                                 shrinkWrap: true,
                                                 itemCount: replies.length,
                                                 itemBuilder: (_, i) {
-                                                  _initializeReplies();
+                                                  // _initializeReplies();
                                                   // final replies =
                                                   //     widget.reply.replies ?? [];
                                                   return ReplyBox(
