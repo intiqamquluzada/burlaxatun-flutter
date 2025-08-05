@@ -17,18 +17,18 @@ class PregnancyProgressCubit extends Cubit<PregnancyProgressState> {
 
   final PregnancyProgressContract pregnancyProgressContract;
 
-  Future<void> getPregnancyProgress({required String week}) async {
+  Future<void> getPregnancyProgress() async {
     try {
       emit(state.copyWith(
           pregnancyProgressStatus: PregnancyProgressStatus.loading));
-      final response =
-          await pregnancyProgressContract.getPregnancyProgress(week: '1');
+      final response = await pregnancyProgressContract.getPregnancyProgress();
 
       if (!response.statusCode.isSuccess) return;
-      final data = PregnancyProgressModel.fromJson(response.data);
+      final data = response.data as List;
+      final progress = PregnancyProgressModel.fromJson(data.first);
       emit(state.copyWith(
         pregnancyProgressStatus: PregnancyProgressStatus.success,
-        progressData: data.results?.first,
+        progressData: progress,
       ));
     } on DioException catch (e) {
       log('network error: $e');

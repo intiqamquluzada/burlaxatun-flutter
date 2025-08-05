@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,10 +15,10 @@ import 'more_details_button.dart';
 class BabyInformation extends StatefulWidget {
   const BabyInformation({
     super.key,
-    required this.week,
+    // required this.week,
   });
 
-  final String week;
+  // final String week;
 
   @override
   State<BabyInformation> createState() => _BabyInformationState();
@@ -27,9 +28,9 @@ class _BabyInformationState extends State<BabyInformation> {
   late PregnancyProgressCubit pregnancyProgressCubit;
   @override
   void initState() {
-    log('init baby info box');
+    log('init baby info box.');
     pregnancyProgressCubit = context.read<PregnancyProgressCubit>()
-      ..getPregnancyProgress(week: widget.week);
+      ..getPregnancyProgress();
     super.initState();
   }
 
@@ -83,7 +84,8 @@ class _BabyInformationState extends State<BabyInformation> {
                           color: Color(0xffF1F3DB),
                         ),
                         child: CachedNetworkImage(
-                          imageUrl: progressData?.imageLeft ?? '',
+                          imageUrl:
+                              '${EndpointsConstants.baseUrl}${progressData?.imageLeft}',
                           errorWidget: (context, url, error) {
                             return Icon(Icons.error);
                           },
@@ -101,7 +103,8 @@ class _BabyInformationState extends State<BabyInformation> {
                           color: Color(0xffFEF2F2),
                         ),
                         child: CachedNetworkImage(
-                          imageUrl: progressData?.imageLeft ?? '',
+                          imageUrl:
+                              '${EndpointsConstants.baseUrl}${progressData?.imageLeft}',
                           errorWidget: (context, url, error) {
                             return Icon(Icons.error);
                           },
@@ -116,15 +119,15 @@ class _BabyInformationState extends State<BabyInformation> {
                     children: [
                       BabyInfoBox(
                         boxName: 'Baby height',
-                        boxData: '17 cm',
+                        boxData: '${progressData?.babyHeight} cm',
                       ),
                       BabyInfoBox(
                         boxName: 'Baby weight',
-                        boxData: '110 gr',
+                        boxData: '${progressData?.babyWeight} gr',
                       ),
                       BabyInfoBox(
                         boxName: 'Days left',
-                        boxData: '168 days',
+                        boxData: '${progressData?.daysLeft} days',
                       ),
                     ],
                   ),

@@ -30,7 +30,7 @@ class BabyUpdateService {
     final token = locator<LoginTokenService>().token;
 
     final response =
-        BaseNetwork.instance.getDio(token: token).patch(url, data: data);
+        BaseNetwork.instance.getDio(token: token).put(url, data: data);
 
     return response;
   }

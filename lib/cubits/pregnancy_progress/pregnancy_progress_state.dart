@@ -7,7 +7,7 @@ class PregnancyProgressState extends Equatable {
   });
 
   final PregnancyProgressStatus pregnancyProgressStatus;
-  final ProgressData? progressData;
+  final PregnancyProgressModel? progressData;
 
   @override
   List<Object?> get props => [
@@ -17,7 +17,7 @@ class PregnancyProgressState extends Equatable {
 
   PregnancyProgressState copyWith({
     PregnancyProgressStatus? pregnancyProgressStatus,
-    ProgressData? progressData,
+    PregnancyProgressModel? progressData,
   }) {
     return PregnancyProgressState(
       pregnancyProgressStatus:
