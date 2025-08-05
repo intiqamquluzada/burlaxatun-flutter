@@ -96,32 +96,25 @@ class _CommentsBoxState extends State<CommentsBox> {
                   );
                 },
               ),
-              // ...List.generate(widget.commentList.length, (i) {
-              //   log('comments buildedd');
-              //   return SingleCommentBox(
-              //     index: i,
-              //     comment: widget.commentList[i],
-              //     replies: replyList[i],
-              //   );
-              // }),
+              //
               BlocSelector<CreateCommentCubit, CreateCommentState,
                   CreateCommentStatus>(
                 selector: (CreateCommentState state) {
                   return state.createCommentStatus;
                 },
                 builder: (context, status) {
-                  if (status == CreateCommentStatus.commentLoading) {
-                    return Container(
+                  return Visibility(
+                    visible: status == CreateCommentStatus.commentLoading,
+                    maintainSize: false,
+                    child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: 80,
                       decoration: BoxDecoration(
                         color: Colors.black12,
                         borderRadius: BorderRadius.all(Radius.circular(18)),
                       ),
-                    );
-                  } else {
-                    return SizedBox.shrink();
-                  }
+                    ),
+                  );
                 },
               ),
             ],

@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
-import 'package:burla_xatun/utils/constants/text_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +10,7 @@ import '../../../../../../../cubits/edit_comment/edit_comment_cubit.dart';
 import '../../../../../../../cubits/report_or_block_user/report_or_block_user_cubit.dart';
 import '../../../../../../../data/models/remote/response/forum_comments_model.dart';
 import '../../../../../../../utils/app/app_snackbars.dart';
+import '../../../../../../../utils/constants/endpoints_constants.dart';
 import '../../../../../../../utils/di/locator.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../../utils/helper/past_helper.dart';
@@ -38,9 +37,7 @@ class _CommentDatasState extends State<CommentDatas>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    log('Build commnet data');
-    final profileImage =
-        '${EndpointsConstants.baseUrl}${widget.comment?.user?.image}';
+    final profileImage = widget.comment?.user?.image;
 
     final userName = widget.comment?.user?.fullName ?? 'user';
     return Row(
@@ -51,13 +48,21 @@ class _CommentDatasState extends State<CommentDatas>
             width: 44,
             height: 44,
             fit: BoxFit.cover,
-            imageUrl: profileImage,
+            imageUrl: profileImage ?? '',
             errorWidget: (context, url, error) => SizedBox(
               child: DecoratedBox(
                 decoration: BoxDecoration(color: Colors.black12),
                 child: Icon(Icons.person),
               ),
             ),
+            fadeInCurve: Curves.easeIn,
+            placeholder: (context, url) {
+              return Column(
+                children: [
+                  CircularProgressIndicator.adaptive(),
+                ],
+              );
+            },
           ),
         ),
         SizedBox(width: 10),
@@ -69,16 +74,21 @@ class _CommentDatasState extends State<CommentDatas>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GlobalText(
-                    text: '@$userName',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey,
+                  Flexible(
+                    child: GlobalText(
+                      text: '@$userName',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey,
+                    ),
                   ),
                   SizedBox(width: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 0),
+                  Flexible(
                     child: GlobalText(
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       text: PastHelper.timeAgo(
                         widget.comment!.createdAt.toString(),
                       ),

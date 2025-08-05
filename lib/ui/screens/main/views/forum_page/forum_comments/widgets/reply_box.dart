@@ -82,7 +82,7 @@ class _ReplyBoxState extends State<ReplyBox> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Padding(
-        padding: const EdgeInsets.only(left: 35),
+        padding: const EdgeInsets.only(left: 25),
         child: GestureDetector(
           onLongPressStart: (details) {
             double fromTop = details.globalPosition.dy > 160
@@ -116,149 +116,153 @@ class _ReplyBoxState extends State<ReplyBox> {
                     child: child,
                   );
                 },
-                child: Ink(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        left: BorderSide(
-                          width: 2,
-                          color: Colors.black,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Ink(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          left: BorderSide(
+                            width: 2,
+                            color: Colors.black,
+                          ),
                         ),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      onTap: widget.onTap,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 6.5,
-                              horizontal: 10,
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        onTap: widget.onTap,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 6.5,
+                                horizontal: 10,
+                              ),
+                              child: CommentDatas(
+                                comment: widget.reply,
+                                tag: widget.parentTag,
+                              ),
                             ),
-                            child: CommentDatas(
-                              comment: widget.reply,
-                              tag: widget.parentTag,
+                            SendedReplyBox(
+                              parentId: widget.reply.id!,
+                              parentTag: widget.reply.user?.fullName ?? 'user',
                             ),
-                          ),
-                          SendedReplyBox(
-                            parentId: widget.reply.id!,
-                            parentTag: widget.reply.user?.fullName ?? 'user',
-                          ),
-                          ValueListenableBuilder(
-                            valueListenable: showMoreVisible,
-                            builder: (context, value, child) {
-                              return Column(
-                                children: [
-                                  Visibility(
-                                    visible: value,
-                                    replacement: widget.replies != null
-                                        ? ValueListenableBuilder(
-                                            valueListenable: widget.replies!,
-                                            builder: (context, replies, child) {
-                                              // _initializeReplies();
-                                              log('${replies.length}');
-                                              return ListView.builder(
-                                                physics:
-                                                    NeverScrollableScrollPhysics(),
-                                                shrinkWrap: true,
-                                                itemCount: replies.length,
-                                                itemBuilder: (_, i) {
-                                                  // _initializeReplies();
-                                                  // final replies =
-                                                  //     widget.reply.replies ?? [];
-                                                  return ReplyBox(
-                                                    depthValue: depthValue,
-                                                    reply: replies[i],
-                                                    boxIndex: i,
-                                                    replies: replyList[i],
-                                                    onTap: () {
-                                                      // final currentReplies =
-                                                      //     List<Comments>.from(
-                                                      //         widget.replies!
-                                                      //             .value);
-                                                      // currentReplies
-                                                      //     .remove(replies[i]);
-                                                      // widget.replies!.value =
-                                                      //     currentReplies;
-                                                    },
-                                                    parentReplies:
-                                                        widget.replies,
-                                                    parentTag: widget.reply.user
-                                                            ?.fullName ??
-                                                        'user',
-                                                  );
-                                                },
-                                              );
+                            ValueListenableBuilder(
+                              valueListenable: showMoreVisible,
+                              builder: (context, value, child) {
+                                return Column(
+                                  children: [
+                                    Visibility(
+                                      visible: value,
+                                      replacement: widget.replies != null
+                                          ? ValueListenableBuilder(
+                                              valueListenable: widget.replies!,
+                                              builder:
+                                                  (context, replies, child) {
+                                                // _initializeReplies();
+                                                log('${replies.length}');
+                                                return ListView.builder(
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(),
+                                                  shrinkWrap: true,
+                                                  itemCount: replies.length,
+                                                  itemBuilder: (_, i) {
+                                                    // _initializeReplies();
+                                                    // final replies =
+                                                    //     widget.reply.replies ?? [];
+                                                    return ReplyBox(
+                                                      depthValue: depthValue,
+                                                      reply: replies[i],
+                                                      boxIndex: i,
+                                                      replies: replyList[i],
+                                                      onTap: () {
+                                                        // final currentReplies =
+                                                        //     List<Comments>.from(
+                                                        //         widget.replies!
+                                                        //             .value);
+                                                        // currentReplies
+                                                        //     .remove(replies[i]);
+                                                        // widget.replies!.value =
+                                                        //     currentReplies;
+                                                      },
+                                                      parentReplies:
+                                                          widget.replies,
+                                                      parentTag: widget.reply
+                                                              .user?.fullName ??
+                                                          'user',
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            )
+                                          : SizedBox.shrink(),
+                                      child: ValueListenableBuilder(
+                                        valueListenable: depthValue!,
+                                        builder: (context, depth, child) {
+                                          return TextButton(
+                                            onPressed: () {
+                                              showMoreVisible.value = false;
+                                              // if (depth == 1) {
+                                              //   log('cavablara baxmaga davam et');
+                                              //   Navigator.push(
+                                              //     context,
+                                              //     MaterialPageRoute(
+                                              //       builder: (context) =>
+                                              //           MultiBlocProvider(
+                                              //         providers: [
+                                              //           BlocProvider(
+                                              //             create: (context) =>
+                                              //                 locator<
+                                              //                     CreateCommentCubit>(),
+                                              //           ),
+                                              //           BlocProvider(
+                                              //             create: (context) =>
+                                              //                 locator<
+                                              //                     ForumCommentsCubit>(),
+                                              //           ),
+                                              //           BlocProvider(
+                                              //             create: (context) =>
+                                              //                 locator<
+                                              //                     DeleteCommentCubit>(),
+                                              //           ),
+                                              //           BlocProvider(
+                                              //             create: (context) =>
+                                              //                 locator<
+                                              //                     EditCommentCubit>(),
+                                              //           ),
+                                              //         ],
+                                              //         child: ContinueThread(
+                                              //           pageContext: context,
+                                              //           index: 0,
+                                              //           comment: widget.reply,
+                                              //           replies: widget.replies,
+                                              //         ),
+                                              //       ),
+                                              //     ),
+                                              //   );
+                                              // } else {
+                                              //   // depthValue!.value += 1;
+                                              //   // showMoreVisible.value = false;
+                                              // }
                                             },
-                                          )
-                                        : SizedBox.shrink(),
-                                    child: ValueListenableBuilder(
-                                      valueListenable: depthValue!,
-                                      builder: (context, depth, child) {
-                                        return TextButton(
-                                          onPressed: () {
-                                            showMoreVisible.value = false;
-                                            // if (depth == 1) {
-                                            //   log('cavablara baxmaga davam et');
-                                            //   Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //       builder: (context) =>
-                                            //           MultiBlocProvider(
-                                            //         providers: [
-                                            //           BlocProvider(
-                                            //             create: (context) =>
-                                            //                 locator<
-                                            //                     CreateCommentCubit>(),
-                                            //           ),
-                                            //           BlocProvider(
-                                            //             create: (context) =>
-                                            //                 locator<
-                                            //                     ForumCommentsCubit>(),
-                                            //           ),
-                                            //           BlocProvider(
-                                            //             create: (context) =>
-                                            //                 locator<
-                                            //                     DeleteCommentCubit>(),
-                                            //           ),
-                                            //           BlocProvider(
-                                            //             create: (context) =>
-                                            //                 locator<
-                                            //                     EditCommentCubit>(),
-                                            //           ),
-                                            //         ],
-                                            //         child: ContinueThread(
-                                            //           pageContext: context,
-                                            //           index: 0,
-                                            //           comment: widget.reply,
-                                            //           replies: widget.replies,
-                                            //         ),
-                                            //       ),
-                                            //     ),
-                                            //   );
-                                            // } else {
-                                            //   // depthValue!.value += 1;
-                                            //   // showMoreVisible.value = false;
-                                            // }
-                                          },
-                                          child: Text(
-                                            'show replies',
-                                            style: TextStyle(
-                                              color: ColorConstants
-                                                  .primaryRedColor,
+                                            child: Text(
+                                              'show replies',
+                                              style: TextStyle(
+                                                color: ColorConstants
+                                                    .primaryRedColor,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
+                                          );
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
