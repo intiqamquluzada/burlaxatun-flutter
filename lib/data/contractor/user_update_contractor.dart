@@ -9,6 +9,7 @@ abstract class UserUpdateContractor {
     bool? wantToBePregnant,
     bool? wantToSeePeriod,
     bool? isPregnant,
+    bool? haveMiscarriage,
     String? pregnantWeek,
     bool? firstChild,
     File? image,
