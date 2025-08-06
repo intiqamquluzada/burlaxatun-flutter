@@ -1,13 +1,12 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/create_comment/create_comment_cubit.dart';
-import 'package:burla_xatun/cubits/delete_comment/delete_comment_cubit.dart';
-import 'package:burla_xatun/cubits/edit_comment/edit_comment_cubit.dart';
-import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
-import 'package:burla_xatun/ui/widgets/global_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../cubits/create_comment/create_comment_cubit.dart';
+import '../../../../../../../cubits/delete_comment/delete_comment_cubit.dart';
+import '../../../../../../../cubits/edit_comment/edit_comment_cubit.dart';
+import '../../../../../../../cubits/forum_comments/forum_comments_cubit.dart';
 import '../../../../../../../cubits/forum_detail/forum_detail_cubit.dart';
 import '../../../../../../../cubits/forum_list/forum_list_cubit.dart';
 import '../../../../../../../data/models/remote/response/forum_list_model.dart';
@@ -15,6 +14,7 @@ import '../../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../../utils/di/locator.dart';
 import '../../../../../../widgets/custom_refresh_indicator.dart';
 import '../../../../../../widgets/global_button.dart';
+import '../../../../../../widgets/global_text.dart';
 import '../../forum_comments/forum_comments_page.dart';
 import '../../widgets/forum_box.dart';
 import 'add_new_forum_button.dart';

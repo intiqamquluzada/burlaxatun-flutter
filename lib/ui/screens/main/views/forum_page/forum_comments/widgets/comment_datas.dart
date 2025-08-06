@@ -164,12 +164,9 @@ class _CommentDatasState extends State<CommentDatas>
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return BlocProvider(
-                    create: (context) => locator<ReportOrBlockUserCubit>(),
-                    child: ReportCommentOrBlockUser(
-                      userId: widget.comment?.user?.id,
-                      commentId: widget.comment?.id,
-                    ),
+                  return ReportCommentOrBlockUser(
+                    userId: widget.comment?.user?.id,
+                    commentId: widget.comment?.id,
                   );
                 },
               );

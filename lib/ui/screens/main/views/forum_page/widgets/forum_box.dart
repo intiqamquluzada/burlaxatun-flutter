@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:burla_xatun/ui/widgets/report_or_block_forum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -104,6 +107,20 @@ class ForumBox extends StatelessWidget {
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      log('forum id: $forumId');
+                      showModalBottomSheet(
+                        useRootNavigator: true,
+                        context: context,
+                        builder: (context) {
+                          return ReportOrBlockForum(forumId: forumId);
+                        },
+                      );
+                    },
+                    child: Icon(Icons.more_horiz),
                   ),
                 ],
               ),
