@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -99,15 +100,15 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
       emit(state.copyWith(selectNameStatus: SelectNameStatus.loading));
       final response =
           await _babyNamesContractor.removeFromWishList(babyNameId: babyNameId);
-      final isRemoved =
-          response.statusCode == 200 || response.statusCode == 201;
-      if (isRemoved) {
+      // final isRemoved =
+      //     response.statusCode == 200 || response.statusCode == 201;
+      if (response.statusCode.isSuccess) {
         // proccessing remove disliked name from wish list
         final List<SelectedName> updatedSelectedNameList =
             List.from(selectedNames ?? []);
         selectedNames = updatedSelectedNameList;
         updatedSelectedNameList.removeWhere((element) {
-          return element.babyName == babyNameId;
+          return element.id == babyNameId;
         });
         emit(state.copyWith(
           selectedNamesList: updatedSelectedNameList.reversed.toList(),
@@ -137,6 +138,7 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
 
       if (isAdded) {
         // proccessing add name to wish list
+        log('added name id: ${selectedName.toJson()}');
         selectedNames!.add(selectedName);
         final List<SelectedName> updatedSelectedNameList =
             List.from(selectedNames ?? []);

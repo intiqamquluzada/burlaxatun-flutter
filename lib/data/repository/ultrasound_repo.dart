@@ -1,6 +1,7 @@
-import 'package:burla_xatun/data/contractor/ultrasound_contract.dart';
-import 'package:burla_xatun/data/services/remote/ultrasound_service.dart';
 import 'package:dio/src/response.dart';
+
+import '../contractor/ultrasound_contract.dart';
+import '../services/remote/ultrasound_service.dart';
 
 class UltrasoundRepo implements UltrasoundContract {
   UltrasoundRepo(this.ultrasoundService);
@@ -8,7 +9,7 @@ class UltrasoundRepo implements UltrasoundContract {
   final UltrasoundService ultrasoundService;
 
   @override
-  Future<Response<dynamic>> getUltraSound() {
-    return ultrasoundService.getUltraSound();
+  Future<Response<dynamic>> getUltraSound({required int week}) {
+    return ultrasoundService.getUltraSound(week: week);
   }
 }

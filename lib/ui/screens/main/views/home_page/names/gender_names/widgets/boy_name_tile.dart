@@ -53,7 +53,10 @@ class _BoyNameTileState extends State<BoyNameTile> {
           if (isSelectedName.value) {
             final isAdded = await babyNamesCubit.addToWishList(
               babyNameId: widget.babyNameId,
-              selectedName: SelectedName(babyName: widget.name),
+              selectedName: SelectedName(
+                babyName: widget.name,
+                id: widget.babyNameId,
+              ),
             );
             if (isAdded == false) {
               isSelectedName.value = !isSelectedName.value;

@@ -28,17 +28,17 @@ class MyHealingCardItemsModel {
     MyHealingCardItemsModel(
       icon: 'assets/icons/indicator_blood_pressure_icon.svg',
       tileName: 'Arterial təzyiq',
-      indciatorName: 'height',
+      indciatorName: 'pressure',
     ),
     MyHealingCardItemsModel(
       icon: 'assets/icons/indicator_coronary_icon.svg',
       tileName: 'Nəbz',
-      indciatorName: 'height',
+      indciatorName: 'saturation',
     ),
     MyHealingCardItemsModel(
       icon: 'assets/icons/indicator_sugar_icon.svg',
       tileName: 'Acqarına şəkər',
-      indciatorName: 'height',
+      indciatorName: 'sugar_before_meal',
     ),
   ];
 }

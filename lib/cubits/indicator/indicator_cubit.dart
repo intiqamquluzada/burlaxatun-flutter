@@ -61,12 +61,13 @@ class IndicatorCubit extends Cubit<IndicatorState> {
     required String indicator,
     required String date,
     required String time,
+    required int babyId,
   }) async {
     try {
       emit(state.copyWith(indicatorStatus: IndicatorStatus.loading));
 
       final postData = AddIndicatorRequestModel(
-        babyId: 86,
+        babyId: babyId,
         indicator: indicator,
         name: indicatorName,
         date: date,
