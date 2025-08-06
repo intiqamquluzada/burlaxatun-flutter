@@ -38,7 +38,7 @@ class _GenderNamesState extends State<GenderNames> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GlobalAppbar(
-        title: 'Adlar 2',
+        title: 'Adlar',
         onLeadingTap: () {
           context.pop();
           // babyNamesCubit.changeIsSelected(v: -1);

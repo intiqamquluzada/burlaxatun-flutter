@@ -104,12 +104,12 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
       //     response.statusCode == 200 || response.statusCode == 201;
       if (response.statusCode.isSuccess) {
         // proccessing remove disliked name from wish list
-        final List<SelectedName> updatedSelectedNameList =
-            List.from(selectedNames ?? []);
-        selectedNames = updatedSelectedNameList;
-        updatedSelectedNameList.removeWhere((element) {
+
+        selectedNames!.removeWhere((element) {
           return element.id == babyNameId;
         });
+        final List<SelectedName> updatedSelectedNameList =
+            List.from(selectedNames ?? []);
         emit(state.copyWith(
           selectedNamesList: updatedSelectedNameList.reversed.toList(),
           selectNameStatus: SelectNameStatus.success,

@@ -25,7 +25,7 @@ class SelectedNameTile extends StatelessWidget {
       trailing: GestureDetector(
         onTap: () async {
           log('name: $name, id: $nameId');
-          // babyNamesCubit.removeFromWishList(babyNameId: nameId);
+          babyNamesCubit.removeFromWishList(babyNameId: nameId);
         },
         child: BlocBuilder<BabyNamesCubit, BabyNamesState>(
           buildWhen: (previous, current) {
