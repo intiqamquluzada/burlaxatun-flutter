@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,6 +32,7 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: Color(0xffFAFAFA),
       body: widget.navigationShell, // navigationShell tablardir
       bottomNavigationBar: SafeArea(
+        bottom: Platform.isIOS ? false : true,
         child: GlobalBottomNavbar(navigationShell: widget.navigationShell),
       ),
     );
