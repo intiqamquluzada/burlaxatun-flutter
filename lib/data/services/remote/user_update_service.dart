@@ -16,6 +16,7 @@ class UserUpdateService {
     bool? wantToBePregnant,
     bool? wantToSeePeriod,
     bool? isPregnant,
+    bool? haveMiscarriage,
     String? pregnantWeek,
     bool? firstChild,
     File? image,
@@ -30,6 +31,7 @@ class UserUpdateService {
       if (onboardingDone != null) "onboarding_done": onboardingDone,
       if (wantToBePregnant != null) "want_to_be_pregnant": wantToBePregnant,
       if (wantToSeePeriod != null) "want_to_see_period": wantToSeePeriod,
+      if (haveMiscarriage != null) "have_miscarriage": haveMiscarriage,
       if (isPregnant != null) "is_pregnant": isPregnant,
       if (pregnantWeek != null || pregnantWeek != '0')
         "pregnant_week": pregnantWeek,

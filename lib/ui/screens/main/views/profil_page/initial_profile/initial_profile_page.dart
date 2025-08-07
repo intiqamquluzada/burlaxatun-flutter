@@ -37,7 +37,7 @@ class _InitialProfilePageState extends State<InitialProfilePage> {
                 children: [
                   24.h,
                   ProfilePictureAndName(), 
-                  24.h,
+                  24.h,  
                   ProfilePageSections(),
                   12.h,
                   ProfilePregnancyBox(),

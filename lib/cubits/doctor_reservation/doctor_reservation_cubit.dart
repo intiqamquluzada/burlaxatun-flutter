@@ -24,6 +24,14 @@ class DoctorReservationCubit extends Cubit<DoctorReservationState> {
   }
 
   Future<void> reservDoctor(int doctorId) async {
+    if (state.reserveDate == null|| state.reserveTime == null) {
+      emit(state.copyWith(
+        errorMessage: 'Vaxt və tarix seçin',
+        doctorReservStatus: DoctorReservStatus.error,
+      ));
+      emit(state.copyWith(doctorReservStatus: DoctorReservStatus.initial));
+      return;
+    }
     try {
       emit(state.copyWith(doctorReservStatus: DoctorReservStatus.loading));
       final response = await _doctorReservContract.reserveDoctor(
@@ -41,7 +49,7 @@ class DoctorReservationCubit extends Cubit<DoctorReservationState> {
       log('error occured while doctor reservation: $e', stackTrace: s);
       emit(state.copyWith(
         doctorReservStatus: DoctorReservStatus.error,
-        errorMessage: 'error occured',
+        errorMessage: 'Xəta baş verdi',
       ));
     }
   }

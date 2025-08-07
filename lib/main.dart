@@ -1,7 +1,9 @@
-import 'package:burla_xatun/cubits/baby_update/baby_update_cubit.dart';
-import 'package:burla_xatun/cubits/change_password/change_password_cubit.dart';
-import 'package:burla_xatun/cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
-import 'package:burla_xatun/cubits/reset_password/reset_password_cubit.dart';
+import 'package:burla_xatun/cubits/report_or_block_user/report_or_block_user_cubit.dart';
+
+import 'cubits/baby_update/baby_update_cubit.dart';
+import 'cubits/change_password/change_password_cubit.dart';
+import 'cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
+import 'cubits/reset_password/reset_password_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -142,6 +144,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => locator<BabyUpdateCubit>(),
         ),
+        BlocProvider(
+          create: (context) => locator<ReportOrBlockUserCubit>(),
+        )
       ],
       child: BlocBuilder<LanguageCubit, Locale>(
         builder: (context, state) {

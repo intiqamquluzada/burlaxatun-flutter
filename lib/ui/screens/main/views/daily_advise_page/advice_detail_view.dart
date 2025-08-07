@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../cubits/daily_rec_detail/daily_rec_detail_cubit.dart';
 import '../../../../widgets/custom_circular_progress_indicator.dart';
-import '../home_page/widgets/scrollable_days_appbar.dart';
+import '../home_page/ultrasound/widgets/scrollable_days_appbar.dart';
 
 class AdviceDetailView extends StatefulWidget {
   const AdviceDetailView({super.key});
@@ -44,7 +44,7 @@ class _AdviceDetailViewState extends State<AdviceDetailView> {
             backgroundColor: ColorConstants.scaffoldColor,
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(175),
-              child: ScrollableDaysAppbar(
+              child: ScrollableWeeksAppBar(
                 count: 270,
                 isShowBackButton: false,
                 appbarName: 'Günlük Tövsiyələr',

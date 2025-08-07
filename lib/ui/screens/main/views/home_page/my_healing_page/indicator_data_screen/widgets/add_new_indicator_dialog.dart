@@ -1,4 +1,5 @@
 import 'package:burla_xatun/cubits/indicator/indicator_cubit.dart';
+import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
 import 'package:burla_xatun/ui/screens/main/views/home_page/my_healing_page/indicator_data_screen/widgets/date_or_time_box.dart';
 import 'package:burla_xatun/ui/screens/main/views/home_page/my_healing_page/indicator_data_screen/widgets/pick_indicator_date_widget.dart';
 import 'package:burla_xatun/utils/app/app_snackbars.dart';
@@ -176,6 +177,12 @@ class _AddNewIndicatorDialogState extends State<AddNewIndicatorDialog> {
                             indicator: _indicatorController.text.trim(),
                             date: selectedDate,
                             time: selectedTime,
+                            babyId: context
+                                    .read<UserDataCubit>()
+                                    .currentBabyNotifier
+                                    .value
+                                    ?.id ??
+                                -1,
                           );
                         },
                         child: BlocConsumer<IndicatorCubit, IndicatorState>(

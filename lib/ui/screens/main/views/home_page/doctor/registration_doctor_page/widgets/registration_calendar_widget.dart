@@ -23,7 +23,7 @@ class RegistrationCalendarWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(10),
           child: TableCalendar(
-            rowHeight: 48,
+            rowHeight: 52,
             focusedDay: value,
             firstDay: DateTime.now(),
             lastDay: DateTime.utc(2030, 3, 14),
@@ -37,13 +37,29 @@ class RegistrationCalendarWidget extends StatelessWidget {
               doctorReservationCubit.saveDate(formattedDay);
             },
             headerStyle: HeaderStyle(
+              titleCentered: true,
               formatButtonVisible: false,
+              titleTextStyle: GoogleFonts.poppins(
+                fontSize: 14,
+                color: Color(0xffEC407A),
+                fontWeight: FontWeight.w500,
+              ),
             ),
             calendarStyle: CalendarStyle(
               cellPadding: EdgeInsets.zero,
               outsideDaysVisible: false,
               selectedDecoration: BoxDecoration(
+                shape: BoxShape.circle,
                 color: ColorConstants.primaryRedColor,
+              ),
+              selectedTextStyle: GoogleFonts.poppins(
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+              todayDecoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: ColorConstants.primaryRedColor.withOpacity(0.2),
               ),
               todayTextStyle: GoogleFonts.poppins(
                 fontSize: 20,
@@ -60,7 +76,7 @@ class RegistrationCalendarWidget extends StatelessWidget {
                 color: Color(0xff667085),
                 fontWeight: FontWeight.w400,
               ),
-              cellMargin: EdgeInsets.all(5),
+              cellMargin: EdgeInsets.all(6),
             ),
             daysOfWeekStyle: DaysOfWeekStyle(
               weekdayStyle: GoogleFonts.poppins(

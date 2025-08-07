@@ -29,6 +29,7 @@ class _GirlNamesState extends State<GirlNames>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<BabyNamesCubit, BabyNamesState>(
       buildWhen: (previous, current) {
         return previous.femaleNamesList != current.femaleNamesList;
@@ -47,7 +48,13 @@ class _GirlNamesState extends State<GirlNames>
             itemCount: girlNames?.length ?? 0,
             itemBuilder: (_, i) {
               final name = girlNames?[i].name ?? 'ad tapılmadı';
-              return GirlNameTile(name: name);
+              final babyNameId = girlNames?[i].id ?? -1;
+              final isSelected = ValueNotifier<bool>(false);
+              return GirlNameTile(
+                name: name,
+                babyNameId: babyNameId,
+                isSelectedName: isSelected,
+              );
             },
             separatorBuilder: (_, index) {
               return Divider(

@@ -1,9 +1,9 @@
-import 'package:burla_xatun/cubits/doctor_notification/doctor_notification_cubit.dart';
-import 'package:burla_xatun/cubits/doctor_notification/doctor_notification_state.dart';
-import 'package:burla_xatun/utils/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../../cubits/doctor_notification/doctor_notification_cubit.dart';
+import '../../../../../../../../cubits/doctor_notification/doctor_notification_state.dart';
+import '../../../../../../../../utils/extensions/context_extensions.dart';
 import '../../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../../widgets/global_text.dart';
 import 'doctors_notification_box_widget.dart';

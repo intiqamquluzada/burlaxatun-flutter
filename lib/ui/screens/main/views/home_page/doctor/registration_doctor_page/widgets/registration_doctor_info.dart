@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../../../data/models/remote/response/doctor_detail_model.dart';
@@ -14,12 +15,14 @@ class RegistrationDoctorInfo extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Image.network(
-            doctor.image ??
-                'default_image_url', // Default image URL for fallback
-            width: 90,
-            height: 90,
-            fit: BoxFit.cover,
+          ClipOval(
+            child: CachedNetworkImage(
+              width: 90,
+              height: 90,
+              fit: BoxFit.cover,
+              imageUrl: doctor.image ?? '',
+              errorWidget: (context, url, error) => Icon(Icons.person),
+            ),
           ),
           12.h,
           GlobalText(

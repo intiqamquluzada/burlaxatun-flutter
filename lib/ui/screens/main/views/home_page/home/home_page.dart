@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userDataCubit = context.read<UserDataCubit>();
-    final user = userDataCubit.state.response;
+    // final user = userDataCubit.state.response;
     return Scaffold(
       backgroundColor: ColorConstants.scaffoldColor,
       appBar: HomePageAppbar(),

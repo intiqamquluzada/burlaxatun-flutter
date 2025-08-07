@@ -3,25 +3,30 @@ part of 'ultrasound_cubit.dart';
 class UltrasoundState extends Equatable {
   const UltrasoundState({
     this.ultraSoundStatus = UltraSoundStatus.initial,
-    this.ultrasound,
+    this.ultrasoundList,
+    this.ultrasoundByWeek,
   });
 
   final UltraSoundStatus ultraSoundStatus;
-  final UltrasoundModel? ultrasound;
+  final List<Ultrasound>? ultrasoundList;
+  final Ultrasound? ultrasoundByWeek;
 
   @override
   List<Object?> get props => [
         ultraSoundStatus,
-        ultrasound,
+        ultrasoundList,
+        ultrasoundByWeek,
       ];
 
   UltrasoundState copyWith({
     UltraSoundStatus? ultraSoundStatus,
-    UltrasoundModel? ultrasound,
+    List<Ultrasound>? ultrasoundList,
+    Ultrasound? ultrasoundByWeek,
   }) {
     return UltrasoundState(
       ultraSoundStatus: ultraSoundStatus ?? this.ultraSoundStatus,
-      ultrasound: ultrasound ?? this.ultrasound,
+      ultrasoundList: ultrasoundList ?? this.ultrasoundList,
+      ultrasoundByWeek: ultrasoundByWeek ?? this.ultrasoundByWeek,
     );
   }
 }

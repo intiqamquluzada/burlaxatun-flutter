@@ -16,7 +16,6 @@ class CountriesWidget extends StatefulWidget {
 
 class _CountriesWidgetState extends State<CountriesWidget>
     with AutomaticKeepAliveClientMixin {
-      
   late BabyNamesCubit _babyNamesCubit;
   @override
   void initState() {
@@ -27,6 +26,7 @@ class _CountriesWidgetState extends State<CountriesWidget>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<BabyNamesCubit, BabyNamesState>(
       buildWhen: (previous, current) {
         return previous.countries != current.countries;

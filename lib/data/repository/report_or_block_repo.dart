@@ -17,4 +17,14 @@ class ReportOrBlockRepo implements ReportOrBlockContract {
   Future<Response> blockUser({required int userId}) {
     return reportOrBlockService.blockUser(userId: userId);
   }
+
+  @override
+  Future<Response> blockForum({required int forumId}) {
+    return reportOrBlockService.blockForum(forumId: forumId);
+  }
+
+  @override
+  Future<Response> reportForum({required int forumId}) {
+    return reportOrBlockService.reportForum(forumId: forumId);
+  }
 }

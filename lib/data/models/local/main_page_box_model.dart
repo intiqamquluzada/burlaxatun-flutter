@@ -31,7 +31,7 @@ class MainPageBoxModel {
     ),
     MainPageBoxModel(
       boxName: 'Həkimlər',
-      boxIcon: 'assets/icons/stethoscopee.svg',
+      boxIcon: 'assets/icons/doctor_icon.svg',
       route: '/initial_doctors',
     ),
     MainPageBoxModel(

@@ -48,6 +48,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
     forumCommentsCubit = context.read<ForumCommentsCubit>();
     deleteCommentCubit = context.read<DeleteCommentCubit>();
     mainCubit = context.read<MainCubit>();
+    _initializeReplies();
 
     super.initState();
   }
@@ -62,7 +63,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    _initializeReplies();
+    // _initializeReplies();
     return Column(
       children: [
         GestureDetector(
@@ -149,7 +150,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                             listener: (context, state) {
                               if (state.deleteCommentStatus ==
                                   DeleteCommentStatus.success) {
-                                _initializeReplies();
+                                // _initializeReplies();
                                 log('${state.deletedComment?.id}');
                                 // final currentReplies =
                                 //     List<Comments>.from(widget.replies!.value);

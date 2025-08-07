@@ -81,6 +81,8 @@ class EndpointsConstants {
   static const reportComment = '$baseUrl/D/forum-comment/report-create/';
   static const blockUser = '$baseUrl/A/user-block-create/';
   static const deleteOrUpdate = '$baseUrl/D/comments';
+  static const reportForum = '$baseUrl/D/forum-report/create/';
+  static const blockForum = '$baseUrl/D/forum-block/create/';
 
   static const user = "$baseUrl/D/forum/videodoktor/user/";
   // static const forumCreate = '$baseUrl/D/forum-create/';

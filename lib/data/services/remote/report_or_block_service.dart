@@ -32,4 +32,34 @@ class ReportOrBlockService {
 
     return response;
   }
+
+  Future<Response<dynamic>> reportForum({required int forumId}) async {
+    final url = EndpointsConstants.reportForum;
+
+    final postData = {
+      'forum': forumId,
+    };
+
+    final token = locator<LoginTokenService>().token;
+    final response = await BaseNetwork.instance
+        .getDio(token: token)
+        .post(url, data: postData);
+
+    return response;
+  }
+
+  Future<Response<dynamic>> blockForum({required int forumId}) async {
+    final url = EndpointsConstants.blockForum;
+
+    final postData = {
+      'forum': forumId,
+    };
+
+    final token = locator<LoginTokenService>().token;
+    final response = await BaseNetwork.instance
+        .getDio(token: token)
+        .post(url, data: postData);
+
+    return response;
+  }
 }

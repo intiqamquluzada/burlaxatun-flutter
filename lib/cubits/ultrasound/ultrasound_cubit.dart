@@ -17,24 +17,22 @@ class UltrasoundCubit extends Cubit<UltrasoundState> {
 
   final UltrasoundContract ultrasoundContract;
 
-  Future<void> getUltraSound() async {
-    try {
-      if (state.ultrasound != null) {
-        return;
-      }
-      emit(state.copyWith(ultraSoundStatus: UltraSoundStatus.loading));
-      final response = await ultrasoundContract.getUltraSound();
+  Future<void> getUltraSound({required int week}) async {
+    // if (state.ultrasoundByWeek != null) return;
 
-      if (response.statusCode.isSuccess) {
-        final ultrasoundData = UltrasoundModel.fromJson(response.data);
-        emit(state.copyWith(
-          ultraSoundStatus: UltraSoundStatus.success,
-          ultrasound: ultrasoundData,
-        ));
-      } else {
-        log('error occured');
-        emit(state.copyWith(ultraSoundStatus: UltraSoundStatus.error));
-      }
+    try {
+      emit(state.copyWith(ultraSoundStatus: UltraSoundStatus.loading));
+      final response = await ultrasoundContract.getUltraSound(week: week);
+
+      if (!response.statusCode.isSuccess) return;
+
+      // final ultrasoundData = UltrasoundModel.fromJson(response.data);
+      final ultrasoundByWeek = Ultrasound.fromJson(response.data);
+      emit(state.copyWith(
+        ultraSoundStatus: UltraSoundStatus.success,
+        // ultrasoundList: ultrasoundData.results,
+        ultrasoundByWeek: ultrasoundByWeek,
+      ));
     } on DioException catch (e, s) {
       if (e.type == DioExceptionType.connectionError) {
         log('Network error: $e');

@@ -37,16 +37,9 @@ class TimeAndPriceBox extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                   ),
-                  8.h,
-                  GlobalText(
-                    text: 'Bazar E - Cümə',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff667085),
-                  ),
                   5.h,
                   GlobalText(
-                    text: doctor.availableTime.toString(),
+                    text: '${doctor.availableTime}',
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff667085),
@@ -65,7 +58,7 @@ class TimeAndPriceBox extends StatelessWidget {
                   ),
                   12.h,
                   GlobalText(
-                    text: doctor.consultantPrice.toString(),
+                    text: '${doctor.consultantPrice.toString()} Azn',
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff667085),

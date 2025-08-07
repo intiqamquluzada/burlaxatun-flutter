@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,6 +24,7 @@ class SelectedNameTile extends StatelessWidget {
       title: Text(name),
       trailing: GestureDetector(
         onTap: () async {
+          log('name: $name, id: $nameId');
           babyNamesCubit.removeFromWishList(babyNameId: nameId);
         },
         child: BlocBuilder<BabyNamesCubit, BabyNamesState>(
