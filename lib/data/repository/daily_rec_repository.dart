@@ -9,7 +9,7 @@ class DailyRecRepository implements DailyRecContractor {
   final DailyRecService _dailyRecService;
 
   @override
-  Future<Response<dynamic>> getDailyRec() {
-    return _dailyRecService.getDailyRec();
+  Future<Response<dynamic>> getDailyRec({int? day}) {
+    return _dailyRecService.getDailyRec(day: day);
   }
 }

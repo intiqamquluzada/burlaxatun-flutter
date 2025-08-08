@@ -46,6 +46,7 @@ class Recommendation extends Equatable {
   final int? id;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final bool? active;
   final String? slug;
   final int? day;
   final String? name;
@@ -56,6 +57,7 @@ class Recommendation extends Equatable {
     this.id,
     this.createdAt,
     this.updatedAt,
+    this.active,
     this.slug,
     this.day,
     this.name,
@@ -72,6 +74,7 @@ class Recommendation extends Equatable {
             ? null
             : DateTime.parse(json["updated_at"]),
         slug: json["slug"],
+        active: json["active"],
         day: json["day"],
         name: json["name"],
         text: json["text"],
@@ -95,6 +98,7 @@ class Recommendation extends Equatable {
         createdAt,
         updatedAt,
         slug,
+        active,
         day,
         name,
         text,

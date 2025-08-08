@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import '../../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../widgets/global_text.dart';
@@ -32,7 +33,7 @@ class PregnancyGuideBox extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                spacing: 15,
+                // spacing: 15,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -45,16 +46,20 @@ class PregnancyGuideBox extends StatelessWidget {
                     color: Color(0xff484848),
                   ),
                   SizedBox(
-                    width: 226,
-                    child: GlobalText(
-                      height: 1.3,
-                      textAlign: TextAlign.left,
-                      text: description,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xff484848),
-                    ),
+                    width: MediaQuery.of(context).size.width * 0.57,
+                    child: Html(data: description),
                   ),
+                  // SizedBox(
+                  //   width: 226,
+                  //   child: GlobalText(
+                  //     height: 1.3,
+                  //     textAlign: TextAlign.left,
+                  //     text: description,
+                  //     fontSize: 12,
+                  //     fontWeight: FontWeight.w400,
+                  //     color: Color(0xff484848),
+                  //   ),
+                  // ),
                 ],
               ),
               Padding(

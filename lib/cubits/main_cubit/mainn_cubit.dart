@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/ui/screens/main/views/daily_advise_page/advice_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,7 +106,7 @@ class MainCubit extends Cubit<MainInitial> {
 
   final Map<String, Widget> homePageViews = {
     'Home': HomePage(),
-    'Gündəlik Tövsiyyələr': AdvicePage(),
+    'Gündəlik Tövsiyyələr': AdvicePagee(),
     'Ultrasəs': UltrasoundPage(),
     'Notification': NotificationPage(),
     'Videolar': VideoPage(),

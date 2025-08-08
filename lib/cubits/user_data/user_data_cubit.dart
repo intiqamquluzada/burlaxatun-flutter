@@ -11,7 +11,7 @@ import '../../data/models/remote/response/user_data_model.dart';
 part 'user_data_state.dart';
 
 class UserDataCubit extends Cubit<UserDataState> {
-  UserDataCubit(this._userDataContractor) : super(UserDataState.initial());
+  UserDataCubit(this._userDataContractor) : super(UserDataState());
 
   final UserDataContractor _userDataContractor;
   // late ValueNotifier<Baby?> currentBabyNotifier;
@@ -25,9 +25,16 @@ class UserDataCubit extends Cubit<UserDataState> {
 
       final response = await _userDataContractor.getUserData();
 
+      final pregnantDays = response.inseminationDate != null
+          ? DateTime.now()
+              .difference(DateTime.parse(response.inseminationDate!))
+              .inDays
+          : null;
+
       emit(state.copyWith(
         status: UserDataStatus.success,
         response: response,
+        pregnantDays: pregnantDays,
         babies: response.babies,
       ));
       log('babies count after save: ${state.babies?.length}');

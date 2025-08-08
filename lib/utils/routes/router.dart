@@ -24,7 +24,7 @@ import '../../ui/screens/auth/login/login.dart';
 import '../../ui/screens/auth/sign_up/signup.dart';
 import '../../ui/screens/auth/video_doktor_login/video_doktor_login.dart';
 import '../../ui/screens/main/main_page.dart';
-import '../../ui/screens/main/views/daily_advise_page/advice_page.dart';
+import '../../ui/screens/main/views/daily_advise_page/advice_detail_view.dart';
 import '../../ui/screens/main/views/forum_page/main_forum_page.dart/forum_page.dart';
 import '../../ui/screens/main/views/forum_page/new_forum_page/create_new_forum.dart';
 import '../../ui/screens/main/views/forum_page/secondary_forum_page/secondary_forum_page.dart';
@@ -320,7 +320,7 @@ class Routerapp {
             routes: [
               GoRoute(
                 path: '/daily_advices',
-                builder: (context, state) => AdvicePage(),
+                builder: (context, state) => AdvicePagee(),
               ),
               // GoRoute(
               //   path: '/daily_advices',

@@ -99,6 +99,7 @@ class _HomePageAppbarState extends State<HomePageAppbar> {
                   builder: (context, currentBaby, child) {
                     // log('user is null: ${user == null}');
                     final isPregnant = state.response?.isPregnant ?? false;
+                    final days = state.pregnantDays;
                     return Visibility(
                       visible: currentBaby == null && isPregnant,
                       replacement: GlobalText(
@@ -115,7 +116,7 @@ class _HomePageAppbarState extends State<HomePageAppbar> {
                         textAlign: TextAlign.left,
                         height: 1.3,
                         text:
-                            'Hamiləliyin ${data.pregnantWeek ?? '0'}. həftəsi \nGün ${(int.tryParse(data.pregnantWeek ?? '0') ?? 0) * 7}',
+                            'Hamiləliyin ${data.pregnantWeek ?? '0'}. həftəsi \nGün $days',
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,

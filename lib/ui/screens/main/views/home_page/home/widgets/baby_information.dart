@@ -122,7 +122,7 @@ class _BabyInformationState extends State<BabyInformation> {
                       ),
                       BabyInfoBox(
                         boxName: 'Qalan günlər',
-                        boxData: '${progressData?.daysLeft} days',
+                        boxData: '${progressData?.daysLeft} gün',
                       ),
                     ],
                   ),

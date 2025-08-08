@@ -27,29 +27,37 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorConstants.scaffoldColor,
       appBar: HomePageAppbar(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              24.h,
-              HorizontalCalendar(),
-              24.h,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  spacing: 24,
-                  children: [
-                    BlocBuilder<UserDataCubit, UserDataState>(
-                      builder: (context, state) {
-                        if (state.status == UserDataStatus.loading) {
-                          return CircularProgressIndicator.adaptive();
-                        } else if (state.status == UserDataStatus.success) {
-                          return ValueListenableBuilder(
+      body: Center(
+        child: SingleChildScrollView(
+          child: BlocBuilder<UserDataCubit, UserDataState>(
+            builder: (context, state) {
+              if (state.status == UserDataStatus.loading) {
+                return Center(child: CircularProgressIndicator.adaptive());
+              }
+              if (state.status == UserDataStatus.success) {
+                final week = state.response?.pregnantWeek ?? '0';
+                final isPregnant = state.response?.isPregnant ?? false;
+                final days = state.pregnantDays;
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            24.h,
+                            HorizontalCalendar(),
+                            24.h,
+                          ],
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: ValueListenableBuilder(
                             valueListenable: userDataCubit.currentBabyNotifier,
                             builder: (context, currentBaby, child) {
                               // log('user is null: ${user == null}');
-                              final isPregnant =
-                                  state.response?.isPregnant ?? false;
+
                               return Visibility(
                                 visible: currentBaby == null && isPregnant,
                                 replacement: currentBaby == null
@@ -58,32 +66,82 @@ class HomePage extends StatelessWidget {
                                 child: BabyInformation(),
                               );
                             },
-                          );
-                        }
-                        return SizedBox.shrink();
-                      },
+                          ),
+                        ),
+                        24.h,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Visibility(
+                            visible: isPregnant,
+                            child: Column(
+                              children: [
+                                Visibility(
+                                  visible: days != null,
+                                  child: HomePageDailyAdvise(),
+                                ),
+                                24.h,
+                                Visibility(
+                                  visible: week != '0',
+                                  child: PregnancyGuide(pregnantWeek: week),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // BlocBuilder<UserDataCubit, UserDataState>(
+                        //   builder: (context, state) {
+                        //     if (state.status == UserDataStatus.loading) {
+                        //       return CircularProgressIndicator.adaptive();
+                        //     } else if (state.status ==
+                        //         UserDataStatus.success) {
+                        //       return ValueListenableBuilder(
+                        //         valueListenable:
+                        //             userDataCubit.currentBabyNotifier,
+                        //         builder: (context, currentBaby, child) {
+                        //           // log('user is null: ${user == null}');
+                        //           final isPregnant =
+                        //               state.response?.isPregnant ?? false;
+                        //           return Visibility(
+                        //             visible:
+                        //                 currentBaby == null && isPregnant,
+                        //             replacement: currentBaby == null
+                        //                 ? SizedBox.shrink()
+                        //                 : CurrentBabyInfo(),
+                        //             child: BabyInformation(),
+                        //           );
+                        //         },
+                        //       );
+                        //     }
+                        //     return SizedBox.shrink();
+                        //   },
+                        // ),
+
+                        // BlocBuilder<UserDataCubit, UserDataState>(
+                        //   builder: (context, state) {
+                        //     if (state.status == UserDataStatus.loading) {
+                        //       return CircularProgressIndicator.adaptive();
+                        //     } else if (state.status ==
+                        //         UserDataStatus.success) {
+                        //       return Visibility(
+                        //         visible: week != '0',
+                        //         child: PregnancyGuide(pregnantWeek: week),
+                        //       );
+                        //     }
+                        //     return SizedBox.shrink();
+                        //   },
+                        // ),
+                        24.h,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: HomePageBoxes(),
+                        ),
+                      ],
                     ),
-                    HomePageDailyAdvise(),
-                    BlocBuilder<UserDataCubit, UserDataState>(
-                      builder: (context, state) {
-                        if (state.status == UserDataStatus.loading) {
-                          return CircularProgressIndicator.adaptive();
-                        } else if (state.status == UserDataStatus.success) {
-                          final week = state.response?.pregnantWeek ?? '0';
-                          return Visibility(
-                            visible: week != '0',
-                            child: PregnancyGuide(pregnantWeek: week),
-                          );
-                        }
-                        return SizedBox.shrink();
-                      },
-                    ),
-                    HomePageBoxes(),
-                  ],
-                ),
-              ),
-              24.h,
-            ],
+                  ),
+                );
+              }
+              return SizedBox.shrink();
+            },
           ),
         ),
       ),

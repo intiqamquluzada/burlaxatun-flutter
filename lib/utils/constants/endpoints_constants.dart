@@ -36,6 +36,11 @@ class EndpointsConstants {
   static const String dailyRecDetail =
       '$baseUrl/extra/daily-recommendations-detail/{slug}/';
 
+  static const String dailyRecommendationByDay =
+      '$baseUrl/extra/daily-recommendations-detail/day/';
+  static const String myDailyRecommendation =
+      '$baseUrl/extra/my-daily-recommendation/';
+
   static const String faqs = '$baseUrl/extra/faq/';
   static const String privacyPolicy = '$baseUrl/extra/privacy-policy/';
   static const String usingRules = '$baseUrl/extra/using-rules/';

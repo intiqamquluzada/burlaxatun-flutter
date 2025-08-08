@@ -1,7 +1,8 @@
-import 'package:burla_xatun/cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
+import '../../../../../../../cubits/user_data/user_data_cubit.dart';
 import '../../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../widgets/global_text.dart';
 import '../mixins/horizontal_calendar_mixin.dart';
@@ -41,10 +42,16 @@ class _HorizontalCalendarState extends State<HorizontalCalendar>
             return GestureDetector(
               onTap: () {
                 ///* If the tapped date is not the current date, scroll to it
-                selectedDateIndex.value = i;
-                context
-                    .read<PregnancyProgressCubit>()
-                    .getPregnancyProgress(date: allDates[i]);
+                final isPregnant =
+                    context.read<UserDataCubit>().state.response!.isPregnant ??
+                        false;
+                if (isPregnant) {
+                  selectedDateIndex.value = i;
+                  context
+                      .read<PregnancyProgressCubit>()
+                      .getPregnancyProgress(date: allDates[i]);
+                }
+
                 // if (i == currentDateIndex) return;
               },
               child: Row(

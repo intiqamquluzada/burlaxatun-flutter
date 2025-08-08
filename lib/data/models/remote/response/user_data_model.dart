@@ -10,6 +10,7 @@ class UserDataResponse extends Equatable {
   final bool? wantToBePregnant;
   final bool? wantToSeePeriod;
   final bool? isPregnant;
+  final String? inseminationDate;
   final bool? haveMiscarriage;
   final String? pregnantWeek;
   final bool? firstChild;
@@ -30,6 +31,7 @@ class UserDataResponse extends Equatable {
     this.haveMiscarriage,
     this.wantToSeePeriod,
     this.isPregnant,
+    this.inseminationDate,
     this.pregnantWeek,
     this.firstChild,
     this.relation,
@@ -50,6 +52,7 @@ class UserDataResponse extends Equatable {
         onboardingDone: json["onboarding_done"],
         wantToBePregnant: json["want_to_be_pregnant"],
         haveMiscarriage: json["have_miscarriage"],
+        inseminationDate: json["insemination_date"],
         wantToSeePeriod: json["want_to_see_period"],
         isPregnant: json["is_pregnant"],
         pregnantWeek: json["pregnant_week"],
@@ -76,6 +79,7 @@ class UserDataResponse extends Equatable {
         "is_pregnant": isPregnant,
         "pregnant_week": pregnantWeek,
         "first_child": firstChild,
+        "insemination_date": inseminationDate,
         "relation": relation,
         "have_miscarriage": haveMiscarriage,
         "image": image,
@@ -98,6 +102,7 @@ class UserDataResponse extends Equatable {
         wantToSeePeriod,
         isPregnant,
         pregnantWeek,
+        inseminationDate,
         firstChild,
         haveMiscarriage,
         relation,

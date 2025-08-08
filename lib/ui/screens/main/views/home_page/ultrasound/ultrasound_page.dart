@@ -29,16 +29,11 @@ class _UltrasoundPageState extends State<UltrasoundPage> {
         context.read<UserDataCubit>().state.response?.pregnantWeek;
     weekValue = ValueNotifier<int?>(int.parse(pregnancyWeek ?? '0'));
     scrollController = ScrollController();
+    ultrasoundCubit = context.read<UltrasoundCubit>();
 
     if (pregnancyWeek == '0') return;
-    ultrasoundCubit = context.read<UltrasoundCubit>()
-      ..getUltraSound(week: int.parse(pregnancyWeek ?? '0'));
-    // scrollController.addListener(() {
-    //   if (scrollController.position.pixels ==
-    //       scrollController.position.maxScrollExtent) {
-    //     log('reached end of bar');
-    //   }
-    // });
+    ultrasoundCubit.getUltraSound(week: int.parse(pregnancyWeek ?? '0'));
+
     super.initState();
   }
 
@@ -49,8 +44,12 @@ class _UltrasoundPageState extends State<UltrasoundPage> {
         preferredSize: Size.fromHeight(175),
         child: ScrollableWeeksAppBar(
           appbarName: 'Ultrasəs',
-          weekValue: weekValue,
+          weekOrDayValue: weekValue,
           scrollController: scrollController,
+          onTap: (weekOrDay) {
+            weekValue.value = weekOrDay;
+            ultrasoundCubit.getUltraSound(week: weekOrDay);
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -94,17 +93,8 @@ class _UltrasoundPageState extends State<UltrasoundPage> {
                         ));
                       }
                       if (state.ultraSoundStatus == UltraSoundStatus.success) {
-                        // final ultrasoundList = state.ultrasoundByWeek ?? [];
                         final ultrasoundByWeek = state.ultrasoundByWeek;
-                        // for (var e in ultrasoundList) {
-                        //   if (e.isActive!) {
-                        //     ultrasoundByWeek = e;
-                        //   }
-                        // }
 
-                        // Future.delayed(Duration(seconds: 1), () {
-                        //   weekValue.value = 30;
-                        // });
                         final format2d = ultrasoundByWeek?.image2D ?? '';
                         final format3d = ultrasoundByWeek?.image3D ?? '';
                         return Column(

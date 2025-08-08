@@ -9,6 +9,7 @@ import 'package:burla_xatun/cubits/forum_category_stats/forum_category_stats_cub
 import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
 import 'package:burla_xatun/cubits/forum_detail/forum_detail_cubit.dart';
 import 'package:burla_xatun/cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
+import 'package:burla_xatun/cubits/recommend_by_day/recommend_by_day_cubit.dart';
 import 'package:burla_xatun/cubits/report_or_block_user/report_or_block_user_cubit.dart';
 import 'package:burla_xatun/cubits/reset_password/reset_password_cubit.dart';
 import 'package:burla_xatun/data/contractor/baby_update_contract.dart';
@@ -450,4 +451,7 @@ Future<void> setupLocator() async {
       () => PregnancyProgressCubit(locator<PregnancyProgressContract>()));
 
   locator.registerFactory(() => BabyUpdateCubit(locator<BabyUpdateContract>()));
+
+  locator.registerFactory(
+      () => RecommendByDayCubit(locator<DailyRecContractor>()));
 }

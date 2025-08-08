@@ -26,12 +26,12 @@ class DailyRecCubit extends Cubit<DailyRecState> {
 
       if (!response.statusCode.isSuccess) return;
 
-      final data = DailyRecResponse.fromJson(response.data);
+      final myRecommendation = Recommendation.fromJson(response.data);
 
-      recommendList = data.results ?? [];
+      // recommendList = data.results ?? [];
       emit(state.copyWith(
         status: DailyRecStatus.success,
-        dailyRecommendList: List.from(recommendList),
+        myRecommendation: myRecommendation,
       ));
 
       //
