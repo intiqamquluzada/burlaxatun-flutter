@@ -30,6 +30,10 @@ class _HorizontalCalendarState extends State<HorizontalCalendar>
     ///* Get current date index for the selected date
     ///* This is used to highlight the selected date
     _initializeValueNotiferValue();
+    final userDataCubit = context.read<UserDataCubit>();
+    final inseminationDate = DateTime.parse(
+        userDataCubit.state.response?.inseminationDate ??
+            DateTime.now().toString());
     return SizedBox(
       height: 70,
       child: Padding(
@@ -43,14 +47,24 @@ class _HorizontalCalendarState extends State<HorizontalCalendar>
               onTap: () {
                 ///* If the tapped date is not the current date, scroll to it
                 final isPregnant =
-                    context.read<UserDataCubit>().state.response!.isPregnant ??
-                        false;
-                if (isPregnant) {
-                  selectedDateIndex.value = i;
-                  context
-                      .read<PregnancyProgressCubit>()
-                      .getPregnancyProgress(date: allDates[i]);
+                    userDataCubit.state.response!.isPregnant ?? false;
+
+                final isBeforeInsemination =
+                    allDates[i].isBefore(inseminationDate);
+                final difference =
+                    inseminationDate.difference(allDates[i]).inDays;
+                final isNextWeek = difference % 7 == 0;
+
+                if (!isPregnant ||
+                    isBeforeInsemination ||
+                    !isNextWeek ||
+                    difference == 0) {
+                  return;
                 }
+                selectedDateIndex.value = i;
+                context
+                    .read<PregnancyProgressCubit>()
+                    .getPregnancyProgress(date: allDates[i]);
 
                 // if (i == currentDateIndex) return;
               },
