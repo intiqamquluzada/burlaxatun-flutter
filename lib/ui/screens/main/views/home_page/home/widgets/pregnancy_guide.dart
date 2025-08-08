@@ -73,9 +73,8 @@ class _PregnancyGuideState extends State<PregnancyGuide> {
                             children: [
                               for (int i = 0; i < tasks.length; i++)
                                 PregnancyGuideBox(
-                                  title: tasks[i].name ?? 'Məlumat tapılmadı',
-                                  description:
-                                      tasks[i].text ?? 'Məlumat tapılmadı',
+                                  task: tasks[i],
+                                  taskId: tasks[i].id ?? -1,
                                 ),
                             ],
                           )

@@ -1,5 +1,6 @@
 import 'package:burla_xatun/cubits/recommend_by_day/recommend_by_day_cubit.dart';
 import 'package:burla_xatun/cubits/report_or_block_user/report_or_block_user_cubit.dart';
+import 'package:burla_xatun/cubits/select_task/select_task_cubit.dart';
 
 import 'cubits/baby_update/baby_update_cubit.dart';
 import 'cubits/change_password/change_password_cubit.dart';
@@ -150,6 +151,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => locator<RecommendByDayCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<SelectTaskCubit>(),
         )
       ],
       child: BlocBuilder<LanguageCubit, Locale>(
