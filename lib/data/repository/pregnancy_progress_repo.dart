@@ -9,7 +9,7 @@ class PregnancyProgressRepo implements PregnancyProgressContract {
   final PregnancyProgressService pregnancyProgressService;
 
   @override
-  Future<Response> getPregnancyProgress() {
-    return pregnancyProgressService.getPregnancyProgress();
+  Future<Response> getPregnancyProgress({required String date}) {
+    return pregnancyProgressService.getPregnancyProgress(date: date);
   }
 }

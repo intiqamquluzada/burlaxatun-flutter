@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +29,7 @@ class _BabyInformationState extends State<BabyInformation> {
   void initState() {
     log('init baby info box.');
     pregnancyProgressCubit = context.read<PregnancyProgressCubit>()
-      ..getPregnancyProgress();
+      ..getPregnancyProgress(date: DateTime.now());
     super.initState();
   }
 
@@ -58,19 +57,17 @@ class _BabyInformationState extends State<BabyInformation> {
                 PregnancyProgressStatus.success) {
               final progressData = state.progressData;
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   26.h,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GlobalText(
-                        textAlign: TextAlign.left,
-                        text: 'Körpəniz ${progressData?.name} ölçüsündədir',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff8C8A8A),
-                      ),
-                    ],
+                  SizedBox(
+                    child: GlobalText(
+                      textAlign: TextAlign.left,
+                      text: '${progressData?.subTitle}',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff8C8A8A),
+                    ),
                   ),
                   38.h,
                   Row(
@@ -84,8 +81,7 @@ class _BabyInformationState extends State<BabyInformation> {
                           color: Color(0xffF1F3DB),
                         ),
                         child: CachedNetworkImage(
-                          imageUrl:
-                              '${EndpointsConstants.baseUrl}${progressData?.imageLeft}',
+                          imageUrl: '${progressData?.imageLeft}',
                           errorWidget: (context, url, error) {
                             return Icon(Icons.error);
                           },
@@ -103,8 +99,7 @@ class _BabyInformationState extends State<BabyInformation> {
                           color: Color(0xffFEF2F2),
                         ),
                         child: CachedNetworkImage(
-                          imageUrl:
-                              '${EndpointsConstants.baseUrl}${progressData?.imageLeft}',
+                          imageUrl: '${progressData?.imageRight}',
                           errorWidget: (context, url, error) {
                             return Icon(Icons.error);
                           },
@@ -118,15 +113,15 @@ class _BabyInformationState extends State<BabyInformation> {
                     spacing: 17,
                     children: [
                       BabyInfoBox(
-                        boxName: 'Baby height',
+                        boxName: 'Körpənin ölçüsü',
                         boxData: '${progressData?.babyHeight} cm',
                       ),
                       BabyInfoBox(
-                        boxName: 'Baby weight',
+                        boxName: 'Körpənin kütləsi',
                         boxData: '${progressData?.babyWeight} gr',
                       ),
                       BabyInfoBox(
-                        boxName: 'Days left',
+                        boxName: 'Qalan günlər',
                         boxData: '${progressData?.daysLeft} days',
                       ),
                     ],

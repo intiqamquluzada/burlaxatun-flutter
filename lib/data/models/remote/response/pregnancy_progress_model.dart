@@ -9,7 +9,7 @@ class PregnancyProgressModel {
   final String? text;
   final String? babyHeight;
   final String? babyWeight;
-  final String? daysLeft;
+  final int? daysLeft;
   final String? imageLeft;
   final String? imageRight;
   final int? forum;

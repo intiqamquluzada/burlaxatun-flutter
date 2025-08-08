@@ -6,6 +6,7 @@ import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
 
 part 'pregnancy_progress_state.dart';
 
@@ -17,15 +18,18 @@ class PregnancyProgressCubit extends Cubit<PregnancyProgressState> {
 
   final PregnancyProgressContract pregnancyProgressContract;
 
-  Future<void> getPregnancyProgress() async {
+  Future<void> getPregnancyProgress({required DateTime date}) async {
     try {
       emit(state.copyWith(
           pregnancyProgressStatus: PregnancyProgressStatus.loading));
-      final response = await pregnancyProgressContract.getPregnancyProgress();
+      final formattedDate = DateFormat('yyyy-MM-dd').format(date);
+      final response = await pregnancyProgressContract.getPregnancyProgress(
+        date: formattedDate,
+      );
 
       if (!response.statusCode.isSuccess) return;
-      final data = response.data as List;
-      final progress = PregnancyProgressModel.fromJson(data.first);
+      // final data = response.data as List;
+      final progress = PregnancyProgressModel.fromJson(response.data);
       emit(state.copyWith(
         pregnancyProgressStatus: PregnancyProgressStatus.success,
         progressData: progress,

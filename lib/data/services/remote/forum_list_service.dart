@@ -1,3 +1,5 @@
+import 'package:burla_xatun/data/services/local/login_token_service.dart';
+import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:dio/dio.dart';
 
 import '../../../utils/constants/endpoints_constants.dart';
@@ -27,7 +29,9 @@ class ForumListService {
       'category': categoryId,
     };
 
-    final response = await BaseNetwork.instance.getDio().get(
+    final token = locator<LoginTokenService>().token;
+
+    final response = await BaseNetwork.instance.getDio(token: token).get(
           url,
           queryParameters: query,
         );

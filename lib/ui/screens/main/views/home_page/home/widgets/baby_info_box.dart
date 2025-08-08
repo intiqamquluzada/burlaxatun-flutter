@@ -15,10 +15,11 @@ class BabyInfoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.24,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: Color(0xffF1F5F8),
-          borderRadius: BorderRadius.all(Radius.circular(12)),
+          borderRadius: BorderRadius.all(Radius.circular(12)), 
         ),
         child: Padding(
           padding: const EdgeInsets.all(12),

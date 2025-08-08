@@ -588,25 +588,26 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
     emit(state.copyWith(focusedWeekIndex: v));
   }
 
-  Future<void> updateUser(
-      {String? phoneNumber,
-      bool? onboardingDone,
-      bool? wantToBePregnant,
-      bool? wantToSeePeriod,
-      bool? isPregnant,
-      String? pregnantWeek,
-      bool? firstChild,
-      String? activeLanguage,
-      bool? enableNotifications}) async {
+  Future<void> updateUser({
+    String? phoneNumber,
+    bool? onboardingDone,
+    bool? wantToBePregnant,
+    bool? wantToSeePeriod,
+    bool? isPregnant,
+    String? pregnantWeek,
+    bool? firstChild,
+    String? activeLanguage,
+    bool? enableNotifications,
+  }) async {
     try {
       emit(state.copyWith(userUpdateStatus: UserUpdateStatus.loading));
       log("User Update Loading");
 
       // final response =
       await userUpdateContractor!.updateUser(
-        isPregnant: questionOneButtonNotifier.value == 0,
-        wantToSeePeriod: questionOneButtonNotifier.value == 1,
-        wantToBePregnant: questionOneButtonNotifier.value == 2,
+        isPregnant: true,
+        // wantToSeePeriod: questionOneButtonNotifier.value == 1,
+        // wantToBePregnant: questionOneButtonNotifier.value == 2,
         activeLanguage: activeLanguage,
         enableNotifications: enableNotifications,
         firstChild: state.isFirstChild,

@@ -1,9 +1,9 @@
-import 'package:burla_xatun/utils/app/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../cubits/questions_cubit/questions_cubit.dart';
 import '../../../../../../cubits/questions_cubit/questions_state.dart';
+import '../../../../../../utils/app/app_snackbars.dart';
 import '../../../../../../utils/constants/color_constants.dart';
 import '../../../../../widgets/global_button.dart';
 import 'calculation_result_dialog.dart';

@@ -1,4 +1,6 @@
+import 'package:burla_xatun/cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../widgets/global_text.dart';
@@ -40,6 +42,9 @@ class _HorizontalCalendarState extends State<HorizontalCalendar>
               onTap: () {
                 ///* If the tapped date is not the current date, scroll to it
                 selectedDateIndex.value = i;
+                context
+                    .read<PregnancyProgressCubit>()
+                    .getPregnancyProgress(date: allDates[i]);
                 // if (i == currentDateIndex) return;
               },
               child: Row(
