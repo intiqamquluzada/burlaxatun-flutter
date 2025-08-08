@@ -1,11 +1,9 @@
-import 'package:burla_xatun/cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
-import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_svg/svg.dart';
 
+import '../../../../../../../cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import '../../../../../../../utils/extensions/context_extensions.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/global_text.dart';
@@ -31,39 +29,53 @@ class BabyText extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 0.27,
-              height: MediaQuery.of(context).size.height * 0.12,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xffF1F3DB),
-              ),
-              child: CachedNetworkImage(
-                imageUrl:
-                    '${EndpointsConstants.baseUrl}${progressData?.imageLeft}',
-                errorWidget: (context, url, error) {
-                  return Icon(Icons.error);
-                },
-              ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width * 0.27,
+            //   height: MediaQuery.of(context).size.height * 0.12,
+            //   decoration: BoxDecoration(
+            //     shape: BoxShape.circle,
+            //     color: Color(0xffF1F3DB),
+            //   ),
+            //   child: CachedNetworkImage(
+            //     imageUrl:
+            //         '${EndpointsConstants.baseUrl}${progressData?.imageLeft}',
+            //     errorWidget: (context, url, error) {
+            //       return Icon(Icons.error);
+            //     },
+            //   ),
+            // ),
+            CachedNetworkImage(
+              width: 100,
+              height: 100,
+              imageUrl: '${progressData?.imageLeft}',
+              errorWidget: (context, url, error) {
+                return Icon(Icons.error);
+              },
             ),
-            SizedBox(width: 19),
-            SvgPicture.asset('assets/icons/pregnancy_progress_arrows.svg'),
-            SizedBox(width: 19),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.27,
-              height: MediaQuery.of(context).size.height * 0.12,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xffFEF2F2),
-              ),
-              child: CachedNetworkImage(
-                imageUrl:
-                    '${EndpointsConstants.baseUrl}${progressData?.imageLeft}',
-                errorWidget: (context, url, error) {
-                  return Icon(Icons.error);
-                },
-              ),
+            SizedBox(width: 52),
+            CachedNetworkImage(
+              width: 100,
+              height: 100,
+              imageUrl: '${progressData?.imageRight}',
+              errorWidget: (context, url, error) {
+                return Icon(Icons.error);
+              },
             ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width * 0.27,
+            //   height: MediaQuery.of(context).size.height * 0.12,
+            //   decoration: BoxDecoration(
+            //     shape: BoxShape.circle,
+            //     color: Color(0xffFEF2F2),
+            //   ),
+            //   child: CachedNetworkImage(
+            //     imageUrl:
+            //         '${EndpointsConstants.baseUrl}${progressData?.imageLeft}',
+            //     errorWidget: (context, url, error) {
+            //       return Icon(Icons.error);
+            //     },
+            //   ),
+            // ),
           ],
         ),
         28.h,

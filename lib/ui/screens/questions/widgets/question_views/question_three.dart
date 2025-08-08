@@ -21,6 +21,7 @@ class _QuestionThreeState extends State<QuestionThree>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final questionCubit = context.read<QuestionsCubit>();
     final userUpdateCubit = context.read<UserUpdateCubit>();
 

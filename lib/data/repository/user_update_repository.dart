@@ -20,6 +20,7 @@ class UserUpdateRepository implements UserUpdateContractor {
     bool? firstChild,
     File? image,
     String? activeLanguage,
+    String? inseminationDate,
     bool? enableNotifications,
   }) {
     return _userUpdateService.updateUser(
@@ -29,6 +30,7 @@ class UserUpdateRepository implements UserUpdateContractor {
       haveMiscarriage: haveMiscarriage,
       wantToSeePeriod: wantToSeePeriod,
       isPregnant: isPregnant,
+      inseminationDate: inseminationDate,
       pregnantWeek: pregnantWeek,
       firstChild: firstChild,
       image: image,

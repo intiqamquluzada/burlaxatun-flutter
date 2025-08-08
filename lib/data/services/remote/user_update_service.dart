@@ -18,6 +18,7 @@ class UserUpdateService {
     bool? isPregnant,
     bool? haveMiscarriage,
     String? pregnantWeek,
+    String? inseminationDate,
     bool? firstChild,
     File? image,
     String? activeLanguage,
@@ -32,6 +33,7 @@ class UserUpdateService {
       if (wantToBePregnant != null) "want_to_be_pregnant": wantToBePregnant,
       if (wantToSeePeriod != null) "want_to_see_period": wantToSeePeriod,
       if (haveMiscarriage != null) "have_miscarriage": haveMiscarriage,
+      if (inseminationDate != null) "insemination_date": inseminationDate,
       if (isPregnant != null) "is_pregnant": isPregnant,
       if (pregnantWeek != null || pregnantWeek != '0')
         "pregnant_week": pregnantWeek,

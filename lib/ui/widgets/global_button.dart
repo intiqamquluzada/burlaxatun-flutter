@@ -50,6 +50,7 @@ class GlobalButton extends StatelessWidget {
         child: isLoading
             ? CustomCircularProgressIndicator()
             : GlobalText(
+                textAlign: TextAlign.center,
                 text: buttonName,
                 fontSize: textFSize,
                 height: textHeight,

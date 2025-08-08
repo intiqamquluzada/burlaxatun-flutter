@@ -603,15 +603,14 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
       emit(state.copyWith(userUpdateStatus: UserUpdateStatus.loading));
       log("User Update Loading");
 
-      // final response =
+      final inseminationDate =
+          DateTime.now().subtract(Duration(days: state.focusedWeekIndex * 7));
+      final formattedInseminationDate =
+          DateFormat('yyyy-MM-dd').format(inseminationDate);
       await userUpdateContractor!.updateUser(
         isPregnant: true,
-        // wantToSeePeriod: questionOneButtonNotifier.value == 1,
-        // wantToBePregnant: questionOneButtonNotifier.value == 2,
-        activeLanguage: activeLanguage,
-        enableNotifications: enableNotifications,
+        inseminationDate: formattedInseminationDate,
         firstChild: state.isFirstChild,
-        onboardingDone: onboardingDone,
         phoneNumber: phoneNumber,
         pregnantWeek: state.focusedWeekIndex.toString(),
       );

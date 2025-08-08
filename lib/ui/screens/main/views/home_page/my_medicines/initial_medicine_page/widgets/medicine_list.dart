@@ -1,10 +1,10 @@
-import 'package:burla_xatun/cubits/medicine/medicine_cubit.dart';
-import 'package:burla_xatun/ui/widgets/custom_circular_progress_indicator.dart';
-import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../../cubits/medicine/medicine_cubit.dart';
+import '../../../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../../widgets/global_text.dart';
 import 'single_medicine_tile.dart';
 
 class MedicineList extends StatelessWidget {
@@ -19,7 +19,7 @@ class MedicineList extends StatelessWidget {
         builder: (_, state) {
           if (state.status == MedicineStatus.loading) {
             return const Center(
-              child: CustomCircularProgressIndicator(),
+              child: CircularProgressIndicator.adaptive(),
             );
           }
           if (state.status == MedicineStatus.failure) {
@@ -37,20 +37,33 @@ class MedicineList extends StatelessWidget {
               onRefresh: () async {
                 context.read<MedicineCubit>().getMedicines();
               },
-              child: ListView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: results.length,
-                itemBuilder: (_, i) {
-                  return Center(
-                    child: Column(
+              child: results.isEmpty
+                  ? ListView(
                       children: [
-                        SingleMedicineTile(data: results[i]),
-                        10.h,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 100),
+                          child: Center(
+                            child: GlobalText(
+                              text: 'Dərman yoxdur',
+                            ),
+                          ),
+                        ),
                       ],
+                    )
+                  : ListView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: results.length,
+                      itemBuilder: (_, i) {
+                        return Center(
+                          child: Column(
+                            children: [
+                              SingleMedicineTile(data: results[i]),
+                              10.h,
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             );
           }
 

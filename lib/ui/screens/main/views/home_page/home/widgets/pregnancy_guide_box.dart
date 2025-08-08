@@ -42,7 +42,7 @@ class _PregnancyGuideBoxState extends State<PregnancyGuideBox> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        isCheckedGuideBoxNotifier.value = !isCheckedGuideBoxNotifier.value;
+        // isCheckedGuideBoxNotifier.value = !isCheckedGuideBoxNotifier.value;
       },
       child: DecoratedBox(
         decoration: BoxDecoration(
