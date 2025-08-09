@@ -1,36 +1,28 @@
 part of 'blog_cat_cubit.dart';
 
-enum BlogCatStatus { initial, loading, success, failure, networkError }
-
 final class BlogCatState extends Equatable {
   const BlogCatState({
-    required this.status,
-    required this.response,
-    required this.errorMessage,
+    this.status = BlogCatStatus.initial,
+    this.categoryList,
+    this.errorMessage,
   });
 
   final BlogCatStatus status;
-  final BlogCatResponse? response;
+  final List<BlogCategoryModel>? categoryList;
   final String? errorMessage;
 
   BlogCatState copyWith({
     BlogCatStatus? status,
-    BlogCatResponse? response,
+    List<BlogCategoryModel>? categoryList,
     String? errorMessage,
   }) {
     return BlogCatState(
       status: status ?? this.status,
-      response: response ?? this.response,
+      categoryList: categoryList ?? this.categoryList,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
-  factory BlogCatState.initial() => const BlogCatState(
-        status: BlogCatStatus.initial,
-        response: null,
-        errorMessage: null,
-      );
-
   @override
-  List<Object?> get props => [status, response, errorMessage];
+  List<Object?> get props => [status, categoryList, errorMessage];
 }

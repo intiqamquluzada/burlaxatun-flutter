@@ -1,5 +1,6 @@
+import 'package:dio/dio.dart';
+
 import '../contractor/blog_cat_contractor.dart';
-import '../models/remote/response/blog_cat_model.dart';
 import '../services/remote/blog_cat_service.dart';
 
 class BlogCatRepository implements BlogCatContractor {
@@ -8,7 +9,7 @@ class BlogCatRepository implements BlogCatContractor {
   final BlogCatService _blogCatService;
 
   @override
-  Future<BlogCatResponse> getBlogCat() {
+  Future<Response<dynamic>> getBlogCat() {
     return _blogCatService.getBlogCat();
   }
 }

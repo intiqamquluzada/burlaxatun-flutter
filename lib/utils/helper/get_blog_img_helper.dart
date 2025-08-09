@@ -1,6 +1,6 @@
-import 'package:burla_xatun/data/models/remote/response/blog_cat_model.dart';
+import 'package:burla_xatun/data/models/remote/response/blog_category_model.dart';
 
-String getBlogImageHelper(Blog blog) {
+String getBlogImageHelper(BlogModel blog) {
   final videoExtensions = ['.mp4', '.mov', '.avi', '.mkv'];
   final file = blog.file?.toLowerCase() ?? '';
 

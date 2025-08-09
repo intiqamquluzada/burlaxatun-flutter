@@ -1,4 +1,4 @@
-import 'package:burla_xatun/data/models/remote/response/blog_cat_model.dart';
+import 'package:burla_xatun/data/models/remote/response/blog_category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -6,7 +6,7 @@ import 'widgets/article_detail.dart';
 import 'widgets/article_details_appbar.dart';
 
 class ArticleDetailsPage extends StatefulWidget {
-  final Blog blog;
+  final BlogModel blog;
 
   const ArticleDetailsPage({
     super.key,

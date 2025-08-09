@@ -1,10 +1,10 @@
-import 'package:burla_xatun/utils/helper/get_blog_img_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../../../data/models/remote/response/blog_cat_model.dart';
+import '../../../../../../../data/models/remote/response/blog_category_model.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../../utils/helper/get_blog_img_helper.dart';
 import '../../../../../../widgets/custom_circular_progress_indicator.dart';
 import '../../../../../../widgets/global_appbar.dart';
 import '../../widgets/article_box.dart';
@@ -12,7 +12,7 @@ import '../../widgets/article_box.dart';
 class SeeAllArticlesPage extends StatelessWidget {
   const SeeAllArticlesPage({super.key, required this.category});
 
-  final Result category; //
+  final BlogCategoryModel category; //
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SeeAllArticlesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: GlobalAppbar(
-        title: category.name ?? 'Blog',
+        title: category.categoryName ?? 'Blog',
         onLeadingTap: () => context.pop(),
       ),
       body: SingleChildScrollView(

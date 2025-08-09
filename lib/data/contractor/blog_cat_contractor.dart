@@ -1,5 +1,5 @@
-import '../models/remote/response/blog_cat_model.dart';
+import 'package:dio/dio.dart';
 
 abstract class BlogCatContractor {
-  Future<BlogCatResponse> getBlogCat();
+  Future<Response<dynamic>> getBlogCat();
 }

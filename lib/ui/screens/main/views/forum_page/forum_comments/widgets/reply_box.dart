@@ -36,7 +36,8 @@ class ReplyBox extends StatefulWidget {
   State<ReplyBox> createState() => _ReplyBoxState();
 }
 
-class _ReplyBoxState extends State<ReplyBox> {
+class _ReplyBoxState extends State<ReplyBox>
+    with AutomaticKeepAliveClientMixin {
   late CreateCommentCubit createCommentCubit;
   late ForumCommentsCubit forumCommentsCubit;
   late MainCubit mainCubit;
@@ -54,7 +55,6 @@ class _ReplyBoxState extends State<ReplyBox> {
     deleteCommentCubit = context.read<DeleteCommentCubit>();
     mainCubit = context.read<MainCubit>();
     _initializeReplies();
-
     super.initState();
   }
 
@@ -73,12 +73,14 @@ class _ReplyBoxState extends State<ReplyBox> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+    // _initializeReplies();
+
     if (widget.depthValue == null) {
       depthValue = ValueNotifier<int>(0);
     } else {
       depthValue = ValueNotifier<int>(widget.depthValue!.value);
     }
-    // _initializeReplies();
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Padding(
@@ -160,7 +162,6 @@ class _ReplyBoxState extends State<ReplyBox> {
                                               valueListenable: widget.replies!,
                                               builder:
                                                   (context, replies, child) {
-                                                // _initializeReplies();
                                                 log('${replies.length}');
                                                 return ListView.builder(
                                                   physics:
@@ -168,24 +169,15 @@ class _ReplyBoxState extends State<ReplyBox> {
                                                   shrinkWrap: true,
                                                   itemCount: replies.length,
                                                   itemBuilder: (_, i) {
-                                                    // _initializeReplies();
-                                                    // final replies =
-                                                    //     widget.reply.replies ?? [];
+                                                    _initializeReplies();
+                                                    widget.reply.replies ?? [];
                                                     return ReplyBox(
+                                                      key: ValueKey(i),
                                                       depthValue: depthValue,
                                                       reply: replies[i],
                                                       boxIndex: i,
                                                       replies: replyList[i],
-                                                      onTap: () {
-                                                        // final currentReplies =
-                                                        //     List<Comments>.from(
-                                                        //         widget.replies!
-                                                        //             .value);
-                                                        // currentReplies
-                                                        //     .remove(replies[i]);
-                                                        // widget.replies!.value =
-                                                        //     currentReplies;
-                                                      },
+                                                      onTap: () {},
                                                       parentReplies:
                                                           widget.replies,
                                                       parentTag: widget.reply
@@ -274,4 +266,8 @@ class _ReplyBoxState extends State<ReplyBox> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

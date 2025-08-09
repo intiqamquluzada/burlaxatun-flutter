@@ -22,10 +22,12 @@ class SingleCommentBox extends StatefulWidget {
     required this.index,
     required this.comment,
     this.replies,
+    this.parentReplies,
   });
 
   final Comments comment;
   final ValueNotifier<List<Comments>>? replies;
+  final ValueNotifier<List<Comments>>? parentReplies;
 
   @override
   State<SingleCommentBox> createState() => _SingleCommentBoxState();
@@ -55,7 +57,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
 
   void _initializeReplies() {
     hasReplies = ValueNotifier<bool>(widget.replies!.value.isEmpty);
-    replyList = List.generate(widget.comment.replies!.length, (i) {
+    replyList = List.generate(widget.replies!.value.length, (i) {
       return ValueNotifier(widget.replies?.value[i].replies ?? []);
     });
   }
@@ -63,7 +65,6 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    // _initializeReplies();
     return Column(
       children: [
         GestureDetector(
@@ -76,6 +77,7 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
               context: context,
               v: fromTop,
               comment: widget.comment,
+              replies: widget.replies,
               createCommentCubit: createCommentCubit,
               forumCommentsCubit: forumCommentsCubit,
               deleteCommentCubit: deleteCommentCubit,
@@ -129,36 +131,31 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
           parentId: widget.comment.id ?? -1,
           parentTag: widget.comment.user?.fullName ?? 'user',
         ),
-        ValueListenableBuilder(
-          valueListenable: hasReplies,
-          builder: (context, value, child) {
-            return Column(
-              children: [
-                Visibility(
-                  visible: !value,
-                  replacement: ValueListenableBuilder(
-                    valueListenable: widget.replies!,
-                    builder: (context, replies, child) {
-                      log('reply length: ${widget.replies?.value.length}');
-                      return ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: widget.replies?.value.length,
-                        itemBuilder: (_, i) {
-                          return BlocListener<DeleteCommentCubit,
-                              DeleteCommentState>(
-                            listener: (context, state) {
-                              if (state.deleteCommentStatus ==
-                                  DeleteCommentStatus.success) {
-                                // _initializeReplies();
-                                log('${state.deletedComment?.id}');
-                                // final currentReplies =
-                                //     List<Comments>.from(widget.replies!.value);
-                                // currentReplies.remove(state.deletedComment);
-                                // widget.replies!.value = currentReplies;
-                              }
-                            },
-                            child: ReplyBox(
+        BlocListener<DeleteCommentCubit, DeleteCommentState>(
+          listener: (context, state) {
+            if (state.deleteCommentStatus == DeleteCommentStatus.success) {
+              // _initializeReplies();
+            }
+          },
+          child: ValueListenableBuilder(
+            valueListenable: hasReplies,
+            builder: (context, value, child) {
+              return Column(
+                children: [
+                  Visibility(
+                    visible: !value,
+                    replacement: ValueListenableBuilder(
+                      valueListenable: widget.replies!,
+                      builder: (context, replies, child) {
+                        log('reply length: ${widget.replies?.value.length}');
+                        return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: widget.replies?.value.length,
+                          itemBuilder: (_, i) {
+                            _initializeReplies();
+                            return ReplyBox(
+                              key: ValueKey(i),
                               reply: replies[i],
                               boxIndex: i,
                               replies: replyList[i],
@@ -166,25 +163,25 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                               parentReplies: widget.replies,
                               parentTag:
                                   widget.comment.user?.fullName ?? 'user',
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  child: TextButton(
-                    onPressed: () {
-                      hasReplies.value = true;
-                    },
-                    child: Text(
-                      'cavabları göstər',
-                      style: TextStyle(color: ColorConstants.primaryRedColor),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        hasReplies.value = true;
+                      },
+                      child: Text(
+                        'cavabları göstər',
+                        style: TextStyle(color: ColorConstants.primaryRedColor),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         ),
       ],
     );

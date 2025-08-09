@@ -65,14 +65,19 @@ class _CommentsBoxState extends State<CommentsBox> {
   late List<ValueNotifier<List<Comments>>> replyList;
   @override
   void initState() {
+    _initializeReplies();
     super.initState();
+  }
+
+  _initializeReplies() {
+    replyList = List.generate(widget.commentList.length, (i) {
+      return ValueNotifier(widget.commentList[i].replies ?? []);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    replyList = List.generate(widget.commentList.length, (i) {
-      return ValueNotifier(widget.commentList[i].replies ?? []);
-    });
+    // _initializeReplies();
     return DecoratedSliver(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -93,6 +98,7 @@ class _CommentsBoxState extends State<CommentsBox> {
                     index: i,
                     comment: widget.commentList[i],
                     replies: replyList[i],
+                    parentReplies: replyList[i],
                   );
                 },
               ),

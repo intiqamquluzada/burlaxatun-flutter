@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/ui/screens/main/views/daily_advise_page/advice_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +13,7 @@ import '../../data/models/local/settings_items_model.dart';
 import '../../data/models/remote/response/forum_comments_model.dart';
 import '../../data/models/remote/response/medicine/medicines_model.dart';
 import '../../ui/screens/auth/change_psw/change_password.dart';
-import '../../ui/screens/main/views/daily_advise_page/advice_page.dart';
+import '../../ui/screens/main/views/daily_advise_page/advice_detail_view.dart';
 import '../../ui/screens/main/views/forum_page/forum_comments/widgets/menu_and_emoji_dialog.dart';
 import '../../ui/screens/main/views/forum_page/forum_comments/widgets/single_comment_box.dart';
 import '../../ui/screens/main/views/forum_page/main_forum_page.dart/forum_page.dart';

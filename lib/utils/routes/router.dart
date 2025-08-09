@@ -14,7 +14,7 @@ import '../../cubits/onboarding_cubit/onboarding_cubit.dart';
 import '../../cubits/questions_cubit/questions_cubit.dart';
 import '../../cubits/signup_cubit/signup_cubit.dart';
 import '../../cubits/splash/splash_cubit.dart';
-import '../../data/models/remote/response/blog_cat_model.dart';
+import '../../data/models/remote/response/blog_category_model.dart';
 import '../../ui/screens/add_child/add_your_child.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_otp_screen.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_success_screen.dart';
@@ -260,7 +260,7 @@ class Routerapp {
               GoRoute(
                 path: '/article_details',
                 builder: (context, state) {
-                  final blog = state.extra as Blog;
+                  final blog = state.extra as BlogModel;
                   return ArticleDetailsPage(
                     blog: blog,
                   );
@@ -269,7 +269,7 @@ class Routerapp {
               GoRoute(
                 path: '/see_all_articles',
                 builder: (context, state) {
-                  final category = state.extra as Result;
+                  final category = state.extra as BlogCategoryModel;
                   return SeeAllArticlesPage(
                     category: category,
                   );
