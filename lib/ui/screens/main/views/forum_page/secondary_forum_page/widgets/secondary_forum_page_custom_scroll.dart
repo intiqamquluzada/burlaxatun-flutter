@@ -44,7 +44,7 @@ class _SecondaryForumPageCustomScrollState
     scrollController = ScrollController();
     forumListCubit = context.read<ForumListCubit>();
 
-    _loadMore();
+    _loadMore(); 
     super.initState();
   }
 

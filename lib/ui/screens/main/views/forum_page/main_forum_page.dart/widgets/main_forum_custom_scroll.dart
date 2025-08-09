@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:burla_xatun/cubits/forum_category_stats/forum_category_stats_cubit.dart';
+import 'package:burla_xatun/ui/screens/main/views/home_page/blog/initial_blog/widgets/blog_banner.dart';
 import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,7 @@ class MainForumCustomScroll extends StatelessWidget {
                 SliverPadding(
                   padding: EdgeInsets.only(bottom: 24),
                   sliver: SliverToBoxAdapter(
-                    child: MainForumBanner(),
+                    child: BlogBanner(),
                   ),
                 ),
                 SliverList(

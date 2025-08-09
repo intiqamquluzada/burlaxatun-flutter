@@ -57,6 +57,7 @@ class ArticleBox extends StatelessWidget {
                     data: boxDescription,
                     style: {
                       "body": Style(
+                        maxLines: 2,
                         margin: Margins.zero,
                         padding: HtmlPaddings.zero,
                         fontSize: FontSize(12),

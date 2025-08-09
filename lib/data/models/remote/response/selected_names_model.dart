@@ -160,7 +160,7 @@ class SelectedName {
   });
 
   factory SelectedName.fromJson(Map<String, dynamic> json) => SelectedName(
-        id: json["id"],
+        id: json["baby_name_id"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -172,7 +172,7 @@ class SelectedName {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "baby_name_id": id,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "user": user,

@@ -38,7 +38,10 @@ class ArticlesWidget extends StatelessWidget {
               GestureDetector(
                 onTap: () => context.push(
                   '/see_all_articles',
-                  extra: category.categoryId,
+                  extra: {
+                    'category_id': category.categoryId,
+                    'category_name': category.categoryName,
+                  },
                 ),
                 child: GlobalText(
                   text: 'Ətraflı',
@@ -57,7 +60,7 @@ class ArticlesWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: blogs.length,
             itemBuilder: (_, index) {
-              final blog = blogs[index];
+              final blog = blogs[index]; 
               return GestureDetector(
                 onTap: () => context.push('/article_details', extra: blog),
                 child: Container(

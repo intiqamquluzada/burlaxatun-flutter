@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../cubits/add_child/add_child_cubit.dart';
 import '../../cubits/baby_names_cubit/baby_names_cubit.dart';
+import '../../cubits/blogs_by_category/blogs_by_category_cubit.dart';
 import '../../cubits/doctor_reservation/doctor_reservation_cubit.dart';
 import '../../cubits/doctors_detail/doctors_detail_cubit.dart';
 import '../../cubits/forum_list/forum_list_cubit.dart';
@@ -14,7 +15,6 @@ import '../../cubits/onboarding_cubit/onboarding_cubit.dart';
 import '../../cubits/questions_cubit/questions_cubit.dart';
 import '../../cubits/signup_cubit/signup_cubit.dart';
 import '../../cubits/splash/splash_cubit.dart';
-import '../../data/models/remote/response/blog_category_model.dart';
 import '../../ui/screens/add_child/add_your_child.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_otp_screen.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_success_screen.dart';
@@ -260,7 +260,7 @@ class Routerapp {
               GoRoute(
                 path: '/article_details',
                 builder: (context, state) {
-                  final blog = state.extra as BlogModel;
+                  final blog = state.extra as dynamic;
                   return ArticleDetailsPage(
                     blog: blog,
                   );
@@ -269,9 +269,16 @@ class Routerapp {
               GoRoute(
                 path: '/see_all_articles',
                 builder: (context, state) {
-                  final category = state.extra as BlogCategoryModel;
-                  return SeeAllArticlesPage(
-                    category: category,
+                  final category = state.extra as Map<String, dynamic>;
+                  final categoryName = category['category_name'];
+                  final categoryId = category['category_id'];
+                  return BlocProvider(
+                    create: (context) => locator<BlogsByCategoryCubit>()
+                      ..getBlogsByCategory(categoryId: categoryId),
+                    child: SeeAllArticlesPage(
+                      categoryName: categoryName,
+                      categoryId: categoryId,
+                    ),
                   );
                 },
               ),
