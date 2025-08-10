@@ -25,7 +25,7 @@ class RegistrationPriceAndTime extends StatelessWidget {
             children: [
               DateOrPriceBox(
                 boxName: 'Uyğun Tarix',
-                boxInfo: '${doctor.availableTime}',
+                boxInfo: '${doctor.availableDays} | ${doctor.availableTimes}',
               ),
               26.h,
               DateOrPriceBox(

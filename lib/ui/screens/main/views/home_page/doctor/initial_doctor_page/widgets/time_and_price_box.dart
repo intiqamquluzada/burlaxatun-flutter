@@ -39,7 +39,13 @@ class TimeAndPriceBox extends StatelessWidget {
                   ),
                   5.h,
                   GlobalText(
-                    text: '${doctor.availableTime}',
+                    text: '${doctor.availableDays}',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff667085),
+                  ),
+                  GlobalText(
+                    text: '${doctor.availableTimes}',
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff667085),

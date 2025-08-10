@@ -1,3 +1,4 @@
+import 'package:burla_xatun/ui/screens/add_child/widgets/add_child_success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -67,10 +68,11 @@ class RegistrationDoctorPage extends StatelessWidget {
                         return Center(child: Text('Həkim məlumatı tapılmadı.'));
                       }
 
-                      final List<String> timeList = doctor.availableTime != null
-                          ? DoctorTimeHelper.generateHourlyTimes(
-                              doctor.availableTime!)
-                          : [];
+                      final List<String> timeList =
+                          doctor.availableTimes != null
+                              ? DoctorTimeHelper.generateHourlyTimes(
+                                  doctor.availableTimes!)
+                              : [];
 
                       return Column(
                         children: [
@@ -107,7 +109,16 @@ class RegistrationDoctorPage extends StatelessWidget {
               AppSnackbars.error(
                   context, state.errorMessage ?? 'Xəta baş verdi');
             } else if (state.doctorReservStatus == DoctorReservStatus.success) {
-              context.go('/home');
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (_) {
+                  return AddChildSuccessDialog(
+                    text: 'Qeydiyyat təsdiqlənmişdir',
+                  );
+                },
+              );
+              //  context.go('/home');
             }
           },
           builder: (context, state) {

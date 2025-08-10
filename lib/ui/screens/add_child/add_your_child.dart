@@ -173,7 +173,9 @@ class AddYourChild extends StatelessWidget {
                     barrierDismissible: false,
                     context: context,
                     builder: (_) {
-                      return AddChildSuccessDialog();
+                      return AddChildSuccessDialog(
+                        text: 'Övladınız uğurla əlavə olundu',
+                      );
                     },
                   );
                 }

@@ -19,7 +19,7 @@ class TimeBox extends StatelessWidget {
       height: 36,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: Color(0xffE8E8E8),
+          color: isSelected ? Color(0xffFDECF2) : Color(0xffE8E8E8),
           borderRadius: BorderRadius.all(Radius.circular(32)),
         ),
         child: Padding(

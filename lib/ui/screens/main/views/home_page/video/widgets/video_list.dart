@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/ui/widgets/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -74,17 +75,22 @@ class _VideoListState extends State<VideoList> {
                   },
                   builder: (context, videos) {
                     return Expanded(
-                      child: ListView.separated(
-                        controller: scrollController,
-                        itemCount: videos.length,
-                        itemBuilder: (_, i) {
-                          return VideoBox(
-                            videoUrl: videos[i].link,
-                          );
+                      child: CustomRefreshIndicator(
+                        onRefresh: () async {
+                          videoCubit.getVideos(isRefresh: true);
                         },
-                        separatorBuilder: (context, index) {
-                          return 24.h;
-                        },
+                        child: ListView.separated(
+                          controller: scrollController,
+                          itemCount: videos.length,
+                          itemBuilder: (_, i) {
+                            return VideoBox(
+                              videoUrl: videos[i].link,
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return 24.h;
+                          },
+                        ),
                       ),
                     );
                   },

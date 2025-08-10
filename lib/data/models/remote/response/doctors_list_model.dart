@@ -54,7 +54,8 @@ class Result extends Equatable {
   final String? image;
   final String? workplace;
   final double? consultantPrice;
-  final String? availableTime;
+  final String? availableDays;
+  final String? availableTimes;
   final Position? position; // Updated type from int? to Position
 
   const Result({
@@ -69,7 +70,8 @@ class Result extends Equatable {
     this.image,
     this.workplace,
     this.consultantPrice,
-    this.availableTime,
+    this.availableDays,
+    this.availableTimes,
     this.position,
   });
 
@@ -91,11 +93,13 @@ class Result extends Equatable {
         image: json["image"],
         workplace: json["workplace"],
         consultantPrice: json["consultant_price"],
-        availableTime: json["available_time"],
+        availableDays: json["available_days"],
+        availableTimes: json["available_times"],
         position: json["position"] == null
             ? null
             : Position.fromJson(
-                json["position"]), // Deserialize position as a Position object
+                json["position"],
+              ), // Deserialize position as a Position object
       );
 
   Map<String, dynamic> toJson() => {
@@ -110,7 +114,8 @@ class Result extends Equatable {
         "image": image,
         "workplace": workplace,
         "consultant_price": consultantPrice,
-        "available_time": availableTime,
+        "available_days": availableDays,
+        "available_time": availableTimes,
         "position": position?.toJson(), // Serialize position back to JSON
       };
 
@@ -127,7 +132,8 @@ class Result extends Equatable {
         image,
         workplace,
         consultantPrice,
-        availableTime,
+        availableDays,
+        availableTimes,
         position,
       ];
 }

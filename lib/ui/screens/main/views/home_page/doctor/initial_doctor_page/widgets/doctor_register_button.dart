@@ -16,6 +16,15 @@ class DoctorRegisterButton extends StatelessWidget {
       buttonColor: const Color(0xffFDECF2),
       textColor: ColorConstants.primaryRedColor,
       onPressed: () {
+        // Navigator.of(rootNavigator: true, context).push(
+        //   MaterialPageRoute(
+        //     builder: (_) => BlocProvider(
+        //       create: (context) =>
+        //           locator<DoctorDetailCubit>()..getDoctorDetail(slug),
+        //       child: RegistrationDoctorPage(),
+        //     ),
+        //   ),
+        // );
         context.push('/doctor_register/$slug');
       },
     );
