@@ -7,9 +7,11 @@ class VideoBox extends StatefulWidget {
   const VideoBox({
     super.key,
     this.videoUrl,
+    this.title,
   });
 
   final String? videoUrl;
+  final String? title;
 
   @override
   State<VideoBox> createState() => _VideoBoxState();
@@ -41,8 +43,8 @@ class _VideoBoxState extends State<VideoBox> {
           ),
         ],
       ),
-      boxTitle: 'Dəyişikliklər',
-      boxDescription: 'Hamiləlik.',
+      boxTitle: widget.title ?? 'Başlıq tapılmadı',
+      boxDescription: '',
     );
   }
 

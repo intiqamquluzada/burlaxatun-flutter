@@ -34,8 +34,6 @@ class _VideoListState extends State<VideoList> {
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        log('reach end of scroll');
-
         await videoCubit.getVideos();
       }
     });
@@ -85,6 +83,7 @@ class _VideoListState extends State<VideoList> {
                           itemBuilder: (_, i) {
                             return VideoBox(
                               videoUrl: videos[i].link,
+                              title: videos[i].name,
                             );
                           },
                           separatorBuilder: (context, index) {
