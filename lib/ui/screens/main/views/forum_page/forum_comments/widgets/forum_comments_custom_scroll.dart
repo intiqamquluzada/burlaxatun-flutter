@@ -39,7 +39,7 @@ class ForumCommentsCustomScroll extends StatelessWidget {
                 return previous.comments != current.comments;
               },
               builder: (context, state) {
-                // list.value = state.comments ?? [];
+                // list.value = state.comments ?? []; 
                 return state.comments!.isEmpty
                     ? SliverToBoxAdapter(
                         child: Center(

@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/ui/widgets/report_or_block_forum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../../utils/extensions/context_extensions.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../widgets/global_text.dart';
+import '../../../../../widgets/report_or_block_forum.dart';
 
 class ForumBox extends StatelessWidget {
   const ForumBox({

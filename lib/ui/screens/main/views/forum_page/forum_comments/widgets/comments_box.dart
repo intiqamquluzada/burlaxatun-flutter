@@ -77,7 +77,7 @@ class _CommentsBoxState extends State<CommentsBox> {
 
   @override
   Widget build(BuildContext context) {
-    // _initializeReplies();
+    _initializeReplies();
     return DecoratedSliver(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20)),
