@@ -1,22 +1,29 @@
+import 'package:burla_xatun/cubits/video_cubit/video_cubit.dart';
+import 'package:burla_xatun/data/models/remote/response/video_model.dart';
 import 'package:equatable/equatable.dart';
 
-class VideoInitial extends Equatable {
-  const VideoInitial({
-    this.isLoading = true,
+class VideoState extends Equatable {
+  const VideoState({
+    this.videoStatus = VideoStatus.initial,
+    this.videos,
   });
 
-  final bool isLoading;
+  final VideoStatus videoStatus;
+  final List<Video>? videos;
 
   @override
   List<Object?> get props => [
-        isLoading,
+        videoStatus,
+        videos,
       ];
 
-  VideoInitial copyWith({
-    bool? isLoading,
+  VideoState copyWith({
+    VideoStatus? videoStatus,
+    List<Video>? videos,
   }) {
-    return VideoInitial(
-      isLoading: isLoading ?? this.isLoading,
+    return VideoState(
+      videoStatus: videoStatus ?? this.videoStatus,
+      videos: videos ?? this.videos,
     );
   }
 }

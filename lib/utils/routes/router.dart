@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/video_cubit/video_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -187,7 +188,10 @@ class Routerapp {
               ),
               GoRoute(
                 path: '/videos',
-                builder: (context, state) => VideoPage(),
+                builder: (context, state) => BlocProvider(
+                  create: (context) => locator<VideoCubit>()..getVideos(),
+                  child: VideoPage(),
+                ),
               ),
               GoRoute(
                 path: '/notification',

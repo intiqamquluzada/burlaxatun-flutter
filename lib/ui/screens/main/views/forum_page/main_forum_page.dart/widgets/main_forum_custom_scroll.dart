@@ -1,14 +1,13 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/forum_category_stats/forum_category_stats_cubit.dart';
-import 'package:burla_xatun/ui/screens/main/views/home_page/blog/initial_blog/widgets/blog_banner.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../../cubits/forum_category/forum_category_cubit.dart';
-import 'main_forum_banner.dart';
+import '../../../../../../../cubits/forum_category_stats/forum_category_stats_cubit.dart';
+import '../../../../../../../utils/di/locator.dart';
+import '../../../home_page/blog/initial_blog/widgets/blog_banner.dart';
 import 'main_forum_title_box.dart';
 
 class MainForumCustomScroll extends StatelessWidget {

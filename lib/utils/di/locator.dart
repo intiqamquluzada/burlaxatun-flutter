@@ -1,11 +1,15 @@
 import 'package:burla_xatun/cubits/blogs_by_category/blogs_by_category_cubit.dart';
 import 'package:burla_xatun/cubits/select_task/select_task_cubit.dart';
+import 'package:burla_xatun/cubits/video_cubit/video_cubit.dart';
 import 'package:burla_xatun/data/contractor/blogs_by_category_contract.dart';
 import 'package:burla_xatun/data/contractor/select_task_contract.dart';
+import 'package:burla_xatun/data/contractor/video_contract.dart';
 import 'package:burla_xatun/data/repository/blogs_by_category_repo.dart';
 import 'package:burla_xatun/data/repository/select_task_repo.dart';
+import 'package:burla_xatun/data/repository/video_repo.dart';
 import 'package:burla_xatun/data/services/remote/blogs_by_category_service.dart';
 import 'package:burla_xatun/data/services/remote/select_task_service.dart';
+import 'package:burla_xatun/data/services/remote/video_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -246,6 +250,8 @@ Future<void> setupLocator() async {
 
   locator.registerLazySingleton(() => BlogsByCategoryService());
 
+  locator.registerLazySingleton(() => VideoService());
+
   // contractor
   locator.registerLazySingleton<LoginContractor>(
       () => LoginRepository(locator<LoginService>()));
@@ -388,6 +394,9 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<BlogsByCategoryContract>(
       () => BlogsByCategoryRepo(locator<BlogsByCategoryService>()));
 
+  locator.registerLazySingleton<VideoContract>(
+      () => VideoRepo(locator<VideoService>()));
+
   // cubit
   locator.registerFactory(() => LoginCubit(locator()));
   locator.registerFactory(() => DailyRecCubit(locator()));
@@ -478,4 +487,6 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(
       () => BlogsByCategoryCubit(locator<BlogsByCategoryContract>()));
+
+  locator.registerFactory(() => VideoCubit(locator<VideoContract>()));
 }
