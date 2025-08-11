@@ -609,6 +609,8 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
           DateFormat('yyyy-MM-dd').format(inseminationDate);
       await userUpdateContractor!.updateUser(
         isPregnant: questionOneButtonNotifier.value == 0,
+        wantToSeePeriod: questionOneButtonNotifier.value == 1,
+        wantToBePregnant: questionOneButtonNotifier.value == 2,
         inseminationDate: formattedInseminationDate,
         firstChild: state.isFirstChild,
         phoneNumber: phoneNumber,

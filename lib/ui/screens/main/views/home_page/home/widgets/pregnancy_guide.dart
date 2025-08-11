@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,6 +33,7 @@ class _PregnancyGuideState extends State<PregnancyGuide> {
   Widget build(BuildContext context) {
     return BlocBuilder<TasksByWeeksCubit, TasksByWeeksState>(
       builder: (context, state) {
+        log('STATUS: ${state.tasksByWeekStatus}');
         if (state.tasksByWeekStatus == TasksByWeekStatus.loading) {
           return Center(child: CircularProgressIndicator.adaptive());
         } else if (state.tasksByWeekStatus == TasksByWeekStatus.error) {
@@ -46,7 +49,7 @@ class _PregnancyGuideState extends State<PregnancyGuide> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
+              ), 
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 26),

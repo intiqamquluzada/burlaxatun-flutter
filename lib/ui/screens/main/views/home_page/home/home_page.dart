@@ -92,7 +92,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 24.h,
                                 Visibility(
-                                  visible: week != '0',
+                                  visible: week != '0' ,
                                   child: PregnancyGuide(pregnantWeek: week),
                                 ),
                               ],

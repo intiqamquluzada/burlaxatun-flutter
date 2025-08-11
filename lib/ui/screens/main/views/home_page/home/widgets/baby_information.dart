@@ -1,9 +1,12 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/ui/widgets/global_button.dart';
+import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../../../cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
@@ -48,8 +51,29 @@ class _BabyInformationState extends State<BabyInformation> {
               return CircularProgressIndicator.adaptive();
             } else if (state.pregnancyProgressStatus ==
                 PregnancyProgressStatus.error) {
-              return Text(
-                  state.errorMessage ?? 'Körpənin məlumatları tapılamdı');
+              return Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Column(
+                  children: [
+                    Text(
+                      state.errorMessage ?? 'Körpənin məlumatları tapılamdı',
+                    ),
+                    10.h,
+                    Visibility(
+                      visible: state.errorMessage == 'Mayalanma tarixi yoxdur.',
+                      child: GlobalButton(
+                        buttonName:
+                            'Tətbiqdən istifadə etmək üçün sualları cavablandırın',
+                        buttonColor: Color(0xffFFEAF1),
+                        textColor: Color(0xffEC407A),
+                        onPressed: () {
+                          context.go('/questions');
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
             } else if (state.pregnancyProgressStatus ==
                 PregnancyProgressStatus.networkError) {
               return Text('Şəbəkəni yoxlayın');
