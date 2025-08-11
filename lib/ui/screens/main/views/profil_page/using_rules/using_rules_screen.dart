@@ -1,15 +1,15 @@
-import 'package:burla_xatun/cubits/using_rules/using_rules_cubit.dart';
-import 'package:burla_xatun/ui/screens/main/views/profil_page/widgets/description_widget.dart';
-import 'package:burla_xatun/ui/screens/main/views/profil_page/widgets/last_edit_text.dart';
-import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../../cubits/using_rules/using_rules_cubit.dart';
+import '../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../widgets/custom_circular_progress_indicator.dart';
 import '../../../../../widgets/global_appbar.dart';
 import '../widgets/header_text.dart';
+import '../widgets/last_edit_text.dart';
 import '../widgets/text_board_widget.dart';
 
 class UsingRulesScreen extends StatelessWidget {
@@ -76,9 +76,10 @@ class UsingRulesScreen extends StatelessWidget {
                                     result?.updatedAt?.toLocal().toString() ??
                                         '',
                               ),
-                              DescriptionWidget(
-                                description: result?.text ?? '',
-                              ),
+                              Html(data: result?.text ?? '')
+                              // DescriptionWidget(
+                              //   description: result?.text ?? '',
+                              // ),
                             ],
                           ),
                         ),

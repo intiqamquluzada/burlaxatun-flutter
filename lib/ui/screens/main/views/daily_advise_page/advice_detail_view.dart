@@ -1,3 +1,4 @@
+import 'package:burla_xatun/utils/helper/html_to_plain_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -103,7 +104,9 @@ class _AdvicePageeState extends State<AdvicePagee> {
                                 adviceTitle: recommendationByDay?.name ?? ''),
                             10.h,
                             AdviseText(
-                                adviceText: recommendationByDay?.text ?? ''),
+                              adviceText: HtmlToPlainText.returnPlainText(
+                                  recommendationByDay?.text ?? ''),
+                            ),
                           ],
                         );
                       }

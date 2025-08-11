@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../cubits/daily_rec/daily_rec_cubit.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../../utils/helper/html_to_plain_text.dart';
 import '../../../../../../widgets/global_text.dart';
 
 class HomePageDailyAdvise extends StatefulWidget {
@@ -96,7 +97,8 @@ class _HomePageDailyAdviseState extends State<HomePageDailyAdvise> {
                     height: 1.3,
                     maxLines: 8,
                     textAlign: TextAlign.left,
-                    text: recommendation?.text ?? '',
+                    text: HtmlToPlainText.returnPlainText(
+                        recommendation?.text ?? ''),
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                     color: const Color(0xff969BAB),
