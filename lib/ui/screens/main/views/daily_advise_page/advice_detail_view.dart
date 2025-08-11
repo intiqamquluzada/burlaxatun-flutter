@@ -30,7 +30,7 @@ class _AdvicePageeState extends State<AdvicePagee> {
     scrollController = ScrollController();
     recommendByDayCubit = context.read<RecommendByDayCubit>();
 
-    if (day == null || day == 0) return;
+    if (day == null) return;
 
     recommendByDayCubit.getRecommendByDay(day: day);
 
@@ -52,7 +52,7 @@ class _AdvicePageeState extends State<AdvicePagee> {
           scrollController: scrollController,
           onTap: (weekOrDay) {
             dayValue.value = weekOrDay;
-            if (weekOrDay == 0) return;
+            // if (weekOrDay == 0) return;
             recommendByDayCubit.getRecommendByDay(day: weekOrDay);
           },
         ),
@@ -64,55 +64,44 @@ class _AdvicePageeState extends State<AdvicePagee> {
             child: ValueListenableBuilder(
               valueListenable: dayValue,
               builder: (context, value, child) {
-                return Visibility(
-                  visible: dayValue.value != 0,
-                  replacement: Padding(
-                    padding: const EdgeInsets.only(top: 100),
-                    child: GlobalText(
-                      textAlign: TextAlign.center,
-                      text:
-                          'İstənilən günün məlumatına baxmaq üçün həmin günün üzərinə toxunun',
-                    ),
-                  ),
-                  child: BlocBuilder<RecommendByDayCubit, RecommendByDayState>(
-                    builder: (context, state) {
-                      if (state.recommendByDayStatus ==
-                          RecommendByDayStatus.loading) {
-                        return CircularProgressIndicator.adaptive();
-                      } else if (state.recommendByDayStatus ==
-                          RecommendByDayStatus.error) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 100),
-                          child: GlobalText(
-                            textAlign: TextAlign.center,
-                            text: 'Bu gün üçün məlumatı tapılmadı',
+                return BlocBuilder<RecommendByDayCubit, RecommendByDayState>(
+                  builder: (context, state) {
+                    if (state.recommendByDayStatus ==
+                        RecommendByDayStatus.loading) {
+                      return CircularProgressIndicator.adaptive();
+                    } else if (state.recommendByDayStatus ==
+                        RecommendByDayStatus.error) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 100),
+                        child: GlobalText(
+                          textAlign: TextAlign.center,
+                          text: 'Bu gün üçün məlumatı tapılmadı',
+                        ),
+                      );
+                    }
+                    if (state.recommendByDayStatus ==
+                        RecommendByDayStatus.success) {
+                      final recommendationByDay = state.recommendationByDay;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AdviseImage(
+                            imageUrl: recommendationByDay?.image ??
+                                'assets/images/default_image.png',
                           ),
-                        );
-                      }
-                      if (state.recommendByDayStatus ==
-                          RecommendByDayStatus.success) {
-                        final recommendationByDay = state.recommendationByDay;
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AdviseImage(
-                              imageUrl: recommendationByDay?.image ??
-                                  'assets/images/default_image.png',
-                            ),
-                            12.h,
-                            AdviseTitle(
-                                adviceTitle: recommendationByDay?.name ?? ''),
-                            10.h,
-                            AdviseText(
-                              adviceText: HtmlToPlainText.returnPlainText(
-                                  recommendationByDay?.text ?? ''),
-                            ),
-                          ],
-                        );
-                      }
-                      return SizedBox.shrink();
-                    },
-                  ),
+                          12.h,
+                          AdviseTitle(
+                              adviceTitle: recommendationByDay?.name ?? ''),
+                          10.h,
+                          AdviseText(
+                            adviceText: HtmlToPlainText.returnPlainText(
+                                recommendationByDay?.text ?? ''),
+                          ),
+                        ],
+                      );
+                    }
+                    return SizedBox.shrink();
+                  },
                 );
               },
             ),

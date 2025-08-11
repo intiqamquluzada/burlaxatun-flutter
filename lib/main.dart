@@ -1,19 +1,13 @@
-import 'package:burla_xatun/cubits/recommend_by_day/recommend_by_day_cubit.dart';
-import 'package:burla_xatun/cubits/report_or_block_user/report_or_block_user_cubit.dart';
-import 'package:burla_xatun/cubits/select_task/select_task_cubit.dart';
-
-import 'cubits/baby_update/baby_update_cubit.dart';
-import 'cubits/change_password/change_password_cubit.dart';
-import 'cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
-import 'cubits/reset_password/reset_password_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'cubits/about/about_cubit.dart';
+import 'cubits/baby_update/baby_update_cubit.dart';
 import 'cubits/blog_cat/blog_cat_cubit.dart';
 import 'cubits/blog_sliders/blog_sliders_cubit.dart';
+import 'cubits/change_password/change_password_cubit.dart';
 import 'cubits/contact/contact_cubit.dart';
 import 'cubits/countries/countries_cubit.dart';
 import 'cubits/daily_rec/daily_rec_cubit.dart';
@@ -28,7 +22,12 @@ import 'cubits/main_cubit/mainn_cubit.dart';
 import 'cubits/medicine/medicine_cubit.dart';
 import 'cubits/medicine_create/medicine_create_cubit.dart';
 import 'cubits/medicine_patch/medicine_patch_cubit.dart';
+import 'cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import 'cubits/privacy_policy/privacy_policy_cubit.dart';
+import 'cubits/recommend_by_day/recommend_by_day_cubit.dart';
+import 'cubits/report_or_block_user/report_or_block_user_cubit.dart';
+import 'cubits/reset_password/reset_password_cubit.dart';
+import 'cubits/select_task/select_task_cubit.dart';
 import 'cubits/tasks_by_weeks/tasks_by_weeks_cubit.dart';
 import 'cubits/ultrasound/ultrasound_cubit.dart';
 import 'cubits/user_data/user_data_cubit.dart';

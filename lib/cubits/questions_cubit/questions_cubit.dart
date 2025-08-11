@@ -608,7 +608,7 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
       final formattedInseminationDate =
           DateFormat('yyyy-MM-dd').format(inseminationDate);
       await userUpdateContractor!.updateUser(
-        isPregnant: true,
+        isPregnant: questionOneButtonNotifier.value == 0,
         inseminationDate: formattedInseminationDate,
         firstChild: state.isFirstChild,
         phoneNumber: phoneNumber,
@@ -646,7 +646,7 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
         }
       } else {
         // log('this is first questions request');
-        await updateUser();
+        await updateUser(isPregnant: false);
       }
     } else if (state.questionPageIndex == 2) {
       log('this question three request');

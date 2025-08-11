@@ -35,7 +35,6 @@ class _HorizontalCalendarState extends State<HorizontalCalendar>
         userDataCubit.state.response?.inseminationDate ??
             DateTime.now().toString());
     final isPregnant = userDataCubit.state.response!.isPregnant ?? false;
-    // final today = DateTime.parse(DateTime.now().toString());
     return SizedBox(
       height: 70,
       child: Padding(
