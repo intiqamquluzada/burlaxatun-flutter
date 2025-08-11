@@ -18,7 +18,7 @@ class _HomePageDailyAdviseState extends State<HomePageDailyAdvise> {
   late DailyRecCubit dailyRecCubit;
   @override
   void initState() {
-    // dailyRecCubit = context.read<DailyRecCubit>()..getDailyRec();
+    dailyRecCubit = context.read<DailyRecCubit>()..getDailyRec();
     super.initState();
   }
 

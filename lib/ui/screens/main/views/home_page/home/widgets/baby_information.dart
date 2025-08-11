@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/ui/widgets/global_button.dart';
-import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../../../cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../widgets/global_button.dart';
 import '../../../../../../widgets/global_text.dart';
 import 'baby_info_box.dart';
 import 'more_details_button.dart';
