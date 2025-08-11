@@ -1,4 +1,6 @@
+import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
@@ -25,7 +27,7 @@ class _InitialProfilePageState extends State<InitialProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final mainCubit = context.read<MainnCubit>();
+    final userDataCubit = context.read<UserDataCubit>();
     return Scaffold(
       backgroundColor: ColorConstants.scaffoldColor,
       body: SafeArea(
@@ -36,12 +38,19 @@ class _InitialProfilePageState extends State<InitialProfilePage> {
               child: Column(
                 children: [
                   24.h,
-                  ProfilePictureAndName(), 
-                  24.h,  
+                  ProfilePictureAndName(),
+                  24.h,
                   ProfilePageSections(),
                   12.h,
-                  ProfilePregnancyBox(),
-                  12.h,
+                  Visibility(
+                    visible: userDataCubit.state.response?.isPregnant ?? false,
+                    child: Column(
+                      children: [
+                        ProfilePregnancyBox(),
+                        12.h,
+                      ],
+                    ),
+                  ),
                   MyProfileBox(),
                   12.h,
                   ColoredBox(
