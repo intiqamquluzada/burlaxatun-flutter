@@ -1,9 +1,9 @@
-import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
-import 'package:burla_xatun/ui/screens/main/views/home_page/home/widgets/baby_info_box.dart';
-import 'package:burla_xatun/ui/screens/main/views/home_page/home/widgets/more_details_button.dart';
-import 'package:burla_xatun/utils/extensions/num_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../../../cubits/user_data/user_data_cubit.dart';
+import '../../../../../../../utils/extensions/num_extensions.dart';
+import 'baby_info_box.dart';
 
 class CurrentBabyInfo extends StatelessWidget {
   const CurrentBabyInfo({super.key});
@@ -25,24 +25,28 @@ class CurrentBabyInfo extends StatelessWidget {
               builder: (context, value, child) {
                 // final indicator = value?.indicators?.first;
                 return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   spacing: 17,
                   children: [
-                    BabyInfoBox(
-                      boxName: 'Baby height',
-                      boxData: '${value?.height} sm',
+                    Expanded(
+                      child: BabyInfoBox(
+                        boxName: 'Övladın boyu',
+                        boxData: '${value?.height} sm',
+                      ),
                     ),
-                    BabyInfoBox(
-                      boxName: 'Baby weight',
-                      boxData: '${value?.weight} kq',
+                    Expanded(
+                      child: BabyInfoBox(
+                        boxName: 'Övladın çəkisi',
+                        boxData: '${value?.weight} kq',
+                      ),
                     ),
                   ],
                 );
               },
             ),
             20.h,
-            MoreDetailsButton(),
-            42.h,
+            // MoreDetailsButton(),
+            // 42.h,
           ],
         ),
       ),
