@@ -1,5 +1,8 @@
+import 'package:burla_xatun/cubits/main_cubit/mainn_cubit.dart';
+import 'package:burla_xatun/utils/routes/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../../cubits/user_data/user_data_cubit.dart';
 import '../../../../../../utils/constants/color_constants.dart';
@@ -23,6 +26,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userDataCubit = context.read<UserDataCubit>();
+    final mainCubit = context.read<MainCubit>();
     // final user = userDataCubit.state.response;
     return Scaffold(
       backgroundColor: ColorConstants.scaffoldColor,
@@ -77,7 +81,14 @@ class HomePage extends StatelessWidget {
                               children: [
                                 Visibility(
                                   visible: days != null,
-                                  child: HomePageDailyAdvise(),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      mainCubit.changeView(1);
+                                      navigatorKey.currentContext
+                                          ?.go('/daily_advices');
+                                    },
+                                    child: HomePageDailyAdvise(),
+                                  ),
                                 ),
                                 24.h,
                                 Visibility(

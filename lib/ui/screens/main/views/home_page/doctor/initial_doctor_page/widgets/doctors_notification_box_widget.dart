@@ -1,3 +1,4 @@
+import 'package:burla_xatun/data/models/remote/response/my_reservations_model.dart';
 import 'package:burla_xatun/ui/screens/main/views/home_page/doctor/initial_doctor_page/widgets/doctor_info.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +7,12 @@ import 'doctor_notification_status.dart';
 import 're_registration_button.dart';
 
 class DoctorsNotificationBoxWidget extends StatelessWidget {
-  const DoctorsNotificationBoxWidget({super.key});
+  const DoctorsNotificationBoxWidget({
+    super.key,
+    required this.reservation,
+  });
+
+  final DoctorNotificationModel reservation;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +29,20 @@ class DoctorsNotificationBoxWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
           child: Column(
             children: [
-              DoctorInfo(),
+              DoctorInfo(
+                name: reservation.doctorName,
+                surname: reservation.doctorSurname,
+                doctorImage: reservation.doctorImage,
+                workPlace: reservation.doctorWorkplace,
+                position: reservation.doctorPosition,
+              ),
               24.h,
-              DoctorNotificationStatus(),
+              DoctorNotificationStatus(status: reservation.status),
               24.h,
-              ReRegistrationButton(),
+              Visibility(
+                visible: reservation.status == 'declined',
+                child: ReRegistrationButton(),
+              ),
             ],
           ),
         ),

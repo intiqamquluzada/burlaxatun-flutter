@@ -46,14 +46,19 @@ class _DoctorsNotificationState extends State<DoctorsNotification> {
                 }
                 if (state.drNotificationStatus ==
                     DrNotificationStatus.success) {
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: 2,
-                      itemBuilder: (_, index) {
-                        return DoctorsNotificationBoxWidget();
-                      },
-                    ),
-                  );
+                  final reservations = state.myReservations ?? [];
+                  return reservations.isEmpty
+                      ? Text('Reservasiya yoxdur')
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: reservations.length,
+                            itemBuilder: (_, i) {
+                              return DoctorsNotificationBoxWidget(
+                                reservation: reservations[i],
+                              );
+                            },
+                          ),
+                        );
                 }
                 return SizedBox.shrink();
               },

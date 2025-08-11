@@ -9,7 +9,7 @@ class DoctorNotificationState extends Equatable {
   });
 
   final DrNotificationStatus drNotificationStatus;
-  final List<MyReservationsModel>? myReservations;
+  final List<DoctorNotificationModel>? myReservations;
 
   @override
   List<Object?> get props => [
@@ -19,7 +19,7 @@ class DoctorNotificationState extends Equatable {
 
   DoctorNotificationState copyWith({
     DrNotificationStatus? drNotificationStatus,
-    List<MyReservationsModel>? myReservations,
+    List<DoctorNotificationModel>? myReservations,
   }) {
     return DoctorNotificationState(
       drNotificationStatus: drNotificationStatus ?? this.drNotificationStatus,

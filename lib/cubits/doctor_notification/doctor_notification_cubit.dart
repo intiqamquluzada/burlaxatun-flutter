@@ -22,7 +22,7 @@ class DoctorNotificationCubit extends Cubit<DoctorNotificationState> {
       if (!response.statusCode.isSuccess) return;
       final data = response.data as List;
       final reservations = data
-          .map((reservation) => MyReservationsModel.fromJson(reservation))
+          .map((reservation) => DoctorNotificationModel.fromJson(reservation))
           .toList();
       emit(state.copyWith(
         drNotificationStatus: DrNotificationStatus.success,

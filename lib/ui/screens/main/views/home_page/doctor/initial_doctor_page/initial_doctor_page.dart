@@ -107,7 +107,7 @@ class _InitialDoctorPageState extends State<InitialDoctorPage> {
                         });
                       },
                     ),
-                    16.h,
+                    16.h, 
                     Padding(
                       padding: const EdgeInsets.only(left: 15, right: 13),
                       child: Column(
