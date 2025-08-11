@@ -65,7 +65,7 @@ class _CommentsBoxState extends State<CommentsBox> {
   late List<ValueNotifier<List<Comments>>> replyList;
   @override
   void initState() {
-    _initializeReplies();
+    // _initializeReplies();
     super.initState();
   }
 

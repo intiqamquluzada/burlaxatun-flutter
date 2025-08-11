@@ -48,7 +48,8 @@ class _BabyInformationState extends State<BabyInformation> {
               return CircularProgressIndicator.adaptive();
             } else if (state.pregnancyProgressStatus ==
                 PregnancyProgressStatus.error) {
-              return Text('Körpənin məlumatları tapılmadı');
+              return Text(
+                  state.errorMessage ?? 'Körpənin məlumatları tapılamdı');
             } else if (state.pregnancyProgressStatus ==
                 PregnancyProgressStatus.networkError) {
               return Text('Şəbəkəni yoxlayın');

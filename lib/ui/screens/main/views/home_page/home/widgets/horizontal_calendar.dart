@@ -34,6 +34,8 @@ class _HorizontalCalendarState extends State<HorizontalCalendar>
     final inseminationDate = DateTime.parse(
         userDataCubit.state.response?.inseminationDate ??
             DateTime.now().toString());
+    final isPregnant = userDataCubit.state.response!.isPregnant ?? false;
+    // final today = DateTime.parse(DateTime.now().toString());
     return SizedBox(
       height: 70,
       child: Padding(
@@ -43,31 +45,37 @@ class _HorizontalCalendarState extends State<HorizontalCalendar>
           itemCount: allDates.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, i) {
+            final isBeforeInsemination = allDates[i].isBefore(inseminationDate);
+
+            final difference = inseminationDate.difference(allDates[i]).inDays;
+            final isNextWeek = difference % 7 == 0;
+
+            final isToday = selectedDate == allDates[i];
+
             return GestureDetector(
-              onTap: () {
-                ///* If the tapped date is not the current date, scroll to it
-                final isPregnant =
-                    userDataCubit.state.response!.isPregnant ?? false;
+              onTap: isPregnant
+                  ? () {
+                      ///* If the tapped date is not the current date, scroll to it
 
-                final isBeforeInsemination =
-                    allDates[i].isBefore(inseminationDate);
-                final difference =
-                    inseminationDate.difference(allDates[i]).inDays;
-                final isNextWeek = difference % 7 == 0;
+                      // if (!isPregnant ||
+                      //     isBeforeInsemination ||
+                      //     !isNextWeek ||
+                      //     difference == 0) {
+                      //   return;
+                      // }
 
-                if (!isPregnant ||
-                    isBeforeInsemination ||
-                    !isNextWeek ||
-                    difference == 0) {
-                  return;
-                }
-                selectedDateIndex.value = i;
-                context
-                    .read<PregnancyProgressCubit>()
-                    .getPregnancyProgress(date: allDates[i]);
+                      if (!isBeforeInsemination && isNextWeek || isToday) {
+                        selectedDateIndex.value = i;
+                        context
+                            .read<PregnancyProgressCubit>()
+                            .getPregnancyProgress(date: allDates[i]);
+                      } else if (difference == 0) {
+                        return;
+                      }
 
-                // if (i == currentDateIndex) return;
-              },
+                      // if (i == currentDateIndex) return;
+                    }
+                  : () {},
               child: Row(
                 children: [
                   SizedBox(
@@ -79,7 +87,9 @@ class _HorizontalCalendarState extends State<HorizontalCalendar>
                           decoration: BoxDecoration(
                             color: i == selectedBoxIndex
                                 ? ColorConstants.primaryRedColor
-                                : Colors.white,
+                                : isNextWeek || isToday
+                                    ? Color(0xffFDECF2)
+                                    : Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(5)),
                           ),
                           child: Center(

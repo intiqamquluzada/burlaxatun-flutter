@@ -36,12 +36,20 @@ class PregnancyProgressCubit extends Cubit<PregnancyProgressState> {
       ));
     } on DioException catch (e) {
       log('network error: $e');
-      emit(state.copyWith(
-          pregnancyProgressStatus: PregnancyProgressStatus.networkError));
+      if (e.type == DioExceptionType.badResponse) {
+        final error = e.response?.data['detail'];
+        emit(state.copyWith(
+            errorMessage: error,
+            pregnancyProgressStatus: PregnancyProgressStatus.error));
+      } else {
+        emit(state.copyWith(
+            pregnancyProgressStatus: PregnancyProgressStatus.networkError));
+      }
     } catch (e, s) {
       log('Error occured while getting pregnancy progress: $e', stackTrace: s);
       emit(state.copyWith(
-          pregnancyProgressStatus: PregnancyProgressStatus.error));
+        pregnancyProgressStatus: PregnancyProgressStatus.error,
+      ));
     }
   }
 }

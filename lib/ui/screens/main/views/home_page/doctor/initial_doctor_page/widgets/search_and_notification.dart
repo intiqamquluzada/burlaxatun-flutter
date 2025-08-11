@@ -34,7 +34,7 @@ class SearchAndNotification extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                showModalBottomSheet(
+                showModalBottomSheet(  
                   showDragHandle: true,
                   isScrollControlled: true, 
                   context: context,
