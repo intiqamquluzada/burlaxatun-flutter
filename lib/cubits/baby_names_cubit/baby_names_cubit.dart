@@ -51,6 +51,10 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
     if (dontRequest(gender)) {
       return;
     }
+    // if (isRefresh) {
+    //   forumList = [];
+    //   url = isRefresh ? '' : url;
+    // }
     try {
       emit(state.copyWith(nameStateStatus: NameStateStatus.loading));
       final response = await _babyNamesContractor.getBabyNamesByCountryId(
@@ -59,33 +63,8 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
         url: returnGenderUrl(gender),
       );
       final data = NamesModel.fromJson(response.data);
-
+      handleGenderProperties(gender: gender, responseData: data);
       if (!response.statusCode.isSuccess) return;
-
-      switch (gender) {
-        case 'male':
-          boyUrl = data.next;
-
-          data.results?.forEach((e) {
-            boyNames.add(e);
-          });
-          emit(state.copyWith(
-            maleNamesList: List.from(boyNames),
-            nameStateStatus: NameStateStatus.success,
-          ));
-          break;
-        case 'female':
-          girlUrl = data.next;
-
-          data.results?.forEach((e) {
-            girlNames.add(e);
-          });
-          emit(state.copyWith(
-            femaleNamesList: List.from(girlNames),
-            nameStateStatus: NameStateStatus.success,
-          ));
-          break;
-      }
     } on DioException catch (e) {
       emit(state.copyWith(nameStateStatus: NameStateStatus.networkError));
       throw Exception(e);
@@ -93,6 +72,17 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
       log('error occured while getting names: $e', stackTrace: s);
       emit(state.copyWith(nameStateStatus: NameStateStatus.error));
     }
+  }
+
+  bool dontRequest(String gender) {
+    if ((gender == 'male' && boyUrl == null) ||
+        state.nameStateStatus == NameStateStatus.loading) {
+      return true;
+    } else if ((gender == 'female' && girlUrl == null) ||
+        state.nameStateStatus == NameStateStatus.loading) {
+      return true;
+    }
+    return false;
   }
 
   String? returnGenderUrl(String gender) {
@@ -108,32 +98,34 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
     return url;
   }
 
-  bool dontRequest(String gender) {
-    if ((gender == 'male' && boyUrl == null) ||
-        state.nameStateStatus == NameStateStatus.loading) {
-      return true;
-    } else if ((gender == 'female' && girlUrl == null) ||
-        state.nameStateStatus == NameStateStatus.loading) {
-      return true;
-    }
-    return false;
-  }
-
   void handleGenderProperties({
-    required String? genderUrl,
+    required String? gender,
     required NamesModel responseData,
-    required List<GenderName> genderList,
   }) {
-    genderUrl = responseData.next;
+    switch (gender) {
+      case 'male':
+        boyUrl = responseData.next;
 
-    responseData.results?.forEach((e) {
-      genderList.add(e);
-    });
-    emit(state.copyWith(
-      maleNamesList: List.from(boyNames),
-      femaleNamesList: List.from(girlNames),
-      nameStateStatus: NameStateStatus.success,
-    ));
+        responseData.results?.forEach((e) {
+          boyNames.add(e);
+        });
+        emit(state.copyWith(
+          maleNamesList: List.from(boyNames),
+          nameStateStatus: NameStateStatus.success,
+        ));
+        break;
+      case 'female':
+        girlUrl = responseData.next;
+
+        responseData.results?.forEach((e) {
+          girlNames.add(e);
+        });
+        emit(state.copyWith(
+          femaleNamesList: List.from(girlNames),
+          nameStateStatus: NameStateStatus.success,
+        ));
+        break;
+    }
   }
 
   List<SelectedName>? selectedNames = [];
