@@ -20,8 +20,9 @@ class BabyNamesService {
   Future<Response<dynamic>> getNames({
     required String countryId,
     required String gender,
+    String? url,
   }) async {
-    final url = EndpointsConstants.babyNames;
+    url ??= EndpointsConstants.babyNames;
     final queryParams = {
       'country': countryId,
       'gender': gender,

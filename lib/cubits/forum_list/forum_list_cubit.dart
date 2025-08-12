@@ -8,7 +8,7 @@ import '../../data/models/remote/response/forum_list_model.dart';
 import '../../utils/extensions/statuscode_extension.dart';
 
 part 'forum_list_state.dart';
-
+ 
 enum ForumListStatus { initial, loading, success, error, netwokrError }
 
 class ForumListCubit extends Cubit<ForumListState> {

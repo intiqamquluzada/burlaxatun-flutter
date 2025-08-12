@@ -16,8 +16,13 @@ class BabyNamesRepository implements BabyNamesContractor {
   Future<Response<dynamic>> getBabyNamesByCountryId({
     required String countryId,
     required String gender,
+    String? url,
   }) {
-    return _babyNamesService.getNames(countryId: countryId, gender: gender);
+    return _babyNamesService.getNames(
+      countryId: countryId,
+      gender: gender,
+      url: url,
+    );
   }
 
   @override

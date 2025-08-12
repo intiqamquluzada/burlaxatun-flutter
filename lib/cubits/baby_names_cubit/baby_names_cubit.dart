@@ -39,28 +39,49 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
     }
   }
 
+  List<GenderName> boyNames = [];
+  List<GenderName> girlNames = [];
+  String? boyUrl = '';
+  String? girlUrl = '';
   Future<void> getNames({
     required String countryId,
     required String gender,
+    // bool isRefresh = false,
   }) async {
+    if (dontRequest(gender)) {
+      return;
+    }
     try {
       emit(state.copyWith(nameStateStatus: NameStateStatus.loading));
       final response = await _babyNamesContractor.getBabyNamesByCountryId(
         countryId: countryId,
         gender: gender,
+        url: returnGenderUrl(gender),
       );
-      final names = NamesModel.fromJson(response.data);
+      final data = NamesModel.fromJson(response.data);
+
+      if (!response.statusCode.isSuccess) return;
 
       switch (gender) {
         case 'male':
+          boyUrl = data.next;
+
+          data.results?.forEach((e) {
+            boyNames.add(e);
+          });
           emit(state.copyWith(
-            maleNamesList: names.results,
+            maleNamesList: List.from(boyNames),
             nameStateStatus: NameStateStatus.success,
           ));
           break;
         case 'female':
+          girlUrl = data.next;
+
+          data.results?.forEach((e) {
+            girlNames.add(e);
+          });
           emit(state.copyWith(
-            femaleNamesList: names.results,
+            femaleNamesList: List.from(girlNames),
             nameStateStatus: NameStateStatus.success,
           ));
           break;
@@ -72,6 +93,47 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
       log('error occured while getting names: $e', stackTrace: s);
       emit(state.copyWith(nameStateStatus: NameStateStatus.error));
     }
+  }
+
+  String? returnGenderUrl(String gender) {
+    String? url = '';
+    switch (gender) {
+      case 'male':
+        url = boyUrl!.isEmpty ? null : boyUrl;
+        break;
+      case 'female':
+        url = girlUrl!.isEmpty ? null : girlUrl;
+        break;
+    }
+    return url;
+  }
+
+  bool dontRequest(String gender) {
+    if ((gender == 'male' && boyUrl == null) ||
+        state.nameStateStatus == NameStateStatus.loading) {
+      return true;
+    } else if ((gender == 'female' && girlUrl == null) ||
+        state.nameStateStatus == NameStateStatus.loading) {
+      return true;
+    }
+    return false;
+  }
+
+  void handleGenderProperties({
+    required String? genderUrl,
+    required NamesModel responseData,
+    required List<GenderName> genderList,
+  }) {
+    genderUrl = responseData.next;
+
+    responseData.results?.forEach((e) {
+      genderList.add(e);
+    });
+    emit(state.copyWith(
+      maleNamesList: List.from(boyNames),
+      femaleNamesList: List.from(girlNames),
+      nameStateStatus: NameStateStatus.success,
+    ));
   }
 
   List<SelectedName>? selectedNames = [];

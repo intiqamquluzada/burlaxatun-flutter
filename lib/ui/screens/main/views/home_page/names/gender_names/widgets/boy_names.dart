@@ -1,3 +1,4 @@
+import 'package:burla_xatun/data/models/remote/response/names_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,11 +20,30 @@ class BoyNames extends StatefulWidget {
 class _BoyNamesState extends State<BoyNames>
     with AutomaticKeepAliveClientMixin {
   late BabyNamesCubit babyNamesCubit;
+  late ScrollController scrollController;
   @override
   void initState() {
     babyNamesCubit = context.read<BabyNamesCubit>();
+    scrollController = ScrollController();
     babyNamesCubit.getNames(countryId: widget.countryId, gender: 'male');
+    _loadMore();
     super.initState();
+  }
+
+  void _loadMore() {
+    scrollController.addListener(() async {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        await babyNamesCubit.getNames(
+            countryId: widget.countryId, gender: 'male');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -32,6 +52,7 @@ class _BoyNamesState extends State<BoyNames>
     return BlocBuilder<BabyNamesCubit, BabyNamesState>(
       buildWhen: (previous, current) {
         return previous.maleNamesList != current.maleNamesList;
+        // return previous.maleNamesList == null;
       },
       builder: (context, state) {
         if (state.nameStateStatus == NameStateStatus.loading) {
@@ -42,22 +63,49 @@ class _BoyNamesState extends State<BoyNames>
           return Center(child: Text('Şəbəkə xətası'));
         }
         if (state.nameStateStatus == NameStateStatus.success) {
-          final boyNames = state.maleNamesList;
-          return ListView.separated(
-            itemCount: boyNames?.length ?? 0,
-            itemBuilder: (_, i) {
-              final name = boyNames?[i].name ?? 'ad tapılmadı';
-              final babyNameId = boyNames?[i].id ?? -1;
-              final isSelected = ValueNotifier<bool>(false);
-              return BoyNameTile(
-                name: name,
-                babyNameId: babyNameId,
-                isSelectedName: isSelected,
-              );
+          // final boyNames = state.maleNamesList;
+          return BlocSelector<BabyNamesCubit, BabyNamesState, List<GenderName>>(
+            selector: (BabyNamesState state) {
+              return state.maleNamesList ?? [];
             },
-            separatorBuilder: (_, index) {
-              return Divider(
-                color: Color(0xffDADADA),
+            builder: (BuildContext context, List<GenderName> boyNames) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.separated(
+                      controller: scrollController,
+                      itemCount: boyNames.length,
+                      itemBuilder: (_, i) {
+                        final name = boyNames[i].name ?? 'ad tapılmadı';
+                        final babyNameId = boyNames[i].id ?? -1;
+                        final isSelected = ValueNotifier<bool>(false);
+                        return BoyNameTile(
+                          name: name,
+                          babyNameId: babyNameId,
+                          isSelectedName: isSelected,
+                        );
+                      },
+                      separatorBuilder: (_, index) {
+                        return Divider(
+                          color: Color(0xffDADADA),
+                        );
+                      },
+                    ),
+                  ),
+                  BlocBuilder<BabyNamesCubit, BabyNamesState>(
+                    buildWhen: (previous, current) {
+                      return previous.nameStateStatus !=
+                              current.nameStateStatus &&
+                          previous.maleNamesList != current.maleNamesList;
+                    },
+                    builder: (context, state) {
+                      if (state.nameStateStatus == NameStateStatus.loading) {
+                        return CircularProgressIndicator.adaptive();
+                      }
+                      return SizedBox.shrink();
+                    },
+                  ),
+                ],
               );
             },
           );
