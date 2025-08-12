@@ -161,15 +161,15 @@ class Routerapp {
           );
         },
       ),
-      GoRoute(
-        path: '/calculate',
-        builder: (context, state) {
-          return BlocProvider(
-            create: (context) => locator<QuestionsCubit>(),
-            child: CalculateBirth(),
-          );
-        },
-      ),
+      // GoRoute(
+      //   path: '/calculate',
+      //   builder: (context, state) {
+      //     return BlocProvider(
+      //       create: (context) => locator<QuestionsCubit>(),
+      //       child: CalculateBirth(),
+      //     ); 
+      //   },
+      // ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return MainPage(

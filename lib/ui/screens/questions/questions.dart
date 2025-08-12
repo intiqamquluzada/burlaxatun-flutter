@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/ui/screens/questions/widgets/calculate_birth_view/calculate_birth.dart';
 import 'package:burla_xatun/utils/app/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -96,7 +97,16 @@ class Questions extends StatelessWidget {
                     state.questionPageIndex != 3
                         ? state.iDontKnow
                             ? {
-                                context.push('/calculate'),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => BlocProvider.value(
+                                      value: questionsCubit,
+                                      child: CalculateBirth(),
+                                    ),
+                                  ),
+                                )
+                                // context.push('/calculate'),
                               }
                             : await questionsCubit.nextQuestion()
                         : {
