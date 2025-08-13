@@ -25,7 +25,9 @@ class _GirlNamesState extends State<GirlNames>
   void initState() {
     babyNamesCubit = context.read<BabyNamesCubit>();
     scrollController = ScrollController();
-    babyNamesCubit.getNames(countryId: widget.countryId, gender: 'female');
+    babyNamesCubit.state.femaleNamesList == null
+        ? babyNamesCubit.getNames(countryId: widget.countryId, gender: 'female')
+        : null;
     _loadMore();
     super.initState();
   }
@@ -51,7 +53,7 @@ class _GirlNamesState extends State<GirlNames>
     super.build(context);
     return BlocBuilder<BabyNamesCubit, BabyNamesState>(
       buildWhen: (previous, current) {
-        return previous.femaleNamesList != current.femaleNamesList;
+        return previous.femaleNamesList == null;
       },
       builder: (context, state) {
         if (state.nameStateStatus == NameStateStatus.loading) {
@@ -94,8 +96,7 @@ class _GirlNamesState extends State<GirlNames>
                   BlocBuilder<BabyNamesCubit, BabyNamesState>(
                     buildWhen: (previous, current) {
                       return previous.nameStateStatus !=
-                              current.nameStateStatus &&
-                          previous.femaleNamesList != current.femaleNamesList;
+                          current.nameStateStatus;
                     },
                     builder: (context, state) {
                       if (state.nameStateStatus == NameStateStatus.loading) {

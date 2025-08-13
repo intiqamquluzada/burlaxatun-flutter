@@ -46,15 +46,14 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
   Future<void> getNames({
     required String countryId,
     required String gender,
-    // bool isRefresh = false,
+    bool isRefresh = false,
   }) async {
+    if (isRefresh) {
+      whenRefresh(gender);
+    }
     if (dontRequest(gender)) {
       return;
     }
-    // if (isRefresh) {
-    //   forumList = [];
-    //   url = isRefresh ? '' : url;
-    // }
     try {
       emit(state.copyWith(nameStateStatus: NameStateStatus.loading));
       final response = await _babyNamesContractor.getBabyNamesByCountryId(
@@ -74,6 +73,7 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
     }
   }
 
+  // preventing request when pagination finished
   bool dontRequest(String gender) {
     if ((gender == 'male' && boyUrl == null) ||
         state.nameStateStatus == NameStateStatus.loading) {
@@ -85,6 +85,20 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
     return false;
   }
 
+  // resetting pagination
+  void whenRefresh(String gender) {
+    if (gender == 'male') {
+      boyNames = [];
+      emit(state.copyWith(maleNamesList: List.from(boyNames)));
+      boyUrl = '';
+    } else {
+      girlNames = [];
+      // emit(state.copyWith(femaleNamesList: girlNames));
+      girlUrl = '';
+    }
+  }
+
+  // returns url according to requested gender
   String? returnGenderUrl(String gender) {
     String? url = '';
     switch (gender) {
@@ -98,6 +112,7 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
     return url;
   }
 
+  // updating gender properties such as url, list
   void handleGenderProperties({
     required String? gender,
     required NamesModel responseData,

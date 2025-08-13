@@ -8,7 +8,7 @@ import '../../data/models/remote/response/forum_list_model.dart';
 import '../../utils/extensions/statuscode_extension.dart';
 
 part 'forum_list_state.dart';
- 
+
 enum ForumListStatus { initial, loading, success, error, netwokrError }
 
 class ForumListCubit extends Cubit<ForumListState> {
@@ -21,7 +21,7 @@ class ForumListCubit extends Cubit<ForumListState> {
   Future<void> getForumList({int? categoryid, bool isRefresh = false}) async {
     if (isRefresh) {
       forumList = [];
-      url = isRefresh ? '' : url;
+      url = '';
     }
     if (url == null || state.forumListStatus == ForumListStatus.loading) {
       return;

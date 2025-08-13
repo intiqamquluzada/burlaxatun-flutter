@@ -1,4 +1,5 @@
 import 'package:burla_xatun/data/models/remote/response/names_model.dart';
+import 'package:burla_xatun/ui/widgets/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +26,9 @@ class _BoyNamesState extends State<BoyNames>
   void initState() {
     babyNamesCubit = context.read<BabyNamesCubit>();
     scrollController = ScrollController();
-    babyNamesCubit.getNames(countryId: widget.countryId, gender: 'male');
+    babyNamesCubit.state.maleNamesList == null
+        ? babyNamesCubit.getNames(countryId: widget.countryId, gender: 'male')
+        : null;
     _loadMore();
     super.initState();
   }
@@ -35,7 +38,9 @@ class _BoyNamesState extends State<BoyNames>
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
         await babyNamesCubit.getNames(
-            countryId: widget.countryId, gender: 'male');
+          countryId: widget.countryId,
+          gender: 'male',
+        );
       }
     });
   }
@@ -51,8 +56,8 @@ class _BoyNamesState extends State<BoyNames>
     super.build(context);
     return BlocBuilder<BabyNamesCubit, BabyNamesState>(
       buildWhen: (previous, current) {
-        return previous.maleNamesList != current.maleNamesList;
-        // return previous.maleNamesList == null;
+        return previous.maleNamesList == null;
+        // return previous.maleNamesList == null || previous.maleNamesList == [];
       },
       builder: (context, state) {
         if (state.nameStateStatus == NameStateStatus.loading) {
@@ -72,31 +77,39 @@ class _BoyNamesState extends State<BoyNames>
               return Column(
                 children: [
                   Expanded(
-                    child: ListView.separated(
-                      controller: scrollController,
-                      itemCount: boyNames.length,
-                      itemBuilder: (_, i) {
-                        final name = boyNames[i].name ?? 'ad tapılmadı';
-                        final babyNameId = boyNames[i].id ?? -1;
-                        final isSelected = ValueNotifier<bool>(false);
-                        return BoyNameTile(
-                          name: name,
-                          babyNameId: babyNameId,
-                          isSelectedName: isSelected,
-                        );
+                    child: CustomRefreshIndicator(
+                      onRefresh: () async {
+                        // await babyNamesCubit.getNames(
+                        //   countryId: widget.countryId,
+                        //   gender: 'male',
+                        //   isRefresh: true,
+                        // );
                       },
-                      separatorBuilder: (_, index) {
-                        return Divider(
-                          color: Color(0xffDADADA),
-                        );
-                      },
+                      child: ListView.separated(
+                        controller: scrollController,
+                        itemCount: boyNames.length,
+                        itemBuilder: (_, i) {
+                          final name = boyNames[i].name ?? 'ad tapılmadı';
+                          final babyNameId = boyNames[i].id ?? -1;
+                          final isSelected = ValueNotifier<bool>(false);
+                          return BoyNameTile(
+                            name: name,
+                            babyNameId: babyNameId,
+                            isSelectedName: isSelected,
+                          );
+                        },
+                        separatorBuilder: (_, index) {
+                          return Divider(
+                            color: Color(0xffDADADA),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   BlocBuilder<BabyNamesCubit, BabyNamesState>(
                     buildWhen: (previous, current) {
                       return previous.nameStateStatus !=
-                              current.nameStateStatus &&
-                          previous.maleNamesList != current.maleNamesList;
+                          current.nameStateStatus;
                     },
                     builder: (context, state) {
                       if (state.nameStateStatus == NameStateStatus.loading) {
