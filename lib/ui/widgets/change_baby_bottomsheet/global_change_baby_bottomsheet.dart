@@ -8,8 +8,8 @@ import 'package:go_router/go_router.dart';
 import '../../../cubits/user_data/user_data_cubit.dart';
 import '../../../utils/extensions/context_extensions.dart';
 import '../../../utils/extensions/num_extensions.dart';
-import 'widgets/add_child_or_im_pregnant_button.dart';
-import 'widgets/child_account_box.dart';
+import '../../screens/main/views/profil_page/change_profile/widgets/add_child_or_im_pregnant_button.dart';
+import '../../screens/main/views/profil_page/change_profile/widgets/child_account_box.dart';
 
 class GlobalChangeBabyBottomsheet extends StatelessWidget {
   const GlobalChangeBabyBottomsheet({super.key});

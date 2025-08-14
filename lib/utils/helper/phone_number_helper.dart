@@ -16,7 +16,7 @@ class PhoneNumberHelper {
       if (phoneNumber != null) {
         context.read<UserUpdateCubit>().updateUser(phoneNumber: phoneNumber);
         context.read<UserDataCubit>().getUserData();
-        AppSnackbars.success(context, 'The number has been updated.');
+        AppSnackbars.success(context, 'Nömrə yeniləndi.');
       }
     }
   }

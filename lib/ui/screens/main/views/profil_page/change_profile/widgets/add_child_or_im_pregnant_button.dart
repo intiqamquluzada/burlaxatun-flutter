@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../utils/constants/color_constants.dart';
-import '../../../../utils/extensions/context_extensions.dart';
-import '../../global_text.dart';
+import '../../../../../../../utils/constants/color_constants.dart';
+import '../../../../../../../utils/extensions/context_extensions.dart';
+import '../../../../../../widgets/global_text.dart';
 
 class AddChildOrImPregnantButton extends StatelessWidget {
-  const AddChildOrImPregnantButton({super.key});
+  const AddChildOrImPregnantButton({
+    super.key,
+    this.onTap,
+  });
+
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.push('/add_child');
-      },
+      onTap: onTap,
       child: DecoratedBox(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(42)),

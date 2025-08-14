@@ -2,8 +2,8 @@ import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../utils/extensions/context_extensions.dart';
-import '../../global_text.dart';
+import '../../../../../../../utils/extensions/context_extensions.dart';
+import '../../../../../../widgets/global_text.dart';
 
 class ChildAccountBox extends StatelessWidget {
   const ChildAccountBox({

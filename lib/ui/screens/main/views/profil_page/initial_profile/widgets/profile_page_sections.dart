@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../../../data/models/local/profile_sections_items_model.dart';
 import 'section_box.dart';
 
-class ProfilePageSections extends StatelessWidget {
+class ProfilePageSections extends StatelessWidget { 
   const ProfilePageSections({super.key});
 
   @override

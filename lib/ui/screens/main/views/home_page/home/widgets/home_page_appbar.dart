@@ -24,7 +24,7 @@ class _HomePageAppbarState extends State<HomePageAppbar> {
   @override
   void initState() {
     super.initState();
-    userDataCubit = context.read<UserDataCubit>()..getUserData();
+    userDataCubit = context.read<UserDataCubit>();
   }
 
   @override

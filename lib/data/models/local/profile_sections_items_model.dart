@@ -16,6 +16,11 @@ class ProfileSectionsItemsModel {
       sectionRoute: '/settings',
     ),
     ProfileSectionsItemsModel(
+      icon: 'assets/icons/settings_icon.svg',
+      sectionName: 'Profili dəyiş',
+      sectionRoute: '/change_profile',
+    ),
+    ProfileSectionsItemsModel(
       icon: 'assets/icons/faq_icon.svg',
       sectionName: 'Tez-tez verilən suallar',
       sectionRoute: '/faq',
