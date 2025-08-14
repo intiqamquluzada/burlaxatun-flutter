@@ -21,12 +21,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   @override
-  void initState() {
-    // context.read<MainnCubit>().setNavigationShell(widget.navigationShell);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffFAFAFA),

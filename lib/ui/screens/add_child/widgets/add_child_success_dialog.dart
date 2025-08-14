@@ -1,4 +1,6 @@
+import 'package:burla_xatun/cubits/main_cubit/mainn_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,9 +16,11 @@ class AddChildSuccessDialog extends StatelessWidget {
   const AddChildSuccessDialog({
     super.key,
     required this.text,
+    this.isChangeProfile = false,
   });
 
   final String text;
+  final bool isChangeProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +64,10 @@ class AddChildSuccessDialog extends StatelessWidget {
                   textColor: ColorConstants.primaryRedColor,
                   height: 44,
                   onPressed: () {
-                    context.pop();
-                    context.go('/home');
+                    isChangeProfile
+                        ? context.replace('/change_profile')
+                        : context.go('/home');
+                    context.read<MainCubit>().changeView(0);
                   },
                 ),
               ],

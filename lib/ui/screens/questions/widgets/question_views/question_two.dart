@@ -9,7 +9,12 @@ import '../../../../../utils/extensions/num_extensions.dart';
 import '../../../../widgets/global_text.dart';
 
 class QuestionTwo extends StatefulWidget {
-  const QuestionTwo({super.key});
+  const QuestionTwo({
+    super.key,
+    this.isAddPregnancy = false,
+  });
+
+  final bool isAddPregnancy;
 
   @override
   State<QuestionTwo> createState() => _QuestionTwoState();
@@ -72,7 +77,10 @@ class _QuestionTwoState extends State<QuestionTwo>
                           onSelectedItemChanged: (i) {
                             // log(' hefte: $i');
                             questionsCubit.updateFocusedWeekIndex(i);
-                            questionsCubit.updateIsActiveButton();
+                            widget.isAddPregnancy
+                                ? questionsCubit
+                                    .updateIsActiveButtonWhileAddingPregnancy()
+                                : questionsCubit.updateIsActiveButton();
                           },
                           itemExtent: 60,
                           children: [
@@ -142,7 +150,10 @@ class _QuestionTwoState extends State<QuestionTwo>
                         groupValue: true,
                         onChanged: (v) {
                           questionsCubit.iDontKnowToggle(v ?? true);
-                          questionsCubit.updateIsActiveButton();
+                          widget.isAddPregnancy
+                              ? questionsCubit
+                                  .updateIsActiveButtonWhileAddingPregnancy()
+                              : questionsCubit.updateIsActiveButton();
                         },
                       );
                     },

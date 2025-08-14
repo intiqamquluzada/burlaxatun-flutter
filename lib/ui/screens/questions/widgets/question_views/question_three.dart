@@ -11,7 +11,12 @@ import '../../../../widgets/global_button.dart';
 import '../../../../widgets/global_text.dart';
 
 class QuestionThree extends StatefulWidget {
-  const QuestionThree({super.key});
+  const QuestionThree({
+    super.key,
+    this.isAddPregnancy = false,
+  });
+
+  final bool isAddPregnancy;
 
   @override
   State<QuestionThree> createState() => _QuestionThreeState();
@@ -49,7 +54,9 @@ class _QuestionThreeState extends State<QuestionThree>
                 textColor: ColorConstants.primaryRedColor,
                 onPressed: () {
                   questionCubit.updateQuestionThreeAnswer(true);
-                  questionCubit.updateIsActiveButton();
+                  widget.isAddPregnancy
+                      ? questionCubit.updateIsActiveButtonWhileAddingPregnancy()
+                      : questionCubit.updateIsActiveButton();
                   // userUpdateCubit.firstChild = true;
                   // userUpdateCubit.updateUser(firstChild: true);
                 },
@@ -70,7 +77,9 @@ class _QuestionThreeState extends State<QuestionThree>
                 textColor: ColorConstants.primaryRedColor,
                 onPressed: () {
                   questionCubit.updateQuestionThreeAnswer(false);
-                  questionCubit.updateIsActiveButton();
+                  widget.isAddPregnancy
+                      ? questionCubit.updateIsActiveButtonWhileAddingPregnancy()
+                      : questionCubit.updateIsActiveButton();
                   // userUpdateCubit.firstChild = false;
                   // userUpdateCubit.updateUser(firstChild: false);
                 },

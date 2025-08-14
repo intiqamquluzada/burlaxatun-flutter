@@ -7,7 +7,6 @@ import '../../../cubits/main_cubit/main_state.dart';
 import '../../../cubits/main_cubit/mainn_cubit.dart';
 import '../../../utils/constants/color_constants.dart';
 import '../../../utils/extensions/num_extensions.dart';
-import '../change_baby_bottomsheet/global_change_baby_bottomsheet.dart';
 import '../global_text.dart';
 
 class BottomNavbarItem extends StatelessWidget {
@@ -30,27 +29,6 @@ class BottomNavbarItem extends StatelessWidget {
       onTap: () {
         mainCubit.changeView(i);
         navigationShell.goBranch(i);
-      },
-      onLongPress: () {
-        if (i == 3) {
-          showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (_) {
-              return GlobalChangeBabyBottomsheet();
-            },
-          );
-        }
-        // else if (i == 2) {
-        //   showModalBottomSheet(
-        //     // showDragHandle: true,
-        //     isScrollControlled: true,
-        //     context: context,
-        //     builder: (_) {
-        //       return ReportCommentOrBlockUser();
-        //     },
-        //   );
-        // }
       },
       child: BlocBuilder<MainCubit, MainInitial>(
         buildWhen: (previous, current) =>

@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../cubits/add_child/add_child_cubit.dart';
 import '../../../cubits/questions_cubit/questions_cubit.dart';
 import '../../../cubits/questions_cubit/questions_state.dart';
+import '../../../cubits/user_data/user_data_cubit.dart';
 import '../../../data/models/remote/request/add_child_request_model.dart';
 import '../../../utils/constants/asset_constants.dart';
 import '../../../utils/constants/color_constants.dart';
@@ -23,7 +22,12 @@ import '../questions/widgets/question_views/pick_birth_date_widget.dart';
 import 'widgets/add_child_success_dialog.dart';
 
 class AddYourChild extends StatelessWidget {
-  const AddYourChild({super.key});
+  const AddYourChild({
+    super.key,
+    this.isChangeProfile = false,
+  });
+
+  final bool isChangeProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +178,7 @@ class AddYourChild extends StatelessWidget {
                     context: context,
                     builder: (_) {
                       return AddChildSuccessDialog(
+                        isChangeProfile: isChangeProfile,
                         text: 'Övladınız uğurla əlavə olundu',
                       );
                     },

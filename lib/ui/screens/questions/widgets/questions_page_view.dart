@@ -4,7 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../cubits/questions_cubit/questions_cubit.dart';
 
 class QuestionsPageView extends StatelessWidget {
-  const QuestionsPageView({super.key});
+  const QuestionsPageView({
+    super.key,
+    required this.isAddPregnancy,
+  });
+
+  final bool isAddPregnancy;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,9 @@ class QuestionsPageView extends StatelessWidget {
         controller: questionsCubit.pageController,
         itemCount: questionsCubit.questionViews.length,
         itemBuilder: (_, i) {
-          return questionsCubit.questionViews[i];
+          return isAddPregnancy
+              ? questionsCubit.addPregnancyViews[i]
+              : questionsCubit.questionViews[i];
         },
       ),
     );

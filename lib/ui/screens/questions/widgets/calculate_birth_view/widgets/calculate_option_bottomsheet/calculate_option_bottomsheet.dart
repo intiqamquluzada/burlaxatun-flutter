@@ -1,3 +1,5 @@
+import 'package:burla_xatun/cubits/questions_cubit/questions_cubit.dart';
+import 'package:burla_xatun/data/models/local/calculation_options_model.dart';
 import 'package:burla_xatun/ui/widgets/global_text.dart';
 import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,28 +7,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../../../../../cubits/questions_cubit/questions_cubit.dart';
-
-class UltrasoundWeeksBottomsheet extends StatefulWidget {
-  const UltrasoundWeeksBottomsheet({super.key});
+class CalculateOptionBottomsheet extends StatefulWidget {
+  const CalculateOptionBottomsheet({super.key});
 
   @override
-  State<UltrasoundWeeksBottomsheet> createState() =>
-      _UltrasoundWeeksBottomsheetState();
+  State<CalculateOptionBottomsheet> createState() =>
+      _CalculateOptionBottomsheetState();
 }
 
-class _UltrasoundWeeksBottomsheetState
-    extends State<UltrasoundWeeksBottomsheet> {
+class _CalculateOptionBottomsheetState
+    extends State<CalculateOptionBottomsheet> {
   late QuestionsCubit questionCubit;
   late FixedExtentScrollController _controller;
-  late ValueNotifier<int> weekValue;
+  late ValueNotifier<int?> calculateOptionValue;
   @override
   void initState() {
     questionCubit = context.read<QuestionsCubit>();
+
+    calculateOptionValue = ValueNotifier<int?>(null);
     _controller = FixedExtentScrollController(
-      initialItem: questionCubit.state.ultrasoundWeekCount ?? 0,
-    );
-    weekValue = ValueNotifier<int>(0);
+        initialItem: questionCubit.state.selectedCalculateOptionIndex ?? 0);
     super.initState();
   }
 
@@ -38,6 +38,7 @@ class _UltrasoundWeeksBottomsheetState
 
   @override
   Widget build(BuildContext context) {
+    final questionsCubit = context.read<QuestionsCubit>();
     return SizedBox(
       height: MediaQuery.of(context).size.height / 3,
       child: Column(
@@ -56,10 +57,15 @@ class _UltrasoundWeeksBottomsheetState
                   ),
                 ),
               ),
-              GlobalText(text: 'Həftə sayını seçin'),
+              GlobalText(text: 'Hesablama metosunu seçin'),
               TextButton(
                 onPressed: () {
-                  questionCubit.updateUltrasoundWeekCount(weekValue.value);
+                  questionsCubit.updateCalculateOptionName(
+                      CalculationOptionsModel
+                          .options[calculateOptionValue.value!].optionName);
+                  questionsCubit
+                      .selectCalculateOption(calculateOptionValue.value!);
+
                   context.pop();
                 },
                 child: Text(
@@ -75,15 +81,20 @@ class _UltrasoundWeeksBottomsheetState
             child: CupertinoPicker(
               scrollController: _controller,
               itemExtent: 40,
-              onSelectedItemChanged: (v) {
-                weekValue.value = v;
+              onSelectedItemChanged: (i) {
+                calculateOptionValue.value = i;
+                // questionsCubit.selectCalculateOption(i);
+                // questionsCubit.updateCalculateOptionName(
+                //     CalculationOptionsModel.options[i].optionName);
               },
               children: [
-                for (int i = 0; i < 10; i++)
+                for (int i = 0;
+                    i < questionsCubit.calculationOptions.length;
+                    i++)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('$i'),
+                      Text('${CalculationOptionsModel.options[i].optionName}'),
                     ],
                   ),
               ],

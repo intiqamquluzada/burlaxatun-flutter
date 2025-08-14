@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,6 +49,7 @@ class CalculateButton extends StatelessWidget {
                   if (state.selectedCalculateOptionIndex == null) {
                     questionsCubit.stateError();
                   } else {
+                    log('question one button notifier value: ${questionsCubit.questionOneButtonNotifier.value}');
                     await questionsCubit.calculate();
                   }
                 },

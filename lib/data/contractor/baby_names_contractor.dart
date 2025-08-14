@@ -6,6 +6,7 @@ abstract class BabyNamesContractor {
   Future<Response<dynamic>> getBabyNamesByCountryId({
     required String countryId,
     required String gender,
+    String? url,
   });
 
   Future<Response<dynamic>> getWishListNames();

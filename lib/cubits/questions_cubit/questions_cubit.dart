@@ -536,7 +536,7 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
     emit(state.copyWith(ultrasoundRadioValue: v));
   }
 
-  void updateIsActiveButton({int? v}) {
+  void updateIsActiveButton() {
     switch (state.questionPageIndex) {
       case 0:
         if (questionOneButtonNotifier.value != null) {
@@ -553,6 +553,25 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
         }
         break;
       case 2:
+        if (state.isFirstChild != null) {
+          emit(state.copyWith(isActiveButton: true));
+        }
+        break;
+      default:
+        log('default');
+    }
+  }
+
+  void updateIsActiveButtonWhileAddingPregnancy() {
+    switch (state.questionPageIndex) {
+      case 0:
+        if (state.iDontKnow || state.focusedWeekIndex != 0) {
+          emit(state.copyWith(isActiveButton: true));
+        } else {
+          emit(state.copyWith(isActiveButton: false));
+        }
+        break;
+      case 1:
         if (state.isFirstChild != null) {
           emit(state.copyWith(isActiveButton: true));
         }
@@ -585,7 +604,10 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
   }
 
   void updateFocusedWeekIndex(int v) {
-    emit(state.copyWith(focusedWeekIndex: v));
+    emit(state.copyWith(
+      focusedWeekIndex: v,
+      isActiveButton: v == 1 ? false : true,
+    ));
   }
 
   Future<void> updateUser({
@@ -660,6 +682,61 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
         pageController.jumpToPage(state.questionPageIndex);
       }
     }
+  }
+
+  final List addPregnancyViews = [
+    BlocProvider<UserUpdateCubit>(
+      create: (context) => locator<UserUpdateCubit>(),
+      child: QuestionTwo(isAddPregnancy: true),
+    ),
+    BlocProvider<UserUpdateCubit>(
+      create: (context) => locator<UserUpdateCubit>(),
+      child: QuestionThree(isAddPregnancy: true),
+    ),
+    RegisterSuccess(),
+    AddYourChild(),
+  ];
+
+  Future<void> addPregnancyNextButton() async {
+    if (state.questionPageIndex < 1) {
+      if (state.questionPageIndex < 2 && questionOneButtonNotifier.value == 0) {
+        emit(state.copyWith(
+          questionPageIndex: state.questionPageIndex + 1,
+        ));
+        pageController.animateToPage(
+          state.questionPageIndex,
+          duration: Durations.medium2,
+          curve: Curves.linear,
+        );
+        if (state.questionPageIndex == 0) {
+          emit(state.copyWith(
+            isActiveButton: state.focusedWeekIndex == 0 ? false : true,
+          ));
+        } else if (state.questionPageIndex == 1) {
+          emit(state.copyWith(
+            isActiveButton: state.isFirstChild == null ? false : true,
+          ));
+        }
+      } else {
+        // log('this is first questions request');
+        await updateUser(isPregnant: false);
+      }
+    } else if (state.questionPageIndex == 1) {
+      log('this question three request');
+      await updateUser();
+      // if (state.isFirstChild!) {
+      //   emit(state.copyWith(
+      //     questionPageIndex: state.questionPageIndex + 1,
+      //   ));
+      //   pageController.jumpToPage(state.questionPageIndex);
+      // }
+    }
+  }
+
+  void initializeIsAddPregnancy() {
+    // emit(state.copyWith(questionPageIndex: 1));
+
+    questionOneButtonNotifier.value = 0;
   }
 
   void goBack() {
@@ -752,8 +829,25 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
     });
   }
 
+  void showCalculateMethods(BuildContext context, Widget widget) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return BlocProvider.value(
+          value: context.read<QuestionsCubit>(),
+          child: widget,
+        );
+      },
+    ).then((onValue) {
+      emit(state.copyWith());
+    });
+  }
+
   void updateUltrasoundWeekCount(int v) {
-    emit(state.copyWith(ultrasoundWeekCount: v));
+    emit(state.copyWith(
+      ultrasoundWeekCount: v,
+      // isActiveButton:
+    ));
   }
 
   void showDayCount(BuildContext context, Widget widget) {

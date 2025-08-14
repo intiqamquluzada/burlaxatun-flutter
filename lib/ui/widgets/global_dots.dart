@@ -7,15 +7,17 @@ class GlobalDots extends StatelessWidget {
   const GlobalDots({
     super.key,
     required this.controller,
+    required this.count,
   });
 
   final PageController controller;
+  final int count;
 
   @override
   Widget build(BuildContext context) {
     return SmoothPageIndicator(
       controller: controller,
-      count: 3,
+      count: count,
       effect: CustomizableEffect(
         spacing: 6,
         dotDecoration: DotDecoration(

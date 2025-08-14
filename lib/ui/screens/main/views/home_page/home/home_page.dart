@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:burla_xatun/cubits/main_cubit/mainn_cubit.dart';
 import 'package:burla_xatun/utils/routes/router.dart';
 import 'package:flutter/material.dart';
@@ -15,19 +17,32 @@ import 'widgets/home_page_daily_advise.dart';
 import 'widgets/horizontal_calendar.dart';
 import 'widgets/pregnancy_guide.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
-    // required this.shellContext,
+    this.isAddedPregnancy = false,
   });
 
-  // final BuildContext shellContext;
+  final bool isAddedPregnancy;
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
+  late final UserDataCubit userDataCubit;
+  late final MainCubit mainCubit;
+  @override
+  void initState() {
+    mainCubit = context.read<MainCubit>();
+    userDataCubit = context.read<UserDataCubit>()..getUserData();
+    super.initState();
+  }
+
+  // final BuildContext shellContext;
   @override
   Widget build(BuildContext context) {
-    final userDataCubit = context.read<UserDataCubit>();
-    final mainCubit = context.read<MainCubit>();
-    // final user = userDataCubit.state.response;
+    log('BUILDED HOME PAGE');
+
     return Scaffold(
       backgroundColor: ColorConstants.scaffoldColor,
       appBar: HomePageAppbar(),
@@ -54,7 +69,6 @@ class HomePage extends StatelessWidget {
                             24.h,
                           ],
                         ),
-
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: ValueListenableBuilder(
@@ -92,7 +106,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 24.h,
                                 Visibility(
-                                  visible: week != '0' ,
+                                  visible: week != '0',
                                   child: PregnancyGuide(pregnantWeek: week),
                                 ),
                               ],

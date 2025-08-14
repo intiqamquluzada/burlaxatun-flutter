@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/main_cubit/mainn_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -91,7 +92,10 @@ class CalculationResultDialog extends StatelessWidget {
                     textColor: Colors.white,
                     height: 44,
                     onPressed: () {
-                      context.go('/home');
+                      context.go(
+                          '/home?reset=${DateTime.now().millisecondsSinceEpoch}');
+                      // context.go('/home');
+                      context.read<MainCubit>().changeView(0);
                     },
                   ),
                 ],

@@ -1,4 +1,3 @@
-import 'package:burla_xatun/cubits/video_cubit/video_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +15,7 @@ import '../../cubits/onboarding_cubit/onboarding_cubit.dart';
 import '../../cubits/questions_cubit/questions_cubit.dart';
 import '../../cubits/signup_cubit/signup_cubit.dart';
 import '../../cubits/splash/splash_cubit.dart';
+import '../../cubits/video_cubit/video_cubit.dart';
 import '../../ui/screens/add_child/add_your_child.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_otp_screen.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_success_screen.dart';
@@ -44,6 +44,7 @@ import '../../ui/screens/main/views/home_page/notification/notification_page.dar
 import '../../ui/screens/main/views/home_page/ultrasound/ultrasound_page.dart';
 import '../../ui/screens/main/views/home_page/video/video_page.dart';
 import '../../ui/screens/main/views/profil_page/about_us/about_us_view.dart';
+import '../../ui/screens/main/views/profil_page/change_profile/change_profile.dart';
 import '../../ui/screens/main/views/profil_page/contact_us/contact_us_view.dart';
 import '../../ui/screens/main/views/profil_page/faq/faq_view.dart';
 import '../../ui/screens/main/views/profil_page/initial_profile/initial_profile_page.dart';
@@ -59,7 +60,7 @@ import '../../ui/screens/main/views/profil_page/special_thanks/special_thanks_vi
 import '../../ui/screens/main/views/profil_page/using_rules/using_rules_screen.dart';
 import '../../ui/screens/onboarding/onboarding.dart';
 import '../../ui/screens/questions/questions.dart';
-import '../../ui/screens/questions/widgets/calculate_birth_view/calculate_birth.dart';
+import '../../ui/screens/questions/widgets/success_add_pregnancy_page.dart';
 import '../../ui/screens/splash/splash_screen.dart';
 import '../di/locator.dart';
 
@@ -117,6 +118,7 @@ class Routerapp {
       GoRoute(
         path: '/add_child',
         builder: (context, state) {
+          final isChangeProfile = state.extra != null;
           return MultiBlocProvider(
             providers: [
               BlocProvider(
@@ -126,7 +128,7 @@ class Routerapp {
                 create: (context) => locator<QuestionsCubit>(),
               ),
             ],
-            child: AddYourChild(),
+            child: AddYourChild(isChangeProfile: isChangeProfile),
           );
         },
       ),
@@ -155,22 +157,28 @@ class Routerapp {
       GoRoute(
         path: '/questions',
         builder: (context, state) {
+          final isAddPregnant = state.extra as bool;
           return BlocProvider(
             create: (context) => locator<QuestionsCubit>(),
-            child: Questions(),
+            child: Questions(isAddPregnancy: isAddPregnant),
           );
         },
       ),
       GoRoute(
-        path: '/calculate',
-        builder: (context, state) {
-          return BlocProvider(
-            create: (context) => locator<QuestionsCubit>(),
-            child: CalculateBirth(),
-          );
-        },
+        path: '/success_add_pregnancy',
+        builder: (context, state) => SuccessAddPregnancyPage(),
       ),
+      // GoRoute(
+      //   path: '/calculate',
+      //   builder: (context, state) {
+      //     return BlocProvider(
+      //       create: (context) => locator<QuestionsCubit>(),
+      //       child: CalculateBirth(),
+      //     );
+      //   },
+      // ),
       StatefulShellRoute.indexedStack(
+        parentNavigatorKey: navigatorKey,
         builder: (context, state, navigationShell) {
           return MainPage(
             navigationShell: navigationShell,
@@ -183,7 +191,10 @@ class Routerapp {
               GoRoute(
                 path: '/home',
                 builder: (context, state) {
-                  return HomePage();
+                  final resetKey = state.uri.queryParameters['reset'] ?? '';
+                  return HomePage(
+                    key: ValueKey(resetKey),
+                  );
                 },
               ),
               GoRoute(
@@ -376,6 +387,10 @@ class Routerapp {
               GoRoute(
                 path: '/profile_page',
                 builder: (context, state) => InitialProfilePage(),
+              ),
+              GoRoute(
+                path: '/change_profile',
+                builder: (context, state) => ChangeProfile(),
               ),
               GoRoute(
                 path: '/about_us',
