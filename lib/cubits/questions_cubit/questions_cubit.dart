@@ -829,6 +829,20 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
     });
   }
 
+  void showCalculateMethods(BuildContext context, Widget widget) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return BlocProvider.value(
+          value: context.read<QuestionsCubit>(),
+          child: widget,
+        );
+      },
+    ).then((onValue) {
+      emit(state.copyWith());
+    });
+  }
+
   void updateUltrasoundWeekCount(int v) {
     emit(state.copyWith(
       ultrasoundWeekCount: v,

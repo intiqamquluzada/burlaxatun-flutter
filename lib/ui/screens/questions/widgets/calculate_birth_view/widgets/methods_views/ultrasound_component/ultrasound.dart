@@ -16,7 +16,7 @@ class Ultrasound extends StatelessWidget {
           UltrasoundWeeksBox(),
           SizedBox(width: 12),
           UltrasoundDaysBox(),
-        ],
+        ], 
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:burla_xatun/ui/screens/questions/widgets/calculate_birth_view/widgets/calculate_option_bottomsheet/calculate_option_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,7 +31,9 @@ class CalculationMethodWidget extends StatelessWidget {
         10.h,
         GestureDetector(
           onTap: () {
-            questionsCubit.showOptionsToggle();
+            questionsCubit.showCalculateMethods(
+                context, CalculateOptionBottomsheet());
+            // questionsCubit.showOptionsToggle();
           },
           child: SizedBox(
             height: 56,
