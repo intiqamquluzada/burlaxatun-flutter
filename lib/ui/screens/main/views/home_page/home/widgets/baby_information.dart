@@ -51,7 +51,7 @@ class _BabyInformationState extends State<BabyInformation> {
             } else if (state.pregnancyProgressStatus ==
                 PregnancyProgressStatus.error) {
               return Padding(
-                padding: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.symmetric(vertical: 30),
                 child: Column(
                   children: [
                     Text(
@@ -66,7 +66,7 @@ class _BabyInformationState extends State<BabyInformation> {
                         buttonColor: Color(0xffFFEAF1),
                         textColor: Color(0xffEC407A),
                         onPressed: () {
-                          context.go('/questions');
+                          context.go('/questions', extra: false);
                         },
                       ),
                     ),

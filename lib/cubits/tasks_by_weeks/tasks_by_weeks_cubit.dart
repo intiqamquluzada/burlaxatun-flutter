@@ -33,7 +33,7 @@ class TasksByWeeksCubit extends Cubit<TasksByWeeksState> {
         tasksByWeek: tasks,
       ));
     } on DioException catch (e) {
-      // if (e.type == DioExceptionType.badResponse) {
+      // if (e.type == DioExceptionType.badResponse) { 
       //   final error = e.response?.data['detail'];
       //   emit(state.copWith(
       //     tasksByWeekStatus: TasksByWeekStatus.error,
