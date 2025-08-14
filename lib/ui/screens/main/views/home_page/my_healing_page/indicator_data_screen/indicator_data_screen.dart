@@ -115,7 +115,7 @@ class _IndicatorDataScreenState extends State<IndicatorDataScreen> {
                               color: ColorConstants.customBlue,
                               textAlign: TextAlign.center,
                               text:
-                                  'Uşaq seçilməyib və ya əlavə edilməyib (profilə basılı tutaraq seçə və ya əlavə edə bilərsiniz)',
+                                  'Uşaq seçilməyib və ya əlavə edilməyib (profil hissəsindən seçə və ya əlavə edə bilərsiniz)',
                             ),
                           ),
                         )

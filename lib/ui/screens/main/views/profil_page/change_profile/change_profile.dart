@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../../cubits/user_data/user_data_cubit.dart';
 import '../../../../../../data/models/remote/response/user_data_model.dart';
+import '../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../widgets/global_appbar.dart';
 import 'widgets/add_child_or_im_pregnant_button.dart';
@@ -20,6 +21,7 @@ class ChangeProfile extends StatelessWidget {
     final currentBaby = userDataCubit.currentBabyNotifier.value;
     log('${currentBaby?.name}');
     return Scaffold(
+      backgroundColor: ColorConstants.scaffoldColor,
       appBar: GlobalAppbar(
         title: 'Profili dəyiş',
         onLeadingTap: () {
@@ -63,7 +65,7 @@ class ChangeProfile extends StatelessWidget {
                       ChildAccountBox(
                         imageUrl:
                             context.read<UserDataCubit>().state.response?.image,
-                        babyName: 'Mən',
+                        babyName: 'Özüm',
                         isSelected: baby == null,
                         onTap: () {
                           log('selected baby: ${currentBaby?.name}');
@@ -74,14 +76,18 @@ class ChangeProfile extends StatelessWidget {
                       18.h,
                       AddChildOrImPregnantButton(
                         onTap: () {
-                          context.push('/add_child', extra: true);
+                          context.push('/questions', extra: true);
                         },
+                        icon: 'assets/icons/add_pregnancy_icon.svg',
+                        buttonName: 'Hamiləyəm',
                       ),
                       10.h,
                       AddChildOrImPregnantButton(
                         onTap: () {
-                          context.push('/questions', extra: true);
+                          context.push('/add_child', extra: true);
                         },
+                        icon: 'assets/icons/add_child_icon.svg',
+                        buttonName: 'Uşaq əlavə edin',
                       ),
                       33.h,
                     ],
