@@ -50,10 +50,10 @@ class ProfileSectionsItemsModel {
       sectionName: 'Məxfilik siyasəti',
       sectionRoute: '/privacy_policy',
     ),
-    ProfileSectionsItemsModel(
-      icon: 'assets/icons/special_thanks_icon.svg',
-      sectionName: 'Xüsusi minətdarılıq',
-      sectionRoute: '/special_thanks',
-    ),
+    // ProfileSectionsItemsModel(
+    //   icon: 'assets/icons/special_thanks_icon.svg',
+    //   sectionName: 'Xüsusi minətdarılıq',
+    //   sectionRoute: '/special_thanks',
+    // ),
   ];
 }

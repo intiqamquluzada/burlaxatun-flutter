@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -23,7 +22,6 @@ class ProfilePageSections extends StatelessWidget {
             sectionName: profileSectionItems[i].sectionName,
             onTap: () {
               if (i == 3) {
-                log('share profile');
                 String appLink = '';
                 if (Platform.isAndroid) {
                   appLink =
