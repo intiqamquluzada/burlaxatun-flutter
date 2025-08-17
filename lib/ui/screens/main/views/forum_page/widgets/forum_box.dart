@@ -25,7 +25,7 @@ class ForumBox extends StatelessWidget {
   final String forumTitle;
   final int likeCount;
   final String viewCount;
-  final String commentCount;
+  final int commentCount;
 
   @override
   Widget build(BuildContext context) {

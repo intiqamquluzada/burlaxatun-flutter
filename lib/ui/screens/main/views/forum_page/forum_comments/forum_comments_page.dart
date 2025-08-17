@@ -75,7 +75,7 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
             isRefresh: true,
             forumId: widget.forumId,
           );
-        }, 
+        },
         child: CustomScrollView(
           controller: scrollController,
           slivers: [
@@ -104,7 +104,7 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
                         forumTitle: forumDetail?.text ?? 'forum text not found',
                         likeCount: forumDetail?.likes ?? 0,
                         viewCount: forumDetail?.viewCount.toString() ?? '',
-                        commentCount: '30',
+                        commentCount: forumDetail?.commentCount ?? 0,
                         forumId: 0,
                       );
                     }
