@@ -165,7 +165,7 @@ class _CommentInputState extends State<CommentInput> {
                   },
                 ),
               ),
-              SizedBox(width: 11),
+              SizedBox(width: 11), 
               GestureDetector(
                 onTap: () {
                   mainCubit.commentInputFocusNode.requestFocus();

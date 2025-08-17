@@ -54,20 +54,28 @@ class _ReplyBoxState extends State<ReplyBox>
     forumCommentsCubit = context.read<ForumCommentsCubit>();
     deleteCommentCubit = context.read<DeleteCommentCubit>();
     mainCubit = context.read<MainCubit>();
+    if (widget.replies != null) {
+      showMoreVisible = ValueNotifier<bool>(widget.replies!.value.isNotEmpty);
+    } else {
+      showMoreVisible = ValueNotifier<bool>(false);
+    }
+
     _initializeReplies();
     super.initState();
   }
 
   void _initializeReplies() {
     if (widget.replies != null) {
-      showMoreVisible = ValueNotifier<bool>(widget.replies!.value.isNotEmpty);
       replyList = List.generate(widget.replies!.value.length, (i) {
         return ValueNotifier(widget.replies?.value[i].replies ?? []);
       });
+      // showMoreVisible = ValueNotifier<bool>(widget.replies!.value.isNotEmpty);
     } else {
-      showMoreVisible = ValueNotifier<bool>(false);
+      // showMoreVisible = ValueNotifier<bool>(false);
     }
   }
+
+  _updateAfterDelete() {}
 
   final ValueNotifier<int> selectedReplyBoxIndex = ValueNotifier<int>(-1);
 

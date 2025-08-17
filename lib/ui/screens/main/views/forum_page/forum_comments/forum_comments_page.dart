@@ -75,7 +75,7 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
             isRefresh: true,
             forumId: widget.forumId,
           );
-        },
+        }, 
         child: CustomScrollView(
           controller: scrollController,
           slivers: [
