@@ -6,7 +6,7 @@ import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/global_appbar.dart';
 import 'widgets/countries_and_selecteds_box.dart';
 import 'widgets/countries_widget.dart';
-import 'widgets/selected_names_widget.dart';
+import 'widgets/selected_names_widget.dart'; 
 
 class NamesPage extends StatefulWidget {
   const NamesPage({super.key});
