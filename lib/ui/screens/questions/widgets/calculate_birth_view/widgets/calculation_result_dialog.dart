@@ -91,8 +91,7 @@ class CalculationResultDialog extends StatelessWidget {
                   ),
                   12.h,
                   GlobalText(
-                    text:
-                        'Körpəniz isə ${questionsCubit.calculatedData.data?.iconName} boydadır!',
+                    text: questionsCubit.calculatedData.data?.iconName ?? '',
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
