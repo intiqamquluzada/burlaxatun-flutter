@@ -57,7 +57,7 @@ class _CalculateOptionBottomsheetState
                   ),
                 ),
               ),
-              GlobalText(text: 'Hesablama metosunu seçin'),
+              GlobalText(text: 'Hesablama metodunu seçin'),
               TextButton(
                 onPressed: () {
                   questionsCubit.updateCalculateOptionName(
