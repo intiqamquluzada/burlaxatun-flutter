@@ -24,7 +24,7 @@ class _CalculateOptionBottomsheetState
   void initState() {
     questionCubit = context.read<QuestionsCubit>();
 
-    calculateOptionValue = ValueNotifier<int?>(null);
+    calculateOptionValue = ValueNotifier<int>(0);
     _controller = FixedExtentScrollController(
         initialItem: questionCubit.state.selectedCalculateOptionIndex ?? 0);
     super.initState();

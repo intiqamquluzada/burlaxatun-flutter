@@ -19,7 +19,7 @@ class CalculationResultDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final questionsCubit = context.read<QuestionsCubit>();
     return PopScope(
-      canPop: false,
+      canPop: true,
       child: Center(
         child: SizedBox(
           width: context.deviceWidth * 0.78,
