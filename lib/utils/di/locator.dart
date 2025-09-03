@@ -398,7 +398,7 @@ Future<void> setupLocator() async {
       () => VideoRepo(locator<VideoService>()));
 
   // cubit
-  locator.registerFactory(() => LoginCubit(locator()));
+  locator.registerLazySingleton(() => LoginCubit(locator()));
   locator.registerFactory(() => DailyRecCubit(locator()));
   locator.registerFactory(() => DailyRecDetailCubit(locator()));
   locator.registerFactory(() => SignupCubit(locator()));

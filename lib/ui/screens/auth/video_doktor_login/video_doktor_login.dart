@@ -47,8 +47,7 @@ class _VideoDoktorLoginState extends State<VideoDoktorLogin> {
       appBar: GlobalAppbar(
         title: 'Video hesabı ilə giriş',
         onLeadingTap: () {
-          context.read<LoginCubit>().disableVideoDoktorButton();
-          context.pop();
+          Navigator.pop(context, true);
         },
       ),
       body: SingleChildScrollView(

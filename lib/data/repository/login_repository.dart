@@ -23,8 +23,8 @@ class LoginRepository implements LoginContractor {
     required String login,
     required String password,
   }) {
-    return _loginService.login(
-      email: login,
+    return _loginService.loginByVideoDoktor(
+      login: login,
       password: password,
     );
   }

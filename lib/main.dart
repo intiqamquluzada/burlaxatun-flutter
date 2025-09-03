@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/login_cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -153,6 +154,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => locator<SelectTaskCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<LoginCubit>(),
         )
       ],
       child: BlocBuilder<LanguageCubit, Locale>(

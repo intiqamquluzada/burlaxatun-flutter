@@ -97,8 +97,8 @@ class Routerapp {
       ),
       GoRoute(
         path: '/login',
-        builder: (context, state) => BlocProvider<LoginCubit>(
-          create: (context) => locator<LoginCubit>(),
+        builder: (context, state) => BlocProvider.value(
+          value: locator<LoginCubit>(),
           child: Login(),
         ),
       ),
