@@ -470,7 +470,7 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
   Future<void> calculate() async {
     try {
       stateLoading();
-      emit(state.copyWith(focusedWeekIndex: null));
+      // emit(state.copyWith(focusedWeekIndex: null));
 
       // Ensure we have a properly formatted date string (YYYY-MM-DD)
       String dateToSend = state.birthDateString;

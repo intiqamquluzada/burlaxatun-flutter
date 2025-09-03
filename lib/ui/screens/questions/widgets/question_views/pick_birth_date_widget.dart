@@ -1,3 +1,4 @@
+import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,9 +25,12 @@ class PickBirthDateWidget extends StatelessWidget {
                 onPressed: () {
                   context.pop();
                 },
-                child: Text('Bağla'),
+                child: Text(
+                  'Bağla',
+                  style: TextStyle(color: ColorConstants.primaryRedColor),
+                ),
               ),
-              Text('Doğum Tarixini secin'),
+              Text('Doğum tarixini seçin'),
               TextButton(
                 onPressed: () {
                   context.pop([
@@ -34,7 +38,10 @@ class PickBirthDateWidget extends StatelessWidget {
                     questionCubit.state.initialDateTime
                   ]);
                 },
-                child: Text('Seçin'),
+                child: Text(
+                  'Seçin',
+                  style: TextStyle(color: ColorConstants.primaryRedColor),
+                ),
               ),
             ],
           ),

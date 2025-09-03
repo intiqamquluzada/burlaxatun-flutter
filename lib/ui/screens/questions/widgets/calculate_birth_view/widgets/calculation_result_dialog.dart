@@ -2,6 +2,7 @@ import 'package:burla_xatun/cubits/main_cubit/mainn_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../cubits/questions_cubit/questions_cubit.dart';
@@ -18,7 +19,7 @@ class CalculationResultDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final questionsCubit = context.read<QuestionsCubit>();
     return PopScope(
-      canPop: false,
+      canPop: true,
       child: Center(
         child: SizedBox(
           width: context.deviceWidth * 0.78,
@@ -50,6 +51,19 @@ class CalculationResultDialog extends StatelessWidget {
                         // 10.w,
                         CachedNetworkImage(
                           imageUrl:
+                              questionsCubit.calculatedData.data?.icon ?? '',
+                          width: 100,
+                          height: 100,
+                          errorWidget: (context, url, error) {
+                            return Icon(Icons.error);
+                          },
+                        ),
+                        SizedBox(width: 10),
+                        SvgPicture.asset(
+                            'assets/icons/pregnancy_progress_arrows.svg'),
+                        SizedBox(width: 10),
+                        CachedNetworkImage(
+                          imageUrl:
                               questionsCubit.calculatedData.data?.iconUrl2 ??
                                   '',
                           width: 100,
@@ -69,7 +83,7 @@ class CalculationResultDialog extends StatelessWidget {
                   (context.deviceHeight * 0.04).h,
                   GlobalText(
                     text:
-                        'Siz hamiləliyinizin ${questionsCubit.calculatedData.data?.weeks} həftəsindəsiniz',
+                        'Siz hamiləliyinizin ${questionsCubit.calculatedData.data?.weeks}. həftəsindəsiniz',
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
@@ -77,8 +91,7 @@ class CalculationResultDialog extends StatelessWidget {
                   ),
                   12.h,
                   GlobalText(
-                    text:
-                        'Körpəniz isə ${questionsCubit.calculatedData.data?.iconName} boydadır!',
+                    text: questionsCubit.calculatedData.data?.iconName ?? '',
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,

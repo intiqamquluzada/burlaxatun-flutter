@@ -50,13 +50,14 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
     forumCommentsCubit = context.read<ForumCommentsCubit>();
     deleteCommentCubit = context.read<DeleteCommentCubit>();
     mainCubit = context.read<MainCubit>();
+    hasReplies = ValueNotifier<bool>(widget.replies!.value.isEmpty);
     _initializeReplies();
 
     super.initState();
   }
 
   void _initializeReplies() {
-    hasReplies = ValueNotifier<bool>(widget.replies!.value.isEmpty);
+    // hasReplies = ValueNotifier<bool>(widget.replies!.value.isEmpty);
     replyList = List.generate(widget.replies!.value.length, (i) {
       return ValueNotifier(widget.replies?.value[i].replies ?? []);
     });
@@ -153,6 +154,8 @@ class _SingleCommentBoxState extends State<SingleCommentBox>
                           shrinkWrap: true,
                           itemCount: widget.replies?.value.length,
                           itemBuilder: (_, i) {
+                            hasReplies = ValueNotifier<bool>(
+                                widget.replies!.value.isEmpty);
                             _initializeReplies();
                             return ReplyBox(
                               key: ValueKey(i),

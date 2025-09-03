@@ -65,16 +65,24 @@ class _MainForumTitleBoxState extends State<MainForumTitleBox> {
                           CategoryStatsStatus.loading) {
                         return Row(
                           children: [
-                            Container(
-                              width: 40,
-                              height: 20,
-                              color: Colors.grey,
+                            ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              child: Container(
+                                width: 40,
+                                height: 20,
+                                color: Colors.black12,
+                              ),
                             ),
                             SizedBox(width: 30),
-                            Container(
-                              width: 40,
-                              height: 20,
-                              color: Colors.grey,
+                            ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              child: Container(
+                                width: 40,
+                                height: 20,
+                                color: Colors.black12,
+                              ),
                             ),
                           ],
                         );

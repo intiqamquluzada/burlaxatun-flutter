@@ -79,7 +79,7 @@ class _UltrasoundWeeksBottomsheetState
                 weekValue.value = v;
               },
               children: [
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 43; i++)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

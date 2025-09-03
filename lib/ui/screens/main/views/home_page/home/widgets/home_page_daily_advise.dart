@@ -33,17 +33,11 @@ class _HomePageDailyAdviseState extends State<HomePageDailyAdvise> {
         builder: (_, state) {
           if (state.status == DailyRecStatus.loading) {
             return CircularProgressIndicator.adaptive();
-          }
-
-          if (state.status == DailyRecStatus.failure) {
-            return const Center(child: Text('Xəta'));
-          }
-
-          if (state.status == DailyRecStatus.networkError) {
-            return const Center(child: Text('Şəbəkə xətası'));
-          }
-
-          if (state.status == DailyRecStatus.success) {
+          } else if (state.status == DailyRecStatus.failure) {
+            return const Center(child: Text('Xəta baş verdi'));
+          } else if (state.status == DailyRecStatus.networkError) {
+            return const Center(child: Text(''));
+          } else if (state.status == DailyRecStatus.success) {
             final recommendation = state.myRecommendation;
 
             return Padding(

@@ -35,7 +35,7 @@ class _PregnancyGuideState extends State<PregnancyGuide> {
       builder: (context, state) {
         log('STATUS: ${state.tasksByWeekStatus}');
         if (state.tasksByWeekStatus == TasksByWeekStatus.loading) {
-          return Center(child: CircularProgressIndicator.adaptive());
+          return Center(child: CircularProgressIndicator.adaptive()); 
         } else if (state.tasksByWeekStatus == TasksByWeekStatus.error) {
           return Center(child: Text('Məlumat tapılmadı'));
         } else if (state.tasksByWeekStatus == TasksByWeekStatus.networkError) {

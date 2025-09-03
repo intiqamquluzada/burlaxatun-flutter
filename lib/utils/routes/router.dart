@@ -157,10 +157,10 @@ class Routerapp {
       GoRoute(
         path: '/questions',
         builder: (context, state) {
-          final isAddPregnant = state.extra as bool;
+          final isAddPregnant = state.extra ?? false;
           return BlocProvider(
             create: (context) => locator<QuestionsCubit>(),
-            child: Questions(isAddPregnancy: isAddPregnant),
+            child: Questions(isAddPregnancy: isAddPregnant as bool),
           );
         },
       ),

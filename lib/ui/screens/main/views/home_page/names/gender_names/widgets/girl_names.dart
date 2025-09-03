@@ -1,3 +1,4 @@
+import 'package:burla_xatun/ui/widgets/global_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,9 +26,10 @@ class _GirlNamesState extends State<GirlNames>
   void initState() {
     babyNamesCubit = context.read<BabyNamesCubit>();
     scrollController = ScrollController();
-    babyNamesCubit.state.femaleNamesList == null
-        ? babyNamesCubit.getNames(countryId: widget.countryId, gender: 'female')
-        : null;
+    babyNamesCubit.getNames(countryId: widget.countryId, gender: 'female');
+    // babyNamesCubit.state.femaleNamesList == null
+    // ? babyNamesCubit.getNames(countryId: widget.countryId, gender: 'female')
+    // : null;
     _loadMore();
     super.initState();
   }
@@ -53,7 +55,7 @@ class _GirlNamesState extends State<GirlNames>
     super.build(context);
     return BlocBuilder<BabyNamesCubit, BabyNamesState>(
       buildWhen: (previous, current) {
-        return previous.femaleNamesList == null;
+        return previous.femaleNamesList != current.femaleNamesList;
       },
       builder: (context, state) {
         if (state.nameStateStatus == NameStateStatus.loading) {
@@ -72,25 +74,29 @@ class _GirlNamesState extends State<GirlNames>
             builder: (BuildContext context, List<GenderName> girlNames) {
               return Column(
                 children: [
-                  Expanded(
-                    child: ListView.separated(
-                      controller: scrollController,
-                      itemCount: girlNames.length,
-                      itemBuilder: (_, i) {
-                        final name = girlNames[i].name ?? 'ad tapılmadı';
-                        final babyNameId = girlNames[i].id ?? -1;
-                        final isSelected = ValueNotifier<bool>(false);
-                        return GirlNameTile(
-                          name: name,
-                          babyNameId: babyNameId,
-                          isSelectedName: isSelected,
-                        );
-                      },
-                      separatorBuilder: (_, index) {
-                        return Divider(
-                          color: Color(0xffDADADA),
-                        );
-                      },
+                  Visibility(
+                    visible: girlNames.isNotEmpty,
+                    replacement: GlobalText(text: 'Siyahı boşdur'),
+                    child: Expanded(
+                      child: ListView.separated(
+                        controller: scrollController,
+                        itemCount: girlNames.length,
+                        itemBuilder: (_, i) {
+                          final name = girlNames[i].name ?? 'ad tapılmadı';
+                          final babyNameId = girlNames[i].id ?? -1;
+                          final isSelected = ValueNotifier<bool>(false);
+                          return GirlNameTile(
+                            name: name,
+                            babyNameId: babyNameId,
+                            isSelectedName: isSelected,
+                          );
+                        },
+                        separatorBuilder: (_, index) {
+                          return Divider(
+                            color: Color(0xffDADADA),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   BlocBuilder<BabyNamesCubit, BabyNamesState>(

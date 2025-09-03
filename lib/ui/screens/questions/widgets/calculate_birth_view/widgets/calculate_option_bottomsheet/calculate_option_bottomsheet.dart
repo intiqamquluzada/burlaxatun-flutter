@@ -24,7 +24,7 @@ class _CalculateOptionBottomsheetState
   void initState() {
     questionCubit = context.read<QuestionsCubit>();
 
-    calculateOptionValue = ValueNotifier<int?>(null);
+    calculateOptionValue = ValueNotifier<int>(0);
     _controller = FixedExtentScrollController(
         initialItem: questionCubit.state.selectedCalculateOptionIndex ?? 0);
     super.initState();
@@ -57,7 +57,7 @@ class _CalculateOptionBottomsheetState
                   ),
                 ),
               ),
-              GlobalText(text: 'Hesablama metosunu seçin'),
+              GlobalText(text: 'Hesablama metodunu seçin'),
               TextButton(
                 onPressed: () {
                   questionsCubit.updateCalculateOptionName(

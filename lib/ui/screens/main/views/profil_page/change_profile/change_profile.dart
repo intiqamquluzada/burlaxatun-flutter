@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/utils/app/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -75,8 +76,14 @@ class ChangeProfile extends StatelessWidget {
                       ),
                       18.h,
                       AddChildOrImPregnantButton(
+                        isActiveButton:
+                            !userDataCubit.state.response!.isPregnant!,
                         onTap: () {
-                          context.push('/questions', extra: true);
+                          userDataCubit.state.response!.isPregnant!
+                              ? AppSnackbars.success(
+                                  context, 'Hamiləlik əlavə olunub')
+                              : context.pushReplacement('/questions',
+                                  extra: true);
                         },
                         icon: 'assets/icons/add_pregnancy_icon.svg',
                         buttonName: 'Hamiləyəm',

@@ -71,7 +71,7 @@ class Forum {
         text: json["text"],
         viewCount: json["view_count"],
         likes: json["likes"],
-        commentCount: json["comment_countl"],
+        commentCount: json["comment_count"],
       );
 
   Map<String, dynamic> toJson() => {

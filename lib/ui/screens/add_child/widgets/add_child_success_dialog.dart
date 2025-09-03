@@ -57,7 +57,7 @@ class AddChildSuccessDialog extends StatelessWidget {
                 ),
                 22.h,
                 GlobalButton(
-                  buttonName: 'Ana səhifə',
+                  buttonName: isChangeProfile ? 'Geri dön' : 'Ana səhifə',
                   textFSize: 14,
                   textHeight: 0,
                   buttonColor: Color(0xffFDECF2),
@@ -65,7 +65,12 @@ class AddChildSuccessDialog extends StatelessWidget {
                   height: 44,
                   onPressed: () {
                     isChangeProfile
-                        ? context.replace('/change_profile')
+                        ? {
+                            for (int i = 0; i < 2; i++)
+                              {
+                                context.pop(),
+                              }
+                          }
                         : context.go('/home');
                     context.read<MainCubit>().changeView(0);
                   },

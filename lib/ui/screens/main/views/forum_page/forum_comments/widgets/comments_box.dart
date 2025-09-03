@@ -95,6 +95,7 @@ class _CommentsBoxState extends State<CommentsBox> {
                 itemBuilder: (_, i) {
                   // log('comments buildedd');
                   return SingleCommentBox(
+                    key: ValueKey(i),
                     index: i,
                     comment: widget.commentList[i],
                     replies: replyList[i],

@@ -44,7 +44,7 @@ class _SecondaryForumPageCustomScrollState
     scrollController = ScrollController();
     forumListCubit = context.read<ForumListCubit>();
 
-    _loadMore(); 
+    _loadMore();
     super.initState();
   }
 
@@ -161,10 +161,11 @@ class _SecondaryForumPageCustomScrollState
                                                 'data not found',
                                         forumTitle: forumList[i].text ??
                                             'data not found',
-                                        likeCount: 23,
+                                        likeCount: forumList[i].likes ?? 111,
                                         viewCount:
                                             forumList[i].viewCount.toString(),
-                                        commentCount: '10',
+                                        commentCount:
+                                            forumList[i].commentCount ?? 1,
                                         onTap: () {
                                           final forumSlug =
                                               forumList[i].slug ?? '';

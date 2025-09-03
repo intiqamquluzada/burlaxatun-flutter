@@ -9,12 +9,14 @@ class AddChildOrImPregnantButton extends StatelessWidget {
     this.onTap,
     required this.icon,
     required this.buttonName,
+    this.isActiveButton = true,
   });
 
   final void Function()? onTap;
 
   final String icon;
   final String buttonName;
+  final bool isActiveButton;
 
   @override
   Widget build(BuildContext context) {

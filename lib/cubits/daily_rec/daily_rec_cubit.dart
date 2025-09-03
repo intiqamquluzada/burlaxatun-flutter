@@ -30,7 +30,7 @@ class DailyRecCubit extends Cubit<DailyRecState> {
 
       // recommendList = data.results ?? [];
       emit(state.copyWith(
-        status: DailyRecStatus.success,
+        status: DailyRecStatus.success, 
         myRecommendation: myRecommendation,
       ));
 

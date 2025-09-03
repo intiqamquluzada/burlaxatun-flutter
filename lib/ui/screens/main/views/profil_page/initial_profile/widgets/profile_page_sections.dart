@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../../../../../data/models/local/profile_sections_items_model.dart';
 import 'section_box.dart';
 
-class ProfilePageSections extends StatelessWidget { 
+class ProfilePageSections extends StatelessWidget {
   const ProfilePageSections({super.key});
 
   @override
@@ -18,9 +21,23 @@ class ProfilePageSections extends StatelessWidget {
             sectionicon: profileSectionItems[i].icon,
             sectionName: profileSectionItems[i].sectionName,
             onTap: () {
-              profileSectionItems[i].sectionRoute != null
-                  ? context.push(profileSectionItems[i].sectionRoute!)
-                  : null;
+              if (i == 3) {
+                String appLink = '';
+                if (Platform.isAndroid) {
+                  appLink =
+                      'https://play.google.com/store/apps/details?id=com.aastudio.anayam.app';
+                } else if (Platform.isIOS) {
+                  appLink = 'https://apps.apple.com/az/app/anayam/id6740815265';
+                }
+                SharePlus.instance.share(
+                  ShareParams(
+                    text:
+                        'Anayam mobil tətbiqini cihazınıza quraşdırın $appLink',
+                  ),
+                );
+              } else {
+                context.push(profileSectionItems[i].sectionRoute!);
+              }
             },
           ),
       ],

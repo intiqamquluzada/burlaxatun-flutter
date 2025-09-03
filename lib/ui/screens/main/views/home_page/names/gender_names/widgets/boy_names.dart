@@ -1,9 +1,11 @@
-import 'package:burla_xatun/data/models/remote/response/names_model.dart';
-import 'package:burla_xatun/ui/widgets/custom_refresh_indicator.dart';
+import 'dart:developer';
+
+import 'package:burla_xatun/ui/widgets/global_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../../cubits/baby_names_cubit/baby_names_cubit.dart';
+import '../../../../../../../../data/models/remote/response/names_model.dart';
 import 'boy_name_tile.dart';
 
 class BoyNames extends StatefulWidget {
@@ -24,11 +26,13 @@ class _BoyNamesState extends State<BoyNames>
   late ScrollController scrollController;
   @override
   void initState() {
+    log('init boy names');
     babyNamesCubit = context.read<BabyNamesCubit>();
     scrollController = ScrollController();
-    babyNamesCubit.state.maleNamesList == null
-        ? babyNamesCubit.getNames(countryId: widget.countryId, gender: 'male')
-        : null;
+    babyNamesCubit.getNames(countryId: widget.countryId, gender: 'male');
+    // babyNamesCubit.state.maleNamesList == null
+    //     ? babyNamesCubit.getNames(countryId: widget.countryId, gender: 'male')
+    //     : null;
     _loadMore();
     super.initState();
   }
@@ -56,8 +60,10 @@ class _BoyNamesState extends State<BoyNames>
     super.build(context);
     return BlocBuilder<BabyNamesCubit, BabyNamesState>(
       buildWhen: (previous, current) {
-        return previous.maleNamesList == null;
-        // return previous.maleNamesList == null || previous.maleNamesList == [];
+        return previous.maleNamesList != current.maleNamesList;
+        // return previous.maleNamesList == null;
+        // return previous.maleNamesList == null ||
+        // previous.maleNamesList!.isEmpty;
       },
       builder: (context, state) {
         if (state.nameStateStatus == NameStateStatus.loading) {
@@ -76,15 +82,10 @@ class _BoyNamesState extends State<BoyNames>
             builder: (BuildContext context, List<GenderName> boyNames) {
               return Column(
                 children: [
-                  Expanded(
-                    child: CustomRefreshIndicator(
-                      onRefresh: () async {
-                        // await babyNamesCubit.getNames(
-                        //   countryId: widget.countryId,
-                        //   gender: 'male',
-                        //   isRefresh: true,
-                        // );
-                      },
+                  Visibility(
+                    visible: boyNames.isNotEmpty,
+                    replacement: GlobalText(text: 'Siyahı boşdur'),
+                    child: Expanded(
                       child: ListView.separated(
                         controller: scrollController,
                         itemCount: boyNames.length,
@@ -108,8 +109,9 @@ class _BoyNamesState extends State<BoyNames>
                   ),
                   BlocBuilder<BabyNamesCubit, BabyNamesState>(
                     buildWhen: (previous, current) {
-                      return previous.nameStateStatus !=
-                          current.nameStateStatus;
+                      return
+                          // previous.maleNamesList != null &&
+                          previous.nameStateStatus != current.nameStateStatus;
                     },
                     builder: (context, state) {
                       if (state.nameStateStatus == NameStateStatus.loading) {

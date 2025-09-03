@@ -48,9 +48,9 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
     required String gender,
     bool isRefresh = false,
   }) async {
-    if (isRefresh) {
-      whenRefresh(gender);
-    }
+    // if (isRefresh) {
+    //   whenRefresh(gender);
+    // }
     if (dontRequest(gender)) {
       return;
     }
@@ -141,6 +141,17 @@ class BabyNamesCubit extends Cubit<BabyNamesState> {
         ));
         break;
     }
+  }
+
+  void resetGenderList() {
+    // emit(state.copyWith(
+    //   maleNamesList: List.from([]),
+    //   femaleNamesList: List.from([]),
+    // ));
+    boyNames = [];
+    girlNames = [];
+    girlUrl = '';
+    boyUrl = '';
   }
 
   List<SelectedName>? selectedNames = [];
