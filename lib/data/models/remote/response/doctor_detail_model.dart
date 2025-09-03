@@ -12,7 +12,8 @@ class DoctorDetailResponse extends Equatable {
   final String? image;
   final String? workplace;
   final double? consultantPrice;
-  final String? availableTime;
+  final String? availableDays;
+  final String? availableTimes;
 
   const DoctorDetailResponse({
     this.id,
@@ -26,7 +27,8 @@ class DoctorDetailResponse extends Equatable {
     this.image,
     this.workplace,
     this.consultantPrice,
-    this.availableTime,
+    this.availableDays,
+    this.availableTimes,
   });
 
   factory DoctorDetailResponse.fromJson(Map<String, dynamic> json) =>
@@ -48,7 +50,8 @@ class DoctorDetailResponse extends Equatable {
         image: json["image"],
         workplace: json["workplace"],
         consultantPrice: json["consultant_price"],
-        availableTime: json["available_time"],
+        availableDays: json["available_days"],
+        availableTimes: json["available_times"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,7 +66,8 @@ class DoctorDetailResponse extends Equatable {
         "image": image,
         "workplace": workplace,
         "consultant_price": consultantPrice,
-        "available_time": availableTime,
+        "available_days": availableDays,
+        "available_times": availableTimes,
       };
 
   @override
@@ -79,7 +83,8 @@ class DoctorDetailResponse extends Equatable {
         image,
         workplace,
         consultantPrice,
-        availableTime,
+        availableDays,
+        availableTimes,
       ];
 }
 

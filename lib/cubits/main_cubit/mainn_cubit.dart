@@ -1,32 +1,29 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/data/models/local/medicine_detail_items_model.dart';
-import 'package:burla_xatun/data/models/remote/response/medicine/medicines_model.dart';
-import 'package:burla_xatun/ui/screens/main/views/daily_advise_page/advice_page.dart';
-import 'package:burla_xatun/ui/screens/main/views/home_page/my_healing_page/my_medicines/initial_medicine_page/widgets/edit_medicine_dialog.dart';
-import 'package:burla_xatun/ui/screens/main/views/profil_page/settings/setting_views/change_password/change_password_page/change_password_page.dart';
-import 'package:burla_xatun/ui/screens/main/views/profil_page/settings/setting_views/change_phone_number/change_phone_number_view.dart';
-import 'package:burla_xatun/ui/screens/main/views/profil_page/using_rules/using_rules_screen.dart';
-import 'package:burla_xatun/ui/widgets/change_baby_bottomsheet/global_change_baby_bottomsheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/models/local/bottom_navbar_items_model.dart';
 import '../../data/models/local/main_page_box_model.dart';
+import '../../data/models/local/medicine_detail_items_model.dart';
 import '../../data/models/local/my_healing_card_items_model.dart';
-import '../../data/models/local/profile_sections_items_model.dart';
 import '../../data/models/local/settings_items_model.dart';
-import '../../ui/screens/main/views/forum_page/forum_comments/forum_comments_page.dart';
+import '../../data/models/remote/response/forum_comments_model.dart';
+import '../../data/models/remote/response/medicine/medicines_model.dart';
+import '../../ui/screens/auth/change_psw/change_password.dart';
+import '../../ui/screens/main/views/daily_advise_page/advice_detail_view.dart';
 import '../../ui/screens/main/views/forum_page/forum_comments/widgets/menu_and_emoji_dialog.dart';
+import '../../ui/screens/main/views/forum_page/forum_comments/widgets/single_comment_box.dart';
 import '../../ui/screens/main/views/forum_page/main_forum_page.dart/forum_page.dart';
 import '../../ui/screens/main/views/home_page/home.dart';
 import '../../ui/screens/main/views/home_page/home/home_page.dart';
-import '../../ui/screens/main/views/home_page/my_healing_page/indicator_data_screen/widgets/add_new_indicator_dialog.dart';
 import '../../ui/screens/main/views/home_page/my_healing_page/indicator_data_screen/widgets/calendar_dialog.dart';
 import '../../ui/screens/main/views/home_page/my_healing_page/initial_my_healing_page/my_healing_page.dart';
-import '../../ui/screens/main/views/home_page/my_healing_page/my_medicines/initial_medicine_page/my_medicines_page.dart';
-import '../../ui/screens/main/views/home_page/my_healing_page/my_medicines/initial_medicine_page/widgets/add_medicine_dialog.dart';
+import '../../ui/screens/main/views/home_page/my_medicines/initial_medicine_page/my_medicines_page.dart';
+import '../../ui/screens/main/views/home_page/my_medicines/initial_medicine_page/widgets/add_medicine_dialog.dart';
+import '../../ui/screens/main/views/home_page/my_medicines/initial_medicine_page/widgets/edit_medicine_dialog.dart';
 import '../../ui/screens/main/views/home_page/notification/notification_page.dart';
 import '../../ui/screens/main/views/home_page/ultrasound/ultrasound_page.dart';
 import '../../ui/screens/main/views/home_page/video/video_page.dart';
@@ -36,7 +33,12 @@ import '../../ui/screens/main/views/profil_page/faq/faq_view.dart';
 import '../../ui/screens/main/views/profil_page/initial_profile/initial_profile_page.dart';
 import '../../ui/screens/main/views/profil_page/pricavy_policy/privacy_policy_view.dart';
 import '../../ui/screens/main/views/profil_page/settings/setting_view.dart';
+import '../../ui/screens/main/views/profil_page/settings/setting_views/change_phone_number/change_phone_number_view.dart';
 import '../../ui/screens/main/views/profil_page/special_thanks/special_thanks_view.dart';
+import '../../ui/screens/main/views/profil_page/using_rules/using_rules_screen.dart';
+import '../create_comment/create_comment_cubit.dart';
+import '../delete_comment/delete_comment_cubit.dart';
+import '../forum_comments/forum_comments_cubit.dart';
 import 'main_state.dart';
 
 enum UltrasoundFormat { format2d, format3d }
@@ -45,10 +47,10 @@ enum NameViewOption { countries, selecteds }
 
 enum GenderOption { boy, girl }
 
-enum CommentDialog { copy, reply, delete, emoji }
+enum CommentDialog { copy, reply, edit, delete, emoji }
 
-class MainnCubit extends Cubit<MainInitial> {
-  MainnCubit()
+class MainCubit extends Cubit<MainInitial> {
+  MainCubit()
       : super(
           MainInitial(
             indexOfView: 0,
@@ -66,6 +68,8 @@ class MainnCubit extends Cubit<MainInitial> {
             isOverlayVisible: false,
             commentBoxIndex: -1,
             userTag: null,
+            replyBoxIndex: -1,
+            commentDialog: null,
             // menuOption: null,
           ),
         );
@@ -76,7 +80,7 @@ class MainnCubit extends Cubit<MainInitial> {
 
   final navbarItems = BottomNavbarItemsModel.items;
   final boxItems = MainPageBoxModel.items;
-  
+
   final myHealingCardItems = MyHealingCardItemsModel.items;
   final settingItems = SettingsItemModel.items;
   final medicineDetailItems = MedicineDetailItemsModel.items;
@@ -101,42 +105,102 @@ class MainnCubit extends Cubit<MainInitial> {
 
   final Map<String, Widget> homePageViews = {
     'Home': HomePage(),
-    'Gündəlik Tövsiyyələr': AdvicePage(),
+    'Gündəlik Tövsiyyələr': AdvicePagee(),
     'Ultrasəs': UltrasoundPage(),
     'Notification': NotificationPage(),
     'Videolar': VideoPage(),
     'Dərmanlar': MyHealingPage(),
   };
 
-  void showMenuDialogAndEmojis(BuildContext context, double v) {
+  void showMenuDialogAndEmojis({
+    required BuildContext context,
+    required double v,
+    required Comments? comment,
+    required CreateCommentCubit createCommentCubit,
+    required ForumCommentsCubit? forumCommentsCubit,
+    required DeleteCommentCubit deleteCommentCubit,
+    ValueNotifier<List<Comments>>? replies,
+    final ValueNotifier<int>? selectedReplyBoxIndex,
+  }) {
     showDialog<CommentDialog>(
       useSafeArea: false,
       barrierColor: Colors.transparent,
       context: context,
       builder: (context) {
-        return MenuAndEmojiDialog(fromTop: v);
+        return MenuAndEmojiDialog(fromTop: v, comment: comment!);
       },
-    ).then((onValue) {
-      emit(state.copyWith(commentBoxIndex: -1));
+    ).then((onValue) async {
+      emit(state.copyWith(commentDialog: onValue));
+      selectedBoxIndex.value = -1;
+      selectedReplyBoxIndex?.value = -1;
       log('$onValue');
       if (onValue != null) {
         switch (onValue) {
           case CommentDialog.copy:
+            log('copied comment: ${comment?.text}');
+            Clipboard.setData(ClipboardData(text: comment?.text ?? ''));
+            ClipboardData? data = await Clipboard.getData('text/plain');
+            log('after copy: ${data?.text}');
+
           case CommentDialog.delete:
+            log('gonderilen replies length:${replies?.value}');
+            final deletedComment = await deleteCommentCubit.deleteComment(
+              deletedComment: comment!,
+              commentId: comment.id ?? -1,
+            );
+            if (deletedComment == null) {
+              log('error');
+              return;
+            } else if (deletedComment.parent == null) {
+              log('delete from comment List');
+              forumCommentsCubit!.deleteCommentFromList(deletedComment);
+            } else if (replies != null) {
+              log('delete from comment replyList: ${comment.id} ${deletedComment.id}');
+              final currentReplies = List<Comments>.from(replies.value);
+              log('length replyList before remove: ${currentReplies.length}');
+              currentReplies.remove(comment);
+              log('length replyList after remove: ${currentReplies.length}');
+              replies.value = currentReplies;
+            } else {
+              log('delete from sendedReply List');
+              createCommentCubit.deleteSendedReply(deletedComment);
+            }
+
+          // if (comment.parent == null) {
+          //   forumCommentsCubit!.deleteCommentFromList(comment);
+          // }
+
+          //else {
+          //   createCommentCubit.deleteSendedReply(comment);
+          // }
           case CommentDialog.reply:
-            emit(state.copyWith(userTag: '@Nihad '));
-            commentInputTextController.text = state.userTag!;
+            commentInputTextController.text = ' ';
+            createCommentCubit.selectedComment.value = comment;
+
+            commentInputFocusNode.requestFocus();
+          case CommentDialog.edit:
+            comment?.parent == null
+                ? null
+                : createCommentCubit.selectedComment.value = comment;
+            commentInputTextController.text = ' ${comment?.text ?? ''}';
             commentInputFocusNode.requestFocus();
 
           case CommentDialog.emoji:
-            // commentInputTextController.text = state.userTag!;
+            createCommentCubit.selectedComment.value = comment;
             commentInputFocusNode.requestFocus();
         }
+      } else {
+        commentInputTextController.text = '';
+        createCommentCubit.selectedComment.value = null;
       }
     });
   }
 
   void onEmoji() {}
+  late StatefulNavigationShell navigationShell;
+  void setNavigationShell(StatefulNavigationShell v) {
+    navigationShell = v;
+  }
 
   void setShellContext(v) {
     emit(state.copyWith(navigationShellContext: v));
@@ -186,22 +250,20 @@ class MainnCubit extends Cubit<MainInitial> {
     );
   }
 
-  void pushScaffoldForumComments(BuildContext context, int forumID) {
-    Navigator.of(context, rootNavigator: true).push(
-      MaterialPageRoute(
-        builder: (_) => ForumCommentsPage(
-          forumId: forumID,
-        ),
-      ),
-    );
-  }
+  // void pushScaffoldForumComments(BuildContext context, int forumID) {
+  //   Navigator.of(context, rootNavigator: true).push(
+  //     MaterialPageRoute(
+  //       builder: (_) => ForumCommentsPage(),
+  //     ),
+  //   );
+  // }
 
   void tapSettingTile(BuildContext context, int i) {
     switch (i) {
       case 1:
         Navigator.of(context, rootNavigator: true).push(
           MaterialPageRoute(
-            builder: (_) => ChangePasswordPage(),
+            builder: (_) => ChangePassword(),
           ),
         );
       case 2:
@@ -295,7 +357,9 @@ class MainnCubit extends Cubit<MainInitial> {
     emit(state.copyWith(commentBoxIndex: v));
   }
 
-  
+  void updateReplyBoxIndex(int v) {
+    emit(state.copyWith(replyBoxIndex: v));
+  }
 
   @override
   Future<void> close() {

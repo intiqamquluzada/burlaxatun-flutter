@@ -17,7 +17,6 @@ class CustomEmojiBar extends EmojiPickerView {
 class _CustomEmojiBarState extends State<CustomEmojiBar> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     // Access widget.config, widget.state and widget.showSearchBar
     final emojiList = widget.state.categoryEmoji[1];
     return SizedBox(
@@ -43,7 +42,7 @@ class _CustomEmojiBarState extends State<CustomEmojiBar> {
                 onTap: () {
                   context.pop(CommentDialog.emoji);
                   widget.textEditingController.text =
-                      '@Nihad ${emojiList.emoji[i].emoji}';
+                      ' ${emojiList.emoji[i].emoji}';
                 },
                 child: Text(emojiList.emoji[i].emoji),
               )

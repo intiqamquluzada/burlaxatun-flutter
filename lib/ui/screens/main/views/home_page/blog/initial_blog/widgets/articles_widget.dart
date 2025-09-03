@@ -1,18 +1,16 @@
-import 'package:burla_xatun/data/models/remote/response/blog_cat_model.dart';
-import 'package:burla_xatun/ui/widgets/custom_circular_progress_indicator.dart';
-import 'package:burla_xatun/utils/helper/get_blog_img_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../../../../data/models/remote/response/blog_category_model.dart';
 import '../../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../../widgets/global_text.dart';
 
 class ArticlesWidget extends StatelessWidget {
   final String title;
   final int itemCount;
-  final List<Blog> blogs;
-  final Result category;
+  final List<BlogModel> blogs;
+  final BlogCategoryModel category;
 
   const ArticlesWidget({
     super.key,
@@ -40,7 +38,10 @@ class ArticlesWidget extends StatelessWidget {
               GestureDetector(
                 onTap: () => context.push(
                   '/see_all_articles',
-                  extra: category,
+                  extra: {
+                    'category_id': category.categoryId,
+                    'category_name': category.categoryName,
+                  },
                 ),
                 child: GlobalText(
                   text: 'Ətraflı',
@@ -55,28 +56,34 @@ class ArticlesWidget extends StatelessWidget {
         12.h,
         SizedBox(
           height: 175,
-          child: ListView.builder(
+          child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: blogs.length,
             itemBuilder: (_, index) {
-              final blog = blogs[index];
+              final blog = blogs[index]; 
               return GestureDetector(
                 onTap: () => context.push('/article_details', extra: blog),
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.37,
-                  margin: EdgeInsets.only(left: index == 0 ? 15 : 12),
+                  margin: EdgeInsets.only(
+                      left: index == 0 ? 15 : 6,
+                      right: index == blogs.length - 1 ? 15 : 6),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Stack(
                       fit: StackFit.expand,
                       children: [
                         CachedNetworkImage(
-                          imageUrl: getBlogImageHelper(blog),
+                          imageUrl: blog.file ?? '',
                           fit: BoxFit.cover,
-                          placeholder: (context, url) =>
-                              Center(child: CustomCircularProgressIndicator()),
-                          errorWidget: (context, url, error) =>
-                              Center(child: CustomCircularProgressIndicator()),
+                          placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator.adaptive(),
+                          ),
+                          errorWidget: (context, url, error) {
+                            return Image.asset(
+                              'assets/png/Burla_Xatun_splash_screen.png',
+                            );
+                          },
                         ),
                         Positioned(
                           bottom: 10,
@@ -94,6 +101,9 @@ class ArticlesWidget extends StatelessWidget {
                   ),
                 ),
               );
+            },
+            separatorBuilder: (context, index) {
+              return SizedBox(width: 0);
             },
           ),
         ),

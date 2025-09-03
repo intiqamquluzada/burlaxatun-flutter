@@ -1,16 +1,26 @@
-import 'package:burla_xatun/ui/widgets/global_button.dart';
-import 'package:burla_xatun/ui/widgets/global_text.dart';
-import 'package:burla_xatun/utils/constants/asset_constants.dart';
-import 'package:burla_xatun/utils/constants/color_constants.dart';
-import 'package:burla_xatun/utils/constants/padding_constants.dart';
-import 'package:burla_xatun/utils/extensions/context_extensions.dart';
-import 'package:burla_xatun/utils/extensions/num_extensions.dart';
+import 'package:burla_xatun/cubits/main_cubit/mainn_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../utils/constants/asset_constants.dart';
+import '../../../../utils/constants/color_constants.dart';
+import '../../../../utils/constants/padding_constants.dart';
+import '../../../../utils/extensions/context_extensions.dart';
+import '../../../../utils/extensions/num_extensions.dart';
+import '../../../widgets/global_button.dart';
+import '../../../widgets/global_text.dart';
+
 class AddChildSuccessDialog extends StatelessWidget {
-  const AddChildSuccessDialog({super.key});
+  const AddChildSuccessDialog({
+    super.key,
+    required this.text,
+    this.isChangeProfile = false,
+  });
+
+  final String text;
+  final bool isChangeProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +49,7 @@ class AddChildSuccessDialog extends StatelessWidget {
                 ),
                 (context.deviceHeight * 0.04).h,
                 GlobalText(
-                  text: 'Övladınız uğurla əlavə olundu',
+                  text: text,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
@@ -47,14 +57,22 @@ class AddChildSuccessDialog extends StatelessWidget {
                 ),
                 22.h,
                 GlobalButton(
-                  buttonName: 'Ana səhifə',
+                  buttonName: isChangeProfile ? 'Geri dön' : 'Ana səhifə',
                   textFSize: 14,
                   textHeight: 0,
                   buttonColor: Color(0xffFDECF2),
                   textColor: ColorConstants.primaryRedColor,
                   height: 44,
                   onPressed: () {
-                    context.go('/home');
+                    isChangeProfile
+                        ? {
+                            for (int i = 0; i < 2; i++)
+                              {
+                                context.pop(),
+                              }
+                          }
+                        : context.go('/home');
+                    context.read<MainCubit>().changeView(0);
                   },
                 ),
               ],

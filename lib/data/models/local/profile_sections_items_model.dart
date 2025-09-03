@@ -16,6 +16,11 @@ class ProfileSectionsItemsModel {
       sectionRoute: '/settings',
     ),
     ProfileSectionsItemsModel(
+      icon: 'assets/icons/settings_icon.svg',
+      sectionName: 'Profili dəyiş',
+      sectionRoute: '/change_profile',
+    ),
+    ProfileSectionsItemsModel(
       icon: 'assets/icons/faq_icon.svg',
       sectionName: 'Tez-tez verilən suallar',
       sectionRoute: '/faq',
@@ -45,10 +50,10 @@ class ProfileSectionsItemsModel {
       sectionName: 'Məxfilik siyasəti',
       sectionRoute: '/privacy_policy',
     ),
-    ProfileSectionsItemsModel(
-      icon: 'assets/icons/special_thanks_icon.svg',
-      sectionName: 'Xüsusi minətdarılıq',
-      sectionRoute: '/special_thanks',
-    ),
+    // ProfileSectionsItemsModel(
+    //   icon: 'assets/icons/special_thanks_icon.svg',
+    //   sectionName: 'Xüsusi minətdarılıq',
+    //   sectionRoute: '/special_thanks',
+    // ),
   ];
 }

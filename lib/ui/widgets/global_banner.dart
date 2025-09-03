@@ -12,12 +12,12 @@ class GlobalBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     return Stack(
       fit: StackFit.passthrough,
       alignment: Alignment.bottomCenter,
       children: [
-        BlocBuilder<MainnCubit, MainInitial>(
+        BlocBuilder<MainCubit, MainInitial>(
           builder: (context, state) {
             return CarouselSlider(
               options: CarouselOptions(
@@ -57,7 +57,7 @@ class GlobalBanner extends StatelessWidget {
             );
           },
         ),
-        BlocBuilder<MainnCubit, MainInitial>(
+        BlocBuilder<MainCubit, MainInitial>(
           buildWhen: (previous, current) {
             return previous.carouselIndex != current.carouselIndex;
           },

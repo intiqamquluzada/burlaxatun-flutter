@@ -33,7 +33,7 @@ class QuestionsInitial extends Equatable {
   });
 
   final int? currentQuestionOneOptionIndex;
-  final int? selectedCalculateOptionIndex;
+  final int? selectedCalculateOptionIndex; 
   final int questionPageIndex;
   final int focusedWeekIndex;
   final int? ultrasoundWeekCount;

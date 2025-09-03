@@ -15,7 +15,7 @@ class GlobalBottomNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     final mq = MediaQuery.of(context).size.width;
     return SizedBox(
       height: 93,

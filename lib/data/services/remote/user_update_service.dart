@@ -1,12 +1,13 @@
 import 'dart:io';
 
-import 'package:burla_xatun/data/models/remote/response/user_update_model.dart';
-import 'package:burla_xatun/data/services/local/login_token_service.dart';
-import 'package:burla_xatun/data/services/remote/base_network_service.dart';
-import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
-import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
 import 'package:dio/dio.dart';
+
+import '../../../utils/constants/endpoints_constants.dart';
+import '../../../utils/di/locator.dart';
+import '../../../utils/extensions/statuscode_extension.dart';
+import '../../models/remote/response/user_update_model.dart';
+import '../local/login_token_service.dart';
+import 'base_network_service.dart';
 
 class UserUpdateService {
   Future<UserUpdateResponse?> updateUser({
@@ -15,7 +16,9 @@ class UserUpdateService {
     bool? wantToBePregnant,
     bool? wantToSeePeriod,
     bool? isPregnant,
+    bool? haveMiscarriage,
     String? pregnantWeek,
+    String? inseminationDate,
     bool? firstChild,
     File? image,
     String? activeLanguage,
@@ -29,6 +32,8 @@ class UserUpdateService {
       if (onboardingDone != null) "onboarding_done": onboardingDone,
       if (wantToBePregnant != null) "want_to_be_pregnant": wantToBePregnant,
       if (wantToSeePeriod != null) "want_to_see_period": wantToSeePeriod,
+      if (haveMiscarriage != null) "have_miscarriage": haveMiscarriage,
+      if (inseminationDate != null) "insemination_date": inseminationDate,
       if (isPregnant != null) "is_pregnant": isPregnant,
       if (pregnantWeek != null || pregnantWeek != '0')
         "pregnant_week": pregnantWeek,
@@ -40,30 +45,23 @@ class UserUpdateService {
         "image": await MultipartFile.fromFile(image.path,
             filename: image.path.split("/").last),
     });
-    final requestBody = {};
-    phoneNumber != null ? requestBody["phone_number"] = phoneNumber : null;
-    requestBody["onboarding_done"] = onboardingDone;
-    requestBody["want_to_be_pregnant"] = wantToBePregnant;
-    requestBody["want_to_see_period"] = wantToSeePeriod;
-    isPregnant != null ? requestBody["is_pregnant"] = isPregnant : null;
-    pregnantWeek != null ? requestBody["pregnant_week"] = pregnantWeek : null;
-    firstChild != null ? requestBody["first_child"] = firstChild : null;
-    activeLanguage != null
-        ? requestBody["active_language"] = activeLanguage
-        : null;
-    requestBody["enable_notifications"] = enableNotifications;
-
-    // {
-    //   "phone_number": phoneNumber,
-    //   "onboarding_done": onboardingDone,
-    //   "want_to_be_pregnant": wantToBePregnant,
-    //   "want_to_see_period": wantToSeePeriod,
-    //   "is_pregnant": isPregnant,
-    //   "pregnant_week": pregnantWeek,
-    //   "first_child": firstChild,
-    //   "active_language": activeLanguage,
-    //   "enable_notifications": enableNotifications,
-    // };
+    // final requestBody = {};
+    // if (phoneNumber != null) requestBody["phone_number"] = phoneNumber;
+    // if (onboardingDone != null) requestBody["onboarding_done"] = onboardingDone;
+    // if (wantToBePregnant != null) {
+    //   requestBody["want_to_be_pregnant"] = wantToBePregnant;
+    // }
+    // if (wantToSeePeriod != null) {
+    //   requestBody["want_to_see_period"] = wantToSeePeriod;
+    // }
+    // if (isPregnant != null) requestBody["is_pregnant"] = isPregnant;
+    // if (pregnantWeek != null) requestBody["pregnant_week"] = pregnantWeek;
+    // if (firstChild != null) requestBody["first_child"] = firstChild;
+    // if (activeLanguage != null) requestBody["active_language"] = activeLanguage;
+    // if (enableNotifications != null) {
+    //   requestBody["enable_notifications"] = enableNotifications;
+    // }
+    // if (image != null) requestBody["image"] = image;
 
     final response = await BaseNetwork.instance.getDio(token: token).patch(
           endpoint,

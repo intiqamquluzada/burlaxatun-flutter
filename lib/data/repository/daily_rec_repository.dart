@@ -1,5 +1,6 @@
+import 'package:dio/dio.dart';
+
 import '../contractor/daily_rec_contractor.dart';
-import '../models/remote/response/daily_rec_model.dart';
 import '../services/remote/daily_rec_service.dart';
 
 class DailyRecRepository implements DailyRecContractor {
@@ -8,7 +9,7 @@ class DailyRecRepository implements DailyRecContractor {
   final DailyRecService _dailyRecService;
 
   @override
-  Future<DailyRecResponse> getDailyRec() {
-    return _dailyRecService.getDailyRec();
+  Future<Response<dynamic>> getDailyRec({int? day}) {
+    return _dailyRecService.getDailyRec(day: day);
   }
 }

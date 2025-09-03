@@ -75,7 +75,7 @@ class LoginInputs extends StatelessWidget {
                             text: (state.errorMessage != null &&
                                     state.errorMessage!.isNotEmpty)
                                 ? state.errorMessage!
-                                : 'Oops! Email or password incorrect try another one.',
+                                : 'Email və ya parol yanlışdır.',
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
                             color: Color(0xffD62828),

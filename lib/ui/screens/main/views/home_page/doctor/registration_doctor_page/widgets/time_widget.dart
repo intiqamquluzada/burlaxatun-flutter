@@ -1,9 +1,7 @@
-import 'dart:developer';
-
-import 'package:burla_xatun/cubits/doctor_reservation/doctor_reservation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../../cubits/doctor_reservation/doctor_reservation_cubit.dart';
 import 'time_box.dart';
 
 class TimeWidget extends StatelessWidget {

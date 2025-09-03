@@ -31,6 +31,12 @@ class _UltrasoundWeeksBottomsheetState
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height / 3,
@@ -73,7 +79,7 @@ class _UltrasoundWeeksBottomsheetState
                 weekValue.value = v;
               },
               children: [
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 43; i++)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

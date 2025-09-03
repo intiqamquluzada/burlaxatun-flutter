@@ -1,44 +1,74 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/utils/app/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../cubits/main_cubit/mainn_cubit.dart';
 import '../../../cubits/questions_cubit/questions_cubit.dart';
 import '../../../cubits/questions_cubit/questions_state.dart';
+import '../../../utils/app/app_snackbars.dart';
 import '../../../utils/extensions/num_extensions.dart';
 import '../../widgets/global_appbar.dart';
 import '../../widgets/global_dots.dart';
+import 'widgets/calculate_birth_view/calculate_birth.dart';
 import 'widgets/question_views/davam_et_button.dart';
 import 'widgets/questions_page_view.dart';
 
-class Questions extends StatelessWidget {
-  const Questions({super.key});
+class Questions extends StatefulWidget {
+  const Questions({
+    super.key,
+    this.isAddPregnancy = false,
+  });
+
+  final bool isAddPregnancy;
+
+  @override
+  State<Questions> createState() => _QuestionsState();
+}
+
+class _QuestionsState extends State<Questions> {
+  late final QuestionsCubit questionsCubit;
+  @override
+  void initState() {
+    questionsCubit = context.read<QuestionsCubit>();
+    widget.isAddPregnancy ? questionsCubit.initializeIsAddPregnancy() : null;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final questionsCubit = context.read<QuestionsCubit>();
-    // final signUpCubit = context.read<SignupCubit>();
     return Scaffold(
       appBar: GlobalAppbar(
-        title: 'Qeydiyyat',
+        title: widget.isAddPregnancy ? 'Hamiləlik' : 'Qeydiyyat',
         leading: BlocBuilder<QuestionsCubit, QuestionsInitial>(
           buildWhen: (previous, current) {
             return previous.questionPageIndex != current.questionPageIndex;
           },
           builder: (context, state) {
-            return state.questionPageIndex == 3 || state.questionPageIndex == 0
-                ? SizedBox.fromSize()
-                : Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Color(0xff344054),
-                  );
+            if (widget.isAddPregnancy) {
+              return state.questionPageIndex == 2
+                  ? SizedBox.fromSize()
+                  : Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Color(0xff344054),
+                    );
+            } else {
+              return state.questionPageIndex == 3 ||
+                      state.questionPageIndex == 0
+                  ? SizedBox.fromSize()
+                  : Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Color(0xff344054),
+                    );
+            }
           },
         ),
         onLeadingTap: () {
           // context.pop();
-          questionsCubit.goBack();
+          widget.isAddPregnancy && questionsCubit.state.questionPageIndex == 0
+              ? context.pop()
+              : questionsCubit.goBack();
         },
       ),
       body: Column(
@@ -46,11 +76,14 @@ class Questions extends StatelessWidget {
         children: [
           BlocBuilder<QuestionsCubit, QuestionsInitial>(
             builder: (_, state) {
-              return state.questionPageIndex < 3
+              return (widget.isAddPregnancy
+                      ? state.questionPageIndex < 2
+                      : state.questionPageIndex < 3)
                   ? Column(
                       children: [
                         36.h,
                         GlobalDots(
+                          count: widget.isAddPregnancy ? 2 : 3,
                           controller: questionsCubit.pageController,
                         ),
                       ],
@@ -58,7 +91,7 @@ class Questions extends StatelessWidget {
                   : SizedBox.shrink();
             },
           ),
-          QuestionsPageView(),
+          QuestionsPageView(isAddPregnancy: widget.isAddPregnancy),
           Padding(
             padding: const EdgeInsets.only(bottom: 24),
             child: BlocConsumer<QuestionsCubit, QuestionsInitial>(
@@ -76,11 +109,13 @@ class Questions extends StatelessWidget {
                   AppSnackbars.error(context, 'Xəta baş verdi');
                 } else if (state.userUpdateStatus == UserUpdateStatus.success) {
                   if (state.questionPageIndex == 0) {
-                    context.go('/home');
+                    widget.isAddPregnancy ? null : context.go('/home');
                     log('success');
                   } else if (state.isFirstChild == true) {
-                    // context.go('/home');
                     log('success');
+                    widget.isAddPregnancy
+                        ? context.go('/success_add_pregnancy')
+                        : null;
                   } else if (state.isFirstChild == false) {
                     context.go('/add_child');
                   }
@@ -93,16 +128,45 @@ class Questions extends StatelessWidget {
                 return DavamEt(
                   isActive: state.isActiveButton,
                   onPressed: () async {
-                    state.questionPageIndex != 3
-                        ? state.iDontKnow
-                            ? {
-                                context.push('/calculate'),
-                              }
-                            : await questionsCubit.nextQuestion()
-                        : {
-                            // await questionsCubit.nextQuestion(),
-                            context.go('/home')
-                          };
+                    if (widget.isAddPregnancy) {
+                      state.questionPageIndex != 2
+                          ? state.iDontKnow
+                              ? {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => BlocProvider.value(
+                                        value: questionsCubit,
+                                        child: CalculateBirth(),
+                                      ),
+                                    ),
+                                  )
+                                  // context.push('/calculate'),
+                                }
+                              : await questionsCubit.addPregnancyNextButton()
+                          : {
+                              context.read<MainCubit>().changeView(0),
+                            };
+                    } else {
+                      state.questionPageIndex != 3
+                          ? state.iDontKnow
+                              ? {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => BlocProvider.value(
+                                        value: questionsCubit,
+                                        child: CalculateBirth(),
+                                      ),
+                                    ),
+                                  )
+                                  // context.push('/calculate'),
+                                }
+                              : await questionsCubit.nextQuestion()
+                          : {
+                              context.go('/home'),
+                            };
+                    }
                   },
                 );
               },

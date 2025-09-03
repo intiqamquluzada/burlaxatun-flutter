@@ -1,137 +1,190 @@
-import 'package:burla_xatun/cubits/about/about_cubit.dart';
-import 'package:burla_xatun/cubits/add_child/add_child_cubit.dart';
-import 'package:burla_xatun/cubits/blog_cat/blog_cat_cubit.dart';
-import 'package:burla_xatun/cubits/blog_sliders/blog_sliders_cubit.dart';
-import 'package:burla_xatun/cubits/contact/contact_cubit.dart';
-import 'package:burla_xatun/cubits/countries/countries_cubit.dart';
-import 'package:burla_xatun/cubits/daily_rec/daily_rec_cubit.dart';
-import 'package:burla_xatun/cubits/doctor_notification/doctor_notification_cubit.dart';
-import 'package:burla_xatun/cubits/doctor_reservation/doctor_reservation_cubit.dart';
-import 'package:burla_xatun/cubits/doctors_list/doctors_list_cubit.dart';
-import 'package:burla_xatun/cubits/faqs_cubit/faqs_cubit.dart';
-import 'package:burla_xatun/cubits/forum_category/forum_category_cubit.dart';
-import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
-import 'package:burla_xatun/cubits/forum_create/forum_create_cubit.dart';
-import 'package:burla_xatun/cubits/forum_list/forum_list_cubit.dart';
-import 'package:burla_xatun/cubits/indicator/indicator_cubit.dart';
-import 'package:burla_xatun/cubits/login_cubit/login_cubit.dart';
-import 'package:burla_xatun/cubits/medicine/medicine_cubit.dart';
-import 'package:burla_xatun/cubits/medicine_create/medicine_create_cubit.dart';
-import 'package:burla_xatun/cubits/medicine_patch/medicine_patch_cubit.dart';
-import 'package:burla_xatun/cubits/notification/notification_cubit.dart';
-import 'package:burla_xatun/cubits/privacy_policy/privacy_policy_cubit.dart';
-import 'package:burla_xatun/cubits/questions_cubit/questions_cubit.dart';
-import 'package:burla_xatun/cubits/signup_cubit/signup_cubit.dart';
-import 'package:burla_xatun/cubits/splash/splash_cubit.dart';
-import 'package:burla_xatun/cubits/tasks_by_weeks/tasks_by_weeks_cubit.dart';
-import 'package:burla_xatun/cubits/ultrasound/ultrasound_cubit.dart';
-import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
-import 'package:burla_xatun/cubits/user_update/user_update_cubit.dart';
-import 'package:burla_xatun/cubits/using_rules/using_rules_cubit.dart';
-import 'package:burla_xatun/data/contractor/about_contractor.dart';
-import 'package:burla_xatun/data/contractor/add_child_contract.dart';
-import 'package:burla_xatun/data/contractor/blog_cat_contractor.dart';
-import 'package:burla_xatun/data/contractor/blog_sliders_contractor.dart';
-import 'package:burla_xatun/data/contractor/contact_contractor.dart';
-import 'package:burla_xatun/data/contractor/countries_contractor.dart';
-import 'package:burla_xatun/data/contractor/daily_rec_contractor.dart';
-import 'package:burla_xatun/data/contractor/daily_rec_detail_contractor.dart';
-import 'package:burla_xatun/data/contractor/doctor_reserv_contract.dart';
-import 'package:burla_xatun/data/contractor/doctors_list_contractor.dart';
-import 'package:burla_xatun/data/contractor/dr_notifications_contract.dart';
-import 'package:burla_xatun/data/contractor/faqs_contractor.dart';
-import 'package:burla_xatun/data/contractor/forum_category_contractor.dart';
-import 'package:burla_xatun/data/contractor/forum_comments_contractor.dart';
-import 'package:burla_xatun/data/contractor/forum_create_contractor.dart';
-import 'package:burla_xatun/data/contractor/forum_list_contractor.dart';
-import 'package:burla_xatun/data/contractor/indicator_contract.dart';
-import 'package:burla_xatun/data/contractor/login_contractor.dart';
-import 'package:burla_xatun/data/contractor/medicine/medicine_contractor.dart';
-import 'package:burla_xatun/data/contractor/medicine/medicine_create_contractor.dart';
-import 'package:burla_xatun/data/contractor/medicine/medicine_patch_contractor.dart';
-import 'package:burla_xatun/data/contractor/notifications_contract.dart';
-import 'package:burla_xatun/data/contractor/privacy_policy_contractor.dart';
-import 'package:burla_xatun/data/contractor/refresh_token_contract.dart';
-import 'package:burla_xatun/data/contractor/register_contractor.dart';
-import 'package:burla_xatun/data/contractor/tasks_by_week_contract.dart';
-import 'package:burla_xatun/data/contractor/ultrasound_contract.dart';
-import 'package:burla_xatun/data/contractor/user_data_contractor.dart';
-import 'package:burla_xatun/data/contractor/user_update_contractor.dart';
-import 'package:burla_xatun/data/contractor/using_rules_contractor.dart';
-import 'package:burla_xatun/data/repository/about_repository.dart';
-import 'package:burla_xatun/data/repository/add_child_repo.dart';
-import 'package:burla_xatun/data/repository/blog_cat_repository.dart';
-import 'package:burla_xatun/data/repository/blog_sliders_repository.dart';
-import 'package:burla_xatun/data/repository/contact_repository.dart';
-import 'package:burla_xatun/data/repository/countries_repository.dart';
-import 'package:burla_xatun/data/repository/daily_rec_repository.dart';
-import 'package:burla_xatun/data/repository/doctor_reserv_repository.dart';
-import 'package:burla_xatun/data/repository/doctors_list_repository.dart';
-import 'package:burla_xatun/data/repository/dr_notifications_repo.dart';
-import 'package:burla_xatun/data/repository/faqs_repository.dart';
-import 'package:burla_xatun/data/repository/forum_category_repository.dart';
-import 'package:burla_xatun/data/repository/forum_comments_repository.dart';
-import 'package:burla_xatun/data/repository/forum_create_repository.dart';
-import 'package:burla_xatun/data/repository/forum_list_repository.dart';
-import 'package:burla_xatun/data/repository/indicator_repo.dart';
-import 'package:burla_xatun/data/repository/login_repository.dart';
-import 'package:burla_xatun/data/repository/medicine/medicine_create_repository.dart';
-import 'package:burla_xatun/data/repository/medicine/medicine_patch_repository.dart';
-import 'package:burla_xatun/data/repository/medicine/medicine_repository.dart';
-import 'package:burla_xatun/data/repository/notifications_repo.dart';
-import 'package:burla_xatun/data/repository/privacy_policy_repository.dart';
-import 'package:burla_xatun/data/repository/refresh_token_repo.dart';
-import 'package:burla_xatun/data/repository/register_repository.dart';
-import 'package:burla_xatun/data/repository/task_by_weeks_repo.dart';
-import 'package:burla_xatun/data/repository/ultrasound_repo.dart';
-import 'package:burla_xatun/data/repository/user_data_repository.dart';
-import 'package:burla_xatun/data/repository/user_update_repository.dart';
-import 'package:burla_xatun/data/repository/using_rules_repository.dart';
-import 'package:burla_xatun/data/services/local/login_token_service.dart';
-import 'package:burla_xatun/data/services/local/register_token_service.dart';
-import 'package:burla_xatun/data/services/remote/about_service.dart';
-import 'package:burla_xatun/data/services/remote/add_child_service.dart';
-import 'package:burla_xatun/data/services/remote/blog_cat_service.dart';
-import 'package:burla_xatun/data/services/remote/blog_sliders_service.dart';
-import 'package:burla_xatun/data/services/remote/contact_service.dart';
-import 'package:burla_xatun/data/services/remote/countries_service.dart';
-import 'package:burla_xatun/data/services/remote/daily_rec_detail_service.dart';
-import 'package:burla_xatun/data/services/remote/daily_rec_service.dart';
-import 'package:burla_xatun/data/services/remote/doctor_reservation_service.dart';
-import 'package:burla_xatun/data/services/remote/doctors_list_service.dart';
-import 'package:burla_xatun/data/services/remote/dr_notifications_service.dart';
-import 'package:burla_xatun/data/services/remote/faqs_service.dart';
-import 'package:burla_xatun/data/services/remote/forum_category_service.dart';
-import 'package:burla_xatun/data/services/remote/forum_comments_service.dart';
-import 'package:burla_xatun/data/services/remote/forum_create_service.dart';
-import 'package:burla_xatun/data/services/remote/forum_list_service.dart';
-import 'package:burla_xatun/data/services/remote/indicator_service.dart';
-import 'package:burla_xatun/data/services/remote/login_service.dart';
-import 'package:burla_xatun/data/services/remote/medicine/medicine_create_service.dart';
-import 'package:burla_xatun/data/services/remote/medicine/medicine_patch_service.dart';
-import 'package:burla_xatun/data/services/remote/medicine/medicine_service.dart';
-import 'package:burla_xatun/data/services/remote/notification_service.dart';
-import 'package:burla_xatun/data/services/remote/privacy_policy_service.dart';
-import 'package:burla_xatun/data/services/remote/refresh_token_service.dart';
-import 'package:burla_xatun/data/services/remote/register_service.dart';
-import 'package:burla_xatun/data/services/remote/tasks_by_week_service.dart';
-import 'package:burla_xatun/data/services/remote/ultrasound_service.dart';
-import 'package:burla_xatun/data/services/remote/user_data_service.dart';
-import 'package:burla_xatun/data/services/remote/user_update_service.dart';
-import 'package:burla_xatun/data/services/remote/using_rules_service.dart';
+import 'package:burla_xatun/cubits/blogs_by_category/blogs_by_category_cubit.dart';
+import 'package:burla_xatun/cubits/select_task/select_task_cubit.dart';
+import 'package:burla_xatun/cubits/video_cubit/video_cubit.dart';
+import 'package:burla_xatun/data/contractor/blogs_by_category_contract.dart';
+import 'package:burla_xatun/data/contractor/select_task_contract.dart';
+import 'package:burla_xatun/data/contractor/video_contract.dart';
+import 'package:burla_xatun/data/repository/blogs_by_category_repo.dart';
+import 'package:burla_xatun/data/repository/select_task_repo.dart';
+import 'package:burla_xatun/data/repository/video_repo.dart';
+import 'package:burla_xatun/data/services/remote/blogs_by_category_service.dart';
+import 'package:burla_xatun/data/services/remote/select_task_service.dart';
+import 'package:burla_xatun/data/services/remote/video_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import '../../cubits/about/about_cubit.dart';
+import '../../cubits/add_child/add_child_cubit.dart';
 import '../../cubits/baby_names_cubit/baby_names_cubit.dart';
+import '../../cubits/baby_update/baby_update_cubit.dart';
+import '../../cubits/blog_cat/blog_cat_cubit.dart';
+import '../../cubits/blog_sliders/blog_sliders_cubit.dart';
+import '../../cubits/change_password/change_password_cubit.dart';
+import '../../cubits/contact/contact_cubit.dart';
+import '../../cubits/countries/countries_cubit.dart';
+import '../../cubits/create_comment/create_comment_cubit.dart';
+import '../../cubits/create_forum/create_forum_cubit.dart';
+import '../../cubits/daily_rec/daily_rec_cubit.dart';
 import '../../cubits/daily_rec_detail/daily_rec_detail_cubit.dart';
+import '../../cubits/delete_comment/delete_comment_cubit.dart';
+import '../../cubits/doctor_notification/doctor_notification_cubit.dart';
+import '../../cubits/doctor_reservation/doctor_reservation_cubit.dart';
 import '../../cubits/doctors_detail/doctors_detail_cubit.dart';
+import '../../cubits/doctors_list/doctors_list_cubit.dart';
+import '../../cubits/edit_comment/edit_comment_cubit.dart';
+import '../../cubits/faqs_cubit/faqs_cubit.dart';
+import '../../cubits/forum_category/forum_category_cubit.dart';
+import '../../cubits/forum_category_stats/forum_category_stats_cubit.dart';
+import '../../cubits/forum_comments/forum_comments_cubit.dart';
+import '../../cubits/forum_detail/forum_detail_cubit.dart';
+import '../../cubits/forum_list/forum_list_cubit.dart';
+import '../../cubits/indicator/indicator_cubit.dart';
+import '../../cubits/login_cubit/login_cubit.dart';
+import '../../cubits/medicine/medicine_cubit.dart';
+import '../../cubits/medicine_create/medicine_create_cubit.dart';
+import '../../cubits/medicine_patch/medicine_patch_cubit.dart';
+import '../../cubits/notification/notification_cubit.dart';
+import '../../cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
+import '../../cubits/privacy_policy/privacy_policy_cubit.dart';
+import '../../cubits/questions_cubit/questions_cubit.dart';
+import '../../cubits/recommend_by_day/recommend_by_day_cubit.dart';
+import '../../cubits/report_or_block_user/report_or_block_user_cubit.dart';
+import '../../cubits/reset_password/reset_password_cubit.dart';
+import '../../cubits/signup_cubit/signup_cubit.dart';
+import '../../cubits/splash/splash_cubit.dart';
+import '../../cubits/tasks_by_weeks/tasks_by_weeks_cubit.dart';
+import '../../cubits/ultrasound/ultrasound_cubit.dart';
+import '../../cubits/user_data/user_data_cubit.dart';
+import '../../cubits/user_update/user_update_cubit.dart';
+import '../../cubits/using_rules/using_rules_cubit.dart';
+import '../../data/contractor/about_contractor.dart';
+import '../../data/contractor/add_child_contract.dart';
 import '../../data/contractor/baby_names_contractor.dart';
+import '../../data/contractor/baby_update_contract.dart';
+import '../../data/contractor/blog_cat_contractor.dart';
+import '../../data/contractor/blog_sliders_contractor.dart';
+import '../../data/contractor/change_password_contract.dart';
+import '../../data/contractor/contact_contractor.dart';
+import '../../data/contractor/countries_contractor.dart';
+import '../../data/contractor/create_comment_contract.dart';
+import '../../data/contractor/create_forum_contract.dart';
+import '../../data/contractor/daily_rec_contractor.dart';
+import '../../data/contractor/daily_rec_detail_contractor.dart';
+import '../../data/contractor/delete_comment_contract.dart';
+import '../../data/contractor/doctor_reserv_contract.dart';
 import '../../data/contractor/doctors_detail_contractor.dart';
+import '../../data/contractor/doctors_list_contractor.dart';
+import '../../data/contractor/dr_notifications_contract.dart';
+import '../../data/contractor/edit_comment_contract.dart';
+import '../../data/contractor/faqs_contractor.dart';
+import '../../data/contractor/forum_category_contractor.dart';
+import '../../data/contractor/forum_category_stats_contract.dart';
+import '../../data/contractor/forum_comment_contract.dart';
+import '../../data/contractor/forum_comment_repo.dart';
+import '../../data/contractor/forum_detail_contract.dart';
+import '../../data/contractor/forum_list_contractor.dart';
+import '../../data/contractor/indicator_contract.dart';
+import '../../data/contractor/login_contractor.dart';
+import '../../data/contractor/medicine/medicine_contractor.dart';
+import '../../data/contractor/medicine/medicine_create_contractor.dart';
+import '../../data/contractor/medicine/medicine_patch_contractor.dart';
+import '../../data/contractor/notifications_contract.dart';
+import '../../data/contractor/pregnancy_progress_contract.dart';
+import '../../data/contractor/privacy_policy_contractor.dart';
+import '../../data/contractor/refresh_token_contract.dart';
+import '../../data/contractor/register_contractor.dart';
+import '../../data/contractor/report_or_block_contract.dart';
+import '../../data/contractor/reset_password_contract.dart';
+import '../../data/contractor/tasks_by_week_contract.dart';
+import '../../data/contractor/ultrasound_contract.dart';
+import '../../data/contractor/user_data_contractor.dart';
+import '../../data/contractor/user_update_contractor.dart';
+import '../../data/contractor/using_rules_contractor.dart';
+import '../../data/repository/about_repository.dart';
+import '../../data/repository/add_child_repo.dart';
 import '../../data/repository/baby_names_repository.dart';
+import '../../data/repository/baby_update_repo.dart';
+import '../../data/repository/blog_cat_repository.dart';
+import '../../data/repository/blog_sliders_repository.dart';
+import '../../data/repository/change_password_repo.dart';
+import '../../data/repository/contact_repository.dart';
+import '../../data/repository/countries_repository.dart';
+import '../../data/repository/create_comment_repo.dart';
+import '../../data/repository/create_forum_repo.dart';
 import '../../data/repository/daily_rec_detail_repository.dart';
+import '../../data/repository/daily_rec_repository.dart';
+import '../../data/repository/delete_comment_repo.dart';
+import '../../data/repository/doctor_reserv_repository.dart';
 import '../../data/repository/doctors_detail_repository.dart';
+import '../../data/repository/doctors_list_repository.dart';
+import '../../data/repository/dr_notifications_repo.dart';
+import '../../data/repository/edit_comment_repo.dart';
+import '../../data/repository/faqs_repository.dart';
+import '../../data/repository/forum_category_repository.dart';
+import '../../data/repository/forum_category_stats_repo.dart';
+import '../../data/repository/forum_detail_repo.dart';
+import '../../data/repository/forum_list_repository.dart';
+import '../../data/repository/indicator_repo.dart';
+import '../../data/repository/login_repository.dart';
+import '../../data/repository/medicine/medicine_create_repository.dart';
+import '../../data/repository/medicine/medicine_patch_repository.dart';
+import '../../data/repository/medicine/medicine_repository.dart';
+import '../../data/repository/notifications_repo.dart';
+import '../../data/repository/pregnancy_progress_repo.dart';
+import '../../data/repository/privacy_policy_repository.dart';
+import '../../data/repository/refresh_token_repo.dart';
+import '../../data/repository/register_repository.dart';
+import '../../data/repository/report_or_block_repo.dart';
+import '../../data/repository/reset_password_repo.dart';
+import '../../data/repository/task_by_weeks_repo.dart';
+import '../../data/repository/ultrasound_repo.dart';
+import '../../data/repository/user_data_repository.dart';
+import '../../data/repository/user_update_repository.dart';
+import '../../data/repository/using_rules_repository.dart';
+import '../../data/services/local/login_token_service.dart';
+import '../../data/services/local/register_token_service.dart';
+import '../../data/services/remote/about_service.dart';
+import '../../data/services/remote/add_child_service.dart';
 import '../../data/services/remote/baby_names_service.dart';
+import '../../data/services/remote/baby_update_service.dart';
+import '../../data/services/remote/blog_cat_service.dart';
+import '../../data/services/remote/blog_sliders_service.dart';
+import '../../data/services/remote/change_password_service.dart';
+import '../../data/services/remote/contact_service.dart';
+import '../../data/services/remote/countries_service.dart';
+import '../../data/services/remote/create_comment_service.dart';
+import '../../data/services/remote/create_forum_service.dart';
+import '../../data/services/remote/daily_rec_detail_service.dart';
+import '../../data/services/remote/daily_rec_service.dart';
+import '../../data/services/remote/delete_comment_service.dart';
+import '../../data/services/remote/doctor_reservation_service.dart';
 import '../../data/services/remote/doctors_detail_service.dart';
+import '../../data/services/remote/doctors_list_service.dart';
+import '../../data/services/remote/dr_notifications_service.dart';
+import '../../data/services/remote/edit_comment_service.dart';
+import '../../data/services/remote/faqs_service.dart';
+import '../../data/services/remote/forum_category_service.dart';
+import '../../data/services/remote/forum_category_stats_service.dart';
+import '../../data/services/remote/forum_comment_service.dart';
+import '../../data/services/remote/forum_detail_service.dart';
+import '../../data/services/remote/forum_list_service.dart';
+import '../../data/services/remote/indicator_service.dart';
+import '../../data/services/remote/login_service.dart';
+import '../../data/services/remote/medicine/medicine_create_service.dart';
+import '../../data/services/remote/medicine/medicine_patch_service.dart';
+import '../../data/services/remote/medicine/medicine_service.dart';
+import '../../data/services/remote/notification_service.dart';
+import '../../data/services/remote/pregnancy_progress_service.dart';
+import '../../data/services/remote/privacy_policy_service.dart';
+import '../../data/services/remote/refresh_token_service.dart';
+import '../../data/services/remote/register_service.dart';
+import '../../data/services/remote/report_or_block_service.dart';
+import '../../data/services/remote/reset_password_service.dart';
+import '../../data/services/remote/tasks_by_week_service.dart';
+import '../../data/services/remote/ultrasound_service.dart';
+import '../../data/services/remote/user_data_service.dart';
+import '../../data/services/remote/user_update_service.dart';
+import '../../data/services/remote/using_rules_service.dart';
 
 final GetIt locator = GetIt.instance;
 
@@ -166,12 +219,12 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ForumCategoryService());
   locator.registerLazySingleton(() => DoctorsListService());
   locator.registerLazySingleton(() => DoctorDetailService());
-  locator.registerLazySingleton(() => ForumListService());
-  locator.registerLazySingleton(() => ForumCommentsService());
-  locator.registerLazySingleton(() => ForumCreateService());
+  // locator.registerLazySingleton(() => ForumListService());
+  locator.registerLazySingleton(() => ForumCommentService());
+  // locator.registerLazySingleton(() => ForumCreateService());
   locator.registerLazySingleton(() => MedicinePatchService());
   locator.registerLazySingleton(() => UserDataService());
-  //locator.registerLazySingleton(() => UserUpdateService());
+  //
   locator.registerLazySingleton(() => DoctorReservationService());
   locator.registerLazySingleton(() => NotificationService());
   locator.registerLazySingleton(() => DrNotificationsService());
@@ -180,6 +233,24 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => UltrasoundService());
   locator.registerLazySingleton(() => IndicatorService());
   locator.registerLazySingleton(() => RefreshTokenService());
+  locator.registerLazySingleton(() => ForumListService());
+  locator.registerLazySingleton(() => ForumDetailService());
+  locator.registerLazySingleton(() => ForumCategoryStatsService());
+  locator.registerLazySingleton(() => CreateCommentService());
+
+  locator.registerLazySingleton(() => ReportOrBlockService());
+  locator.registerLazySingleton(() => ResetPasswordService());
+  locator.registerLazySingleton(() => ChangePasswordService());
+  locator.registerLazySingleton(() => DeleteCommentService());
+  locator.registerLazySingleton(() => EditCommentService());
+  locator.registerLazySingleton(() => CreateForumService());
+  locator.registerLazySingleton(() => PregnancyProgressService());
+  locator.registerLazySingleton(() => BabyUpdateService());
+  locator.registerLazySingleton(() => SelectTaskService());
+
+  locator.registerLazySingleton(() => BlogsByCategoryService());
+
+  locator.registerLazySingleton(() => VideoService());
 
   // contractor
   locator.registerLazySingleton<LoginContractor>(
@@ -233,8 +304,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<ForumCategoryContractor>(
       () => ForumCategoryRepository(locator<ForumCategoryService>()));
 
-  locator.registerLazySingleton<ForumCreateContractor>(
-      () => ForumCreateRepository(locator<ForumCreateService>()));
+  // locator.registerLazySingleton<ForumCreateContractor>(
+  // () => ForumCreateRepository(locator<ForumCreateService>()));
 
   locator.registerLazySingleton<DoctorsListContractor>(
       () => DoctorsListRepository(locator<DoctorsListService>()));
@@ -245,8 +316,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<ForumListContractor>(
       () => ForumListRepository(locator<ForumListService>()));
 
-  locator.registerLazySingleton<ForumCommentsContractor>(
-      () => ForumCommentsRepository(locator<ForumCommentsService>()));
+  // locator.registerLazySingleton<ForumCommentsContractor>(
+  //     () => ForumCommentsRepository(locator<ForumCommentsService>()));
 
   locator.registerLazySingleton<MedicinePatchContractor>(
       () => MedicinePatchRepository(locator<MedicinePatchService>()));
@@ -281,6 +352,51 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<RefreshTokenContract>(
       () => RefreshTokenRepo(locator<RefreshTokenService>()));
 
+  locator.registerLazySingleton<ForumDetailContract>(
+      () => ForumDetailRepo(locator<ForumDetailService>()));
+
+  locator.registerLazySingleton<ForumCategoryStatsContract>(
+      () => ForumCategoryStatsRepo(locator<ForumCategoryStatsService>()));
+
+  locator.registerLazySingleton<ForumCommentContract>(
+      () => ForumCommentRepo(locator<ForumCommentService>()));
+
+  locator.registerLazySingleton<CreateCommentContract>(
+      () => CreateCommentRepo(locator<CreateCommentService>()));
+
+  locator.registerLazySingleton<ReportOrBlockContract>(
+      () => ReportOrBlockRepo(locator<ReportOrBlockService>()));
+
+  locator.registerLazySingleton<ResetPasswordContract>(
+      () => ResetPasswordRepo(locator<ResetPasswordService>()));
+
+  locator.registerLazySingleton<ChangePasswordContract>(
+      () => ChangePasswordRepo(locator<ChangePasswordService>()));
+
+  locator.registerLazySingleton<DeleteCommentContract>(
+      () => DeleteCommentRepo(locator<DeleteCommentService>()));
+
+  locator.registerLazySingleton<EditCommentContract>(
+      () => EditCommentRepo(locator<EditCommentService>()));
+
+  locator.registerLazySingleton<CreateForumContract>(
+      () => CreateForumRepo(locator<CreateForumService>()));
+
+  locator.registerLazySingleton<PregnancyProgressContract>(
+      () => PregnancyProgressRepo(locator<PregnancyProgressService>()));
+
+  locator.registerLazySingleton<BabyUpdateContract>(
+      () => BabyUpdateRepo(locator<BabyUpdateService>()));
+
+  locator.registerLazySingleton<SelectTaskContract>(
+      () => SelectTaskRepo(locator<SelectTaskService>()));
+
+  locator.registerLazySingleton<BlogsByCategoryContract>(
+      () => BlogsByCategoryRepo(locator<BlogsByCategoryService>()));
+
+  locator.registerLazySingleton<VideoContract>(
+      () => VideoRepo(locator<VideoService>()));
+
   // cubit
   locator.registerFactory(() => LoginCubit(locator()));
   locator.registerFactory(() => DailyRecCubit(locator()));
@@ -302,9 +418,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => ForumCategoryCubit(locator()));
   locator.registerFactory(() => DoctorsListCubit(locator()));
   locator.registerFactory(() => DoctorDetailCubit(locator()));
-  locator.registerFactory(() => ForumListCubit(locator()));
-  locator.registerFactory(() => ForumCommentsCubit(locator()));
-  locator.registerFactory(() => ForumCreateCubit(locator()));
+  // locator.registerFactory(() => ForumCommentsCubit(locator()));
+  // locator.registerFactory(() => ForumCreateCubit(locator()));
   locator.registerFactory(() => UserDataCubit(locator()));
   //locator.registerFactory(() => UserUpdateCubit(locator()));
   locator.registerFactory(
@@ -328,4 +443,50 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => IndicatorCubit(locator<IndicatorContract>()));
 
   locator.registerFactory(() => SplashCubit(locator<RefreshTokenContract>()));
+
+  locator.registerFactory(() => ForumListCubit(locator<ForumListContractor>()));
+
+  locator
+      .registerFactory(() => ForumDetailCubit(locator<ForumDetailContract>()));
+
+  locator.registerFactory(
+      () => ForumCategoryStatsCubit(locator<ForumCategoryStatsContract>()));
+
+  locator.registerFactory(
+      () => ForumCommentsCubit(locator<ForumCommentContract>()));
+
+  locator.registerFactory(
+      () => CreateCommentCubit(locator<CreateCommentContract>()));
+
+  locator.registerFactory(
+      () => ReportOrBlockUserCubit(locator<ReportOrBlockContract>()));
+
+  locator.registerFactory(
+      () => ResetPasswordCubit(locator<ResetPasswordContract>()));
+
+  locator.registerFactory(
+      () => ChangePasswordCubit(locator<ChangePasswordContract>()));
+
+  locator.registerFactory(
+      () => DeleteCommentCubit(locator<DeleteCommentContract>()));
+
+  locator
+      .registerFactory(() => EditCommentCubit(locator<EditCommentContract>()));
+  locator
+      .registerFactory(() => CreateForumCubit(locator<CreateForumContract>()));
+
+  locator.registerFactory(
+      () => PregnancyProgressCubit(locator<PregnancyProgressContract>()));
+
+  locator.registerFactory(() => BabyUpdateCubit(locator<BabyUpdateContract>()));
+
+  locator.registerFactory(
+      () => RecommendByDayCubit(locator<DailyRecContractor>()));
+
+  locator.registerFactory(() => SelectTaskCubit(locator<SelectTaskContract>()));
+
+  locator.registerFactory(
+      () => BlogsByCategoryCubit(locator<BlogsByCategoryContract>()));
+
+  locator.registerFactory(() => VideoCubit(locator<VideoContract>()));
 }

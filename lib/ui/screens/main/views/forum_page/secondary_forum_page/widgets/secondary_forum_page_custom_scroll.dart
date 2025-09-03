@@ -1,22 +1,34 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/forum_comments/forum_comments_cubit.dart';
-import 'package:burla_xatun/cubits/forum_list/forum_list_cubit.dart';
-import 'package:burla_xatun/data/models/remote/response/forum_comments_model.dart';
-import 'package:burla_xatun/ui/widgets/custom_circular_progress_indicator.dart';
-import 'package:burla_xatun/ui/widgets/custom_refresh_indicator.dart';
-import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../cubits/create_comment/create_comment_cubit.dart';
+import '../../../../../../../cubits/delete_comment/delete_comment_cubit.dart';
+import '../../../../../../../cubits/edit_comment/edit_comment_cubit.dart';
+import '../../../../../../../cubits/forum_comments/forum_comments_cubit.dart';
+import '../../../../../../../cubits/forum_detail/forum_detail_cubit.dart';
+import '../../../../../../../cubits/forum_list/forum_list_cubit.dart';
+import '../../../../../../../data/models/remote/response/forum_list_model.dart';
+import '../../../../../../../utils/constants/color_constants.dart';
+import '../../../../../../../utils/di/locator.dart';
+import '../../../../../../widgets/custom_refresh_indicator.dart';
+import '../../../../../../widgets/global_button.dart';
+import '../../../../../../widgets/global_text.dart';
 import '../../forum_comments/forum_comments_page.dart';
 import '../../widgets/forum_box.dart';
 import 'add_new_forum_button.dart';
 import 'forum_title.dart';
-import 'secondary_forum_search_input.dart';
 
 class SecondaryForumPageCustomScroll extends StatefulWidget {
-  const SecondaryForumPageCustomScroll({super.key});
+  const SecondaryForumPageCustomScroll({
+    super.key,
+    required this.categoryId,
+    required this.categoryName,
+  });
+
+  final int categoryId;
+  final String categoryName;
 
   @override
   State<SecondaryForumPageCustomScroll> createState() =>
@@ -25,139 +37,223 @@ class SecondaryForumPageCustomScroll extends StatefulWidget {
 
 class _SecondaryForumPageCustomScrollState
     extends State<SecondaryForumPageCustomScroll> {
-  String searchText = '';
+  late ForumListCubit forumListCubit;
+  late ScrollController scrollController;
+  @override
+  void initState() {
+    scrollController = ScrollController();
+    forumListCubit = context.read<ForumListCubit>();
+
+    _loadMore();
+    super.initState();
+  }
+
+  void _loadMore() {
+    scrollController.addListener(() async {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        await forumListCubit.getForumList(categoryid: widget.categoryId);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ForumListCubit, ForumListState>(
-      builder: (_, state) {
-        if (state is ForumListLoading) {
-          return const Center(child: CustomCircularProgressIndicator());
-        }
-        if (state is ForumListError) {
-          log("Forum list ui error: ${state.message}");
-          return const Text("Xəta");
-        }
-        if (state is ForumListNetworkError) {
-          log("Forum list ui network error: ${state.message}");
-          return const Text("Şəbəkə xətası");
-        }
-        if (state is ForumListSuccess) {
-          final allResults = state.forumListResponse.results ?? [];
-
-          final filteredResults = allResults.where((forum) {
-            final fullName = forum.user?.fullName?.toLowerCase() ?? '';
-            final text = forum.text?.toLowerCase() ?? '';
-            return fullName.contains(searchText.toLowerCase()) ||
-                text.contains(searchText.toLowerCase());
-          }).toList();
-
-          if (filteredResults.isEmpty) {
-            return const Center(
-              child: Text(
-                "Hələ heç bir element yoxdur",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: ColorConstants.primaryRedColor,
+      buildWhen: (previous, current) {
+        return previous.forumList == null;
+        // previous.forumList != current.forumList
+        // &&
+        // previous.forumListStatus != current.forumListStatus;
+      },
+      builder: (context, state) {
+        if (state.forumListStatus == ForumListStatus.loading) {
+          return Center(child: CircularProgressIndicator.adaptive());
+        } else if (state.forumListStatus == ForumListStatus.error) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 40,
+              children: [
+                Text(
+                  'Xəta baş verdi',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
-            );
-          }
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GlobalButton(
+                    onPressed: () async {
+                      await forumListCubit.getForumList(
+                        isRefresh: true,
+                        categoryid: widget.categoryId,
+                      );
+                    },
+                    buttonName: 'Yenidən cəhd et',
+                    buttonColor: ColorConstants.primaryRedColor,
+                    textColor: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        if (state.forumListStatus == ForumListStatus.success) {
+          // final categoryName = state.forumList?.first.category?.name ??
+          //     'Category name not found';
+          log('${state.forumList?.isEmpty}');
 
           return Stack(
             alignment: Alignment.bottomRight,
             children: [
               CustomRefreshIndicator(
                 onRefresh: () async {
-                  final categoryId = allResults.first.category?.id;
-                  if (categoryId != null) {
-                    await Future.wait([
-                      context
-                          .read<ForumListCubit>()
-                          .getForumList(categoryId: categoryId.toString()),
-                      context.read<ForumCommentsCubit>().getForumComments(),
-                    ]);
-                  }
+                  await forumListCubit.getForumList(
+                    isRefresh: true,
+                    categoryid: widget.categoryId,
+                  );
                 },
                 child: CustomScrollView(
+                  controller: scrollController,
                   slivers: [
                     SliverPadding(
                       padding: const EdgeInsets.only(top: 22, bottom: 18),
                       sliver: SliverToBoxAdapter(
                         child: ForumTitle(
-                          title: allResults.first.category?.name ?? '',
+                          title: widget.categoryName,
                         ),
                       ),
                     ),
-                    SliverPadding(
-                      padding: const EdgeInsets.only(bottom: 18),
-                      sliver: SliverToBoxAdapter(
-                        child: SecondaryForumSearchInput(
-                          onChanged: (value) {
-                            setState(() {
-                              searchText = value;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        childCount: filteredResults.length,
-                        (_, i) {
-                          final forum = filteredResults[i];
-                          return BlocBuilder<ForumCommentsCubit,
-                              ForumCommentsState>(
-                            builder: (_, commentState) {
-                              int commentCount = 0;
-                              if (commentState.status ==
-                                  ForumCommentsStatus.success) {
-                                final forumId = forum.id;
-                                final counts =
-                                    commentState.response?.forumCommentCounts ??
-                                        {};
-                                commentCount = counts[forumId] ?? 0;
-                              }
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 18),
-                                child: ForumBox(
-                                  forumId: forum.id ?? 0,
-                                  authorName: forum.user?.fullName ?? "",
-                                  forumTitle: forum.text ?? "",
-                                  likeCount: forum.likes ?? 0,
-                                  viewCount: forum.viewCount ?? 0,
-                                  commentCount: commentCount,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => ForumCommentsPage(
-                                          forumId: forum.id ?? 0,
-                                        ),
+                    BlocSelector<ForumListCubit, ForumListState, List<Forum>>(
+                      selector: (state) {
+                        return state.forumList!;
+                      },
+                      builder: (context, forumList) {
+                        return forumList.isEmpty
+                            ? SliverToBoxAdapter(
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 30),
+                                    child: GlobalText(text: 'İlk forumu yarat'),
+                                  ),
+                                ),
+                              )
+                            : SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  childCount: forumList.length,
+                                  (_, i) {
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 18),
+                                      child: ForumBox(
+                                        forumId: forumList[i].id ?? -1,
+                                        authorName:
+                                            forumList[i].user?.fullName ??
+                                                'data not found',
+                                        forumTitle: forumList[i].text ??
+                                            'data not found',
+                                        likeCount: forumList[i].likes ?? 111,
+                                        viewCount:
+                                            forumList[i].viewCount.toString(),
+                                        commentCount:
+                                            forumList[i].commentCount ?? 1,
+                                        onTap: () {
+                                          final forumSlug =
+                                              forumList[i].slug ?? '';
+                                          final forumId = forumList[i].id ?? -1;
+
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .push(
+                                            MaterialPageRoute(
+                                              builder: (_) => MultiBlocProvider(
+                                                providers: [
+                                                  BlocProvider(
+                                                    create: (context) =>
+                                                        locator<
+                                                            ForumDetailCubit>()
+                                                          ..getForumDetail(
+                                                              forumSlug),
+                                                  ),
+                                                  BlocProvider(
+                                                    create: (context) => locator<
+                                                        ForumCommentsCubit>()
+                                                      ..getForumComments(
+                                                        forumId: forumId,
+                                                      ),
+                                                  ),
+                                                  BlocProvider(
+                                                    create: (context) => locator<
+                                                        CreateCommentCubit>(),
+                                                  ),
+                                                  BlocProvider(
+                                                    create: (context) => locator<
+                                                        DeleteCommentCubit>(),
+                                                  ),
+                                                  BlocProvider(
+                                                    create: (context) =>
+                                                        locator<
+                                                            EditCommentCubit>(),
+                                                  ),
+                                                ],
+                                                child: ForumCommentsPage(
+                                                  forumId: forumId,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     );
                                   },
                                 ),
                               );
-                            },
-                          );
-                        },
-                      ),
+                      },
+                    ),
+                    BlocSelector<ForumListCubit, ForumListState,
+                        ForumListStatus>(
+                      selector: (state) {
+                        return state.forumListStatus!;
+                      },
+                      builder: (context, status) {
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 20),
+                            child: Visibility(
+                              visible: status == ForumListStatus.loading,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 160),
+                                child: SizedBox(
+                                  width: 20,
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
               ),
               Positioned(
                 bottom: 24,
-                child: AddNewForumButton(
-                  categoryId: allResults.first.category?.id ?? 0,
-                ),
+                child: AddNewForumButton(categoryId: widget.categoryId),
               ),
             ],
           );
         }
-
-        return const SizedBox.shrink();
+        return SizedBox.shrink();
       },
     );
   }

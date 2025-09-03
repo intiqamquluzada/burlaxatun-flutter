@@ -21,7 +21,11 @@ class EmojiWidget extends StatelessWidget {
       // },
       customWidget: (config, state, showSearchBar) {
         return CustomEmojiBar(
-            config, state, showSearchBar, textEditingController);
+          config,
+          state,
+          showSearchBar,
+          textEditingController,
+        );
       },
       textEditingController: textEditingController,
       config: Config(

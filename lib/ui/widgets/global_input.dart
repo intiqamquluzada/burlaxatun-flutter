@@ -77,6 +77,10 @@ class GlobalInput extends StatelessWidget {
           onChanged: onChanged,
           focusNode: focusNode,
           obscureText: isObsecure,
+          maxLength: isNumber ? 10 : null,
+          buildCounter: (context,
+                  {required currentLength, required isFocused, maxLength}) =>
+              null,
           keyboardType: isNumber ? TextInputType.phone : TextInputType.text,
           style: GoogleFonts.poppins(
             fontSize: 14,
@@ -96,7 +100,8 @@ class GlobalInput extends StatelessWidget {
             prefixIcon: prefixIcon == null
                 ? isNumber
                     ? Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 10, bottom: 1),
+                        padding: const EdgeInsets.only(
+                            left: 16, right: 10, bottom: 1),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

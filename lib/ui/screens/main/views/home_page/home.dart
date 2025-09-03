@@ -9,8 +9,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
-    return BlocBuilder<MainnCubit, MainInitial>(
+    final mainCubit = context.read<MainCubit>();
+    return BlocBuilder<MainCubit, MainInitial>(
       buildWhen: (previous, current) {
         return previous.viewName != current.viewName;
       },

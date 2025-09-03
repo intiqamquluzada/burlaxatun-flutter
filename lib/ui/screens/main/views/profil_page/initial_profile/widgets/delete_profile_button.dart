@@ -1,12 +1,12 @@
-import 'package:burla_xatun/cubits/user_update/user_update_cubit.dart';
-import 'package:burla_xatun/data/services/local/login_token_service.dart';
-import 'package:burla_xatun/utils/constants/color_constants.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../../../cubits/user_update/user_update_cubit.dart';
+import '../../../../../../../data/services/local/login_token_service.dart';
+import '../../../../../../../utils/constants/color_constants.dart';
+import '../../../../../../../utils/di/locator.dart';
 import '../../../../../../widgets/global_text.dart';
 
 class DeleteProfileButton extends StatefulWidget {
@@ -40,7 +40,7 @@ class _DeleteProfileButtonState extends State<DeleteProfileButton> {
 
   @override
   Widget build(BuildContext context) {
-    final userUpdateCuit = context.read<UserUpdateCubit>();
+    // final userUpdateCuit = context.read<UserUpdateCubit>();
     return GestureDetector(
       onTap: () async {
         showDeleteAccountDialog(context);
@@ -63,7 +63,7 @@ class _DeleteProfileButtonState extends State<DeleteProfileButton> {
                   )
                 : Row(
                     children: [
-                      SvgPicture.asset('assets/icons/delete_icon.svg'),
+                      SvgPicture.asset('assets/icons/mi_delete.svg'),
                       SizedBox(width: 21),
                       GlobalText(
                         text: 'Hesabı sil',
@@ -172,5 +172,3 @@ class _DeleteProfileButtonState extends State<DeleteProfileButton> {
     );
   }
 }
-
-class AppColorConstants {}

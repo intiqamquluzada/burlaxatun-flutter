@@ -9,8 +9,13 @@ class EndpointsConstants {
   static const register = '$baseUrl/A/user-register/';
   static const userUpdate = "$baseUrl/A/user-update/";
   static const babyAdd = "$baseUrl/A/baby-add/";
-  static const changePass = "$baseUrl/A/baby-add/";
   static const refreshToken = '$baseUrl/A/users/refresh-token/';
+
+  static const requestResetPassword = '$baseUrl/A/user/password-reset/request/';
+  static const verifyOtp = '$baseUrl/A/user/password-reset/confirm/';
+  static const resetPassword = '$baseUrl/A/user/password-reset/change/';
+
+  static const changePassword = '$baseUrl/A/user/change-password';
 
   static const users = '$baseUrl/users';
 
@@ -31,6 +36,11 @@ class EndpointsConstants {
   static const String dailyRecDetail =
       '$baseUrl/extra/daily-recommendations-detail/{slug}/';
 
+  static const String dailyRecommendationByDay =
+      '$baseUrl/extra/daily-recommendations-detail/day/';
+  static const String myDailyRecommendation =
+      '$baseUrl/extra/my-daily-recommendation/';
+
   static const String faqs = '$baseUrl/extra/faq/';
   static const String privacyPolicy = '$baseUrl/extra/privacy-policy/';
   static const String usingRules = '$baseUrl/extra/using-rules/';
@@ -44,6 +54,8 @@ class EndpointsConstants {
   // A
   static const userData = '$baseUrl/A/me/';
   static const userProfileDelete = '$baseUrl/A/delete-account/';
+  static const videoDoktorLogin = '$baseUrl/A/videodoktor-auth/';
+  static const babyUpdate = '$baseUrl/A/baby-update/';
 
   // A1
   static const String babyIndicators = '$baseUrl/A1/baby-indicators/';
@@ -55,6 +67,9 @@ class EndpointsConstants {
   // B1
   static const String notifications = '$baseUrl/B1/notifications/';
   static const String ultraSound = '$baseUrl/B1/ultra-sound/';
+  static const String progressPregnancy = '$baseUrl/B1/my-progress-pregnancy/';
+  static const String progressPregnancyByDate =
+      '$baseUrl/B1/progress-pregnancy-by-date/';
 
   // C
   static const String medicines = '$baseUrl/C/medicines/';
@@ -64,10 +79,20 @@ class EndpointsConstants {
   static const String myReservations = '$baseUrl/C/my-reservations/';
 
   // D
-  static const forumCategory = "$baseUrl/D/forum-category-stats/";
+  static const forumCategory = "$baseUrl/D/forum-category-list/";
+  static const forumCategoryStats = "$baseUrl/D/forum-category-stats/";
   static const forumList = "$baseUrl/D/forum-list/";
-  static const forumComments = '$baseUrl/D/comments/';
-  static const forumCreate = '$baseUrl/D/forum-create/';
+  static const forumDetail = "$baseUrl/D/forum-detail";
+  static const forumComments = "$baseUrl/D/forum-comment";
+  static const createComment = "$baseUrl/D/comments/";
+  static const reportComment = '$baseUrl/D/forum-comment/report-create/';
+  static const blockUser = '$baseUrl/A/user-block-create/';
+  static const deleteOrUpdate = '$baseUrl/D/comments';
+  static const reportForum = '$baseUrl/D/forum-report/create/';
+  static const blockForum = '$baseUrl/D/forum-block/create/';
+
+  static const user = "$baseUrl/D/forum/videodoktor/user/";
+  // static const forumCreate = '$baseUrl/D/forum-create/';
 
   static const String doctorsList = '$baseUrl/C/doctors-list/';
   static const String doctorDetail = '$baseUrl/C/doctors-detail/{slug}/';

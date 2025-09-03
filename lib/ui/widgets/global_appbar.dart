@@ -5,13 +5,15 @@ import 'global_text.dart';
 class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
   const GlobalAppbar({
     super.key,
-    required this.title,
+    this.title,
     this.leading,
     this.onLeadingTap,
+    this.babyName,
   });
 
-  final String title;
+  final String? title;
   final Widget? leading;
+  final Widget? babyName;
   final void Function()? onLeadingTap;
 
   @override
@@ -30,12 +32,13 @@ class GlobalAppbar extends StatelessWidget implements PreferredSizeWidget {
                 color: Color(0xff344054),
               ),
         ),
-        title: GlobalText(
-          text: title,
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-          color: Color(0xff344054),
-        ),
+        title: babyName ??
+            GlobalText(
+              text: title ?? '',
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              color: Color(0xff344054),
+            ),
       ),
     );
   }

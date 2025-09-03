@@ -30,9 +30,11 @@ class Onboarding extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 25, left: 20, right: 20),
-        child: OnboardButton(),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 25, left: 20, right: 20),
+          child: OnboardButton(),
+        ),
       ),
     );
   }

@@ -2,7 +2,7 @@ class UltrasoundModel {
   final int? count;
   final dynamic next;
   final dynamic previous;
-  final List<Result>? results;
+  final List<Ultrasound>? results;
 
   UltrasoundModel({
     this.count,
@@ -15,7 +15,7 @@ class UltrasoundModel {
     int? count,
     dynamic next,
     dynamic previous,
-    List<Result>? results,
+    List<Ultrasound>? results,
   }) =>
       UltrasoundModel(
         count: count ?? this.count,
@@ -31,8 +31,8 @@ class UltrasoundModel {
         previous: json["previous"],
         results: json["results"] == null
             ? []
-            : List<Result>.from(
-                json["results"]!.map((x) => Result.fromJson(x))),
+            : List<Ultrasound>.from(
+                json["results"]!.map((x) => Ultrasound.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,8 +45,9 @@ class UltrasoundModel {
       };
 }
 
-class Result {
+class Ultrasound {
   final int? id;
+  final bool? isActive;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final String? slug;
@@ -54,7 +55,8 @@ class Result {
   final String? image2D;
   final String? image3D;
 
-  Result({
+  Ultrasound({
+    this.isActive,
     this.id,
     this.createdAt,
     this.updatedAt,
@@ -64,7 +66,7 @@ class Result {
     this.image3D,
   });
 
-  Result copyWith({
+  Ultrasound copyWith({
     int? id,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -73,7 +75,7 @@ class Result {
     String? image2D,
     String? image3D,
   }) =>
-      Result(
+      Ultrasound(
         id: id ?? this.id,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
@@ -83,7 +85,7 @@ class Result {
         image3D: image3D ?? this.image3D,
       );
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory Ultrasound.fromJson(Map<String, dynamic> json) => Ultrasound(
         id: json["id"],
         createdAt: json["created_at"] == null
             ? null
@@ -92,6 +94,7 @@ class Result {
             ? null
             : DateTime.parse(json["updated_at"]),
         slug: json["slug"],
+        isActive: json["active"],
         week: json["week"],
         image2D: json["image_2d"],
         image3D: json["image_3d"],

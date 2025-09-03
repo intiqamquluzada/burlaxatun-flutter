@@ -14,28 +14,24 @@ class AddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      width: 127,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          shadowColor: const WidgetStatePropertyAll(Colors.transparent),
-          backgroundColor: WidgetStatePropertyAll(Color(0xffFFD3E2)),
-        ),
-        onPressed: onPressed,
-        child: Row(
-          spacing: 3,
-          children: [
-            GlobalText(
-              text: 'Əlavə et',
-              fontSize: 14,
-              height: 1.1,
-              fontWeight: FontWeight.w500,
-              color: ColorConstants.primaryRedColor,
-            ),
-            SvgPicture.asset('assets/icons/add_icon.svg'),
-          ],
-        ),
+    return ElevatedButton(
+      style: ButtonStyle(
+        shadowColor: const WidgetStatePropertyAll(Colors.transparent),
+        backgroundColor: WidgetStatePropertyAll(Color(0xffFFD3E2)),
+      ),
+      onPressed: onPressed,
+      child: Row(
+        spacing: 3,
+        children: [
+          GlobalText(
+            text: 'Əlavə et',
+            fontSize: 14,
+            height: 1.1,
+            fontWeight: FontWeight.w500,
+            color: ColorConstants.primaryRedColor,
+          ),
+          SvgPicture.asset('assets/icons/add_icon.svg'),
+        ],
       ),
     );
   }

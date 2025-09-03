@@ -13,15 +13,20 @@ class ImagePickerHelper {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Choose photo'),
+          backgroundColor: Colors.white,
+          title: const Text('Şəkil seçin'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(ImageSource.camera),
-              child: const Text('Camera'),
+              child: const Text('Kamera'),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(ImageSource.gallery),
-              child: const Text('Gallery'),
+              child: const Text('Qalereya'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(ImageSource.camera),
+              child: const Text('Sil'),
             ),
           ],
         );
@@ -52,15 +57,7 @@ class ImagePickerHelper {
 
       if (user != null) {
         await userUpdateCubit.updateUser(
-          phoneNumber: user.phoneNumber,
-          onboardingDone: user.onboardingDone,
-          wantToBePregnant: user.wantToBePregnant,
-          wantToSeePeriod: user.wantToSeePeriod,
-          isPregnant: user.isPregnant,
-          pregnantWeek: user.pregnantWeek,
-          firstChild: user.firstChild,
-          activeLanguage: user.activeLanguage,
-          enableNotifications: user.enableNotifications,
+          image: pickedImage,
         );
       }
     }

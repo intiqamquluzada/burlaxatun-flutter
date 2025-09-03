@@ -1,10 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../../cubits/main_cubit/mainn_cubit.dart';
+import '../../../../../../../data/models/local/main_page_box_model.dart';
+import '../../../../../../../utils/routes/router.dart';
 import 'home_box.dart';
 
 class HomePageBoxes extends StatelessWidget {
@@ -12,7 +12,8 @@ class HomePageBoxes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
+    final boxItems = MainPageBoxModel.items;
     return GridView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -21,13 +22,21 @@ class HomePageBoxes extends StatelessWidget {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
-      itemCount: mainCubit.boxItems.length,
+      itemCount: boxItems.length,
       itemBuilder: (_, i) {
         return HomeBox(
-          boxName: mainCubit.boxItems[i].boxName,
-          boxIcon: mainCubit.boxItems[i].boxIcon,
+          boxName: boxItems[i].boxName,
+          boxIcon: boxItems[i].boxIcon,
           onTap: () {
-            context.push(mainCubit.boxItems[i].route);
+            if (i == 0) {
+              mainCubit.changeView(1);
+              // mainCubit.navigationShell.goBranch(1);
+              navigatorKey.currentContext?.go('/daily_advices');
+            } else if (boxItems[i].boxName == 'Dərmanlar') {
+              mainCubit.pushScaffoldMyMedicinesPage(context);
+            } else {
+              context.push(mainCubit.boxItems[i].route);
+            }
           },
         );
       },

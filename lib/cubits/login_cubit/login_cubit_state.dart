@@ -6,14 +6,20 @@ class LoginCubitInitial extends Equatable {
     this.isActiveButton = false,
     this.isObsecure = true,
     this.isError = false,
+    this.isVideDoktorError = false,
     this.loginStatus = LoginStatus.initial,
     this.errorMessage,
+    this.videoDoktorLoginStatus = VideoDoktorLoginStatus.initial,
+    this.isActiveVideoDoktorLoginButton = false,
   });
 
   final bool isActiveButton;
   final bool isObsecure;
   final bool isError;
+  final bool isVideDoktorError;
+  final bool isActiveVideoDoktorLoginButton;
   final LoginStatus loginStatus;
+  final VideoDoktorLoginStatus videoDoktorLoginStatus;
   final String? errorMessage;
 
   @override
@@ -23,6 +29,9 @@ class LoginCubitInitial extends Equatable {
         isError,
         loginStatus,
         errorMessage,
+        videoDoktorLoginStatus,
+        isVideDoktorError,
+        isActiveVideoDoktorLoginButton,
       ];
 
   LoginCubitInitial copyWith({
@@ -31,13 +40,21 @@ class LoginCubitInitial extends Equatable {
     bool? isError,
     LoginStatus? loginStatus,
     String? errorMessage,
+    VideoDoktorLoginStatus? videoDoktorLoginStatus,
+    bool? isVideDoktorError,
+    bool? isActiveVideoDoktorLoginButton,
   }) {
     return LoginCubitInitial(
+      isVideDoktorError: isVideDoktorError ?? this.isVideDoktorError,
       isActiveButton: isActiveButton ?? this.isActiveButton,
       isObsecure: isObsecure ?? this.isObsecure,
       isError: isError ?? this.isError,
       loginStatus: loginStatus ?? this.loginStatus,
       errorMessage: errorMessage ?? this.errorMessage,
+      videoDoktorLoginStatus:
+          videoDoktorLoginStatus ?? this.videoDoktorLoginStatus,
+      isActiveVideoDoktorLoginButton:
+          isActiveVideoDoktorLoginButton ?? this.isActiveVideoDoktorLoginButton,
     );
   }
 }

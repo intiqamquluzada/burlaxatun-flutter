@@ -1,5 +1,4 @@
 import 'package:burla_xatun/data/services/local/login_token_service.dart';
-import 'package:burla_xatun/data/services/local/token_hive_service.dart';
 import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:dio/dio.dart';
 
@@ -21,8 +20,9 @@ class BabyNamesService {
   Future<Response<dynamic>> getNames({
     required String countryId,
     required String gender,
+    String? url,
   }) async {
-    final url = EndpointsConstants.babyNames;
+    url ??= EndpointsConstants.babyNames;
     final queryParams = {
       'country': countryId,
       'gender': gender,

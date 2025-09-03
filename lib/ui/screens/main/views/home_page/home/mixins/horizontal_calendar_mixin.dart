@@ -2,7 +2,7 @@ import 'package:burla_xatun/ui/screens/main/views/home_page/home/widgets/horizon
 import 'package:flutter/material.dart';
 
 mixin HorizontalCalendarMixin on State<HorizontalCalendar> {
-   final _currentDate = DateTime(
+  final _currentDate = DateTime(
     DateTime.now().year,
     DateTime.now().month,
     DateTime.now().day,
@@ -59,13 +59,13 @@ mixin HorizontalCalendarMixin on State<HorizontalCalendar> {
   @override
   void initState() {
     super.initState();
-    allDates = allDatesGet();
 
     scrollController = ScrollController();
+    allDates = allDatesGet();
+
     // Scroll to middle after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final middleOffset = scrollController.position.maxScrollExtent / 2;
-
       scrollController.animateTo(
         middleOffset,
         duration: const Duration(milliseconds: 800),

@@ -1,36 +1,28 @@
 part of 'forum_comments_cubit.dart';
 
-enum ForumCommentsStatus { initial, loading, success, failure, networkError }
-
-final class ForumCommentsState extends Equatable {
+class ForumCommentsState extends Equatable {
   const ForumCommentsState({
-    required this.status,
-    required this.response,
-    required this.errorMessage,
+    this.forumCommentStatus = ForumCommentStatus.initial,
+    this.comments,
+    this.sendedReplies,
   });
 
-  final ForumCommentsStatus status;
-  final ForumCommentsResponse? response;
-  final String? errorMessage;
-
-  ForumCommentsState copyWith({
-    ForumCommentsStatus? status,
-    ForumCommentsResponse? response,
-    String? errorMessage,
-  }) {
-    return ForumCommentsState(
-      status: status ?? this.status,
-      response: response ?? this.response,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
-
-  factory ForumCommentsState.initial() => const ForumCommentsState(
-        status: ForumCommentsStatus.initial,
-        response: null,
-        errorMessage: null,
-      );
+  final ForumCommentStatus forumCommentStatus;
+  final List<Comments>? comments;
+  final List<Comments>? sendedReplies;
 
   @override
-  List<Object?> get props => [status, response, errorMessage];
+  List<Object?> get props => [forumCommentStatus, comments, sendedReplies];
+
+  ForumCommentsState copyWith({
+    ForumCommentStatus? forumCommentStatus,
+    List<Comments>? comments,
+    List<Comments>? sendedReplies,
+  }) {
+    return ForumCommentsState(
+      forumCommentStatus: forumCommentStatus ?? this.forumCommentStatus,
+      comments: comments ?? this.comments,
+      sendedReplies: sendedReplies ?? this.sendedReplies,
+    );
+  }
 }

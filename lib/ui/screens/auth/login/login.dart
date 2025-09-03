@@ -1,7 +1,4 @@
-import 'package:burla_xatun/ui/screens/main/main_page.dart';
-import 'package:burla_xatun/ui/screens/main/views/home_page/home/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../utils/constants/padding_constants.dart';
 import '../../../../utils/extensions/context_extensions.dart';
@@ -11,7 +8,7 @@ import 'widgets/forgot_password_button.dart';
 import 'widgets/login_button.dart';
 import 'widgets/login_image.dart';
 import 'widgets/login_inputs.dart';
-import 'widgets/signup_button.dart';
+import '../sign_up/widgets/signup_button.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});

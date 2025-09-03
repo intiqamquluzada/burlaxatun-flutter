@@ -48,7 +48,7 @@ class UltrasoundWeeksBox extends StatelessWidget {
                         return GlobalText(
                           text: state.ultrasoundWeekCount == null
                               ? 'Həftə sayı'
-                              : '${state.ultrasoundWeekCount.toString()} gün',
+                              : '${state.ultrasoundWeekCount.toString()} həftə',
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,

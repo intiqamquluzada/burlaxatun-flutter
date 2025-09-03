@@ -1,7 +1,6 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
+import 'package:burla_xatun/utils/app/app_snackbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../../cubits/add_child/add_child_cubit.dart';
 import '../../../cubits/questions_cubit/questions_cubit.dart';
 import '../../../cubits/questions_cubit/questions_state.dart';
+import '../../../cubits/user_data/user_data_cubit.dart';
 import '../../../data/models/remote/request/add_child_request_model.dart';
 import '../../../utils/constants/asset_constants.dart';
 import '../../../utils/constants/color_constants.dart';
@@ -23,7 +23,12 @@ import '../questions/widgets/question_views/pick_birth_date_widget.dart';
 import 'widgets/add_child_success_dialog.dart';
 
 class AddYourChild extends StatelessWidget {
-  const AddYourChild({super.key});
+  const AddYourChild({
+    super.key,
+    this.isChangeProfile = false,
+  });
+
+  final bool isChangeProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +43,7 @@ class AddYourChild extends StatelessWidget {
         onLeadingTap: () {
           context.pop();
         },
+        leading: isChangeProfile ? null : SizedBox.shrink(),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -62,7 +68,9 @@ class AddYourChild extends StatelessWidget {
                     GlobalInput(
                       onFieldSubmitted: (v) {
                         questionCubit.showBirthDateBottomSheet(
-                            context, PickBirthDateWidget());
+                          context,
+                          PickBirthDateWidget(),
+                        );
                       },
                       textController: addChildCubit.childFullNameController,
                       inputName: 'Tam Ad',
@@ -116,7 +124,10 @@ class AddYourChild extends StatelessWidget {
                                           text: state.birthDateString,
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
-                                          color: ColorConstants.hintTextColor,
+                                          color: state.birthDateString ==
+                                                  'Tarixi seçin...'
+                                              ? ColorConstants.hintTextColor
+                                              : Colors.black,
                                         );
                                       },
                                     ),
@@ -133,7 +144,8 @@ class AddYourChild extends StatelessWidget {
                       focusNode: questionCubit.childWeightFocusNode,
                       inputName: 'Çəki',
                       prefixIcon: AssetConstants.weightIcon,
-                      hintText: 'Çəkisini qeyd edin',
+                      hintText: 'Çəkisini qeyd edin (kq ilə)',
+                      isNumber: true,
                       onFieldSubmitted: (v) {
                         questionCubit.childHeightFocusNode.requestFocus();
                       },
@@ -143,7 +155,8 @@ class AddYourChild extends StatelessWidget {
                       focusNode: questionCubit.childHeightFocusNode,
                       inputName: 'Boy',
                       prefixIcon: AssetConstants.heightIcon,
-                      hintText: 'Boyunu qeyd edin',
+                      isNumber: true,
+                      hintText: 'Boyunu qeyd edin (sm ilə)',
                     ),
                   ],
                 ),
@@ -173,21 +186,37 @@ class AddYourChild extends StatelessWidget {
                     barrierDismissible: false,
                     context: context,
                     builder: (_) {
-                      return AddChildSuccessDialog();
+                      return AddChildSuccessDialog(
+                        isChangeProfile: isChangeProfile,
+                        text: 'Övladınız uğurla əlavə olundu',
+                      );
                     },
                   );
                 }
               },
               builder: (context, state) {
+                final babyName =
+                    addChildCubit.childFullNameController.text.trim();
+                final babyBirthDate = questionCubit.state.birthDateString;
+                final babyWeight =
+                    addChildCubit.childWeightController.text.trim();
+                final babyHeight =
+                    addChildCubit.childHeightController.text.trim();
                 return DavamEt(
                   isLoading: state.addChildStatus == AddChildStatus.loading,
                   isActive: true,
                   onPressed: () async {
+                    if (babyName.isEmpty ||
+                        babyHeight.isEmpty ||
+                        babyWeight.isEmpty) {
+                      AppSnackbars.error(context, 'Bütün xanaları doldurun');
+                      return;
+                    }
                     final childData = AddChildRequestModel(
-                      name: addChildCubit.childFullNameController.text.trim(),
-                      weight: addChildCubit.childWeightController.text.trim(),
-                      height: addChildCubit.childHeightController.text.trim(),
-                      birthDate: questionCubit.state.birthDateString,
+                      name: babyName,
+                      weight: babyWeight,
+                      height: babyHeight,
+                      birthDate: babyBirthDate,
                     );
                     await addChildCubit.addChild(childData: childData);
                     await userDataCubit.getUserData();

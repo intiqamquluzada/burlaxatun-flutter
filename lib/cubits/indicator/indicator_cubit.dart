@@ -1,14 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:burla_xatun/data/contractor/indicator_contract.dart';
-import 'package:burla_xatun/data/models/remote/request/add_indicator_request_model.dart';
-import 'package:burla_xatun/data/models/remote/response/indicator_model.dart';
-import 'package:burla_xatun/data/repository/indicator_repo.dart';
-import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/contractor/indicator_contract.dart';
+import '../../data/models/remote/request/add_indicator_request_model.dart';
+import '../../data/models/remote/response/indicator_model.dart';
+import '../../utils/extensions/statuscode_extension.dart';
 
 part 'indicator_state.dart';
 
@@ -22,11 +22,12 @@ class IndicatorCubit extends Cubit<IndicatorState> {
   Future<void> getIndicatorDatas({
     required String indicatorName,
     required String range,
+    required int babyId,
   }) async {
     try {
       emit(state.copyWith(indicatorStatus: IndicatorStatus.loading));
       final response = await indicatorContract.getIndicator(
-        babyId: 86,
+        babyId: babyId,
         indicatorName: indicatorName,
         range: range,
       );
@@ -60,12 +61,13 @@ class IndicatorCubit extends Cubit<IndicatorState> {
     required String indicator,
     required String date,
     required String time,
+    required int babyId,
   }) async {
     try {
       emit(state.copyWith(indicatorStatus: IndicatorStatus.loading));
 
       final postData = AddIndicatorRequestModel(
-        babyId: 86,
+        babyId: babyId,
         indicator: indicator,
         name: indicatorName,
         date: date,

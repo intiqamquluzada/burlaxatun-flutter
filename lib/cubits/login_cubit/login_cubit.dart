@@ -12,6 +12,8 @@ import 'login_cubit_state.dart';
 
 enum LoginStatus { initial, loading, success, error, networkError }
 
+enum VideoDoktorLoginStatus { initial, loading, success, error, networkError }
+
 class LoginCubit extends Cubit<LoginCubitInitial> {
   LoginCubit(this._contractor) : super(LoginCubitInitial());
 
@@ -36,8 +38,25 @@ class LoginCubit extends Cubit<LoginCubitInitial> {
     emit(state.copyWith(isActiveButton: isActiveButton));
   }
 
+  void updateVideoDoktorLoginButton({
+    required TextEditingController userName,
+    required TextEditingController password,
+  }) {
+    final isActiveButton =
+        userName.text.trim().isNotEmpty && password.text.trim().isNotEmpty;
+    emit(state.copyWith(isActiveVideoDoktorLoginButton: isActiveButton));
+  }
+
+  void disableVideoDoktorButton() {
+    emit(state.copyWith(isActiveVideoDoktorLoginButton: false));
+  }
+
   void errorState() {
     emit(state.copyWith(isError: true));
+  }
+
+  void errorVideoDoktor() {
+    emit(state.copyWith(isVideDoktorError: true));
   }
 
   void login() async {
@@ -66,6 +85,44 @@ class LoginCubit extends Cubit<LoginCubitInitial> {
     } catch (e, s) {
       emit(state.copyWith(
         loginStatus: LoginStatus.error,
+        errorMessage: '',
+      ));
+      log("Login Unknown Error: $e", stackTrace: s);
+    }
+  }
+
+  Future<void> loginByVideoDoktor({
+    required String login,
+    required String password,
+  }) async {
+    try {
+      emit(state.copyWith(
+          videoDoktorLoginStatus: VideoDoktorLoginStatus.loading,
+          isVideDoktorError: false));
+      log("Login Loading");
+
+      final response = await _contractor.loginByVideoDoktor(
+        login: login,
+        password: password,
+      );
+
+      await _loginTokenService.saveLoginResponse(response);
+      emit(state.copyWith(
+          videoDoktorLoginStatus: VideoDoktorLoginStatus.success));
+      log("video doctor login success");
+      log("Saved access token (login): ${_loginTokenService.token}");
+    } on DioException catch (e, s) {
+      emit(
+        state.copyWith(
+          videoDoktorLoginStatus: VideoDoktorLoginStatus.networkError,
+          errorMessage:
+              (e.response?.data as Map<String, dynamic>)['detail'] ?? '',
+        ),
+      );
+      log("Login Dio Exception: $e", stackTrace: s);
+    } catch (e, s) {
+      emit(state.copyWith(
+        videoDoktorLoginStatus: VideoDoktorLoginStatus.error,
         errorMessage: '',
       ));
       log("Login Unknown Error: $e", stackTrace: s);

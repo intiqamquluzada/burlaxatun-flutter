@@ -11,6 +11,8 @@ class TokenHiveService {
 
   Box<String>? _tokenBox;
 
+  get token => null;
+
   Future<Box<String>> initBox() async =>
       _tokenBox ??= await Hive.openBox<String>('token');
 

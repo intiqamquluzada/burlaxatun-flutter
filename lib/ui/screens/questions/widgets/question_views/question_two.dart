@@ -1,17 +1,20 @@
-import 'dart:developer';
-
-import 'package:burla_xatun/cubits/user_update/user_update_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../cubits/questions_cubit/questions_cubit.dart';
 import '../../../../../cubits/questions_cubit/questions_state.dart';
+import '../../../../../cubits/user_update/user_update_cubit.dart';
 import '../../../../../utils/constants/color_constants.dart';
 import '../../../../../utils/extensions/num_extensions.dart';
 import '../../../../widgets/global_text.dart';
 
 class QuestionTwo extends StatefulWidget {
-  const QuestionTwo({super.key});
+  const QuestionTwo({
+    super.key,
+    this.isAddPregnancy = false,
+  });
+
+  final bool isAddPregnancy;
 
   @override
   State<QuestionTwo> createState() => _QuestionTwoState();
@@ -21,13 +24,15 @@ class _QuestionTwoState extends State<QuestionTwo>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final questionsCubit = context.read<QuestionsCubit>();
-    final userUpdateCubit = context.read<UserUpdateCubit>();
+    // final userUpdateCubit = context.read<UserUpdateCubit>();
     return Padding(
       padding: const EdgeInsets.only(top: 56),
       child: Column(
         children: [
           GlobalText(
+            textAlign: TextAlign.center,
             text: 'Neçə həftəlik hamiləsiniz?',
             fontSize: 24,
             fontWeight: FontWeight.w500,
@@ -72,7 +77,10 @@ class _QuestionTwoState extends State<QuestionTwo>
                           onSelectedItemChanged: (i) {
                             // log(' hefte: $i');
                             questionsCubit.updateFocusedWeekIndex(i);
-                            questionsCubit.updateIsActiveButton();
+                            widget.isAddPregnancy
+                                ? questionsCubit
+                                    .updateIsActiveButtonWhileAddingPregnancy()
+                                : questionsCubit.updateIsActiveButton();
                           },
                           itemExtent: 60,
                           children: [
@@ -142,7 +150,10 @@ class _QuestionTwoState extends State<QuestionTwo>
                         groupValue: true,
                         onChanged: (v) {
                           questionsCubit.iDontKnowToggle(v ?? true);
-                          questionsCubit.updateIsActiveButton();
+                          widget.isAddPregnancy
+                              ? questionsCubit
+                                  .updateIsActiveButtonWhileAddingPregnancy()
+                              : questionsCubit.updateIsActiveButton();
                         },
                       );
                     },

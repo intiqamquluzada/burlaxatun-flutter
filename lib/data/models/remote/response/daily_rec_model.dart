@@ -4,7 +4,7 @@ class DailyRecResponse extends Equatable {
   final int? count;
   final String? next;
   final String? previous;
-  final List<Result>? results;
+  final List<Recommendation>? results;
 
   const DailyRecResponse({
     this.count,
@@ -20,8 +20,8 @@ class DailyRecResponse extends Equatable {
         previous: json["previous"],
         results: json["results"] == null
             ? []
-            : List<Result>.from(
-                json["results"]!.map((x) => Result.fromJson(x))),
+            : List<Recommendation>.from(
+                json["results"]!.map((x) => Recommendation.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,20 +42,22 @@ class DailyRecResponse extends Equatable {
       ];
 }
 
-class Result extends Equatable {
+class Recommendation extends Equatable {
   final int? id;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final bool? active;
   final String? slug;
   final int? day;
   final String? name;
   final String? text;
   final String? image;
 
-  const Result({
+  const Recommendation({
     this.id,
     this.createdAt,
     this.updatedAt,
+    this.active,
     this.slug,
     this.day,
     this.name,
@@ -63,7 +65,7 @@ class Result extends Equatable {
     this.image,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory Recommendation.fromJson(Map<String, dynamic> json) => Recommendation(
         id: json["id"],
         createdAt: json["created_at"] == null
             ? null
@@ -72,6 +74,7 @@ class Result extends Equatable {
             ? null
             : DateTime.parse(json["updated_at"]),
         slug: json["slug"],
+        active: json["active"],
         day: json["day"],
         name: json["name"],
         text: json["text"],
@@ -95,6 +98,7 @@ class Result extends Equatable {
         createdAt,
         updatedAt,
         slug,
+        active,
         day,
         name,
         text,

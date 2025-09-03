@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,17 +9,23 @@ import '../../../../../../widgets/global_text.dart';
 import 'pregnancy_guide_box.dart';
 
 class PregnancyGuide extends StatefulWidget {
-  const PregnancyGuide({super.key});
+  const PregnancyGuide({
+    super.key,
+    this.pregnantWeek,
+  });
+
+  final String? pregnantWeek;
 
   @override
   State<PregnancyGuide> createState() => _PregnancyGuideState();
 }
 
 class _PregnancyGuideState extends State<PregnancyGuide> {
-  late TasksByWeeksCubit _tasksByWeeksCubit;
+  late TasksByWeeksCubit tasksByWeeksCubit;
+
   @override
   void initState() {
-    _tasksByWeeksCubit = context.read<TasksByWeeksCubit>()..getTasksByWeek();
+    tasksByWeeksCubit = context.read<TasksByWeeksCubit>()..getTasksByWeek();
     super.initState();
   }
 
@@ -25,23 +33,23 @@ class _PregnancyGuideState extends State<PregnancyGuide> {
   Widget build(BuildContext context) {
     return BlocBuilder<TasksByWeeksCubit, TasksByWeeksState>(
       builder: (context, state) {
+        log('STATUS: ${state.tasksByWeekStatus}');
         if (state.tasksByWeekStatus == TasksByWeekStatus.loading) {
-          return Center(child: CircularProgressIndicator.adaptive());
+          return Center(child: CircularProgressIndicator.adaptive()); 
         } else if (state.tasksByWeekStatus == TasksByWeekStatus.error) {
           return Center(child: Text('Məlumat tapılmadı'));
         } else if (state.tasksByWeekStatus == TasksByWeekStatus.networkError) {
           return Center(child: Text(state.networkErrorMessage!));
         }
         if (state.tasksByWeekStatus == TasksByWeekStatus.success) {
-          final weekTask = state.tasksByWeek?.first;
-          final tasks = weekTask?.tasks ?? [];
+          final tasks = state.tasksByWeek ?? [];
           return SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
             child: DecoratedBox(
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(8)),
-              ),
+              ), 
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 26),
@@ -53,7 +61,7 @@ class _PregnancyGuideState extends State<PregnancyGuide> {
                         GlobalText(
                           textAlign: TextAlign.end,
                           text:
-                              'Hamiləlik Bələdçisi · ${weekTask?.week ?? '-'} . Həftə',
+                              'Hamiləlik Bələdçisi · ${widget.pregnantWeek ?? '0'}. Həftə',
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff8C8A8A),
@@ -68,9 +76,8 @@ class _PregnancyGuideState extends State<PregnancyGuide> {
                             children: [
                               for (int i = 0; i < tasks.length; i++)
                                 PregnancyGuideBox(
-                                  title: tasks[i].name ?? 'Məlumat tapılmadı',
-                                  description:
-                                      tasks[i].text ?? 'Məlumat tapılmadı',
+                                  task: tasks[i],
+                                  taskId: tasks[i].id ?? -1,
                                 ),
                             ],
                           )

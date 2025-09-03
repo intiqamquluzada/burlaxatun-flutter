@@ -25,7 +25,7 @@ class CalculationOptions extends StatelessWidget {
           child: Column(
             spacing: 12,
             children: [
-              for (int i = 0; i < 4; i++)
+              for (int i = 0; i < 4; i++) 
                 GestureDetector(
                   onTap: () {
                     questionsCubit.selectCalculateOption(i);

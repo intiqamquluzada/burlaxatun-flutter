@@ -1,5 +1,6 @@
 import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
 import 'package:burla_xatun/ui/widgets/custom_circular_progress_indicator.dart';
+import 'package:burla_xatun/utils/helper/baby_age_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,14 +16,15 @@ class HomePageAppbar extends StatefulWidget implements PreferredSizeWidget {
   State<HomePageAppbar> createState() => _HomePageAppbarState();
 
   @override
-  Size get preferredSize => const Size(double.maxFinite, 101);
+  Size get preferredSize => const Size(double.maxFinite, 95);
 }
 
 class _HomePageAppbarState extends State<HomePageAppbar> {
+  late UserDataCubit userDataCubit;
   @override
   void initState() {
     super.initState();
-    context.read<UserDataCubit>().getUserData();
+    userDataCubit = context.read<UserDataCubit>();
   }
 
   @override
@@ -57,11 +59,17 @@ class _HomePageAppbarState extends State<HomePageAppbar> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        GlobalText(
-                          text: 'Salam, ${data.fullName ?? 'İstifadəçi'}',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xff8C8A8A),
+                        ValueListenableBuilder(
+                          valueListenable: userDataCubit.currentBabyNotifier,
+                          builder: (context, value, child) {
+                            return GlobalText(
+                              text:
+                                  'Salam, ${value?.name ?? data.fullName ?? 'İstifadəçi'}',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xff8C8A8A),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -84,15 +92,38 @@ class _HomePageAppbarState extends State<HomePageAppbar> {
                     ),
                   ],
                 ),
-                GlobalText(
-                  textAlign: TextAlign.left,
-                  height: 1.3,
-                  text:
-                      'Hamiləliyin ${data.pregnantWeek ?? '0'}. həftəsi \nGün ${(int.tryParse(data.pregnantWeek ?? '0') ?? 0) * 7}',
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
+                // !data.isPregnant!
+                // ?
+                ValueListenableBuilder(
+                  valueListenable: userDataCubit.currentBabyNotifier,
+                  builder: (context, currentBaby, child) {
+                    // log('user is null: ${user == null}');
+                    final isPregnant = state.response?.isPregnant ?? false;
+                    final days = state.pregnantDays;
+                    return Visibility(
+                      visible: currentBaby == null && isPregnant,
+                      replacement: GlobalText(
+                        textAlign: TextAlign.left,
+                        height: 1.3,
+                        text: currentBaby == null
+                            ? '${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}'
+                            : '${BabyAgeHelper.getAge(currentBaby.birthDate ?? DateTime.now())} yaş',
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                      child: GlobalText(
+                        textAlign: TextAlign.left,
+                        height: 1.3,
+                        text:
+                            'Hamiləliyin ${data.pregnantWeek ?? '0'}. həftəsi \nGün $days',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    );
+                  },
+                )
               ],
             );
           }

@@ -1,22 +1,37 @@
-import 'package:equatable/equatable.dart';
+part of 'reset_password_cubit.dart';
 
-import 'reset_password_cubit.dart';
-
-class ResetPasswordInitial extends Equatable {
-  const ResetPasswordInitial({
-    this.resetPasswordStatus = ResetPasswordStateStatus.initial,
+class ResetPasswordState extends Equatable {
+  const ResetPasswordState({
+    this.resetPasswordStatus = ResetPasswordStatus.initial,
+    this.phoneNumber,
+    this.otp,
+    this.sendOtpStatus = SendOtpStatus.initial,
   });
 
-  final ResetPasswordStateStatus resetPasswordStatus;
+  final ResetPasswordStatus resetPasswordStatus;
+  final SendOtpStatus sendOtpStatus;
+  final String? phoneNumber;
+  final String? otp;
 
   @override
-  List<Object?> get props => [resetPasswordStatus];
+  List<Object?> get props => [
+        sendOtpStatus,
+        resetPasswordStatus,
+        phoneNumber,
+        otp,
+      ];
 
-  ResetPasswordInitial copyWith({
-    ResetPasswordStateStatus? resetPasswordStateStatus,
+  ResetPasswordState copyWith({
+    SendOtpStatus? sendOtpStatus,
+    ResetPasswordStatus? resetPasswordStatus,
+    String? phoneNumber,
+    String? otp,
   }) {
-    return ResetPasswordInitial(
-      resetPasswordStatus: resetPasswordStateStatus ?? this.resetPasswordStatus,
+    return ResetPasswordState(
+      sendOtpStatus: sendOtpStatus ?? this.sendOtpStatus,
+      resetPasswordStatus: resetPasswordStatus ?? this.resetPasswordStatus,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      otp: otp ?? this.otp,
     );
   }
 }

@@ -24,6 +24,7 @@ class _SelectedNamesWidgetState extends State<SelectedNamesWidget>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<BabyNamesCubit, BabyNamesState>(
       buildWhen: (previous, current) {
         return previous.selectedNamesList != current.selectedNamesList;
@@ -59,8 +60,8 @@ class _SelectedNamesWidgetState extends State<SelectedNamesWidget>
                     itemBuilder: (_, i) {
                       final selectedName = selectedNames[i];
                       return SelectedNameTile(
-                        name: selectedName.babyName.toString(),
-                        nameId: selectedName.babyName ?? -1,
+                        name: selectedName.babyName ?? '',
+                        nameId: selectedName.id ?? -1,
                       );
                     },
                     separatorBuilder: (_, index) {

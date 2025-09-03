@@ -15,7 +15,7 @@ class SuccessChangePassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainCubit = context.read<MainnCubit>();
+    final mainCubit = context.read<MainCubit>();
     return Scaffold(
       appBar: GlobalAppbar(
         title: ' ',

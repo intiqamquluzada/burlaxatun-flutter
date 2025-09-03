@@ -22,7 +22,7 @@ class CountriesAndSelectedsBox extends StatelessWidget {
       valueListenable: countriesOrSelectedNamesScreen,
       builder: (_, value, child) {
         return SelectOption(
-          optionOne: BlocBuilder<MainnCubit, MainInitial>(
+          optionOne: BlocBuilder<MainCubit, MainInitial>(
             buildWhen: (previous, current) {
               return previous.nameViewOptions != current.nameViewOptions;
             },
@@ -39,7 +39,7 @@ class CountriesAndSelectedsBox extends StatelessWidget {
               );
             },
           ),
-          optionTwo: BlocBuilder<MainnCubit, MainInitial>(
+          optionTwo: BlocBuilder<MainCubit, MainInitial>(
             buildWhen: (previous, current) {
               return previous.nameViewOptions != current.nameViewOptions;
             },

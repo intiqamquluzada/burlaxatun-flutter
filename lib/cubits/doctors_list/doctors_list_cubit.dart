@@ -8,8 +8,7 @@ import '../../data/models/remote/response/doctors_list_model.dart';
 part 'doctors_list_state.dart';
 
 class DoctorsListCubit extends Cubit<DoctorsListState> {
-  DoctorsListCubit(this._doctorsListContractor)
-      : super(DoctorsListState.initial());
+  DoctorsListCubit(this._doctorsListContractor) : super(DoctorsListState());
 
   final DoctorsListContractor _doctorsListContractor;
 

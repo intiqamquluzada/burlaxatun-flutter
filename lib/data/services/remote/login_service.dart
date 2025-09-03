@@ -12,7 +12,28 @@ class LoginService {
     final requestBody = {
       "phone_number": email,
       "password": password,
-    }; 
+    };
+    final response = await BaseNetwork.instance.getDio().post(
+          endpoint,
+          data: requestBody,
+        );
+    if (response.statusCode.isSuccess) {
+      return LoginResponseModel.fromJson(response.data);
+    } else if (response.statusCode.isFailure) {
+      throw Exception("Failed to login");
+    }
+    throw Exception("Unable to login");
+  }
+
+  Future<LoginResponseModel> loginByVideoDoktor({
+    required String login,
+    required String password,
+  }) async {
+    final endpoint = EndpointsConstants.videoDoktorLogin;
+    final requestBody = {
+      "login": login,
+      "password": password,
+    };
     final response = await BaseNetwork.instance.getDio().post(
           endpoint,
           data: requestBody,

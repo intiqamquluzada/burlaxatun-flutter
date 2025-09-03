@@ -144,7 +144,7 @@ class _FirstDayOfLastPeriodState extends State<FirstDayOfLastPeriod> {
                             },
                             itemExtent: 57,
                             children: [
-                              for (int i = 1; i < 11; i++)
+                              for (int i = 1; i < 36; i++)
                                 SizedBox(
                                   width: double.maxFinite,
                                   child: Row(

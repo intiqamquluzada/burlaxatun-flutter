@@ -1,23 +1,41 @@
-import 'package:burla_xatun/data/models/remote/response/forum_list_response.dart';
-import 'package:burla_xatun/data/services/remote/base_network_service.dart';
-import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
-import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
+import 'package:burla_xatun/data/services/local/login_token_service.dart';
+import 'package:burla_xatun/utils/di/locator.dart';
+import 'package:dio/dio.dart';
+
+import '../../../utils/constants/endpoints_constants.dart';
+import 'base_network_service.dart';
 
 class ForumListService {
-  Future<ForumListResponse> getForumList({String? categoryId}) async {
-    // final endpoint = EndpointsConstants.forumList;
+  Future<Response<dynamic>> getForumList({
+    int? categoryId,
+    String? url,
+  }) async {
+    // String? url;
+    // url = nextPage ?? EndpointsConstants.forumList;
+    // String url = EndpointsConstants.forumList;
+    // final Map<String, dynamic> query = {
+    //   'page': page,
+    // };
 
-    final endpoint = categoryId == null
-        ? EndpointsConstants.forumList
-        : "${EndpointsConstants.forumList}?category=$categoryId";
+    url ??= EndpointsConstants.forumList;
 
-    final response = await BaseNetwork.instance.getDio().get(endpoint);
+    // if (url == null) {
+    //   url = EndpointsConstants.forumList;
+    // } else {
 
-    if (response.statusCode.isSuccess) {
-      return ForumListResponse.fromJson(response.data);
-    } else if (response.statusCode.isFailure) {
-      throw Exception("Failed to load forum list data");
-    }
-    throw Exception("Unable to get forum list data");
+    // }
+
+    final Map<String, dynamic> query = {
+      'category': categoryId,
+    };
+
+    final token = locator<LoginTokenService>().token;
+
+    final response = await BaseNetwork.instance.getDio(token: token).get(
+          url,
+          queryParameters: query,
+        );
+
+    return response;
   }
 }

@@ -17,4 +17,15 @@ class LoginRepository implements LoginContractor {
       password: password,
     );
   }
+
+  @override
+  Future<LoginResponseModel> loginByVideoDoktor({
+    required String login,
+    required String password,
+  }) {
+    return _loginService.login(
+      email: login,
+      password: password,
+    );
+  }
 }

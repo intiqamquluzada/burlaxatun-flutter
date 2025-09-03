@@ -73,7 +73,7 @@ class _UltrasoundDaysBottomsheetState extends State<UltrasoundDaysBottomsheet> {
                 dayValue.value = v;
               },
               children: [
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 7; i++)
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

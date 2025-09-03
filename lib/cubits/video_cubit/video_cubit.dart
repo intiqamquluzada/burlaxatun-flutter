@@ -1,54 +1,54 @@
 import 'dart:developer';
 
-import 'package:chewie/chewie.dart';
-import 'package:flutter/services.dart';
+import 'package:burla_xatun/data/models/remote/response/video_model.dart';
+import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_player/video_player.dart';
 
+import '../../data/contractor/video_contract.dart';
 import 'video_state.dart';
 
-class VideoCubit extends Cubit<VideoInitial> {
-  VideoCubit() : super(VideoInitial());
+enum VideoStatus { initial, loading, error, success, networkError }
 
-  late final VideoPlayerController videoController;
-  late final ChewieController chewieController;
+class VideoCubit extends Cubit<VideoState> {
+  VideoCubit(this.videoContract) : super(VideoState());
 
-  Future<void> initializeVideoPlayer() async {
-    final url = Uri.parse(
-        'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4');
+  final VideoContract videoContract;
 
-    videoController = VideoPlayerController.networkUrl(url);
+  List<Video> videos = [];
+  String? url = '';
 
-    await videoController.initialize();
+  Future<void> getVideos({bool isRefresh = false}) async {
+    if (isRefresh) {
+      videos = [];
+      url = isRefresh ? '' : url;
+      emit(state.copyWith(videos: []));
+    }
+    if (url == null || state.videoStatus == VideoStatus.loading) {
+      return;
+    }
+    try {
+      emit(state.copyWith(videoStatus: VideoStatus.loading));
+      final response = await videoContract.getVideos(
+        url: url!.isEmpty ? null : url,
+      );
 
-    chewieController = ChewieController(
-      videoPlayerController: videoController,
-      autoPlay: false,
-      looping: false,
-      showControls: true,
-      allowFullScreen: true,
-      fullScreenByDefault: true,
-      showControlsOnInitialize: false,
-      deviceOrientationsOnEnterFullScreen: [
-        DeviceOrientation.portraitUp,
-      ],
-      deviceOrientationsAfterFullScreen: [
-        DeviceOrientation.portraitUp,
-      ],
-    );
+      if (!response.statusCode.isSuccess) return;
 
-    emit(state.copyWith(isLoading: false));
-    log('${state.isLoading}');
-  }
+      final data = VideoModel.fromJson(response.data);
 
-  void playVideo() {
-    chewieController.play();
-  }
+      url = data.next;
 
-  @override
-  Future<void> close() {
-    videoController.dispose();
-    chewieController.dispose();
-    return super.close();
+      data.results?.forEach((e) {
+        videos.add(e);
+      });
+
+      emit(state.copyWith(
+        videoStatus: VideoStatus.success,
+        videos: List.from(videos),
+      ));
+    } catch (e, s) {
+      log('Error occured while getting videos: $e', stackTrace: s);
+      emit(state.copyWith(videoStatus: VideoStatus.error));
+    }
   }
 }

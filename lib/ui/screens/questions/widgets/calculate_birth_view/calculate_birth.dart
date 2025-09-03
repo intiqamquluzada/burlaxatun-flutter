@@ -23,7 +23,7 @@ class CalculateBirth extends StatelessWidget {
   Widget build(BuildContext context) {
     final questionsCubit = context.read<QuestionsCubit>();
     return Scaffold(
-      appBar: GlobalAppbar(
+      appBar: GlobalAppbar( 
         title: 'Doğuşu hesabla',
         onLeadingTap: () {
           Navigator.pop(context);
@@ -41,14 +41,11 @@ class CalculateBirth extends StatelessWidget {
                   return previous.showOptions != current.showOptions;
                 },
                 builder: (context, state) {
-                  return AnimatedSize(
-                    duration: Durations.short4,
-                    child: Visibility(
-                      visible: state.showOptions,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 14),
-                        child: CalculationOptions(),
-                      ),
+                  return Visibility(
+                    visible: state.showOptions,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 14),
+                      child: CalculationOptions(),
                     ),
                   );
                 },

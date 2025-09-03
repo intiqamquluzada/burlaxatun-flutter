@@ -9,7 +9,7 @@ import '../local/login_token_service.dart';
 import 'base_network_service.dart';
 
 class ChangePassService {
-  final endpoint = EndpointsConstants.changePass;
+  final endpoint = EndpointsConstants.changePassword;
 
   Future<bool> changePassword({
     required String oldPassword,
@@ -24,7 +24,6 @@ class ChangePassService {
       "new_password2": newPassword2,
     };
 
-    log('Change password request body: $requestBody');
 
     final response = await BaseNetwork.instance.post(
       path: endpoint,

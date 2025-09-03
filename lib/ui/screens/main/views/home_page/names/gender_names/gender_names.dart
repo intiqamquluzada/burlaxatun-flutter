@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../../../cubits/baby_names_cubit/baby_names_cubit.dart';
@@ -29,16 +30,23 @@ class _GenderNamesState extends State<GenderNames> {
   @override
   void initState() {
     genderScreenIndex = ValueNotifier<int>(0);
+    babyNamesCubit = context.read<BabyNamesCubit>();
     _pageController = PageController(initialPage: 0);
     // babyNamesCubit = context.read<BabyNamesCubit>()..getNames(widget.countryId);
     super.initState();
   }
 
   @override
+  void dispose() {
+    babyNamesCubit.resetGenderList();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GlobalAppbar(
-        title: 'Adlar 2',
+        title: 'Adlar',
         onLeadingTap: () {
           context.pop();
           // babyNamesCubit.changeIsSelected(v: -1);

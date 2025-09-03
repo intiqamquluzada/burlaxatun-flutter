@@ -46,7 +46,7 @@ class MyProfileBox extends StatelessWidget {
                       children: [
                         GlobalText(
                           text: 'Hesabım',
-                          fontSize: 15,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
@@ -58,13 +58,13 @@ class MyProfileBox extends StatelessWidget {
                       children: [
                         GlobalText(
                           text: 'Ad və Soyadınız',
-                          fontSize: 15,
+                          fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff344054),
                         ),
                         GlobalText(
                           text: data?.fullName ?? 'Ad',
-                          fontSize: 15,
+                          fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff344054),
                         ),
@@ -84,14 +84,14 @@ class MyProfileBox extends StatelessWidget {
                       children: [
                         GlobalText(
                           text: 'Yaşınız',
-                          fontSize: 15,
+                          fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff344054),
                         ),
                         GlobalText(
                           text: data?.birthday != null
                               ? DateFormat('yyyy-MM-dd').format(data!.birthday!)
-                              : '2001-09-03',
+                              : 'Bilinmir',
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff344054),
@@ -112,13 +112,13 @@ class MyProfileBox extends StatelessWidget {
                       children: [
                         GlobalText(
                           text: 'Siz kimsiniz?',
-                          fontSize: 15,
+                          fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff344054),
                         ),
                         GlobalText(
-                          text: data?.relation ?? 'Ana',
-                          fontSize: 15,
+                          text: 'Ana',
+                          fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff344054),
                         ),

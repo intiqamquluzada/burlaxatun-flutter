@@ -1,9 +1,5 @@
-import 'dart:math' as math;
-
-import 'package:burla_xatun/ui/screens/questions/widgets/calculate_birth_view/widgets/apple_circle.dart';
-import 'package:burla_xatun/utils/constants/asset_constants.dart';
-import 'package:burla_xatun/utils/constants/padding_constants.dart';
-import 'package:burla_xatun/utils/extensions/context_extensions.dart';
+import 'package:burla_xatun/cubits/main_cubit/mainn_cubit.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +7,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../../cubits/questions_cubit/questions_cubit.dart';
 import '../../../../../../utils/constants/color_constants.dart';
+import '../../../../../../utils/constants/padding_constants.dart';
+import '../../../../../../utils/extensions/context_extensions.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../widgets/global_button.dart';
 import '../../../../../widgets/global_text.dart';
@@ -21,7 +19,7 @@ class CalculationResultDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final questionsCubit = context.read<QuestionsCubit>();
     return PopScope(
-      canPop: false,
+      canPop: true,
       child: Center(
         child: SizedBox(
           width: context.deviceWidth * 0.78,
@@ -40,38 +38,52 @@ class CalculationResultDialog extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AppleCircle(),
-                        Transform.rotate(
-                          angle: -math.pi,
-                          child: SvgPicture.asset(
-                            AssetConstants.arrowLeft,
-                          ),
-                        ),
-                        SvgPicture.asset(
-                          AssetConstants.arrowRight,
-                        ),
-                        10.w,
-                        // CachedNetworkImage(
-                        //   imageUrl:
-                        //       questionsCubit.calculatedData.data?.iconUrl2 ?? '',
-                        // width: context.deviceWidth * 0.69,
-                        // height: context.deviceHeight * 0.12,
-                        //   errorWidget: (context, url, error) {
-                        //     return Icon(Icons.error);
-                        //   },
+                        // AppleCircle(),
+                        // Transform.rotate(
+                        //   angle: -math.pi,
+                        //   child: SvgPicture.asset(
+                        //     AssetConstants.arrowLeft,
+                        //   ),
                         // ),
+                        // SvgPicture.asset(
+                        //   AssetConstants.arrowRight,
+                        // ),
+                        // 10.w,
+                        CachedNetworkImage(
+                          imageUrl:
+                              questionsCubit.calculatedData.data?.icon ?? '',
+                          width: 100,
+                          height: 100,
+                          errorWidget: (context, url, error) {
+                            return Icon(Icons.error);
+                          },
+                        ),
+                        SizedBox(width: 10),
                         SvgPicture.asset(
-                          AssetConstants.baby,
-                          width: context.deviceWidth * 0.69,
-                          height: context.deviceHeight * 0.12,
-                        )
+                            'assets/icons/pregnancy_progress_arrows.svg'),
+                        SizedBox(width: 10),
+                        CachedNetworkImage(
+                          imageUrl:
+                              questionsCubit.calculatedData.data?.iconUrl2 ??
+                                  '',
+                          width: 100,
+                          height: 100,
+                          errorWidget: (context, url, error) {
+                            return Icon(Icons.error);
+                          },
+                        ),
+                        // SvgPicture.asset(
+                        //   AssetConstants.baby,
+                        //   width: context.deviceWidth * 0.69,
+                        //   height: context.deviceHeight * 0.12,
+                        // )
                       ],
                     ),
                   ),
                   (context.deviceHeight * 0.04).h,
                   GlobalText(
                     text:
-                        'Siz hamiləliyinizin ${questionsCubit.calculatedData.data?.weeks} həftəsindəsiniz',
+                        'Siz hamiləliyinizin ${questionsCubit.calculatedData.data?.weeks}. həftəsindəsiniz',
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
@@ -79,8 +91,7 @@ class CalculationResultDialog extends StatelessWidget {
                   ),
                   12.h,
                   GlobalText(
-                    text:
-                        'Körpəniz isə ${questionsCubit.calculatedData.data?.iconName} boydadır!',
+                    text: questionsCubit.calculatedData.data?.iconName ?? '',
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
@@ -94,7 +105,10 @@ class CalculationResultDialog extends StatelessWidget {
                     textColor: Colors.white,
                     height: 44,
                     onPressed: () {
-                      context.go('/home');
+                      context.go(
+                          '/home?reset=${DateTime.now().millisecondsSinceEpoch}');
+                      // context.go('/home');
+                      context.read<MainCubit>().changeView(0);
                     },
                   ),
                 ],

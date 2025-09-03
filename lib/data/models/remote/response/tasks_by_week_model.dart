@@ -1,33 +1,34 @@
-class TasksByWeekModel {
-  final String? week;
-  final List<Task>? tasks;
+// class TasksByWeekModel {
+//   final String? week;
+//   final List<Task>? tasks;
 
-  TasksByWeekModel({
-    this.week,
-    this.tasks,
-  });
+//   TasksByWeekModel({
+//     this.week,
+//     this.tasks,
+//   });
 
-  factory TasksByWeekModel.fromJson(Map<String, dynamic> json) =>
-      TasksByWeekModel(
-        week: json["week"],
-        tasks: json["tasks"] == null
-            ? []
-            : List<Task>.from(json["tasks"]!.map((x) => Task.fromJson(x))),
-      );
+//   factory TasksByWeekModel.fromJson(Map<String, dynamic> json) =>
+//       TasksByWeekModel(
+//         week: json["week"],
+//         tasks: json["tasks"] == null
+//             ? []
+//             : List<Task>.from(json["tasks"]!.map((x) => Task.fromJson(x))),
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "week": week,
-        "tasks": tasks == null
-            ? []
-            : List<dynamic>.from(tasks!.map((x) => x.toJson())),
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "week": week,
+//         "tasks": tasks == null
+//             ? []
+//             : List<dynamic>.from(tasks!.map((x) => x.toJson())),
+//       };
+// }
 
 class Task {
   final int? id;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final String? week;
+  final bool? active;
+  final List<Week>? week;
   final String? name;
   final String? text;
 
@@ -35,6 +36,7 @@ class Task {
     this.id,
     this.createdAt,
     this.updatedAt,
+    this.active,
     this.week,
     this.name,
     this.text,
@@ -49,6 +51,7 @@ class Task {
             ? null
             : DateTime.parse(json["updated_at"]),
         week: json["week"],
+        active: json["active"],
         name: json["name"],
         text: json["text"],
       );
@@ -57,8 +60,24 @@ class Task {
         "id": id,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
+        "active": active,
         "week": week,
         "name": name,
         "text": text,
       };
+}
+
+class Week {
+  final int? id;
+  final int? week;
+
+  Week({
+    this.id,
+    this.week,
+  });
+
+  factory Week.fromJson(Map<String, dynamic> json) => Week(
+        id: json["id"],
+        week: json["week"],
+      );
 }

@@ -15,7 +15,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>burla_xatun</string>
+		<string>Anayam</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
@@ -47,5 +47,9 @@
 		<false/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>We need access to your photo library for profile image.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>We need access to your camera to take photo for profile image.</string>
 	</dict>
 </plist>

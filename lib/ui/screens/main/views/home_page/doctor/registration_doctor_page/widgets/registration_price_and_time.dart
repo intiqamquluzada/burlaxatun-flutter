@@ -24,12 +24,14 @@ class RegistrationPriceAndTime extends StatelessWidget {
           child: Column(
             children: [
               DateOrPriceBox(
-                  boxName: 'Uyğun Tarix',
-                  boxInfo: 'Monday to Friday | ${doctor.availableTime}'),
+                boxName: 'Uyğun Tarix',
+                boxInfo: '${doctor.availableDays} | ${doctor.availableTimes}',
+              ),
               26.h,
               DateOrPriceBox(
-                  boxName: 'Müayinə Qiyməti',
-                  boxInfo: '${doctor.consultantPrice} AZN'),
+                boxName: 'Müayinə Qiyməti',
+                boxInfo: '${doctor.consultantPrice} Azn',
+              ),
             ],
           ),
         ),

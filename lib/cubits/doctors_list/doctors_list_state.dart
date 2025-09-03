@@ -4,14 +4,17 @@ enum DoctorsListStatus { initial, loading, success, failure, networkError }
 
 final class DoctorsListState extends Equatable {
   const DoctorsListState({
-    required this.status,
-    required this.response,
-    required this.errorMessage,
+    this.status = DoctorsListStatus.initial,
+    this.response,
+    this.errorMessage,
   });
 
   final DoctorsListStatus status;
   final DoctorsListResponse? response;
   final String? errorMessage;
+
+  @override
+  List<Object?> get props => [status, response, errorMessage];
 
   DoctorsListState copyWith({
     DoctorsListStatus? status,
@@ -25,12 +28,9 @@ final class DoctorsListState extends Equatable {
     );
   }
 
-  factory DoctorsListState.initial() => const DoctorsListState(
-        status: DoctorsListStatus.initial,
-        response: null,
-        errorMessage: null,
-      );
-
-  @override
-  List<Object?> get props => [status, response, errorMessage];
+  // factory DoctorsListState.initial() => const DoctorsListState(
+  //       status: DoctorsListStatus.initial,
+  //       response: null,
+  //       errorMessage: null,
+  //     );
 }
