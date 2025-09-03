@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,6 +51,7 @@ class VideoDoktorLoginButton extends StatelessWidget {
               : ColorConstants.disabledButtonColor,
           textColor: ColorConstants.white,
           onPressed: () {
+            log('videodoktor login');
             if (state.videoDoktorLoginStatus ==
                 VideoDoktorLoginStatus.loading) {
               return;
