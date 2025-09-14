@@ -48,7 +48,11 @@ class LoginCubit extends Cubit<LoginCubitInitial> {
   }
 
   void disableVideoDoktorButton() {
-    emit(state.copyWith(isActiveVideoDoktorLoginButton: false));
+    emit(state.copyWith(
+      isActiveVideoDoktorLoginButton: false,
+      isVideDoktorError: false,
+      videoDoktorLoginStatus: VideoDoktorLoginStatus.initial,
+    ));
   }
 
   void errorState() {

@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../cubits/login_cubit/login_cubit.dart';
 import '../../../../../cubits/login_cubit/login_cubit_state.dart';
-import '../../../../../utils/app/app_snackbars.dart';
 import '../../../../../utils/constants/color_constants.dart';
 import '../../../../../utils/constants/text_constants.dart';
 import '../../../../widgets/custom_circular_progress_indicator.dart';
@@ -25,12 +24,15 @@ class VideoDoktorLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginCubit = context.read<LoginCubit>();
+    log('video doktor error: ${loginCubit.state.isVideDoktorError}');
+    log('video doktor active button: ${loginCubit.state.isActiveVideoDoktorLoginButton}');
     return BlocConsumer<LoginCubit, LoginCubitInitial>(
       buildWhen: (previous, current) =>
           previous.videoDoktorLoginStatus != current.videoDoktorLoginStatus ||
           previous.isActiveVideoDoktorLoginButton !=
               current.isActiveVideoDoktorLoginButton,
       listener: (_, state) {
+        log('changed error state');
         if (state.videoDoktorLoginStatus == VideoDoktorLoginStatus.success) {
           // context.go('/home');
         }
@@ -41,7 +43,7 @@ class VideoDoktorLoginButton extends StatelessWidget {
         if (state.videoDoktorLoginStatus ==
             VideoDoktorLoginStatus.networkError) {
           loginCubit.errorVideoDoktor();
-          AppSnackbars.error(context, 'Şəbəkəni yoxlayın');
+          // AppSnackbars.error(context, 'Şəbəkəni yoxlayın');
         }
       },
       builder: (_, state) {

@@ -23,12 +23,14 @@ class _VideoDoktorLoginState extends State<VideoDoktorLogin> {
   late TextEditingController passwordController;
   late FocusNode userNameOrPhoneNumberFocusNode;
   late FocusNode passwordFocusNode;
+  late LoginCubit loginCubit;
   @override
   void initState() {
     userNameOrPhoneNumberController = TextEditingController();
     passwordController = TextEditingController();
     userNameOrPhoneNumberFocusNode = FocusNode();
     passwordFocusNode = FocusNode();
+    loginCubit = context.read<LoginCubit>();
     super.initState();
   }
 
@@ -47,7 +49,7 @@ class _VideoDoktorLoginState extends State<VideoDoktorLogin> {
       appBar: GlobalAppbar(
         title: 'Video hesabı ilə giriş',
         onLeadingTap: () {
-          context.read<LoginCubit>().disableVideoDoktorButton();
+          loginCubit.disableVideoDoktorButton();
           context.pop();
         },
       ),

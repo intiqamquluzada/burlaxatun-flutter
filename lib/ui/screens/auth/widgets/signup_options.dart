@@ -22,16 +22,7 @@ class SignupOptions extends StatelessWidget {
           color: Colors.black,
         ),
         context.deviceHeight < 710 ? 10.h : 24.h,
-        // OptionWidget(
-        //   optionName: TextConstants.signUpWithGoogle,
-        //   child: Image.asset(
-        //     'assets/png/google_logo.png',
-        //     width: 25,
-        //     height: 25,
-        //   ),
-        // ),
-        // 10.h,
-        GestureDetector(
+        GestureDetector( 
           onTap: () {
             // context.pushReplacement('/video_doktor_login');
             Navigator.push(
