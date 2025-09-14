@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
             builder: (context, state) {
               if (state.status == UserDataStatus.loading) {
                 return Center(child: CircularProgressIndicator.adaptive());
-              }
+              } 
               if (state.status == UserDataStatus.success) {
                 final week = state.response?.pregnantWeek ?? '0';
                 final isPregnant = state.response?.isPregnant ?? false;

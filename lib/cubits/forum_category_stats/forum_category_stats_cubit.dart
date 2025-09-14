@@ -21,6 +21,7 @@ class ForumCategoryStatsCubit extends Cubit<ForumCategoryStatsState> {
   final List<ForumCategoryStatsModel> sortedCategoryStatsList = [];
 
   Future<void> getCategoryStatistics() async {
+    log('request for sttaistics');
     try {
       emit(state.copyWith(categoryStatsStatus: CategoryStatsStatus.loading));
       final response = await forumCategoryStatsContract.getCategoryStats();

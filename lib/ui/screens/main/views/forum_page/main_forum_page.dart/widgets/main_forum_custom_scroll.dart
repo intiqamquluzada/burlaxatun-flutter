@@ -6,12 +6,24 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../../../cubits/forum_category/forum_category_cubit.dart';
 import '../../../../../../../cubits/forum_category_stats/forum_category_stats_cubit.dart';
-import '../../../../../../../utils/di/locator.dart';
 import '../../../home_page/blog/initial_blog/widgets/blog_banner.dart';
 import 'main_forum_title_box.dart';
 
-class MainForumCustomScroll extends StatelessWidget {
+class MainForumCustomScroll extends StatefulWidget {
   const MainForumCustomScroll({super.key});
+
+  @override
+  State<MainForumCustomScroll> createState() => _MainForumCustomScrollState();
+}
+
+class _MainForumCustomScrollState extends State<MainForumCustomScroll> {
+  late ForumCategoryStatsCubit forumCategoryStatsCubit;
+  @override
+  void initState() {
+    forumCategoryStatsCubit = context.read<ForumCategoryStatsCubit>()
+      ..getCategoryStatistics();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +47,7 @@ class MainForumCustomScroll extends StatelessWidget {
           return RefreshIndicator(
             onRefresh: () async {
               await context.read<ForumCategoryCubit>().getForumCategory();
+              await forumCategoryStatsCubit.getCategoryStatistics();
             },
             child: CustomScrollView(
               slivers: [
@@ -51,21 +64,16 @@ class MainForumCustomScroll extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 24) +
                             EdgeInsets.symmetric(horizontal: 15),
-                        child: BlocProvider(
-                          create: (context) =>
-                              locator<ForumCategoryStatsCubit>()
-                                ..getCategoryStatistics(),
-                          child: MainForumTitleBox(
-                            title: data[i].name ?? 'Məlumat tapılmadı',
-                            onTap: () => context.push(
-                              '/secondary_forum',
-                              extra: {
-                                'category_id': data[i].id,
-                                'category_name': data[i].name,
-                              },
-                            ),
-                            categoryIndex: i,
+                        child: MainForumTitleBox(
+                          title: data[i].name ?? 'Məlumat tapılmadı',
+                          onTap: () => context.push(
+                            '/secondary_forum',
+                            extra: {
+                              'category_id': data[i].id,
+                              'category_name': data[i].name,
+                            },
                           ),
+                          categoryIndex: i,
                         ),
                       );
                     },
