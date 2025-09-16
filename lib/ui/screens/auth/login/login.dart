@@ -34,7 +34,7 @@ class Login extends StatelessWidget {
                   SignupButton(),
                   context.deviceHeight < 750 ? 10.h : 25.h,
                   SignupOptions(),
-                  
+
                   // TextButton(
                   //   onPressed: () {
                   //     context.go('/home');

@@ -60,14 +60,15 @@ class ArticlesWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: blogs.length,
             itemBuilder: (_, index) {
-              final blog = blogs[index]; 
+              final blog = blogs[index];
               return GestureDetector(
                 onTap: () => context.push('/article_details', extra: blog),
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.37,
                   margin: EdgeInsets.only(
-                      left: index == 0 ? 15 : 6,
-                      right: index == blogs.length - 1 ? 15 : 6),
+                    left: index == 0 ? 15 : 6,
+                    right: index == blogs.length - 1 ? 15 : 6,
+                  ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Stack(
@@ -86,6 +87,24 @@ class ArticlesWidget extends StatelessWidget {
                           },
                         ),
                         Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            height: 100,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black87,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
                           bottom: 10,
                           left: 9,
                           right: 9,
@@ -93,7 +112,7 @@ class ArticlesWidget extends StatelessWidget {
                             text: blog.name ?? '',
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                         ),
                       ],

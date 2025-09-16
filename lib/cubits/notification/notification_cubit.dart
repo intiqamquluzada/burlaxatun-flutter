@@ -1,15 +1,18 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
-import 'package:burla_xatun/data/contractor/notifications_contract.dart';
-import 'package:burla_xatun/data/models/remote/response/notifications_model.dart';
-import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/contractor/notifications_contract.dart';
+import '../../data/models/remote/response/notifications_model.dart';
+import '../../utils/extensions/statuscode_extension.dart';
 
 part 'notification_state.dart';
 
 enum NotificationStatus { initial, loading, error, networkError, success }
+
+enum EnableNotificationStatus { initial, loading, error, success }
 
 class NotificationCubit extends Cubit<NotificationState> {
   NotificationCubit(this.notificationsContract) : super(NotificationState());
@@ -33,6 +36,29 @@ class NotificationCubit extends Cubit<NotificationState> {
     } on DioException catch (e, s) {
       log('Error occured while getting notifications: $e', stackTrace: s);
       emit(state.copyWith(notificationStatus: NotificationStatus.error));
+    }
+  }
+
+  Future<void> enableNotification({
+    required String fcmToken,
+    required String deviceType,
+  }) async {
+    try {
+      emit(state.copyWith(
+          enableNotificationStatus: EnableNotificationStatus.loading));
+      final response = await notificationsContract.saveFcmToken(
+        fcmToken: fcmToken,
+        deviceType: deviceType,
+      );
+
+      if (response.statusCode.isSuccess) {
+        emit(state.copyWith(
+            enableNotificationStatus: EnableNotificationStatus.success));
+      }
+    } catch (e, s) {
+      log('Error occured while enabling notification: $e', stackTrace: s);
+      emit(state.copyWith(
+          enableNotificationStatus: EnableNotificationStatus.error));
     }
   }
 }

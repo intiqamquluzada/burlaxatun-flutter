@@ -26,8 +26,10 @@ class _MainForumTitleBoxState extends State<MainForumTitleBox> {
   late ForumCategoryStatsCubit forumCategoryStatsCubit;
   @override
   void initState() {
-    forumCategoryStatsCubit = context.read<ForumCategoryStatsCubit>();
-    forumCategoryStatsCubit.getCategoryStatistics();
+    // log('init statistics');
+    // forumCategoryStatsCubit = context.read<ForumCategoryStatsCubit>()
+    //   ..getCategoryStatistics();
+    // forumCategoryStatsCubit.getCategoryStatistics();
     super.initState();
   }
 

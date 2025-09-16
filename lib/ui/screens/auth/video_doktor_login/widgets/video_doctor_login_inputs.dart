@@ -76,32 +76,26 @@ class _VideoDoctorLoginInputsState extends State<VideoDoctorLoginInputs> {
               },
             ),
             context.deviceHeight < 750 ? 10.h : 26.h,
-            BlocBuilder<LoginCubit, LoginCubitInitial>(
-              buildWhen: (previous, current) =>
-                  previous.isError != current.isError,
-              builder: (_, state) {
-                return ValueListenableBuilder(
-                  valueListenable: isObsecure,
-                  builder: (context, value, child) {
-                    return GlobalInput(
-                      isError: state.isVideDoktorError,
-                      textController: widget.passwordController,
-                      focusNode: widget.passwordFocusNode,
-                      inputName: TextConstants.sifre,
-                      hintText: TextConstants.sifreniziDaxilEdin,
-                      isObsecure: value,
-                      suffixIcon: value
-                          ? AssetConstants.eyeClosedIcon
-                          : AssetConstants.eyeOpenedIcon,
-                      onSuffixIconTap: () {
-                        isObsecure.value = !isObsecure.value;
-                      },
-                      onChanged: (v) {
-                        loginCubit.updateVideoDoktorLoginButton(
-                          userName: widget.userNameOrPhoneNumberController,
-                          password: widget.passwordController,
-                        );
-                      },
+            ValueListenableBuilder(
+              valueListenable: isObsecure,
+              builder: (context, value, child) {
+                return GlobalInput(
+                  isError: state.isVideDoktorError,
+                  textController: widget.passwordController,
+                  focusNode: widget.passwordFocusNode,
+                  inputName: TextConstants.sifre,
+                  hintText: TextConstants.sifreniziDaxilEdin,
+                  isObsecure: value,
+                  suffixIcon: value
+                      ? AssetConstants.eyeClosedIcon
+                      : AssetConstants.eyeOpenedIcon,
+                  onSuffixIconTap: () {
+                    isObsecure.value = !isObsecure.value;
+                  },
+                  onChanged: (v) {
+                    loginCubit.updateVideoDoktorLoginButton(
+                      userName: widget.userNameOrPhoneNumberController,
+                      password: widget.passwordController,
                     );
                   },
                 );

@@ -12,16 +12,14 @@ class ForumTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        GlobalText(
-          text: title ?? 'Hamiləlik və reproduktiv sağlamlıq',
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: Colors.black,
-        ),
-      ],
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: GlobalText(
+        text: title ?? 'Hamiləlik və reproduktiv sağlamlıq',
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: Colors.black,
+      ),
     );
   }
 }

@@ -44,7 +44,7 @@ class ArticleDetail extends StatelessWidget {
                       height: 1.2,
                       textAlign: TextAlign.left,
                       text: title,
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: Color(0xff1D2939),
                     ),

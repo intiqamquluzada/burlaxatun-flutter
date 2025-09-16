@@ -1,3 +1,4 @@
+import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
 import 'package:dio/dio.dart';
 
 import '../../../utils/di/locator.dart';
@@ -9,7 +10,7 @@ class CreateForumService {
     required int categoryId,
     required String text,
   }) async {
-    final url = 'https://burrla.secop.az/D/forum-create/';
+    final url = '${EndpointsConstants.baseUrl}/D/forum-create/';
 
     final postData = {
       "category_id": categoryId,

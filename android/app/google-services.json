@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1082814215806",
+    "project_id": "anayam-test-60006",
+    "storage_bucket": "anayam-test-60006.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082814215806:android:8ccab41bdd5ed48fe5ca2f",
+        "android_client_info": {
+          "package_name": "com.aastudio.anayam.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdZLjkPZVXf6S9Qqf7GkST1wTV998yxCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
