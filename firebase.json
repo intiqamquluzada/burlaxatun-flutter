@@ -1,0 +1,24 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "anayam-test-60006",
+                    "appId": "1:1082814215806:android:8ccab41bdd5ed48fe5ca2f",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "anayam-test-60006",
+                    "configurations": {
+                        "android": "1:1082814215806:android:8ccab41bdd5ed48fe5ca2f",
+                        "ios": "1:1082814215806:ios:90ad4d7af07375bde5ca2f",
+                        "macos": "1:1082814215806:ios:2f1de08405afbf1ce5ca2f",
+                        "windows": "1:1082814215806:web:28b28df7f8e39c18e5ca2f"
+                    }
+                }
+            }
+        }
+    }
+}

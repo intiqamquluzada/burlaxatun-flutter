@@ -16,7 +16,7 @@ class AdviseText extends StatelessWidget {
     return GlobalText(
       textAlign: TextAlign.left,
       text: adviceText,
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: FontWeight.w400,
       color: ColorConstants.gray600,
     );

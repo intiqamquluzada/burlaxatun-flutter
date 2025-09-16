@@ -1,4 +1,3 @@
-import 'package:burla_xatun/data/models/local/settings_items_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../../../cubits/main_cubit/mainn_cubit.dart';
 import '../../../../../../../cubits/user_data/user_data_cubit.dart';
 import '../../../../../../../cubits/user_update/user_update_cubit.dart';
+import '../../../../../../../data/models/local/settings_items_model.dart';
 import 'setting_box.dart';
 
 class SettingBoxes extends StatefulWidget {
@@ -37,7 +37,7 @@ class _SettingBoxesState extends State<SettingBoxes> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for (int i = 0; i < settingItems.length ; i++)
+        for (int i = 0; i < settingItems.length; i++)
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: SettingBox(
@@ -51,7 +51,8 @@ class _SettingBoxesState extends State<SettingBoxes> {
                           value: value,
                           onChanged: (v) async {
                             await userUpdateCubit.updateUser(
-                                enableNotifications: v);
+                              enableNotifications: v,
+                            );
                             isEnableNotification.value = v;
                           },
                         );

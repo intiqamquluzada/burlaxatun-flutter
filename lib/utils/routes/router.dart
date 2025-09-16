@@ -1,4 +1,3 @@
-import 'package:burla_xatun/cubits/forum_category_stats/forum_category_stats_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,10 +7,10 @@ import '../../cubits/baby_names_cubit/baby_names_cubit.dart';
 import '../../cubits/blogs_by_category/blogs_by_category_cubit.dart';
 import '../../cubits/doctor_reservation/doctor_reservation_cubit.dart';
 import '../../cubits/doctors_detail/doctors_detail_cubit.dart';
+import '../../cubits/forum_category_stats/forum_category_stats_cubit.dart';
 import '../../cubits/forum_list/forum_list_cubit.dart';
 import '../../cubits/indicator/indicator_cubit.dart';
 import '../../cubits/login_cubit/login_cubit.dart';
-import '../../cubits/notification/notification_cubit.dart';
 import '../../cubits/onboarding_cubit/onboarding_cubit.dart';
 import '../../cubits/questions_cubit/questions_cubit.dart';
 import '../../cubits/signup_cubit/signup_cubit.dart';
@@ -207,10 +206,7 @@ class Routerapp {
               ),
               GoRoute(
                 path: '/notification',
-                builder: (context, state) => BlocProvider(
-                  create: (context) => locator<NotificationCubit>(),
-                  child: NotificationPage(),
-                ),
+                builder: (context, state) => NotificationPage(),
               ),
               GoRoute(
                 path: '/my_healing_card',
