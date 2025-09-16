@@ -98,7 +98,7 @@ class ArticlesWidget extends StatelessWidget {
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   Colors.transparent,
-                                  Colors.black54,
+                                  Colors.black87,
                                 ],
                               ),
                             ),
