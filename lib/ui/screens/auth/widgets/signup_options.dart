@@ -1,5 +1,8 @@
+import 'package:burla_xatun/cubits/login_cubit/login_cubit_state.dart';
+import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../cubits/login_cubit/login_cubit.dart';
 import '../../../../utils/constants/text_constants.dart';
@@ -13,39 +16,69 @@ class SignupOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GlobalText(
-          text: 'VƏ YA',
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-          color: Colors.black,
-        ),
-        context.deviceHeight < 710 ? 10.h : 24.h,
-        GestureDetector( 
-          onTap: () {
-            // context.pushReplacement('/video_doktor_login');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => BlocProvider.value(
-                  value: context.read<LoginCubit>(),
-                  child: VideoDoktorLogin(),
+    return BlocConsumer<LoginCubit, LoginCubitInitial>(
+      listener: (_, state) {
+        if (state.videoDoktorLoginStatus == VideoDoktorLoginStatus.success) {
+          context.go('/home');
+        }
+        if (state.videoDoktorLoginStatus == VideoDoktorLoginStatus.error) {
+          locator<LoginCubit>().errorState();
+        }
+        if (state.videoDoktorLoginStatus ==
+            VideoDoktorLoginStatus.networkError) {
+          locator<LoginCubit>().errorState();
+          // AppSnackbars.error(context, 'Şəbəkəni yoxlayın');
+        }
+      },
+      builder: (context, state) {
+        return Column(
+          children: [
+            GlobalText(
+              text: 'VƏ YA',
+              fontSize: 10,
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+            context.deviceHeight < 710 ? 10.h : 24.h,
+            // OptionWidget(
+            //   optionName: TextConstants.signUpWithGoogle,
+            //   child: Image.asset(
+            //     'assets/png/google_logo.png',
+            //     width: 25,
+            //     height: 25,
+            //   ),
+            // ),
+            // 10.h,
+            GestureDetector(
+              onTap: () async {
+                // context.pushReplacement('/video_doktor_login');
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => BlocProvider.value(
+                      value: locator<LoginCubit>(),
+                      child: VideoDoktorLogin(),
+                    ),
+                  ),
+                );
+
+                if (result == true) {
+                  locator<LoginCubit>().disableVideoDoktorButton();
+                }
+              },
+              child: OptionWidget(
+                paddingRight: 39,
+                optionName: TextConstants.videoDoktor,
+                child: Image.asset(
+                  'assets/png/videodoctor_logo.png',
+                  width: 25,
+                  height: 25,
                 ),
               ),
-            );
-          },
-          child: OptionWidget(
-            paddingRight: 39,
-            optionName: TextConstants.videoDoktor,
-            child: Image.asset(
-              'assets/png/videodoctor_logo.png',
-              width: 25,
-              height: 25,
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 }

@@ -33,6 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
             context.go('/home');
           } else if (state is SplashLogin) {
             context.go('/login');
+          } else {
+            context.go('/onboarding');
           }
         },
         child: Center(

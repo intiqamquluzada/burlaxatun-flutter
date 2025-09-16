@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/cubits/login_cubit/login_cubit.dart';
 import 'package:burla_xatun/cubits/notification/notification_cubit.dart';
 import 'package:burla_xatun/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,7 +8,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'cubits/about/about_cubit.dart';
@@ -180,6 +180,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => locator<SelectTaskCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<LoginCubit>(),
         )
       ],
       child: BlocBuilder<LanguageCubit, Locale>(
