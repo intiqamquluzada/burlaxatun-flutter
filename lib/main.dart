@@ -1,5 +1,8 @@
 import 'dart:developer';
 
+import 'package:burla_xatun/cubits/login_cubit/login_cubit.dart';
+import 'package:burla_xatun/cubits/notification/notification_cubit.dart';
+import 'package:burla_xatun/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -179,6 +182,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => locator<SelectTaskCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => locator<LoginCubit>(),
         )
       ],
       child: BlocBuilder<LanguageCubit, Locale>(
