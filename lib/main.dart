@@ -1,13 +1,10 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/notification/notification_cubit.dart';
-import 'package:burla_xatun/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'cubits/about/about_cubit.dart';
@@ -29,6 +26,7 @@ import 'cubits/main_cubit/mainn_cubit.dart';
 import 'cubits/medicine/medicine_cubit.dart';
 import 'cubits/medicine_create/medicine_create_cubit.dart';
 import 'cubits/medicine_patch/medicine_patch_cubit.dart';
+import 'cubits/notification/notification_cubit.dart';
 import 'cubits/pregnancy_progress/pregnancy_progress_cubit.dart';
 import 'cubits/privacy_policy/privacy_policy_cubit.dart';
 import 'cubits/recommend_by_day/recommend_by_day_cubit.dart';
@@ -42,6 +40,7 @@ import 'cubits/user_update/user_update_cubit.dart';
 import 'cubits/using_rules/using_rules_cubit.dart';
 import 'data/contractor/ultrasound_contract.dart';
 import 'data/models/local/user_data_model.dart';
+import 'firebase_options.dart';
 import 'generated/l10n.dart';
 import 'utils/constants/color_constants.dart';
 import 'utils/di/locator.dart';
@@ -69,7 +68,7 @@ void main() async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     log('notification: ${message.notification?.title}');
   });
-  
+
   runApp(MyApp());
 }
 

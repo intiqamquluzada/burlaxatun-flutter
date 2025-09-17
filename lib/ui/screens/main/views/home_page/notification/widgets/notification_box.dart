@@ -1,4 +1,5 @@
 import 'package:burla_xatun/data/models/remote/response/notifications_model.dart';
+import 'package:burla_xatun/utils/helper/past_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -72,7 +73,7 @@ class NotificationBox extends StatelessWidget {
                   4.h,
                   GlobalText(
                     text:
-                        '${DateTime.now().difference(notification.createdAt!).inMinutes} dəqiqə əvvəl',
+                        '${PastHelper.timeAgo(notification.createdAt.toString())} dəqiqə əvvəl',
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
                     color: Color(0xff8E8E93),

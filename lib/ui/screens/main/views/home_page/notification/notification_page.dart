@@ -57,7 +57,8 @@ class _NotificationPageState extends State<NotificationPage> {
                             itemCount: notificationList.length,
                             itemBuilder: (_, i) {
                               return NotificationBox(
-                                  notification: notificationList[i]);
+                                notification: notificationList[i],
+                              );
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {
