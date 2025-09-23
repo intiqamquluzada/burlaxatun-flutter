@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyB1YRnc0ZYTLUtMV8p1PR3TwlWjXlyf6Pw</string>
+	<string>AIzaSyDVAA3yvMHZuYKbodXCITkIWtHYF5920sw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1082814215806</string>
+	<string>84595542956</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.aastudio.burlaxatunapp</string>
 	<key>PROJECT_ID</key>
-	<string>anayam-test-60006</string>
+	<string>anayam-b4680</string>
 	<key>STORAGE_BUCKET</key>
-	<string>anayam-test-60006.firebasestorage.app</string>
+	<string>anayam-b4680.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1082814215806:ios:90ad4d7af07375bde5ca2f</string>
+	<string>1:84595542956:ios:21464a43fa8e5957524809</string>
 </dict>
 </plist>

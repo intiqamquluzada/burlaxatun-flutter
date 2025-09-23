@@ -4,38 +4,13 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-/// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
-    }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
         return ios;
-      case TargetPlatform.macOS:
-        return macos;
-      case TargetPlatform.windows:
-        return windows;
-      case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -44,38 +19,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDdZLjkPZVXf6S9Qqf7GkST1wTV998yxCg',
-    appId: '1:1082814215806:android:8ccab41bdd5ed48fe5ca2f',
-    messagingSenderId: '1082814215806',
-    projectId: 'anayam-test-60006',
-    storageBucket: 'anayam-test-60006.firebasestorage.app',
+    apiKey: 'AIzaSyCBU4Mu8Dq1YkiJDHqAbDuHwc8q5JMVtO4',
+    appId: '1:84595542956:android:897c98eec70aa34f524809',
+    messagingSenderId: '84595542956',
+    projectId: 'anayam-b4680',
+    storageBucket: 'anayam-b4680.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB1YRnc0ZYTLUtMV8p1PR3TwlWjXlyf6Pw',
-    appId: '1:1082814215806:ios:90ad4d7af07375bde5ca2f',
-    messagingSenderId: '1082814215806',
-    projectId: 'anayam-test-60006',
-    storageBucket: 'anayam-test-60006.firebasestorage.app',
+    apiKey: 'AIzaSyDVAA3yvMHZuYKbodXCITkIWtHYF5920sw',
+    appId: '1:84595542956:ios:21464a43fa8e5957524809',
+    messagingSenderId: '84595542956',
+    projectId: 'anayam-b4680',
+    storageBucket: 'anayam-b4680.firebasestorage.app',
     iosBundleId: 'com.aastudio.burlaxatunapp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB1YRnc0ZYTLUtMV8p1PR3TwlWjXlyf6Pw',
-    appId: '1:1082814215806:ios:2f1de08405afbf1ce5ca2f',
-    messagingSenderId: '1082814215806',
-    projectId: 'anayam-test-60006',
-    storageBucket: 'anayam-test-60006.firebasestorage.app',
-    iosBundleId: 'com.aastudio.anayam.app',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDOR--yzQl5ULI9cdeFk6bOtb6t6Qxtm-U',
-    appId: '1:1082814215806:web:28b28df7f8e39c18e5ca2f',
-    messagingSenderId: '1082814215806',
-    projectId: 'anayam-test-60006',
-    authDomain: 'anayam-test-60006.firebaseapp.com',
-    storageBucket: 'anayam-test-60006.firebasestorage.app',
-    measurementId: 'G-FBWB2RZPCT',
   );
 }
