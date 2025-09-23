@@ -2,8 +2,8 @@ class EndpointsConstants {
   EndpointsConstants._();
 
   static const String baseUrl = 'https://anayam.burlaxatun.az';
-  
-  // static const String baseUrl = 'https://burla-backend-py.onrender.com';
+
+  // static const String baseUrl = 'https://burrla.secop.az';
 
   // Authentication
   static const login = '$baseUrl/A/users/access-token/';
