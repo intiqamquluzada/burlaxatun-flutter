@@ -11,42 +11,42 @@ class ProfileSectionsItemsModel {
 
   static List<ProfileSectionsItemsModel> items = [
     ProfileSectionsItemsModel(
-      icon: 'assets/icons/settings_icon.svg',
+      icon: 'assets/icons/Setting.svg',
       sectionName: 'Tənzimləmələr',
       sectionRoute: '/settings',
     ),
     ProfileSectionsItemsModel(
-      icon: 'assets/icons/settings_icon.svg',
+      icon: 'assets/icons/profile_add_1.svg',
       sectionName: 'Profili dəyiş',
       sectionRoute: '/change_profile',
     ),
     ProfileSectionsItemsModel(
-      icon: 'assets/icons/faq_icon.svg',
+      icon: 'assets/icons/tabler_question_mark.svg',
       sectionName: 'Tez-tez verilən suallar',
       sectionRoute: '/faq',
     ),
     ProfileSectionsItemsModel(
-      icon: 'assets/icons/share_arrow_icon.svg',
+      icon: 'assets/icons/fluent_share-32-regular.svg',
       sectionName: 'Dostunla paylaş',
       // sectionRoute: '/share',
     ),
     ProfileSectionsItemsModel(
-      icon: 'assets/icons/info_icon.svg',
+      icon: 'assets/icons/information_circle.svg',
       sectionName: 'Haqqımızda',
       sectionRoute: '/about_us',
     ),
     ProfileSectionsItemsModel(
-      icon: 'assets/icons/phone_call_icon.svg',
+      icon: 'assets/icons/Call.svg',
       sectionName: 'Bizimlə əlaqə',
       sectionRoute: '/contact_us',
     ),
     ProfileSectionsItemsModel(
-      icon: 'assets/icons/document_icon.svg',
+      icon: 'assets/icons/document_justify_center_2.svg',
       sectionName: 'İstifadə qaydaları',
       sectionRoute: '/terms_of_use',
     ),
     ProfileSectionsItemsModel(
-      icon: 'assets/icons/privacy_policy_icon.svg',
+      icon: 'assets/icons/security_safe.svg',
       sectionName: 'Məxfilik siyasəti',
       sectionRoute: '/privacy_policy',
     ),

@@ -20,9 +20,9 @@ class IndicatorCubit extends Cubit<IndicatorState> {
   final IndicatorContract indicatorContract;
 
   Future<void> getIndicatorDatas({
+    int? babyId,
     required String indicatorName,
     required String range,
-    required int babyId,
   }) async {
     try {
       emit(state.copyWith(indicatorStatus: IndicatorStatus.loading));
@@ -61,7 +61,7 @@ class IndicatorCubit extends Cubit<IndicatorState> {
     required String indicator,
     required String date,
     required String time,
-    required int babyId,
+    int? babyId,
   }) async {
     try {
       emit(state.copyWith(indicatorStatus: IndicatorStatus.loading));

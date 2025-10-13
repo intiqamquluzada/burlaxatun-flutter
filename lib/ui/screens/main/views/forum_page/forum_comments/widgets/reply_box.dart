@@ -75,7 +75,7 @@ class _ReplyBoxState extends State<ReplyBox>
     }
   }
 
-  _updateAfterDelete() {}
+  // _updateAfterDelete() {}
 
   final ValueNotifier<int> selectedReplyBoxIndex = ValueNotifier<int>(-1);
 

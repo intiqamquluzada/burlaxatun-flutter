@@ -1,6 +1,6 @@
-import 'package:burla_xatun/utils/helper/html_to_plain_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import '../../../../../cubits/recommend_by_day/recommend_by_day_cubit.dart';
 import '../../../../../cubits/user_data/user_data_cubit.dart';
@@ -9,7 +9,6 @@ import '../../../../../utils/extensions/num_extensions.dart';
 import '../../../../widgets/global_text.dart';
 import '../home_page/ultrasound/widgets/scrollable_days_appbar.dart';
 import 'widgets/advise_image.dart';
-import 'widgets/advise_text.dart';
 import 'widgets/advise_title.dart';
 
 class AdvicePagee extends StatefulWidget {
@@ -91,11 +90,22 @@ class _AdvicePageeState extends State<AdvicePagee> {
                           ),
                           12.h,
                           AdviseTitle(
-                              adviceTitle: recommendationByDay?.name ?? ''),
+                            adviceTitle: recommendationByDay?.name ?? '',
+                          ),
                           10.h,
-                          AdviseText(
-                            adviceText: HtmlToPlainText.returnPlainText(
-                                recommendationByDay?.text ?? ''),
+                          Html(
+                            data: recommendationByDay?.text,
+                            style: {
+                              "body": Style(
+                                margin: Margins.zero,
+                                padding: HtmlPaddings.zero,
+                                fontSize: FontSize(14),
+                                color: const Color(0xff667085),
+                                fontWeight: FontWeight.w400,
+                                lineHeight: const LineHeight(1.4),
+                                textAlign: TextAlign.left,
+                              ),
+                            },
                           ),
                         ],
                       );

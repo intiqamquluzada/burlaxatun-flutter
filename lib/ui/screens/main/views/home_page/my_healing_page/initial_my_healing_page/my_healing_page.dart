@@ -18,7 +18,7 @@ class MyHealingPage extends StatelessWidget {
           valueListenable: context.read<UserDataCubit>().currentBabyNotifier,
           builder: (context, value, child) {
             return GlobalText(
-              text: value?.name ?? 'Övlad seçilməyib',
+              text: value?.name ?? 'Öz göstəricilərim',
               fontSize: 20,
               fontWeight: FontWeight.w500,
               color: Color(0xff344054),

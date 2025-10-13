@@ -156,7 +156,7 @@ class _ScrollableWeeksAppBarState extends State<ScrollableWeeksAppBar> {
                                           children: [
                                             GlobalText(
                                               text: '$i',
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.w600,
                                               color: Colors.black,
                                             ),

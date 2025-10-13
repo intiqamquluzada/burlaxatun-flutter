@@ -6,12 +6,14 @@ class ResetPasswordState extends Equatable {
     this.phoneNumber,
     this.otp,
     this.sendOtpStatus = SendOtpStatus.initial,
+    this.operationId,
   });
 
   final ResetPasswordStatus resetPasswordStatus;
   final SendOtpStatus sendOtpStatus;
   final String? phoneNumber;
   final String? otp;
+  final String? operationId;
 
   @override
   List<Object?> get props => [
@@ -19,6 +21,7 @@ class ResetPasswordState extends Equatable {
         resetPasswordStatus,
         phoneNumber,
         otp,
+        operationId,
       ];
 
   ResetPasswordState copyWith({
@@ -26,12 +29,14 @@ class ResetPasswordState extends Equatable {
     ResetPasswordStatus? resetPasswordStatus,
     String? phoneNumber,
     String? otp,
+    String? operationId,
   }) {
     return ResetPasswordState(
       sendOtpStatus: sendOtpStatus ?? this.sendOtpStatus,
       resetPasswordStatus: resetPasswordStatus ?? this.resetPasswordStatus,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       otp: otp ?? this.otp,
+      operationId: operationId ?? this.operationId,
     );
   }
 }

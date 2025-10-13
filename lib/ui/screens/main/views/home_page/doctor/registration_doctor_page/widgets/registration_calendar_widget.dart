@@ -1,4 +1,5 @@
 import 'package:burla_xatun/cubits/doctor_reservation/doctor_reservation_cubit.dart';
+import 'package:burla_xatun/cubits/doctors_detail/doctors_detail_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,8 +13,9 @@ class RegistrationCalendarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DoctorReservationCubit doctorReservationCubit =
-        context.read<DoctorReservationCubit>();
+    final doctorReservationCubit = context.read<DoctorReservationCubit>();
+
+    final doctorDetailCubit = context.read<DoctorDetailCubit>();
 
     final ValueNotifier<DateTime> selectedDayNotifier =
         ValueNotifier<DateTime>(DateTime.now());
@@ -23,6 +25,8 @@ class RegistrationCalendarWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(10),
           child: TableCalendar(
+            locale: 'Az',
+            startingDayOfWeek: StartingDayOfWeek.monday,
             rowHeight: 52,
             focusedDay: value,
             firstDay: DateTime.now(),
@@ -30,11 +34,14 @@ class RegistrationCalendarWidget extends StatelessWidget {
             selectedDayPredicate: (day) {
               return isSameDay(value, day);
             },
-            onDaySelected: (selectedDay, focusedDay) {
+            onDaySelected: (selectedDay, focusedDay) async {
               selectedDayNotifier.value = focusedDay;
               final formattedDay =
                   DateFormat('yyyy-MM-dd').format(selectedDayNotifier.value);
-              doctorReservationCubit.saveDate(formattedDay);
+              // doctorReservationCubit.saveDate(formattedDay);
+              doctorReservationCubit.saveTime(0);
+
+              await doctorDetailCubit.getAvailableTimes(date: formattedDay);
             },
             headerStyle: HeaderStyle(
               titleCentered: true,

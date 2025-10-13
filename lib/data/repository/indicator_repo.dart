@@ -9,7 +9,7 @@ class IndicatorRepo implements IndicatorContract {
 
   @override
   Future<Response> getIndicator({
-    required int babyId,
+    int? babyId,
     required String indicatorName,
     required String range,
   }) {

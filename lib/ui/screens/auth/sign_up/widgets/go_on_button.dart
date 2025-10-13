@@ -30,24 +30,29 @@ class _GoOnButtonState extends State<GoOnButton> {
     return BlocConsumer<SignupCubit, SignupState>(
       listener: (_, state) {
         if (state is SignupSuccess) {
-          context.go('/questions', extra: false);
+          // context.go('/questions', extra: false);
+          context.go(
+            "/forgot_psw_otp",
+            extra: {
+              'from_register': true,
+              'phone_number': context.read<SignupCubit>().phoneController.text,
+            },
+          );
         }
         if (state is SignupError) {
           final errorMessage = state.error;
           AppSnackbars.error(
-              context,
-              errorMessage.isNotEmpty
-                  ? errorMessage
-                  : 'Qeydiyyat uğursuz oldu!');
+            context,
+            errorMessage.isNotEmpty ? errorMessage : 'Qeydiyyat uğursuz oldu!',
+          );
         }
         if (state is SignupNetworkError) {
           final errorMessage = state.error;
 
           AppSnackbars.error(
-              context,
-              errorMessage.isNotEmpty
-                  ? errorMessage
-                  : 'Qeydiyyat uğursuz oldu!');
+            context,
+            errorMessage.isNotEmpty ? errorMessage : 'Qeydiyyat uğursuz oldu!',
+          );
         }
       },
       builder: (_, state) {

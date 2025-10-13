@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:burla_xatun/cubits/user_data/user_data_cubit.dart';
 import 'package:burla_xatun/cubits/user_update/user_update_cubit.dart';
+import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,15 +19,33 @@ class ImagePickerHelper {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(ImageSource.camera),
-              child: const Text('Kamera'),
+              child: const Text(
+                'Kamera',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: ColorConstants.primaryRedColor,
+                ),
+              ),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(ImageSource.gallery),
-              child: const Text('Qalereya'),
+              child: const Text(
+                'Qalereya',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: ColorConstants.primaryRedColor,
+                ),
+              ),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(ImageSource.camera),
-              child: const Text('Sil'),
+              child: const Text(
+                'Sil',
+                style: TextStyle(
+                  fontSize: 13,
+                  color: ColorConstants.primaryRedColor,
+                ),
+              ),
             ),
           ],
         );

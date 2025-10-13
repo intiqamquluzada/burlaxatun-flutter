@@ -20,15 +20,24 @@ class ResetPasswordService {
   }
 
   Future<Response<dynamic>> verifyOtp({
-    required String phoneNumber,
+    String? phoneNumber,
+    String? operationId,
     required String otp,
+    required bool fromRegister,
   }) async {
-    final url = EndpointsConstants.verifyOtp;
+    final url = fromRegister
+        ? EndpointsConstants.registerVerifyOtp
+        : EndpointsConstants.resetPasswordVerifyOtp;
 
-    final postData = {
-      "phone_number": phoneNumber,
-      "otp": otp,
-    };
+    final Map<String, dynamic> postData = {};
+
+    if (fromRegister) {
+      postData["phone_number"] = phoneNumber;
+      postData["otp_code"] = otp;
+    } else {
+      postData["operation_id"] = operationId;
+      postData["code"] = otp;
+    }
 
     final response = await BaseNetwork.instance.post(
       path: url,
@@ -38,24 +47,39 @@ class ResetPasswordService {
   }
 
   Future<Response<dynamic>> resetPassword({
+    required String operationId,
     required String phoneNumber,
-    required String otp,
     required String newPass,
     required String confirmNewPass,
   }) async {
     final url = EndpointsConstants.resetPassword;
 
     final postData = {
+      "operation_id": operationId,
       "phone_number": phoneNumber,
-      "otp": otp,
-      "new_password": newPass,
-      "confirm_password": confirmNewPass,
+      "password": newPass,
+      "password2": confirmNewPass,
     };
 
     final response = await BaseNetwork.instance.post(
       path: url,
       postData: postData,
     );
+    return response;
+  }
+
+  Future<Response<dynamic>> resendOtp({required String phoneNumber}) async {
+    final url = EndpointsConstants.resendOtp;
+
+    final postData = {
+      'phone_number': phoneNumber,
+    };
+
+    final response = await BaseNetwork.instance.post(
+      path: url,
+      postData: postData,
+    );
+
     return response;
   }
 }

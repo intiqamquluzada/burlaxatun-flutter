@@ -113,7 +113,13 @@ class _PhoneNumberRequestScreenState extends State<PhoneNumberRequestScreen> {
                       );
                     } else if (state.sendOtpStatus == SendOtpStatus.success) {
                       log('code sended successfully to your phone');
-                      context.go("/forgot_psw_otp");
+                      context.go(
+                        "/forgot_psw_otp",
+                        extra: {
+                          'from_register': false,
+                          'register_number': _textEditingController.text,
+                        },
+                      );
                     }
                   },
                   builder: (context, state) {

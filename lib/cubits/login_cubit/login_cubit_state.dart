@@ -11,6 +11,8 @@ class LoginCubitInitial extends Equatable {
     this.errorMessage,
     this.videoDoktorLoginStatus = VideoDoktorLoginStatus.initial,
     this.isActiveVideoDoktorLoginButton = false,
+    this.questionCompleted,
+    this.errorCode,
   });
 
   final bool isActiveButton;
@@ -21,6 +23,8 @@ class LoginCubitInitial extends Equatable {
   final LoginStatus loginStatus;
   final VideoDoktorLoginStatus videoDoktorLoginStatus;
   final String? errorMessage;
+  final bool? questionCompleted;
+  final String? errorCode;
 
   @override
   List<Object?> get props => [
@@ -32,6 +36,8 @@ class LoginCubitInitial extends Equatable {
         videoDoktorLoginStatus,
         isVideDoktorError,
         isActiveVideoDoktorLoginButton,
+        questionCompleted,
+        errorCode,
       ];
 
   LoginCubitInitial copyWith({
@@ -43,6 +49,8 @@ class LoginCubitInitial extends Equatable {
     VideoDoktorLoginStatus? videoDoktorLoginStatus,
     bool? isVideDoktorError,
     bool? isActiveVideoDoktorLoginButton,
+    bool? questionCompleted,
+    String? errorCode,
   }) {
     return LoginCubitInitial(
       isVideDoktorError: isVideDoktorError ?? this.isVideDoktorError,
@@ -55,6 +63,8 @@ class LoginCubitInitial extends Equatable {
           videoDoktorLoginStatus ?? this.videoDoktorLoginStatus,
       isActiveVideoDoktorLoginButton:
           isActiveVideoDoktorLoginButton ?? this.isActiveVideoDoktorLoginButton,
+      questionCompleted: questionCompleted ?? this.questionCompleted,
+      errorCode: errorCode ?? this.errorCode,
     );
   }
 }

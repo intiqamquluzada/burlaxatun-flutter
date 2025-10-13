@@ -9,7 +9,7 @@ class BlogCatRepository implements BlogCatContractor {
   final BlogCatService _blogCatService;
 
   @override
-  Future<Response<dynamic>> getBlogCat() {
-    return _blogCatService.getBlogCat();
+  Future<Response<dynamic>> getBlogCat({String? search}) {
+    return _blogCatService.getBlogCat(search: search);
   }
 }

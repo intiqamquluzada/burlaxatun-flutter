@@ -13,8 +13,11 @@ class EndpointsConstants {
   static const refreshToken = '$baseUrl/A/users/refresh-token/';
 
   static const requestResetPassword = '$baseUrl/A/user/password-reset/request/';
-  static const verifyOtp = '$baseUrl/A/user/password-reset/confirm/';
+  static const resetPasswordVerifyOtp =
+      '$baseUrl/A/user/password-reset/confirm/';
+  static const registerVerifyOtp = '$baseUrl/A/user-verify-otp/';
   static const resetPassword = '$baseUrl/A/user/password-reset/change/';
+  static const resendOtp = '$baseUrl/A/user-resend-otp/';
 
   static const changePassword = '$baseUrl/A/user/change-password';
 
@@ -95,6 +98,7 @@ class EndpointsConstants {
   static const user = "$baseUrl/D/forum/videodoktor/user/";
   // static const forumCreate = '$baseUrl/D/forum-create/';
 
-  static const String doctorsList = '$baseUrl/C/doctors-list/';
-  static const String doctorDetail = '$baseUrl/C/doctors-detail/{slug}/';
+  static const String doctorsList = '$baseUrl/C/doctors-list-specialization';
+  static const String doctorSpecialities = '$baseUrl/C/doctors/specialties/';
+  static const String doctorDetails = '$baseUrl/C/doctors-detail';
 }

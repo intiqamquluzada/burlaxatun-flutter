@@ -5,8 +5,12 @@ import '../../../../../../../../utils/extensions/num_extensions.dart';
 import 'date_or_price_box.dart';
 
 class RegistrationPriceAndTime extends StatelessWidget {
-  final DoctorDetailResponse doctor;
-  const RegistrationPriceAndTime({super.key, required this.doctor});
+  const RegistrationPriceAndTime({
+    super.key,
+    required this.doctor,
+  });
+
+  final DoctorDetailsModel doctor;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +29,13 @@ class RegistrationPriceAndTime extends StatelessWidget {
             children: [
               DateOrPriceBox(
                 boxName: 'Uyğun Tarix',
-                boxInfo: '${doctor.availableDays} | ${doctor.availableTimes}',
+                boxInfo: '${doctor.works?.first.workingTime}',
+                // | ${doctor.availableTimes}
               ),
               26.h,
               DateOrPriceBox(
                 boxName: 'Müayinə Qiyməti',
-                boxInfo: '${doctor.consultantPrice} Azn',
+                boxInfo: '0 Azn',
               ),
             ],
           ),

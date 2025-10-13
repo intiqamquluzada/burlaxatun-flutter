@@ -6,9 +6,12 @@ import '../../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../../widgets/global_text.dart';
 
 class RegistrationDoctorInfo extends StatelessWidget {
-  final DoctorDetailResponse doctor;
+  const RegistrationDoctorInfo({
+    super.key,
+    required this.doctor,
+  });
 
-  const RegistrationDoctorInfo({super.key, required this.doctor});
+  final DoctorDetailsModel doctor;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,8 @@ class RegistrationDoctorInfo extends StatelessWidget {
               width: 90,
               height: 90,
               fit: BoxFit.cover,
-              imageUrl: doctor.image ?? '',
+              imageUrl:
+                  'https://videodoktor.az/uploads/doctors/${doctor.imageFile}',
               errorWidget: (context, url, error) => Icon(Icons.person),
             ),
           ),
@@ -33,7 +37,8 @@ class RegistrationDoctorInfo extends StatelessWidget {
           ),
           5.h,
           GlobalText(
-            text: '${doctor.position?.name ?? ''} • ${doctor.workplace ?? ''}',
+            text:
+                '${doctor.specializations?.first ?? ''} • ${doctor.works?.first.clinicId ?? ''}',
             fontSize: 14,
             fontWeight: FontWeight.w400,
             color: Color(0xff667085),

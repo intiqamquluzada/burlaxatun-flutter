@@ -29,6 +29,9 @@ class ForumInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextFormField(
+        onTapOutside: (event) {
+          FocusScope.of(context).unfocus();
+        },
         maxLines: maxLines,
         textAlignVertical: TextAlignVertical.top,
         controller: textController,

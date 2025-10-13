@@ -1,36 +1,42 @@
 part of 'doctors_detail_cubit.dart';
 
-enum DoctorDetailStatus { initial, loading, success, failure, networkError }
-
 final class DoctorDetailState extends Equatable {
   const DoctorDetailState({
-    required this.status,
-    required this.response,
-    required this.errorMessage,
+    this.doctorDetailStatus = DoctorDetailStatus.initial,
+    this.availableTimesStatus = AvailableTimesStatus.initial,
+    this.availableTimes,
+    this.doctorDetails,
+    this.errorMessage,
   });
 
-  final DoctorDetailStatus status;
-  final DoctorDetailResponse? response;
+  final DoctorDetailStatus doctorDetailStatus;
+  final AvailableTimesStatus availableTimesStatus;
+  final List<AvailableTimes>? availableTimes;
+  final DoctorDetailsModel? doctorDetails;
   final String? errorMessage;
 
+  @override
+  List<Object?> get props => [
+        doctorDetailStatus,
+        availableTimesStatus,
+        availableTimes,
+        doctorDetails,
+        errorMessage,
+      ];
+
   DoctorDetailState copyWith({
-    DoctorDetailStatus? status,
-    DoctorDetailResponse? response,
+    DoctorDetailStatus? doctorDetailStatus,
+    AvailableTimesStatus? availableTimesStatus,
+    List<AvailableTimes>? availableTimes,
+    DoctorDetailsModel? doctorDetails,
     String? errorMessage,
   }) {
     return DoctorDetailState(
-      status: status ?? this.status,
-      response: response ?? this.response,
+      doctorDetailStatus: doctorDetailStatus ?? this.doctorDetailStatus,
+      availableTimesStatus: availableTimesStatus ?? this.availableTimesStatus,
+      doctorDetails: doctorDetails ?? this.doctorDetails,
+      availableTimes: availableTimes ?? this.availableTimes,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
-
-  factory DoctorDetailState.initial() => const DoctorDetailState(
-        status: DoctorDetailStatus.initial,
-        response: null,
-        errorMessage: null,
-      );
-
-  @override
-  List<Object?> get props => [status, response, errorMessage];
 }

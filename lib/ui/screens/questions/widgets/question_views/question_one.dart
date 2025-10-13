@@ -47,10 +47,12 @@ class _QuestionOneState extends State<QuestionOne>
                     userUpdateCubit.updateUser(isPregnant: true);
                   } else if (i == 1) {
                     // userUpdateCubit.wantToSeePeriod = true;
-                    userUpdateCubit.updateUser(wantToSeePeriod: true);
+                    userUpdateCubit.updateUser(
+                        wantToSeePeriod: true, questionsCompleted: true);
                   } else if (i == 2) {
                     // userUpdateCubit.wantToBePregnant = true;
-                    userUpdateCubit.updateUser(wantToBePregnant: true);
+                    userUpdateCubit.updateUser(
+                        wantToBePregnant: true, questionsCompleted: true);
                   }
                 },
                 child: QuestionOneButton(

@@ -24,9 +24,16 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       );
 
       if (!response.statusCode.isSuccess) return;
+
+      final Map<String, dynamic> operationData =
+          (response.data as Map<String, dynamic>)['operation_data'];
+
+      log('operation id: ${operationData['operation']}');
+
       emit(state.copyWith(
         sendOtpStatus: SendOtpStatus.success,
         phoneNumber: phoneNumber,
+        operationId: operationData['operation'],
       ));
     } catch (e, s) {
       log('Error occured while sending code to number: $e', stackTrace: s);
@@ -34,12 +41,19 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     }
   }
 
-  Future<void> confirmOtp({required String otp}) async {
+  Future<void> confirmOtp({
+    required String otp,
+    required bool fromRegister,
+    String? phoneNumber,
+  }) async {
+    log('opeartion id in state ${state.operationId}');
     try {
       emit(state.copyWith(resetPasswordStatus: ResetPasswordStatus.loading));
       final response = await resetPasswordContract.verifyOtp(
-        phoneNumber: state.phoneNumber ?? '',
+        phoneNumber: phoneNumber,
+        operationId: state.operationId,
         otp: otp,
+        fromRegister: fromRegister,
       );
       if (!response.statusCode.isSuccess) return;
       emit(state.copyWith(
@@ -52,6 +66,8 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     }
   }
 
+  // Future<void> registerVerifyOtp() {}
+
   Future<void> resetPassword({
     required String newPass,
     required String confirmNewPass,
@@ -60,7 +76,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       emit(state.copyWith(resetPasswordStatus: ResetPasswordStatus.loading));
       final response = await resetPasswordContract.resetPassword(
         phoneNumber: state.phoneNumber ?? '',
-        otp: state.otp ?? '',
+        operationId: state.operationId ?? '',
         newPass: newPass,
         confirmNewPass: confirmNewPass,
       );
@@ -70,6 +86,20 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     } catch (e, s) {
       log('Error occured while reseting password: $e', stackTrace: s);
       emit(state.copyWith(resetPasswordStatus: ResetPasswordStatus.error));
+    }
+  }
+
+  Future<void> resendOtp({required String phoneNumber}) async {
+    try {
+      emit(state.copyWith(sendOtpStatus: SendOtpStatus.loading));
+      final response =
+          await resetPasswordContract.resendOtp(phoneNumber: phoneNumber);
+
+      if (!response.statusCode.isSuccess) return;
+      emit(state.copyWith(sendOtpStatus: SendOtpStatus.success));
+    } catch (e, s) {
+      log('Error occured while resending otp to number: $e', stackTrace: s);
+      emit(state.copyWith(sendOtpStatus: SendOtpStatus.error));
     }
   }
 }

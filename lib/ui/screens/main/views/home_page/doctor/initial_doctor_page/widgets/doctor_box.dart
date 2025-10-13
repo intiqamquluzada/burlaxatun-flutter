@@ -1,13 +1,12 @@
-import 'package:burla_xatun/data/models/remote/response/doctors_list_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../data/models/remote/response/doctors_model.dart';
 import '../../../../../../../../utils/extensions/num_extensions.dart';
 import 'doctor_info.dart';
 import 'doctor_register_button.dart';
-import 'time_and_price_box.dart';
 
 class DoctorBox extends StatelessWidget {
-  final Result doctor;
+  final Doctor doctor;
 
   const DoctorBox({
     super.key,
@@ -32,17 +31,17 @@ class DoctorBox extends StatelessWidget {
               DoctorInfo(
                 name: doctor.name,
                 surname: doctor.surname,
-                doctorImage: doctor.image,
-                workPlace: doctor.workplace,
-                position: doctor.position?.name ?? 'Tapılmadı',
+                doctorImage: doctor.imageFile,
+                workPlace: 'deded',
+                position: doctor.specializations,
               ),
-              24.h,
-              TimeAndPriceBox(
-                doctor: doctor,
-              ),
+              // 24.h,
+              // TimeAndPriceBox(
+              //   doctor: doctor,
+              // ),
               24.h,
               DoctorRegisterButton(
-                slug: doctor.slug ?? '',
+                doctorId: doctor.id ?? -1,
               ),
             ],
           ),

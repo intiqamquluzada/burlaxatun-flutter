@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final userResponseModel = userResponseModelFromJson(jsonString);
-
 import 'dart:convert';
 
 import 'package:burla_xatun/data/models/local/user_data_model.dart';

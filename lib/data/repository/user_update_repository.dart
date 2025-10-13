@@ -22,6 +22,7 @@ class UserUpdateRepository implements UserUpdateContractor {
     String? activeLanguage,
     String? inseminationDate,
     bool? enableNotifications,
+    bool? questionsCompleted,
   }) {
     return _userUpdateService.updateUser(
       phoneNumber: phoneNumber,
@@ -36,6 +37,7 @@ class UserUpdateRepository implements UserUpdateContractor {
       image: image,
       activeLanguage: activeLanguage,
       enableNotifications: enableNotifications,
+      questionsCompleted: questionsCompleted,
     );
   }
 

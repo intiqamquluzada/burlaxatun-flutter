@@ -1,9 +1,9 @@
-import 'package:burla_xatun/cubits/indicator/indicator_cubit.dart';
-import 'package:burla_xatun/data/models/local/indicator_time_interval_items_model.dart';
-import 'package:burla_xatun/data/models/remote/response/user_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../../cubits/indicator/indicator_cubit.dart';
+import '../../../../../../../../data/models/local/indicator_time_interval_items_model.dart';
+import '../../../../../../../../data/models/remote/response/user_data_model.dart';
 import 'single_time_interval_box.dart';
 
 class TimeIntervalsWidget extends StatelessWidget {
@@ -11,15 +11,17 @@ class TimeIntervalsWidget extends StatelessWidget {
     super.key,
     required this.indicatorName,
     required this.currentBabyNotifier,
+    required this.selectedInterval,
   });
 
   final String indicatorName;
   final ValueNotifier<Baby?> currentBabyNotifier;
+  final ValueNotifier<int?> selectedInterval;
 
   @override
   Widget build(BuildContext context) {
     final timeIntervalItems = IndicatorTimeIntervalItemsModel.items;
-    final ValueNotifier<int> selectedInterval = ValueNotifier<int>(2);
+    // final ValueNotifier<int> selectedInterval = ValueNotifier<int>(2);
     final IndicatorCubit indicatorCubit = context.read<IndicatorCubit>();
     return Row(
       children: [
@@ -39,15 +41,11 @@ class TimeIntervalsWidget extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           selectedInterval.value = i;
-                          if (currentBaby == null) {
-                            return;
-                          } else {
-                            indicatorCubit.getIndicatorDatas(
-                              babyId: currentBaby.id ?? -1,
-                              indicatorName: indicatorName,
-                              range: timeIntervalItems[i].range,
-                            );
-                          }
+                          indicatorCubit.getIndicatorDatas(
+                            babyId: currentBaby?.id,
+                            indicatorName: indicatorName,
+                            range: timeIntervalItems[i].range,
+                          );
                         },
                         child: SingleTimeIntervalBox(
                           interval: timeIntervalItems[i].interval,

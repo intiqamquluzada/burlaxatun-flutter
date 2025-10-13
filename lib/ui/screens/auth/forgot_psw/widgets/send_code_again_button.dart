@@ -8,7 +8,14 @@ import '../../../../../utils/app/app_snackbars.dart';
 import '../../../../../utils/constants/color_constants.dart';
 
 class SendCodeAgainButton extends StatefulWidget {
-  const SendCodeAgainButton({super.key});
+  const SendCodeAgainButton({
+    super.key,
+    required this.fromRegister,
+    this.phoneNumber,
+  });
+
+  final bool fromRegister;
+  final String? phoneNumber;
 
   @override
   State<SendCodeAgainButton> createState() => _SendCodeAgainButtonState();
@@ -18,8 +25,14 @@ class _SendCodeAgainButtonState extends State<SendCodeAgainButton> {
   final ValueNotifier<int> seconds = ValueNotifier<int>(0);
   Timer? timer;
 
+  @override
+  void initState() {
+    !widget.fromRegister ? _startTimer() : null;
+    super.initState();
+  }
+
   void _startTimer() {
-    seconds.value = 30;
+    seconds.value = 120;
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       seconds.value--;
       _stopWhenZero();
@@ -49,6 +62,7 @@ class _SendCodeAgainButtonState extends State<SendCodeAgainButton> {
   @override
   Widget build(BuildContext context) {
     final resetpasswordCubit = context.read<ResetPasswordCubit>();
+
     return ValueListenableBuilder(
       valueListenable: seconds,
       builder: (context, value, child) {
@@ -76,7 +90,11 @@ class _SendCodeAgainButtonState extends State<SendCodeAgainButton> {
                 onTap: () {
                   if (isZero) {
                     _startTimer();
-                    resetpasswordCubit.sendCode();
+                    widget.fromRegister
+                        ? resetpasswordCubit.resendOtp(
+                            phoneNumber: widget.phoneNumber!,
+                          )
+                        : resetpasswordCubit.sendCode();
                   }
                 },
                 child: Text(

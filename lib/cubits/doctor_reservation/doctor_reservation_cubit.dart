@@ -15,16 +15,16 @@ class DoctorReservationCubit extends Cubit<DoctorReservationState> {
 
   final DoctorReservContract _doctorReservContract;
 
-  void saveTime(String v) {
-    emit(state.copyWith(reserveTime: v));
+  void saveTime(int v) {
+    emit(state.copyWith(reserveTimeId: v));
   }
 
   void saveDate(String v) {
     emit(state.copyWith(reserveDate: v));
   }
 
-  Future<void> reservDoctor(int doctorId) async {
-    if (state.reserveDate == null|| state.reserveTime == null) {
+  Future<void> reservDoctor() async {
+    if (state.reserveTimeId == 0 || state.reserveTimeId == null) {
       emit(state.copyWith(
         errorMessage: 'Vaxt və tarix seçin',
         doctorReservStatus: DoctorReservStatus.error,
@@ -32,14 +32,10 @@ class DoctorReservationCubit extends Cubit<DoctorReservationState> {
       emit(state.copyWith(doctorReservStatus: DoctorReservStatus.initial));
       return;
     }
-    try {
+    try { 
       emit(state.copyWith(doctorReservStatus: DoctorReservStatus.loading));
       final response = await _doctorReservContract.reserveDoctor(
-        postData: {
-          "doctor": doctorId,
-          "reserve_date": state.reserveDate,
-          "reserve_time": state.reserveTime,
-        },
+        schedulingTimeId: state.reserveTimeId!,
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         emit(state.copyWith(doctorReservStatus: DoctorReservStatus.success));

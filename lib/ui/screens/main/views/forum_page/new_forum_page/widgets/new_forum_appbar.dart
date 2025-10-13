@@ -67,7 +67,7 @@ class NewForumAppbar extends StatelessWidget implements PreferredSizeWidget {
                   child: SvgPicture.asset(
                     'assets/icons/forum_send_icon.svg',
                     color: state.createForumStatus == CreateForumStatus.loading
-                        ? ColorConstants.customBlack
+                        ? ColorConstants.gray400
                         : ColorConstants.primaryRedColor,
                   ),
                 ),
