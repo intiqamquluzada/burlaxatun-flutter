@@ -176,17 +176,17 @@ class _AddNewIndicatorDialogState extends State<AddNewIndicatorDialog> {
                                 .format(dateValue.value);
                             final selectedTime =
                                 DateFormat('HH:mm').format(timeValue.value);
+                            final babyId = context
+                                .read<UserDataCubit>()
+                                .currentBabyNotifier
+                                .value
+                                ?.id;
                             indicatorCubit.addIndicator(
                               indicatorName: widget.indicatorName,
                               indicator: _indicatorController.text.trim(),
                               date: selectedDate,
                               time: selectedTime,
-                              babyId: context
-                                      .read<UserDataCubit>()
-                                      .currentBabyNotifier
-                                      .value
-                                      ?.id ??
-                                  -1,
+                              babyId: babyId,
                             );
                           },
                           child: BlocConsumer<IndicatorCubit, IndicatorState>(

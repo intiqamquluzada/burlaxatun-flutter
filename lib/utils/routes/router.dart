@@ -1,3 +1,4 @@
+import 'package:burla_xatun/cubits/doctors_list/doctors_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -17,7 +18,7 @@ import '../../cubits/signup_cubit/signup_cubit.dart';
 import '../../cubits/splash/splash_cubit.dart';
 import '../../cubits/video_cubit/video_cubit.dart';
 import '../../ui/screens/add_child/add_your_child.dart';
-import '../../ui/screens/auth/forgot_psw/forgot_psw_otp_screen.dart';
+import '../../ui/screens/auth/forgot_psw/otp_screen.dart';
 import '../../ui/screens/auth/forgot_psw/forgot_psw_success_screen.dart';
 import '../../ui/screens/auth/forgot_psw/phone_number_request_screen.dart';
 import '../../ui/screens/auth/forgot_psw/reset_psw_screen.dart';
@@ -141,7 +142,13 @@ class Routerapp {
       GoRoute(
         path: '/forgot_psw_otp',
         builder: (context, state) {
-          return ForgotPswOtpScreen();
+          final extra = state.extra as Map<String, dynamic>;
+          final fromRegister = extra['from_register'];
+          final phoneNumber = extra['phone_number'];
+          return OtpScreen(
+            fromRegister: fromRegister,
+            phoneNumber: phoneNumber,
+          );
         },
       ),
       GoRoute(
@@ -231,17 +238,20 @@ class Routerapp {
               ),
               GoRoute(
                 path: '/initial_doctors',
-                builder: (context, state) => InitialDoctorPage(),
+                builder: (context, state) => BlocProvider(
+                  create: (context) => locator<DoctorsCubit>(),
+                  child: InitialDoctorPage(),
+                ),
               ),
               GoRoute(
-                path: '/doctor_register/:slug',
+                path: '/doctor_register',
                 builder: (context, state) {
-                  final slug = state.pathParameters['slug']!;
+                  final doctorId = state.extra as int;
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(
-                        create: (context) =>
-                            locator<DoctorDetailCubit>()..getDoctorDetail(slug),
+                        create: (context) => locator<DoctorDetailCubit>()
+                          ..getDoctorDetail(doctorId: doctorId),
                       ),
                       BlocProvider(
                         create: (context) => locator<DoctorReservationCubit>(),

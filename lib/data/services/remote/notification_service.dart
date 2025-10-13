@@ -1,3 +1,4 @@
+import 'package:burla_xatun/utils/constants/endpoints_constants.dart';
 import 'package:dio/dio.dart';
 
 import '../../../utils/di/locator.dart';
@@ -6,8 +7,9 @@ import 'base_network_service.dart';
 
 class NotificationService {
   Future<Response<dynamic>> getNotifications() async {
-    // final url = EndpointsConstants.notifications;
-    final url = 'https://burrla.secop.az/notifications/';
+    final url = '${EndpointsConstants.baseUrl}/notifications/';
+    // final url = 'https://burrla.secop.az/notifications/';
+    // final url = 'https://anayam.burlaxatun.az/notifications/';
 
     final accessToken = locator<LoginTokenService>().token;
 
@@ -21,7 +23,8 @@ class NotificationService {
     required String fcmToken,
     required String deviceType,
   }) async {
-    final url = 'https://burrla.secop.az/notifications/fcm-token/';
+    final url = '${EndpointsConstants.baseUrl}/notifications/fcm-token/';
+    // final url = 'https://burrla.secop.az/notifications/fcm-token/';
     final data = {
       "token": fcmToken,
       "device_type": deviceType,

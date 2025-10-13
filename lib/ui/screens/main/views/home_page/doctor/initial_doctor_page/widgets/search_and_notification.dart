@@ -28,19 +28,20 @@ class SearchAndNotification extends StatelessWidget {
               width: MediaQuery.of(context).size.width * 0.82,
               child: GlobalInput(
                 prefixIcon: 'assets/icons/search_icon.svg',
-                hintText: 'Axtarış...',
+                hintText: 'Sahəyə uyğun axtarış...',
                 onChanged: onSearch,
               ),
             ),
             GestureDetector(
               onTap: () {
-                showModalBottomSheet(  
+                showModalBottomSheet(
                   showDragHandle: true,
-                  isScrollControlled: true, 
+                  isScrollControlled: true,
                   context: context,
                   builder: (_) {
                     return BlocProvider(
-                      create: (context) => locator<DoctorNotificationCubit>()..getDrNotifications(),
+                      create: (context) => locator<DoctorNotificationCubit>()
+                        ..getDrNotifications(),
                       child: DoctorsNotification(),
                     );
                   },

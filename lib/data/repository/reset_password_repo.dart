@@ -17,27 +17,40 @@ class ResetPasswordRepo implements ResetPasswordContract {
 
   @override
   Future<Response> verifyOtp({
-    required String phoneNumber,
+    String? operationId,
+    String? phoneNumber,
+    required bool fromRegister,
     required String otp,
   }) {
     return resetPasswordService.verifyOtp(
+      operationId: operationId,
       phoneNumber: phoneNumber,
       otp: otp,
+      fromRegister: fromRegister,
     );
   }
 
   @override
   Future<Response> resetPassword({
+    required String operationId,
     required String phoneNumber,
-    required String otp,
     required String newPass,
     required String confirmNewPass,
   }) {
     return resetPasswordService.resetPassword(
+      operationId: operationId,
       phoneNumber: phoneNumber,
-      otp: otp,
       newPass: newPass,
       confirmNewPass: confirmNewPass,
+    );
+  }
+
+  @override
+  Future<Response> resendOtp({
+    required String phoneNumber,
+  }) {
+    return resetPasswordService.resendOtp(
+      phoneNumber: phoneNumber,
     );
   }
 }

@@ -9,8 +9,10 @@ class DoctorReservRepository implements DoctorReservContract {
 
   @override
   Future<Response<dynamic>> reserveDoctor({
-    required Map<String, dynamic> postData,
+    required int schedulingTimeId,
   }) {
-    return _doctorReservationService.reserveDoctor(postData: postData);
+    return _doctorReservationService.reserveDoctor(
+      schedulingTimeId: schedulingTimeId,
+    );
   }
 }

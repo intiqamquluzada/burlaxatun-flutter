@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
     if (!isAllowedNotification) return;
 
     String? newFcmToken = await FirebaseMessaging.instance.getToken();
+    
 
     if (newFcmToken == null) return;
 

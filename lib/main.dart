@@ -1,8 +1,6 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/cubits/login_cubit/login_cubit.dart';
-import 'package:burla_xatun/cubits/notification/notification_cubit.dart';
-import 'package:burla_xatun/firebase_options.dart';
+import 'package:burla_xatun/cubits/doctors_list/doctors_cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +18,11 @@ import 'cubits/countries/countries_cubit.dart';
 import 'cubits/daily_rec/daily_rec_cubit.dart';
 import 'cubits/daily_rec_detail/daily_rec_detail_cubit.dart';
 import 'cubits/doctors_detail/doctors_detail_cubit.dart';
-import 'cubits/doctors_list/doctors_list_cubit.dart';
 import 'cubits/faqs_cubit/faqs_cubit.dart';
 import 'cubits/forum_category/forum_category_cubit.dart';
 import 'cubits/forum_create/forum_create_cubit.dart';
 import 'cubits/language_cubit/language_cubit.dart';
+import 'cubits/login_cubit/login_cubit.dart';
 import 'cubits/main_cubit/mainn_cubit.dart';
 import 'cubits/medicine/medicine_cubit.dart';
 import 'cubits/medicine_create/medicine_create_cubit.dart';
@@ -53,7 +51,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  log('Background message received: ${message.messageId}');
 }
 
 void main() async {
@@ -147,9 +144,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<ForumCreateCubit>(
           create: (context) => locator<ForumCreateCubit>(),
         ),
-        BlocProvider<DoctorsListCubit>(
-          create: (context) => locator<DoctorsListCubit>()..getDoctorsList(),
-        ),
+        // BlocProvider<DoctorsCubit>(
+        //   create: (context) => locator<DoctorsCubit>(),
+        // ),
         BlocProvider(
           create: (context) => locator<DoctorDetailCubit>(),
         ),

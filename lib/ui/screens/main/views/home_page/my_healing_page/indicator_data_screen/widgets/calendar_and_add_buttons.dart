@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../../cubits/indicator/indicator_cubit.dart';
-import '../../../../../../../../cubits/user_data/user_data_cubit.dart';
 import '../../../../../../../../utils/di/locator.dart';
 import '../../widgets/add_button.dart';
 import 'add_new_indicator_dialog.dart';
@@ -38,10 +37,6 @@ class CalendarAndAddButtons extends StatelessWidget {
         Spacer(),
         AddButton(
           onPressed: () {
-            if (context.read<UserDataCubit>().currentBabyNotifier.value ==
-                null) {
-              return;
-            }
             showDialog(
               context: context,
               builder: (_) {

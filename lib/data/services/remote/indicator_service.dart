@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 
 class IndicatorService {
   Future<Response<dynamic>> getIndicator({
-    required int babyId,
+    int? babyId,
     required String indicatorName,
     required String range,
   }) async {

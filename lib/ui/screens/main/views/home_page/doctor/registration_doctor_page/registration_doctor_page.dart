@@ -1,4 +1,3 @@
-import 'package:burla_xatun/ui/screens/add_child/widgets/add_child_success_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,24 +7,19 @@ import '../../../../../../../cubits/doctors_detail/doctors_detail_cubit.dart';
 import '../../../../../../../utils/app/app_snackbars.dart';
 import '../../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
-import '../../../../../../../utils/helper/doctor_time_helper.dart';
 import '../../../../../../widgets/global_button.dart';
+import '../../../../../add_child/widgets/add_child_success_dialog.dart';
 import 'widgets/registration_date_and_time_widget.dart';
 import 'widgets/registration_doctor_info.dart';
 import 'widgets/registration_price_and_time.dart';
 
 class RegistrationDoctorPage extends StatelessWidget {
-  // final String slug;
-  const RegistrationDoctorPage({
-    super.key,
-    // required this.slug,
-  });
+  const RegistrationDoctorPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final DoctorReservationCubit doctorReservationCubit =
         context.read<DoctorReservationCubit>();
-    late int doctorId;
     return Scaffold(
       // backgroundColor: Color(0xffFCFCFD),
       appBar: PreferredSize(
@@ -53,26 +47,30 @@ class RegistrationDoctorPage extends StatelessWidget {
             child: Column(
               children: [
                 BlocBuilder<DoctorDetailCubit, DoctorDetailState>(
+                  buildWhen: (previous, current) {
+                    return previous.doctorDetailStatus !=
+                        current.doctorDetailStatus;
+                  },
                   builder: (context, state) {
-                    if (state.status == DoctorDetailStatus.loading) {
-                      return CircularProgressIndicator();
-                    } else if (state.status == DoctorDetailStatus.failure ||
-                        state.status == DoctorDetailStatus.networkError) {
+                    if (state.doctorDetailStatus ==
+                        DoctorDetailStatus.loading) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (state.doctorDetailStatus ==
+                            DoctorDetailStatus.failure ||
+                        state.doctorDetailStatus ==
+                            DoctorDetailStatus.networkError) {
                       return Center(
-                          child: Text('Xəta baş verdi: ${state.errorMessage}'));
-                    } else if (state.status == DoctorDetailStatus.success) {
-                      final doctor = state.response;
-                      doctorId = doctor?.id ?? -1;
+                        child: Text(
+                          'Həkim məlumatlarını yüklərkən xəta baş verdi',
+                        ),
+                      );
+                    } else if (state.doctorDetailStatus ==
+                        DoctorDetailStatus.success) {
+                      final doctor = state.doctorDetails;
 
                       if (doctor == null) {
                         return Center(child: Text('Həkim məlumatı tapılmadı.'));
                       }
-
-                      final List<String> timeList =
-                          doctor.availableTimes != null
-                              ? DoctorTimeHelper.generateHourlyTimes(
-                                  doctor.availableTimes!)
-                              : [];
 
                       return Column(
                         children: [
@@ -80,9 +78,7 @@ class RegistrationDoctorPage extends StatelessWidget {
                           32.h,
                           RegistrationPriceAndTime(doctor: doctor),
                           40.h,
-                          RegistrationDateAndTimeWidget(
-                            timeList: timeList,
-                          ),
+                          RegistrationDateAndTimeWidget(),
                           75.h,
                         ],
                       );
@@ -128,7 +124,7 @@ class RegistrationDoctorPage extends StatelessWidget {
               buttonColor: ColorConstants.primaryRedColor,
               textColor: Colors.white,
               onPressed: () {
-                doctorReservationCubit.reservDoctor(doctorId);
+                doctorReservationCubit.reservDoctor();
               },
             );
           },

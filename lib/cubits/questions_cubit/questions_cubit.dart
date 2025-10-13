@@ -637,6 +637,7 @@ class QuestionsCubit extends Cubit<QuestionsInitial> {
         firstChild: state.isFirstChild,
         phoneNumber: phoneNumber,
         pregnantWeek: state.focusedWeekIndex.toString(),
+        questionsCompleted: true,
       );
       emit(state.copyWith(userUpdateStatus: UserUpdateStatus.success));
     } on DioException catch (e, s) {

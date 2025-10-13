@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:burla_xatun/ui/widgets/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,6 +5,7 @@ import '../../../../../../../cubits/video_cubit/video_cubit.dart';
 import '../../../../../../../cubits/video_cubit/video_state.dart';
 import '../../../../../../../data/models/remote/response/video_model.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
+import '../../../../../../widgets/custom_refresh_indicator.dart';
 import 'video_box.dart';
 
 class VideoList extends StatefulWidget {
@@ -47,12 +45,6 @@ class _VideoListState extends State<VideoList> {
 
   @override
   Widget build(BuildContext context) {
-    // final List<String> url = [
-    //   'BK7u4dizImk',
-    //   'KZMzgx1-USE',
-    //   'pgZv31I3Nww',
-    //   '0CcK7GmOyQQ'
-    // ];
     return Center(
       child: BlocBuilder<VideoCubit, VideoState>(
         buildWhen: (previous, current) {

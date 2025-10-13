@@ -1,5 +1,6 @@
+import 'package:dio/dio.dart';
+
 import '../contractor/doctors_detail_contractor.dart';
-import '../models/remote/response/doctor_detail_model.dart';
 import '../services/remote/doctors_detail_service.dart';
 
 class DoctorDetailRepository implements DoctorDetailContractor {
@@ -8,7 +9,18 @@ class DoctorDetailRepository implements DoctorDetailContractor {
   final DoctorDetailService _doctorDetailService;
 
   @override
-  Future<DoctorDetailResponse> getDoctorDetail({required String slug}) {
-    return _doctorDetailService.getDoctorDetail(slug: slug);
+  Future<Response> getDoctorDetail({required int doctorId}) {
+    return _doctorDetailService.getDoctorDetail(doctorId: doctorId);
+  }
+
+  @override
+  Future<Response> getAvailableTimes({
+    required String date,
+    required int doctorId,
+  }) {
+    return _doctorDetailService.getAvailableTimes(
+      date: date,
+      doctorId: doctorId,
+    );
   }
 }

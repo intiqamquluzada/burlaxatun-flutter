@@ -30,7 +30,7 @@ import '../../cubits/delete_comment/delete_comment_cubit.dart';
 import '../../cubits/doctor_notification/doctor_notification_cubit.dart';
 import '../../cubits/doctor_reservation/doctor_reservation_cubit.dart';
 import '../../cubits/doctors_detail/doctors_detail_cubit.dart';
-import '../../cubits/doctors_list/doctors_list_cubit.dart';
+import '../../cubits/doctors_list/doctors_cubit.dart';
 import '../../cubits/edit_comment/edit_comment_cubit.dart';
 import '../../cubits/faqs_cubit/faqs_cubit.dart';
 import '../../cubits/forum_category/forum_category_cubit.dart';
@@ -416,7 +416,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => MedicineCreateCubit(locator()));
   locator.registerFactory(() => MedicinePatchCubit(locator()));
   locator.registerFactory(() => ForumCategoryCubit(locator()));
-  locator.registerFactory(() => DoctorsListCubit(locator()));
+  locator.registerFactory(() => DoctorsCubit(locator()));
   locator.registerFactory(() => DoctorDetailCubit(locator()));
   // locator.registerFactory(() => ForumCommentsCubit(locator()));
   // locator.registerFactory(() => ForumCreateCubit(locator()));

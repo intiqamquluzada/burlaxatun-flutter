@@ -34,7 +34,7 @@ class DoctorsNotificationBoxWidget extends StatelessWidget {
                 surname: reservation.doctorSurname,
                 doctorImage: reservation.doctorImage,
                 workPlace: reservation.doctorWorkplace,
-                position: reservation.doctorPosition,
+                position: [],
               ),
               24.h,
               DoctorNotificationStatus(status: reservation.status),

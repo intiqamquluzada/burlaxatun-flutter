@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import '../../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../../widgets/global_text.dart';
 
-class DoctorInfo extends StatelessWidget {
+class DoctorInfo extends StatefulWidget {
   const DoctorInfo({
     super.key,
-    // this.doctor,
     this.doctorImage,
     this.name,
     this.surname,
@@ -15,13 +14,27 @@ class DoctorInfo extends StatelessWidget {
     this.position,
   });
 
-  // final Result? doctor;
-
   final String? doctorImage;
   final String? name;
   final String? surname;
   final String? workPlace;
-  final String? position;
+  final List<String>? position;
+
+  @override
+  State<DoctorInfo> createState() => _DoctorInfoState();
+}
+
+class _DoctorInfoState extends State<DoctorInfo> {
+  late String positions = '';
+  @override
+  void initState() {
+    for (var i = 0; i < widget.position!.length; i++) {
+      positions +=
+          i == 0 ? '${widget.position?[i]}' : ', ${widget.position?[i]}';
+    }
+    // widget.position?.forEach((position) {});
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,50 +45,35 @@ class DoctorInfo extends StatelessWidget {
             width: 40,
             height: 40,
             fit: BoxFit.cover,
-            imageUrl: doctorImage ?? '',
+            imageUrl:
+                'https://videodoktor.az/uploads/doctors/${widget.doctorImage}',
             errorWidget: (context, url, error) => Icon(Icons.person),
+            placeholder: (context, url) {
+              return Container(
+                color: Colors.black12,
+              );
+            },
           ),
         ),
         SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GlobalText(
-                  text: 'Dr. $name $surname',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ],
+            GlobalText(
+              text: 'Dr. ${widget.name} ${widget.surname}',
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
             ),
             7.h,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                GlobalText(
-                  text: position ?? 'Tapılmadı',
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-                SizedBox(width: 4),
-                GlobalText(
-                  text: '• ',
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-                SizedBox(width: 4),
-                GlobalText(
-                  text: workPlace ?? 'Tapılmadı',
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ],
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 108,
+              child: GlobalText(
+                text: positions,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
             ),
           ],
         ),

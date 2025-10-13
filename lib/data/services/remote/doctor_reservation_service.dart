@@ -6,10 +6,15 @@ import 'package:dio/dio.dart';
 
 class DoctorReservationService {
   Future<Response<dynamic>> reserveDoctor({
-    required Map<String, dynamic> postData,
+    required int schedulingTimeId,
   }) async {
-    final url = EndpointsConstants.doctorReserve;
+    final url =
+        '${EndpointsConstants.baseUrl}/C/doctors/scheduling-item-record/';
     final token = locator<LoginTokenService>().token;
+
+    final postData = {
+      'scheduling_item_id': schedulingTimeId,
+    };
 
     final response = await BaseNetwork.instance
         .getDio(token: token)

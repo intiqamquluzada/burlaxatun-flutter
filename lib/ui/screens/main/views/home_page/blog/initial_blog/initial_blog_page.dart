@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../../../cubits/blog_cat/blog_cat_cubit.dart';
 import '../../../../../../../cubits/blog_sliders/blog_sliders_cubit.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/global_appbar.dart';
@@ -18,9 +21,11 @@ class InitialBlogPage extends StatefulWidget {
 
 class _InitialBlogPageState extends State<InitialBlogPage> {
   String searchQuery = '';
+  Timer? _debounce;
 
   @override
   Widget build(BuildContext context) {
+    final blogCubit = context.read<BlogCatCubit>();
     return Scaffold(
       appBar: GlobalAppbar(
         title: 'Blog',
@@ -32,9 +37,13 @@ class _InitialBlogPageState extends State<InitialBlogPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: SearchInput(
-                onChanged: (value) {
-                  setState(() {
-                    searchQuery = value;
+                onSearchChanged: (value) async {
+                  // setState(() {
+                  //   searchQuery = value;
+                  // });
+                  if (_debounce?.isActive ?? false) _debounce!.cancel();
+                  _debounce = Timer(const Duration(milliseconds: 500), () {
+                    blogCubit.getBlogCat(search: value);
                   });
                 },
               ),

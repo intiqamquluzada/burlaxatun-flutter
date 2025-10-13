@@ -5,9 +5,12 @@ import '../../../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../../widgets/global_button.dart';
 
 class DoctorRegisterButton extends StatelessWidget {
-  final String slug;
+  const DoctorRegisterButton({
+    super.key,
+    required this.doctorId,
+  });
 
-  const DoctorRegisterButton({super.key, required this.slug});
+  final int doctorId;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class DoctorRegisterButton extends StatelessWidget {
         //     ),
         //   ),
         // );
-        context.push('/doctor_register/$slug');
+        context.push('/doctor_register', extra: doctorId);
       },
     );
   }

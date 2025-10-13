@@ -1,5 +1,9 @@
-import '../models/remote/response/doctor_detail_model.dart';
+import 'package:dio/dio.dart';
 
 abstract class DoctorDetailContractor {
-  Future<DoctorDetailResponse> getDoctorDetail({required String slug});
+  Future<Response> getDoctorDetail({required int doctorId});
+  Future<Response> getAvailableTimes({
+    required String date,
+    required int doctorId,
+  });
 }

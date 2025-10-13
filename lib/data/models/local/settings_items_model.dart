@@ -11,16 +11,16 @@ class SettingsItemModel {
 
   static List<SettingsItemModel> items = [
     SettingsItemModel(
-      icon: 'assets/icons/setting_bing_icon.svg',
+      icon: 'assets/icons/notification_2.svg',
       settingName: 'Bildirişlər',
     ),
     SettingsItemModel(
-      icon: 'assets/icons/privacy_policy_icon.svg',
+      icon: 'assets/icons/Unlock_4.svg',
       settingName: 'Şifrəni dəyiş',
       route: '/change_password',
     ),
     SettingsItemModel(
-      icon: 'assets/icons/phone_call_icon.svg',
+      icon: 'assets/icons/Call.svg',
       settingName: 'Mobil nömrəni dəyiş',
       route: '/change_number',
     ),

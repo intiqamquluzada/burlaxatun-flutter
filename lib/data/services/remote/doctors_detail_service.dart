@@ -1,23 +1,36 @@
-import 'package:burla_xatun/data/services/remote/base_network_service.dart';
-import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
+import 'package:dio/dio.dart';
 
 import '../../../utils/constants/endpoints_constants.dart';
-import '../../models/remote/response/doctor_detail_model.dart';
+import '../../../utils/di/locator.dart';
+import '../local/login_token_service.dart';
+import 'base_network_service.dart';
 
 class DoctorDetailService {
-  final endpoint = EndpointsConstants.doctorDetail;
+  final token = locator<LoginTokenService>().token;
 
-  Future<DoctorDetailResponse> getDoctorDetail({required String slug}) async {
-    final url = endpoint.replaceFirst('{slug}', slug);
+  Future<Response> getDoctorDetail({required int doctorId}) async {
+    final url = '${EndpointsConstants.doctorDetails}/$doctorId/';
 
-    final response = await BaseNetwork.instance.getDio().get(url);
+    final response = await BaseNetwork.instance.getDio(token: token).get(url);
 
-    if (response.statusCode.isSuccess) {
-      return DoctorDetailResponse.fromJson(response.data);
-    } else if (response.statusCode.isFailure) {
-      throw Exception('Failed to load doctor detail from service');
-    } else {
-      throw Exception('Unknown error occurred while loading doctor detail');
-    }
+    return response;
+  }
+
+  Future<Response> getAvailableTimes({
+    required String date,
+    required int doctorId,
+  }) async {
+    final url = '${EndpointsConstants.baseUrl}/C/doctors/scheduling-items/';
+
+    final queryParams = {
+      'date_from': date,
+      'doctor_id': doctorId,
+    };
+
+    final response = await BaseNetwork.instance
+        .getDio(token: token)
+        .get(url, queryParameters: queryParams);
+
+    return response;
   }
 }

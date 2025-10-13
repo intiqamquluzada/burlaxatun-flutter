@@ -32,48 +32,35 @@ class IndicatorDataScreen extends StatefulWidget {
 class _IndicatorDataScreenState extends State<IndicatorDataScreen> {
   late IndicatorCubit indicatorCubit;
   late ValueNotifier<Baby?> currentBabyNotifier;
-  // late Baby? currentBaby;
+  late ValueNotifier<int?> selectedInterval;
   late VoidCallback babyNotifierListener;
 
   @override
   void initState() {
     super.initState();
-
+    selectedInterval = ValueNotifier<int>(2);
     indicatorCubit = context.read<IndicatorCubit>();
     currentBabyNotifier = context.read<UserDataCubit>().currentBabyNotifier;
-    // currentBaby = currentBabyNotifier.value;
+
     log('current baby null: ${currentBabyNotifier.value == null}');
 
-    babyNotifierListener = () {
-      log('change baby');
-      // currentBabyNotifier = context.read<UserDataCubit>().currentBabyNotifier;
-      if (currentBabyNotifier.value == null) {
-        return;
-      } else {
-        indicatorCubit.getIndicatorDatas(
-          babyId: currentBabyNotifier.value?.id ?? -1,
-          indicatorName: widget.indicatorName,
-          range: 'monthly',
-        );
-      }
-      // if (currentBabyNotifier.value == null) return;
-      // indicatorCubit.getIndicatorDatas(
-      //   babyId: currentBabyNotifier.value?.id ?? -1,
-      //   indicatorName: widget.indicatorName,
-      //   range: 'monthly',
-      // );
-    };
+    indicatorCubit.getIndicatorDatas(
+      babyId: currentBabyNotifier.value?.id,
+      indicatorName: widget.indicatorName,
+      range: 'monthly',
+    );
 
-    currentBabyNotifier.addListener(babyNotifierListener);
-    if (currentBabyNotifier.value == null) {
-      return;
-    } else {
+    babyNotifierListener = () {
+      log('changed baby');
+      selectedInterval.value = 2;
       indicatorCubit.getIndicatorDatas(
-        babyId: currentBabyNotifier.value?.id ?? -1,
+        babyId: currentBabyNotifier.value?.id,
         indicatorName: widget.indicatorName,
         range: 'monthly',
       );
-    }
+    };
+
+    currentBabyNotifier.addListener(babyNotifierListener);
   }
 
   @override
@@ -98,6 +85,7 @@ class _IndicatorDataScreenState extends State<IndicatorDataScreen> {
             TimeIntervalsWidget(
               indicatorName: widget.indicatorName,
               currentBabyNotifier: currentBabyNotifier,
+              selectedInterval: selectedInterval,
             ),
             18.h,
             DecoratedBox(
@@ -106,68 +94,48 @@ class _IndicatorDataScreenState extends State<IndicatorDataScreen> {
               child: ValueListenableBuilder(
                 valueListenable: currentBabyNotifier,
                 builder: (context, value, child) {
-                  return value == null
-                      ? SizedBox(
-                          height: 200,
-                          width: MediaQuery.of(context).size.width,
+                  return BlocBuilder<IndicatorCubit, IndicatorState>(
+                    buildWhen: (previous, current) {
+                      return previous.indicatorList == current.indicatorList ||
+                          previous.indicatorStatus != current.indicatorStatus;
+                    },
+                    builder: (context, state) {
+                      log('baby data status: ${state.indicatorStatus}');
+                      if (state.indicatorStatus == IndicatorStatus.loading) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 112),
                           child: Center(
-                            child: GlobalText(
-                              color: ColorConstants.customBlue,
-                              textAlign: TextAlign.center,
-                              text:
-                                  'Uşaq seçilməyib və ya əlavə edilməyib (profil hissəsindən seçə və ya əlavə edə bilərsiniz)',
-                            ),
-                          ),
-                        )
-                      : BlocBuilder<IndicatorCubit, IndicatorState>(
-                          buildWhen: (previous, current) {
-                            return previous.indicatorList ==
-                                    current.indicatorList ||
-                                previous.indicatorStatus !=
-                                    current.indicatorStatus;
-                          },
-                          builder: (context, state) {
-                            log('baby data status: ${state.indicatorStatus}');
-                            if (state.indicatorStatus ==
-                                IndicatorStatus.loading) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 112),
-                                child: Center(
-                                    child:
-                                        CircularProgressIndicator.adaptive()),
-                              );
-                            } else if (state.indicatorStatus ==
-                                IndicatorStatus.error) {
-                              return Center(child: Text('Xəta baş verdi'));
-                            }
-                            if (state.indicatorStatus ==
-                                IndicatorStatus.success) {
-                              log('Indicator datas: ${state.indicatorList?.length}');
-                              return state.indicatorList!.isNotEmpty
-                                  ? Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 20),
-                                      child: ChartWidget(
-                                        indicatorDataList:
-                                            state.indicatorList ?? [],
-                                      ),
-                                    )
-                                  : SizedBox(
-                                      height: 200,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Center(
-                                        child: GlobalText(
-                                          color: ColorConstants.customBlue,
-                                          textAlign: TextAlign.center,
-                                          text: 'Məlumat yoxdur',
-                                        ),
-                                      ),
-                                    );
-                            }
-                            return SizedBox.shrink();
-                          },
+                              child: CircularProgressIndicator.adaptive()),
                         );
+                      } else if (state.indicatorStatus ==
+                          IndicatorStatus.error) {
+                        return Center(child: Text('Xəta baş verdi'));
+                      }
+                      if (state.indicatorStatus == IndicatorStatus.success) {
+                        log('Indicator datas: ${state.indicatorList?.length}');
+                        return state.indicatorList!.isNotEmpty
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: ChartWidget(
+                                  indicatorDataList: state.indicatorList ?? [],
+                                ),
+                              )
+                            : SizedBox(
+                                height: 200,
+                                width: MediaQuery.of(context).size.width,
+                                child: Center(
+                                  child: GlobalText(
+                                    color: ColorConstants.customBlue,
+                                    textAlign: TextAlign.center,
+                                    text: 'Məlumat yoxdur',
+                                  ),
+                                ),
+                              );
+                      }
+                      return SizedBox.shrink();
+                    },
+                  );
                 },
               ),
             ),

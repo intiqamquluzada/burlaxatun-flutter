@@ -1,7 +1,7 @@
-import 'package:burla_xatun/cubits/notification/notification_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../cubits/notification/notification_cubit.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
 import 'widgets/last_days.dart';
 import 'widgets/notification_appbar.dart';
@@ -31,28 +31,32 @@ class _NotificationPageState extends State<NotificationPage> {
       appBar: NotificationAppbar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            28.h,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [LastDays()],
-            ),
-            24.h,
-            BlocBuilder<NotificationCubit, NotificationState>(
-              builder: (context, state) {
-                if (state.notificationStatus == NotificationStatus.error) {
-                  return Center(child: Text('Məlumat tapılmadı'));
-                } else if (state.notificationStatus ==
-                    NotificationStatus.loading) {
-                  return Center(child: CircularProgressIndicator.adaptive());
-                }
-                if (state.notificationStatus == NotificationStatus.success) {
-                  final notificationList = state.notifications ?? [];
-                  return notificationList.isEmpty
-                      ? Center(child: Text('Bildiriş yoxdur'))
-                      : Expanded(
+        child: BlocBuilder<NotificationCubit, NotificationState>(
+          builder: (context, state) {
+            if (state.notificationStatus == NotificationStatus.error) {
+              return Center(child: Text('Məlumat tapılmadı'));
+            } else if (state.notificationStatus == NotificationStatus.loading) {
+              return Center(child: CircularProgressIndicator.adaptive());
+            }
+            if (state.notificationStatus == NotificationStatus.success) {
+              final notificationList = state.notifications ?? [];
+              return notificationList.isEmpty
+                  ? Center(child: Text('Bildiriş yoxdur'))
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        28.h,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            LastDays(
+                              createdAt:
+                                  notificationList.last.createdAt.toString(),
+                            )
+                          ],
+                        ),
+                        24.h,
+                        Expanded(
                           child: ListView.separated(
                             itemCount: notificationList.length,
                             itemBuilder: (_, i) {
@@ -65,12 +69,12 @@ class _NotificationPageState extends State<NotificationPage> {
                               return 23.h;
                             },
                           ),
-                        );
-                }
-                return SizedBox.shrink();
-              },
-            ),
-          ],
+                        ),
+                      ],
+                    );
+            }
+            return SizedBox.shrink();
+          },
         ),
       ),
     );

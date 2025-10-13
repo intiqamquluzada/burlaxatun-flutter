@@ -74,16 +74,20 @@ class LoginCubit extends Cubit<LoginCubitInitial> {
       );
 
       await _loginTokenService.saveLoginResponse(response);
-      emit(state.copyWith(loginStatus: LoginStatus.success));
+      emit(state.copyWith(
+        loginStatus: LoginStatus.success,
+        questionCompleted: response.questionCompleted,
+      ));
       log("Login success");
       log("Saved access token (login): ${_loginTokenService.token}");
     } on DioException catch (e, s) {
       emit(
         state.copyWith(
-          loginStatus: LoginStatus.networkError,
-          errorMessage:
-              (e.response?.data as Map<String, dynamic>)['detail'] ?? '',
-        ),
+            loginStatus: LoginStatus.networkError,
+            errorMessage:
+                (e.response?.data as Map<String, dynamic>)['detail'] ?? '',
+            errorCode:
+                (e.response?.data as Map<String, dynamic>)['code'] ?? ''),
       );
       log("Login Dio Exception: $e", stackTrace: s);
     } catch (e, s) {

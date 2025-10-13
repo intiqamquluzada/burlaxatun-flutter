@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/data/contractor/register_contractor.dart';
-import 'package:burla_xatun/data/models/remote/response/login_response_model.dart';
-import 'package:burla_xatun/data/services/local/login_token_service.dart';
-import 'package:burla_xatun/utils/di/locator.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../data/contractor/register_contractor.dart';
+import '../../data/services/local/login_token_service.dart';
+import '../../utils/di/locator.dart';
 
 part 'signup_state.dart';
 
@@ -71,15 +71,15 @@ class SignupCubit extends Cubit<SignupState> {
         password: passwordController.text.trim(),
       );
 
-      final savedRegisterData = LoginResponseModel(
-        refresh: response.refresh,
-        access: response.access,
-        activeLanguage: response.activeLanguage,
-        onboardingDone: response.onboardingDone,
-        enableNotifications: response.enableNotifications,
-      );
+      // final savedRegisterData = LoginResponseModel(
+      //   refresh: response.refresh,
+      //   access: response.access,
+      //   activeLanguage: response.activeLanguage,
+      //   onboardingDone: response.onboardingDone,
+      //   enableNotifications: response.enableNotifications,
+      // );
 
-      _loginTokenService.saveLoginResponse(savedRegisterData);
+      // _loginTokenService.saveLoginResponse(savedRegisterData);
 
       emit(SignupSuccess());
       log("Register success");

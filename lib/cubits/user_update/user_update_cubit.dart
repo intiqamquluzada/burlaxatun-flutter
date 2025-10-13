@@ -26,6 +26,7 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
     bool? firstChild,
     String? activeLanguage,
     bool? enableNotifications,
+    bool? questionsCompleted,
     File? image,
   }) async {
     try {
@@ -44,6 +45,7 @@ class UserUpdateCubit extends Cubit<UserUpdateState> {
         pregnantWeek: pregnantWeek,
         wantToBePregnant: wantToBePregnant,
         wantToSeePeriod: wantToSeePeriod,
+        questionsCompleted: questionsCompleted,
         image: image,
       );
 

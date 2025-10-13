@@ -23,6 +23,7 @@ class UserUpdateService {
     File? image,
     String? activeLanguage,
     bool? enableNotifications,
+    bool? questionsCompleted,
   }) async {
     final token = locator<LoginTokenService>().token;
     final endpoint = EndpointsConstants.userUpdate;
@@ -38,6 +39,7 @@ class UserUpdateService {
       if (pregnantWeek != null || pregnantWeek != '0')
         "pregnant_week": pregnantWeek,
       if (firstChild != null) "first_child": firstChild,
+      if (questionsCompleted != null) "questions_completed": questionsCompleted,
       if (activeLanguage != null) "active_language": activeLanguage,
       if (enableNotifications != null)
         "enable_notifications": enableNotifications,

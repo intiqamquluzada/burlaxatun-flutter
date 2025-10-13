@@ -16,6 +16,7 @@ abstract class UserUpdateContractor {
     File? image,
     String? activeLanguage,
     bool? enableNotifications,
+    bool? questionsCompleted,
   });
 
   Future<bool> userProfileDelete();

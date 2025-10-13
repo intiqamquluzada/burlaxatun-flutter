@@ -1,3 +1,4 @@
+import 'package:burla_xatun/ui/widgets/global_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,24 +23,28 @@ class AllArticles extends StatelessWidget {
         } else if (state.status == BlogCatStatus.success) {
           final categoryList = state.categoryList ?? [];
 
-          final filtered = categoryList.where((result) {
-            final name = result.categoryName?.toLowerCase() ?? '';
-            return name.contains(searchQuery.toLowerCase());
-          }).toList();
+          // final filtered = categoryList.where((result) {
+          //   final name = result.categoryName?.toLowerCase() ?? '';
+          //   return name.contains(searchQuery.toLowerCase());
+          // }).toList();
 
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: filtered.length,
-            itemBuilder: (_, index) {
-              final category = filtered[index];
-              return ArticlesWidget(
-                title: category.categoryName ?? 'Cateqoriya tapılmadı',
-                itemCount: category.blogs?.length ?? 0,
-                blogs: category.blogs ?? [],
-                category: category,
-              );
-            },
+          return Visibility(
+            visible: categoryList.isNotEmpty,
+            replacement: GlobalText(text: 'Blog tapılamdı'),
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: categoryList.length,
+              itemBuilder: (_, index) {
+                final category = categoryList[index];
+                return ArticlesWidget(
+                  title: category.categoryName ?? 'Cateqoriya tapılmadı',
+                  itemCount: category.blogs?.length ?? 0,
+                  blogs: category.blogs ?? [],
+                  category: category,
+                );
+              },
+            ),
           );
         }
 

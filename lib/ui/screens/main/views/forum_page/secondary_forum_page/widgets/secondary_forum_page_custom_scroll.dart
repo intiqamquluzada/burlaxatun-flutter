@@ -177,7 +177,7 @@ class _SecondaryForumPageCustomScrollState
                                             MaterialPageRoute(
                                               builder: (_) => MultiBlocProvider(
                                                 providers: [
-                                                  BlocProvider(
+                                                  BlocProvider( 
                                                     create: (context) =>
                                                         locator<
                                                             ForumDetailCubit>()

@@ -1,5 +1,11 @@
-import '../models/remote/response/doctors_list_model.dart';
+import 'package:dio/dio.dart';
 
 abstract class DoctorsListContractor {
-  Future<DoctorsListResponse> getDoctorsList();
+  Future<Response> getSpecializations({String? url});
+
+  Future<Response> getDoctorsList({
+    int? specializationId,
+    String? search,
+    String? url,
+  });
 }

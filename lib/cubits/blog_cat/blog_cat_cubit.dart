@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
@@ -15,12 +17,11 @@ class BlogCatCubit extends Cubit<BlogCatState> {
 
   final BlogCatContractor _blogCatContractor;
 
-  Future<void> getBlogCat() async {
-    if (state.categoryList != null) return;
+  Future<void> getBlogCat({String? search}) async {
     try {
       emit(state.copyWith(status: BlogCatStatus.loading));
 
-      final response = await _blogCatContractor.getBlogCat();
+      final response = await _blogCatContractor.getBlogCat(search: search);
 
       if (!response.statusCode.isSuccess) return;
       final data = response.data as List;
@@ -33,14 +34,16 @@ class BlogCatCubit extends Cubit<BlogCatState> {
         categoryList: categoryList,
       ));
     } on DioException catch (e) {
+      log('error occured while getting blogs with categories: $e');
       emit(state.copyWith(
         status: BlogCatStatus.networkError,
-        errorMessage: e.toString(),
+        errorMessage: 'Xəta baş verdi',
       ));
     } catch (e) {
+      log('error occured while getting blogs with categories: $e');
       emit(state.copyWith(
         status: BlogCatStatus.failure,
-        errorMessage: e.toString(),
+        errorMessage: 'Xəta baş verdi',
       ));
     }
   }

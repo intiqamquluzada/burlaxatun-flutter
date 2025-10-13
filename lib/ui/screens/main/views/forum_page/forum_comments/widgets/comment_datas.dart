@@ -86,9 +86,9 @@ class _CommentDatasState extends State<CommentDatas>
                     child: GlobalText(
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      text: PastHelper.timeAgo(
+                      text: '${PastHelper.timeAgo(
                         widget.comment!.createdAt.toString(),
-                      ),
+                      )} öncə',
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey,

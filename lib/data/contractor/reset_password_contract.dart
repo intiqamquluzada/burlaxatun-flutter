@@ -6,14 +6,20 @@ abstract class ResetPasswordContract {
   });
 
   Future<Response<dynamic>> verifyOtp({
-    required String phoneNumber,
+    String? operationId,
+    String? phoneNumber,
+    required bool fromRegister,
     required String otp,
   });
 
   Future<Response<dynamic>> resetPassword({
+    required String operationId,
     required String phoneNumber,
-    required String otp,
     required String newPass,
     required String confirmNewPass,
+  });
+
+  Future<Response<dynamic>> resendOtp({
+    required String phoneNumber,
   });
 }

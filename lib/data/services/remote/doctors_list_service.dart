@@ -1,21 +1,42 @@
-import 'package:burla_xatun/utils/extensions/statuscode_extension.dart';
+import 'package:dio/dio.dart';
 
 import '../../../utils/constants/endpoints_constants.dart';
-import '../../models/remote/response/doctors_list_model.dart';
+import '../../../utils/di/locator.dart';
+import '../local/login_token_service.dart';
 import 'base_network_service.dart';
 
 class DoctorsListService {
-  final endpoint = EndpointsConstants.doctorsList;
+  final token = locator<LoginTokenService>().token;
+  Future<Response> getSpecializations({String? url}) async {
+    url ??= EndpointsConstants.doctorSpecialities;
 
-  Future<DoctorsListResponse> getDoctorsList() async {
-    final response = await BaseNetwork.instance.getDio().get(endpoint);
+    final response = await BaseNetwork.instance.getDio(token: token).get(url);
 
-    if (response.statusCode.isSuccess) {
-      return DoctorsListResponse.fromJson(response.data);
-    } else if (response.statusCode.isFailure) {
-      throw Exception('Failed to load Doctors List data from service');
-    } else {
-      throw Exception('Failed to load Doctors List data from service');
-    }
+    return response;
+  }
+
+  Future<Response> getDoctorsList({
+    int? specializationId,
+    String? url,
+    String? search,
+  }) async {
+    // String url = '';
+    // if (specializationId == null) {
+    //   url = next!;
+    // } else {
+    //   url = '${EndpointsConstants.doctorsList}/$specializationId/';
+    // }
+    url ??= '${EndpointsConstants.doctorsList}/$specializationId/';
+
+    final queryParam = {
+      'search': search,
+    };
+
+    final response = await BaseNetwork.instance.getDio(token: token).get(
+          url,
+          queryParameters: queryParam,
+        );
+
+    return response;
   }
 }

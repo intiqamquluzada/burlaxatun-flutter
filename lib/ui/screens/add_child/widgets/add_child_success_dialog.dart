@@ -1,6 +1,4 @@
-import 'package:burla_xatun/cubits/main_cubit/mainn_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -71,8 +69,11 @@ class AddChildSuccessDialog extends StatelessWidget {
                                 context.pop(),
                               }
                           }
-                        : context.go('/home');
-                    context.read<MainCubit>().changeView(0);
+                        : {
+                            context.pop(),
+                            context.go('/home'),
+                          };
+                    // context.read<MainCubit>().changeView(0);
                   },
                 ),
               ],

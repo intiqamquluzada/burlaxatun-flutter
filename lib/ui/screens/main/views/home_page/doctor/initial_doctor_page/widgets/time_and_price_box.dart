@@ -1,11 +1,11 @@
-import 'package:burla_xatun/data/models/remote/response/doctors_list_model.dart';
+import 'package:burla_xatun/data/models/remote/response/doctors_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../../widgets/global_text.dart';
 
 class TimeAndPriceBox extends StatelessWidget {
-  final Result doctor;
+  final Doctor doctor;
 
   const TimeAndPriceBox({
     super.key,
@@ -39,13 +39,13 @@ class TimeAndPriceBox extends StatelessWidget {
                   ),
                   5.h,
                   GlobalText(
-                    text: '${doctor.availableDays}',
+                    text: '',
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff667085),
                   ),
                   GlobalText(
-                    text: '${doctor.availableTimes}',
+                    text: '',
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff667085),
@@ -64,7 +64,7 @@ class TimeAndPriceBox extends StatelessWidget {
                   ),
                   12.h,
                   GlobalText(
-                    text: '${doctor.consultantPrice.toString()} Azn',
+                    text: '232 Azn',
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Color(0xff667085),

@@ -1,0 +1,2 @@
+D:/burla_xatun/burla_xatun/android/app/.cxx/Debug/6f26e431/x86_64/CMakeFiles/edit_cache.dir
+D:/burla_xatun/burla_xatun/android/app/.cxx/Debug/6f26e431/x86_64/CMakeFiles/rebuild_cache.dir

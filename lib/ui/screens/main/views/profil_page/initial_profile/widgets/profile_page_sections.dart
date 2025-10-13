@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:share_plus/share_plus.dart';
@@ -22,17 +20,14 @@ class ProfilePageSections extends StatelessWidget {
             sectionName: profileSectionItems[i].sectionName,
             onTap: () {
               if (i == 3) {
-                String appLink = '';
-                if (Platform.isAndroid) {
-                  appLink =
-                      'https://play.google.com/store/apps/details?id=com.aastudio.anayam.app';
-                } else if (Platform.isIOS) {
-                  appLink = 'https://apps.apple.com/az/app/anayam/id6740815265';
-                }
+                String iosLink =
+                    'https://apps.apple.com/az/app/anayam/id6740815265';
+                String androidLink =
+                    'https://play.google.com/store/apps/details?id=com.aastudio.anayam.app';
                 SharePlus.instance.share(
                   ShareParams(
                     text:
-                        'Anayam mobil tətbiqini cihazınıza quraşdırın $appLink',
+                        'Anayam mobil tətbiqini cihazınıza quraşdırın. \n İos üçün keçid: $iosLink \n Android üçün keçid: $androidLink',
                   ),
                 );
               } else {

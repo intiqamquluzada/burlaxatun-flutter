@@ -5,14 +5,14 @@ String timeAgo(DateTime createdAt) {
   final difference = now.difference(createdAt);
 
   if (difference.inSeconds < 60) {
-    return '${difference.inSeconds} seconds ago';
+    return '${difference.inSeconds} saniyə öncə';
   } else if (difference.inMinutes < 60) {
-    return '${difference.inMinutes} minutes ago';
+    return '${difference.inMinutes} dəqiqə öncə';
   } else if (difference.inHours < 24) {
-    return '${difference.inHours} hours ago';
+    return '${difference.inHours} saat öncə';
   } else if (difference.inDays == 1) {
-    return 'yesterday';
+    return 'dünən';
   } else {
-    return '${difference.inDays} days ago';
+    return '${difference.inDays} gün öncə';
   }
 }
