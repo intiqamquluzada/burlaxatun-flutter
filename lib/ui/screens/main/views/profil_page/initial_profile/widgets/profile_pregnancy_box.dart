@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../../../cubits/baby_update/baby_update_cubit.dart';
 import '../../../../../../../cubits/user_data/user_data_cubit.dart';
@@ -69,10 +68,10 @@ class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
               }
 
               if (state.status == UserDataStatus.success) {
-                final data = state.response;
-                final baby = data?.babies?.isNotEmpty == true
-                    ? data!.babies!.first
-                    : null;
+                // final data = state.response;
+                // final baby = data?.babies?.isNotEmpty == true
+                //     ? data!.babies!.first
+                //     : null;
                 return Column(
                   children: [
                     Row(
@@ -87,101 +86,101 @@ class _ProfilePregnancyBoxState extends State<ProfilePregnancyBox> {
                       ],
                     ),
                     32.h,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GlobalText(
-                          text: 'Körpənin cinsi',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xff344054),
-                        ),
-                        GlobalText(
-                          text: baby?.gender ?? 'Bilinmir',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xff344054),
-                        ),
-                      ],
-                    ),
-                    14.h,
-                    ColoredBox(
-                      color: Color(0xffF2F4F7),
-                      child: SizedBox(
-                        height: 1,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                    ),
-                    14.h,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GlobalText(
-                          text: 'Körpənin adı',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xff344054),
-                        ),
-                        SizedBox(
-                          width: 75,
-                          height: 37,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: baby?.name?.isNotEmpty == true
-                                  ? baby!.name!
-                                  : 'Daxil edin',
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                              hintStyle: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xff98A2B3),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    14.h,
-                    ColoredBox(
-                      color: Color(0xffF2F4F7),
-                      child: SizedBox(
-                        height: 1,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                    ),
-                    14.h,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GlobalText(
-                          text: 'Doğum tarixi',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xff344054),
-                        ),
-                        GlobalText(
-                          text: baby?.birthDate != null
-                              ? DateFormat('dd.MM.yyyy')
-                                  .format(baby!.birthDate!)
-                              : 'Yoxdur',
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xff344054),
-                        ),
-                      ],
-                    ),
-                    14.h,
-                    ColoredBox(
-                      color: Color(0xffF2F4F7),
-                      child: SizedBox(
-                        height: 1,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                    ),
-                    14.h,
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     GlobalText(
+                    //       text: 'Körpənin cinsi',
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.w500,
+                    //       color: Color(0xff344054),
+                    //     ),
+                    //     GlobalText(
+                    //       text: baby?.gender ?? 'Bilinmir',
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.w500,
+                    //       color: Color(0xff344054),
+                    //     ),
+                    //   ],
+                    // ),
+                    // 14.h,
+                    // ColoredBox(
+                    //   color: Color(0xffF2F4F7),
+                    //   child: SizedBox(
+                    //     height: 1,
+                    //     width: MediaQuery.of(context).size.width,
+                    //   ),
+                    // ),
+                    // 14.h,
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     GlobalText(
+                    //       text: 'Körpənin adı',
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.w500,
+                    //       color: Color(0xff344054),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 75,
+                    //       height: 37,
+                    //       child: TextField(
+                    //         decoration: InputDecoration(
+                    //           hintText: baby?.name?.isNotEmpty == true
+                    //               ? baby!.name!
+                    //               : 'Daxil edin',
+                    //           border: InputBorder.none,
+                    //           enabledBorder: InputBorder.none,
+                    //           focusedBorder: InputBorder.none,
+                    //           disabledBorder: InputBorder.none,
+                    //           hintStyle: TextStyle(
+                    //             fontSize: 15,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: Color(0xff98A2B3),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),
+                    // 14.h,
+                    // ColoredBox(
+                    //   color: Color(0xffF2F4F7),
+                    //   child: SizedBox(
+                    //     height: 1,
+                    //     width: MediaQuery.of(context).size.width,
+                    //   ),
+                    // ),
+                    // 14.h,
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     GlobalText(
+                    //       text: 'Doğum tarixi',
+                    //       fontSize: 15,
+                    //       fontWeight: FontWeight.w500,
+                    //       color: Color(0xff344054),
+                    //     ),
+                    //     GlobalText(
+                    //       text: baby?.birthDate != null
+                    //           ? DateFormat('dd.MM.yyyy')
+                    //               .format(baby!.birthDate!)
+                    //           : 'Yoxdur',
+                    //       fontSize: 13,
+                    //       fontWeight: FontWeight.w500,
+                    //       color: Color(0xff344054),
+                    //     ),
+                    //   ],
+                    // ),
+                    // 14.h,
+                    // ColoredBox(
+                    //   color: Color(0xffF2F4F7),
+                    //   child: SizedBox(
+                    //     height: 1,
+                    //     width: MediaQuery.of(context).size.width,
+                    //   ),
+                    // ),
+                    // 14.h,
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //   children: [
