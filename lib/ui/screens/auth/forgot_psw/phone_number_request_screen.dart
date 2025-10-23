@@ -18,7 +18,7 @@ import '../../../widgets/global_text.dart';
 class PhoneNumberRequestScreen extends StatefulWidget {
   const PhoneNumberRequestScreen({super.key});
 
-  @override
+  @override 
   State<PhoneNumberRequestScreen> createState() =>
       _PhoneNumberRequestScreenState();
 }

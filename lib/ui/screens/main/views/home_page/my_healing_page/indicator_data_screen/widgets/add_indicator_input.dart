@@ -13,6 +13,7 @@ class AddIndicatorInput extends StatelessWidget {
     this.controller,
     this.onTap,
     this.suffixIcon,
+    this.validator,
   });
 
   final String inputName;
@@ -20,6 +21,7 @@ class AddIndicatorInput extends StatelessWidget {
   final TextEditingController? controller;
   final VoidCallback? onTap;
   final IconData? suffixIcon;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class AddIndicatorInput extends StatelessWidget {
         ),
         16.h,
         TextFormField(
+          keyboardType: TextInputType.numberWithOptions(),
           controller: controller,
           readOnly: onTap != null,
           onTap: onTap,
@@ -47,6 +50,7 @@ class AddIndicatorInput extends StatelessWidget {
             color: Colors.black,
             fontWeight: FontWeight.w500,
           ),
+          validator: validator,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(
               left: 20,
@@ -73,6 +77,13 @@ class AddIndicatorInput extends StatelessWidget {
               ),
             ),
             errorBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(34)),
+              borderSide: BorderSide(
+                color: ColorConstants.primaryRedColor,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(34)),
               borderSide: BorderSide(
                 color: ColorConstants.primaryRedColor,
               ),

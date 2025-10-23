@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
 
 abstract class ForumCategoryStatsContract {
-  Future<Response<dynamic>> getCategoryStats();
+  Future<Response<dynamic>> getCategoryStats({String? url});
 }

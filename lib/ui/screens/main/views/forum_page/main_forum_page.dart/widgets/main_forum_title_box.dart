@@ -12,10 +12,12 @@ class MainForumTitleBox extends StatefulWidget {
     required this.title,
     this.onTap,
     required this.categoryIndex,
+    required this.categoryId,
   });
 
   final String title;
   final int categoryIndex;
+  final int categoryId;
   final void Function()? onTap;
 
   @override
@@ -27,8 +29,7 @@ class _MainForumTitleBoxState extends State<MainForumTitleBox> {
   @override
   void initState() {
     // log('init statistics');
-    // forumCategoryStatsCubit = context.read<ForumCategoryStatsCubit>()
-    //   ..getCategoryStatistics();
+
     // forumCategoryStatsCubit.getCategoryStatistics();
     super.initState();
   }
@@ -62,6 +63,12 @@ class _MainForumTitleBoxState extends State<MainForumTitleBox> {
                   ),
                   25.h,
                   BlocBuilder<ForumCategoryStatsCubit, ForumCategoryStatsState>(
+                    buildWhen: (previous, current) {
+                      return previous.categoryStatsList !=
+                          current.categoryStatsList;
+                      // previous.categoryStatsStatus !=
+                      // current.categoryStatsStatus;
+                    },
                     builder: (context, state) {
                       if (state.categoryStatsStatus ==
                           CategoryStatsStatus.loading) {
@@ -91,8 +98,7 @@ class _MainForumTitleBoxState extends State<MainForumTitleBox> {
                       } else if (state.categoryStatsStatus ==
                           CategoryStatsStatus.error) {
                         return Text('melumat tapilmadi');
-                      }
-                      if (state.categoryStatsStatus ==
+                      } else if (state.categoryStatsStatus ==
                           CategoryStatsStatus.success) {
                         final stats =
                             state.categoryStatsList?[widget.categoryIndex];

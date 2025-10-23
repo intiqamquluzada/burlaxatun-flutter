@@ -1,7 +1,5 @@
 import 'dart:developer';
 
-import 'package:burla_xatun/ui/widgets/global_text.dart';
-import 'package:burla_xatun/utils/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,10 +7,13 @@ import 'package:go_router/go_router.dart';
 import '../../../../../../../cubits/indicator/indicator_cubit.dart';
 import '../../../../../../../cubits/user_data/user_data_cubit.dart';
 import '../../../../../../../data/models/remote/response/user_data_model.dart';
+import '../../../../../../../utils/constants/color_constants.dart';
 import '../../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../../widgets/global_appbar.dart';
+import '../../../../../../widgets/global_text.dart';
 import 'widgets/calendar_and_add_buttons.dart';
 import 'widgets/chart_widget.dart';
+import 'widgets/pressure_chart_widget.dart';
 import 'widgets/time_intervals_widget.dart';
 
 class IndicatorDataScreen extends StatefulWidget {
@@ -117,8 +118,16 @@ class _IndicatorDataScreenState extends State<IndicatorDataScreen> {
                             ? Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 20),
-                                child: ChartWidget(
-                                  indicatorDataList: state.indicatorList ?? [],
+                                child: Visibility(
+                                  visible: widget.indicatorName != 'pressure',
+                                  replacement: PressureChartWidget(
+                                    indicatorDataList:
+                                        state.indicatorList ?? [],
+                                  ),
+                                  child: ChartWidget(
+                                    indicatorDataList:
+                                        state.indicatorList ?? [],
+                                  ),
                                 ),
                               )
                             : SizedBox(

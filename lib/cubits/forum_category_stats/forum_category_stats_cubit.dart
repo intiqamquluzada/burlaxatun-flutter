@@ -20,19 +20,34 @@ class ForumCategoryStatsCubit extends Cubit<ForumCategoryStatsState> {
   final ForumCategoryCubit forumCategoryCubit = locator<ForumCategoryCubit>();
   final List<ForumCategoryStatsModel> sortedCategoryStatsList = [];
 
+  List<ForumCategoryStats> statList = [];
+  String? url = '';
+
   Future<void> getCategoryStatistics() async {
-    log('request for sttaistics');
+    log('request for statistics');
+    if (url == null ||
+        state.categoryStatsStatus == CategoryStatsStatus.loading) {
+      return;
+    }
     try {
       emit(state.copyWith(categoryStatsStatus: CategoryStatsStatus.loading));
-      final response = await forumCategoryStatsContract.getCategoryStats();
-      final data = response.data as List;
-      final unsortedCategoryStatsList =
-          data.map((e) => ForumCategoryStatsModel.fromJson(e)).toList();
-      final sortedList = unsortedCategoryStatsList.reversed.toList();
+      final response = await forumCategoryStatsContract.getCategoryStats(
+        url: url!.isEmpty ? null : url,
+      );
+      final data = ForumCategoryStatsModel.fromJson(response.data);
+      // final sortedList = unsortedCategoryStatsList.results?.reversed.toList();
+
+      url = data.next;
+
+      data.results?.forEach((e) {
+        statList.add(e);
+      });
+
+      // final reversedList = statList;
 
       emit(state.copyWith(
         categoryStatsStatus: CategoryStatsStatus.success,
-        categoryStatsList: sortedList,
+        categoryStatsList: List.from(statList),
       ));
     } catch (e, s) {
       emit(state.copyWith(categoryStatsStatus: CategoryStatsStatus.error));

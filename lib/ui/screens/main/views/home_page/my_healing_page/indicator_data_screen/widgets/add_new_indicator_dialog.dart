@@ -28,10 +28,21 @@ class AddNewIndicatorDialog extends StatefulWidget {
 
 class _AddNewIndicatorDialogState extends State<AddNewIndicatorDialog> {
   late TextEditingController _indicatorController;
+  late TextEditingController _secondIndicatorController;
+  late GlobalKey<FormState> _formKey;
   @override
   void initState() {
     _indicatorController = TextEditingController();
+    _secondIndicatorController = TextEditingController();
+    _formKey = GlobalKey<FormState>();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _indicatorController.dispose();
+    _secondIndicatorController.dispose();
+    super.dispose();
   }
 
   @override
@@ -40,12 +51,14 @@ class _AddNewIndicatorDialogState extends State<AddNewIndicatorDialog> {
     final ValueNotifier<DateTime> timeValue = ValueNotifier(DateTime.now());
     final IndicatorCubit indicatorCubit = context.read<IndicatorCubit>();
 
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+    return AnimatedPadding(
+      padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom / 1.4),
+      duration: const Duration(milliseconds: 300),
+      child: Center(
         child: SizedBox(
-          width: MediaQuery.of(context).size.height * 0.5,
-          height: 480,
+          width: MediaQuery.of(context).size.width * 0.89,
+          height: MediaQuery.of(context).size.height * 0.6,
           child: Material(
             type: MaterialType.transparency,
             child: DecoratedBox(
@@ -71,66 +84,112 @@ class _AddNewIndicatorDialogState extends State<AddNewIndicatorDialog> {
                     ),
                   ),
                   GlobalText(
-                    //text: 'New indicator',
                     text: 'Yeni göstərici',
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     color: Colors.black,
                   ),
-                  30.h,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Column(
-                      spacing: 20,
-                      children: [
-                        AddIndicatorInput(
-                          inputName: 'Göstərici',
-                          hintText: 'Göstərici',
-                          controller: _indicatorController,
+                  Expanded(
+                    child: Scrollbar(
+                      thumbVisibility: true,
+                      child: Form(
+                        key: _formKey,
+                        child: ListView(
+                          children: [
+                            15.h,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 24),
+                              child: Column(
+                                children: [
+                                  AddIndicatorInput(
+                                    inputName:
+                                        widget.indicatorName == 'pressure'
+                                            ? 'Sistolik təzyiq (mmHg ilə)'
+                                            : 'Göstərici',
+                                    hintText: widget.indicatorName == 'pressure'
+                                        ? 'Yuxarı rəqəm'
+                                        : 'Göstərici',
+                                    validator: (v) {
+                                      if (v == null || v.isEmpty) {
+                                        return 'Sahə boş ola bilməz';
+                                      }
+                                      return null;
+                                    },
+                                    controller: _indicatorController,
+                                  ),
+                                  10.h,
+                                  widget.indicatorName == 'pressure'
+                                      ? Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 10,
+                                          ),
+                                          child: AddIndicatorInput(
+                                            inputName: 'Diastolik (mmHg ilə)',
+                                            hintText: 'Aşağı rəqəm',
+                                            controller:
+                                                _secondIndicatorController,
+                                            validator: (v) {
+                                              if (v == null || v.isEmpty) {
+                                                return 'Sahə boş ola bilməz';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+                                        )
+                                      : SizedBox.shrink(),
+                                  10.h,
+                                  ValueListenableBuilder(
+                                    valueListenable: dateValue,
+                                    builder: (context, value, child) {
+                                      final selectedDate =
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(value);
+                                      return DateOrTimeBox(
+                                        inputName: 'Tarix',
+                                        hintText: selectedDate,
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return PickIndicatorDateWidget(
+                                                dateValue: dateValue,
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  20.h,
+                                  ValueListenableBuilder(
+                                    valueListenable: timeValue,
+                                    builder: (_, value, child) {
+                                      final hintTime =
+                                          DateFormat('HH:mm').format(value);
+                                      return DateOrTimeBox(
+                                        hintText: hintTime,
+                                        inputName: 'Vaxt',
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) {
+                                              return PickIndicatorDateWidget(
+                                                isTimeSelecting: true,
+                                                timeValue: timeValue,
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                        ValueListenableBuilder(
-                          valueListenable: dateValue,
-                          builder: (context, value, child) {
-                            final selectedDate =
-                                DateFormat('yyyy-MM-dd').format(value);
-                            return DateOrTimeBox(
-                              inputName: 'Tarix',
-                              hintText: selectedDate,
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return PickIndicatorDateWidget(
-                                      dateValue: dateValue,
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        ),
-                        ValueListenableBuilder(
-                          valueListenable: timeValue,
-                          builder: (_, value, child) {
-                            final hintTime = DateFormat('HH:mm').format(value);
-                            return DateOrTimeBox(
-                              hintText: hintTime,
-                              inputName: 'Vaxt',
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return PickIndicatorDateWidget(
-                                      isTimeSelecting: true,
-                                      timeValue: timeValue,
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                   20.h,
@@ -172,22 +231,26 @@ class _AddNewIndicatorDialogState extends State<AddNewIndicatorDialog> {
                                 WidgetStatePropertyAll(Color(0xffFFD3E2)),
                           ),
                           onPressed: () {
-                            final selectedDate = DateFormat('yyyy-MM-dd')
-                                .format(dateValue.value);
-                            final selectedTime =
-                                DateFormat('HH:mm').format(timeValue.value);
-                            final babyId = context
-                                .read<UserDataCubit>()
-                                .currentBabyNotifier
-                                .value
-                                ?.id;
-                            indicatorCubit.addIndicator(
-                              indicatorName: widget.indicatorName,
-                              indicator: _indicatorController.text.trim(),
-                              date: selectedDate,
-                              time: selectedTime,
-                              babyId: babyId,
-                            );
+                            if (_formKey.currentState!.validate()) {
+                              final selectedDate = DateFormat('yyyy-MM-dd')
+                                  .format(dateValue.value);
+                              final selectedTime =
+                                  DateFormat('HH:mm').format(timeValue.value);
+                              final babyId = context
+                                  .read<UserDataCubit>()
+                                  .currentBabyNotifier
+                                  .value
+                                  ?.id;
+                              indicatorCubit.addIndicator(
+                                indicatorName: widget.indicatorName,
+                                indicator: _indicatorController.text.trim(),
+                                secondIndicator:
+                                    _secondIndicatorController.text.trim(),
+                                date: selectedDate,
+                                time: selectedTime,
+                                babyId: babyId,
+                              );
+                            }
                           },
                           child: BlocConsumer<IndicatorCubit, IndicatorState>(
                             listener: (context, state) {
@@ -198,9 +261,12 @@ class _AddNewIndicatorDialogState extends State<AddNewIndicatorDialog> {
                                     'Göstərici əlavə edərkən xəta baş verdi');
                               } else if (state.indicatorStatus ==
                                   IndicatorStatus.success) {
+                                // indicatorCubit.getIndicatorDatas();
                                 context.pop();
                                 AppSnackbars.success(
-                                    context, 'Göstərici uğurla əlavə olundu');
+                                  context,
+                                  'Göstərici uğurla əlavə olundu',
+                                );
                               }
                             },
                             builder: (context, state) {
@@ -222,6 +288,7 @@ class _AddNewIndicatorDialogState extends State<AddNewIndicatorDialog> {
                       ),
                     ],
                   ),
+                  20.h,
                 ],
               ),
             ),

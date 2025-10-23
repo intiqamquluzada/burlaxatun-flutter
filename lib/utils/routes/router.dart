@@ -144,7 +144,7 @@ class Routerapp {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>;
           final fromRegister = extra['from_register'];
-          final phoneNumber = extra['phone_number'];
+          final phoneNumber = extra['register_number'];
           return OtpScreen(
             fromRegister: fromRegister,
             phoneNumber: phoneNumber,
