@@ -9,7 +9,7 @@ class ForumCategoryStatsRepo implements ForumCategoryStatsContract {
   final ForumCategoryStatsService _forumCategoryService;
 
   @override
-  Future<Response<dynamic>> getCategoryStats() {
-    return _forumCategoryService.getCategoryStats();
+  Future<Response<dynamic>> getCategoryStats({String? url}) {
+    return _forumCategoryService.getCategoryStats(url: url);
   }
 }

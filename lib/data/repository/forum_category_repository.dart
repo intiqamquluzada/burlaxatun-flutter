@@ -1,6 +1,7 @@
-import 'package:burla_xatun/data/contractor/forum_category_contractor.dart';
-import 'package:burla_xatun/data/models/remote/response/forum_category_model.dart';
-import 'package:burla_xatun/data/services/remote/forum_category_service.dart';
+import 'package:dio/dio.dart';
+
+import '../contractor/forum_category_contractor.dart';
+import '../services/remote/forum_category_service.dart';
 
 class ForumCategoryRepository implements ForumCategoryContractor {
   ForumCategoryRepository(this._categoryService);
@@ -8,7 +9,7 @@ class ForumCategoryRepository implements ForumCategoryContractor {
   final ForumCategoryService _categoryService;
 
   @override
-  Future<List<ForumCategory>> getForumCategory() {
-    return _categoryService.getForumCategory();
+  Future<Response> getForumCategory({String? url}) {
+    return _categoryService.getForumCategory(url: url);
   }
 }

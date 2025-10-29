@@ -21,15 +21,20 @@ class IndicatorCubit extends Cubit<IndicatorState> {
 
   Future<void> getIndicatorDatas({
     int? babyId,
-    required String indicatorName,
-    required String range,
+    String? indicatorName,
+    String? range,
   }) async {
     try {
-      emit(state.copyWith(indicatorStatus: IndicatorStatus.loading));
-      final response = await indicatorContract.getIndicator(
-        babyId: babyId,
+      emit(state.copyWith(
+        indicatorStatus: IndicatorStatus.loading,
         indicatorName: indicatorName,
         range: range,
+      ));
+      log('$indicatorName');
+      final response = await indicatorContract.getIndicator(
+        babyId: babyId,
+        indicatorName: indicatorName!,
+        range: range ?? state.range!,
       );
       if (response.statusCode.isSuccess) {
         final indicatorData = response.data as List;
@@ -39,9 +44,6 @@ class IndicatorCubit extends Cubit<IndicatorState> {
           indicatorStatus: IndicatorStatus.success,
           indicatorList: indicatorList,
         ));
-        // emit(state.copyWith(
-        //   indicatorList: indicatorList,
-        // ));
       }
     } on DioException catch (e, s) {
       if (e.type is SocketException) {
@@ -59,6 +61,7 @@ class IndicatorCubit extends Cubit<IndicatorState> {
   void addIndicator({
     required String indicatorName,
     required String indicator,
+    String? secondIndicator,
     required String date,
     required String time,
     int? babyId,
@@ -70,6 +73,7 @@ class IndicatorCubit extends Cubit<IndicatorState> {
         babyId: babyId,
         indicator: indicator,
         name: indicatorName,
+        indicator2: secondIndicator,
         date: date,
         time: time,
       ).toJson();

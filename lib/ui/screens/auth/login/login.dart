@@ -10,7 +10,7 @@ import 'widgets/login_image.dart';
 import 'widgets/login_inputs.dart';
 import '../sign_up/widgets/signup_button.dart';
 
-class Login extends StatelessWidget {
+ class Login extends StatelessWidget {
   const Login({super.key});
 
   @override

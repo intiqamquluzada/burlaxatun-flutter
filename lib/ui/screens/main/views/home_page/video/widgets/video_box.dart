@@ -58,7 +58,7 @@ class _VideoBoxState extends State<VideoBox> {
     } else if (uri.pathSegments.contains('embed')) {
       return uri.pathSegments[1];
     } else {
-      return '';
+      return 'FdJ1egGjCSg';
     }
   }
 }

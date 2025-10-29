@@ -7,7 +7,10 @@ import '../../widgets/add_button.dart';
 import 'add_new_indicator_dialog.dart';
 
 class CalendarAndAddButtons extends StatelessWidget {
-  const CalendarAndAddButtons({super.key, required this.indicatorName});
+  const CalendarAndAddButtons({
+    super.key,
+    required this.indicatorName,
+  });
 
   final String indicatorName;
 

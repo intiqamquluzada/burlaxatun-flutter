@@ -5,14 +5,14 @@ import '../../../../../../../../data/models/remote/response/indicator_model.dart
 import 'chart_data_not_found_widget.dart';
 
 class ChartWidget extends StatelessWidget {
-  const ChartWidget({
+  const ChartWidget({ 
     super.key,
     required this.indicatorDataList,
   });
 
   final List<IndicatorModel> indicatorDataList;
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return indicatorDataList.isEmpty
         ? ChartDataNotFoundWidget()
