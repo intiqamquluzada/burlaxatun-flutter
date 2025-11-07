@@ -106,6 +106,7 @@ class _ForumCommentsPageState extends State<ForumCommentsPage> {
                         viewCount: forumDetail?.viewCount.toString() ?? '',
                         commentCount: forumDetail?.commentCount ?? 0,
                         forumId: 0,
+                        isCommentPage: true,
                       );
                     }
                     return SizedBox.shrink();

@@ -17,6 +17,7 @@ class ForumBox extends StatelessWidget {
     required this.viewCount,
     required this.commentCount,
     required this.forumId,
+    this.isCommentPage = false,
     this.onTap,
   });
   final int forumId;
@@ -26,6 +27,7 @@ class ForumBox extends StatelessWidget {
   final int likeCount;
   final String viewCount;
   final int commentCount;
+  final bool isCommentPage;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class ForumBox extends StatelessWidget {
               ),
               8.h,
               SizedBox(
-                width: context.deviceWidth * 0.62,
+                // width: context.deviceWidth * 0.62,
                 child: GlobalText(
                   height: 1.4,
                   textAlign: TextAlign.left,
@@ -79,8 +81,8 @@ class ForumBox extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                  maxLines: !isCommentPage ? 2 : null,
+                  overflow: !isCommentPage ? TextOverflow.ellipsis : null,
                 ),
               ),
               20.h,
