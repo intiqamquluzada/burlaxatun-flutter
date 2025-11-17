@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -67,6 +69,7 @@ class _VideoBoxState extends State<VideoBox> {
     } else if (uri.pathSegments.contains('embed')) {
       return uri.pathSegments[1];
     } else {
+      log('default id');
       return 'FdJ1egGjCSg';
     }
   }

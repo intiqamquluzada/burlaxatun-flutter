@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../../../utils/extensions/context_extensions.dart';
 import '../../../../../../utils/extensions/num_extensions.dart';
 import '../../../../../widgets/global_text.dart';
 import '../../../../../widgets/report_or_block_forum.dart';
@@ -17,6 +16,7 @@ class ForumBox extends StatelessWidget {
     required this.viewCount,
     required this.commentCount,
     required this.forumId,
+    this.isCommentPage = false,
     this.onTap,
   });
   final int forumId;
@@ -26,6 +26,7 @@ class ForumBox extends StatelessWidget {
   final int likeCount;
   final String viewCount;
   final int commentCount;
+  final bool isCommentPage;
 
   @override
   Widget build(BuildContext context) {
@@ -53,25 +54,28 @@ class ForumBox extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  Row(
-                    children: [
-                      GlobalText(
-                        text: 'Daha ətraflı',
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff97989D),
-                      ),
-                      SizedBox(width: 7),
-                      SvgPicture.asset(
-                        'assets/icons/medicine_arrow_right_icon.svg',
-                      ),
-                    ],
+                  Visibility(
+                    visible: !isCommentPage,
+                    child: Row(
+                      children: [
+                        GlobalText(
+                          text: 'Daha ətraflı',
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff97989D),
+                        ),
+                        SizedBox(width: 7),
+                        SvgPicture.asset(
+                          'assets/icons/medicine_arrow_right_icon.svg',
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
               8.h,
               SizedBox(
-                width: context.deviceWidth * 0.62,
+                // width: context.deviceWidth * 0.62,
                 child: GlobalText(
                   height: 1.4,
                   textAlign: TextAlign.left,
@@ -79,8 +83,8 @@ class ForumBox extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                  maxLines: !isCommentPage ? 2 : null,
+                  overflow: !isCommentPage ? TextOverflow.ellipsis : null,
                 ),
               ),
               20.h,

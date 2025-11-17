@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../widgets/global_appbar.dart';
 import 'widgets/video_list.dart';
 
-class VideoPage extends StatelessWidget {
+ class VideoPage extends StatelessWidget {
   const VideoPage({super.key});
 
   @override
