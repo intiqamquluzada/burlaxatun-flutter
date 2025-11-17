@@ -565,14 +565,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_youtube_video:
-    dependency: "direct main"
-    description:
-      name: flutter_youtube_video
-      sha256: "803192080da92411ec7a75734216d09388e08b0ebb176dcc4f2ac17c817bbf9d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1570,6 +1562,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.3"
+  youtube_player_flutter:
+    dependency: "direct main"
+    description:
+      name: youtube_player_flutter
+      sha256: e64eeebaa5f7dc1d55d103cc9abf05f87d8013bae0d3b6a11aad5d33a2f7f5b4
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.3"
 sdks:
   dart: ">=3.8.0-0 <4.0.0"
   flutter: ">=3.29.0"

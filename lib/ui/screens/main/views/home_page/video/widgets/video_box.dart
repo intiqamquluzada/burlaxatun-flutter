@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_youtube_video/flutter_youtube_video.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../widgets/article_box.dart';
 
@@ -37,7 +37,16 @@ class _VideoBoxState extends State<VideoBox> {
               width: MediaQuery.of(context).size.width * 0.8,
               child: AspectRatio(
                 aspectRatio: 16 / 9.1,
-                child: FlutterYoutubePlayer(videoId: id),
+                child: YoutubePlayer(
+                  controller: YoutubePlayerController(
+                    initialVideoId: id,
+                    flags: YoutubePlayerFlags(
+                      autoPlay: false,
+                      mute: false,
+                    ),
+                  ),
+                  aspectRatio: 16 / 9,
+                ),
               ),
             ),
           ),
